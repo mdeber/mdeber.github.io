@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Make base-pair resolution GRanges object — makeGRangesBPres • BRGenomics</title>
+<title>Make base-pair resolution GRanges object — makeGRangesBRG • BRGenomics</title>
 
 
 <!-- jquery -->
@@ -35,7 +35,7 @@
 
 
 
-<meta property="og:title" content="Make base-pair resolution GRanges object — makeGRangesBPres" />
+<meta property="og:title" content="Make base-pair resolution GRanges object — makeGRangesBRG" />
 <meta property="og:description" content="Splits up all ranges in gr to be each 1 basepair wide. For any range
 that is split up, all metadata information belonging to that range is
 inherited by its daughter ranges, and therefore the transformation is
@@ -105,7 +105,7 @@ non-destructive." />
     <div class="page-header">
     <h1>Make base-pair resolution GRanges object</h1>
     
-    <div class="hidden name"><code>makeGRangesBPres.Rd</code></div>
+    <div class="hidden name"><code>makeGRangesBRG.Rd</code></div>
     </div>
 
     <div class="ref-description">
@@ -115,7 +115,7 @@ inherited by its daughter ranges, and therefore the transformation is
 non-destructive.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>makeGRangesBPres</span>(<span class='no'>dataset.gr</span>)</pre>
+    <pre class="usage"><span class='fu'>makeGRangesBRG</span>(<span class='no'>dataset.gr</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -135,11 +135,11 @@ non-destructive.</p>
   (usually readcounts) is derived from a single basepair position.</p>
 <p>The motivating case for this function is a bigWig file (e.g. one imported
   by <code>rtracklayer</code>), as bigWig files typically use run-length
-  compression on the data signal (the 'score' column), such that when
-  adjacent bases sharing the same signal will combined into a single range.
-  The base-pair resolution GRanges objects produced by this function remove
-  this compression, resulting in each index (each range) of the GRanges
-  object addressing a single genomic position.</p>
+  compression on the data signal (the 'score' column), such that adjacent
+  bases sharing the same signal are combined into a single range. The
+  base-pair resolution GRanges objects produced by this function remove this
+  compression, resulting in each index (each range) of the GRanges object
+  addressing a single genomic position.</p>
     <h2 class="hasAnchor" id="generating-basepair-resolution-granges-from-whole-reads"><a class="anchor" href="#generating-basepair-resolution-granges-from-whole-reads"></a>Generating basepair-resolution GRanges from whole reads</h2>
 
     <p>If working
@@ -156,15 +156,32 @@ non-destructive.</p>
   <code><a href='https://rdrr.io/pkg/GenomicRanges/man/intra-range-methods.html'>GenomicRanges::resize()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"PROseq"</span>) <span class='co'># load included PROseq data</span>
-<span class='fu'><a href='https://rdrr.io/r/base/range.html'>range</a></span>(<span class='fu'>width</span>(<span class='no'>PROseq</span>))</div><div class='output co'>#&gt; [1] 1 1</div><div class='input'>
-<span class='co'># simulate the format of a bigWig file, using arbitrary scores</span>
-<span class='no'>bw</span> <span class='kw'>&lt;-</span> <span class='fu'>reduce</span>(<span class='no'>PROseq</span>)
-<span class='fu'>score</span>(<span class='no'>bw</span>) <span class='kw'>&lt;-</span> <span class='fu'>score</span>(<span class='no'>PROseq</span>)[<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_along</a></span>(<span class='no'>bw</span>)]
-<span class='fu'><a href='https://rdrr.io/r/base/range.html'>range</a></span>(<span class='fu'>width</span>(<span class='no'>bw</span>))</div><div class='output co'>#&gt; [1]  1 17</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>bw</span>)</div><div class='output co'>#&gt; [1] 39429</div><div class='input'>
-<span class='no'>gr</span> <span class='kw'>&lt;-</span> <span class='fu'>makeGRangesBPres</span>(<span class='no'>bw</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/range.html'>range</a></span>(<span class='fu'>width</span>(<span class='no'>gr</span>))</div><div class='output co'>#&gt; [1] 1 1</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>gr</span>)</div><div class='output co'>#&gt; [1] 47533</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>gr</span>) <span class='kw'>==</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='fu'>width</span>(<span class='no'>bw</span>))</div><div class='output co'>#&gt; [1] TRUE</div></pre>
+    <pre class="examples"><div class='input'><span class='co'>#--------------------------------------------------#</span>
+<span class='co'># Make a bigWig file single width</span>
+<span class='co'>#--------------------------------------------------#</span>
+
+<span class='co'># get local address for an included bigWig file</span>
+<span class='no'>bw_file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"PROseq_dm6_chr4_plus.bw"</span>,
+                       <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"BRGenomics"</span>)
+
+<span class='co'># BRGenomics::import_bigWig automatically applies makeGRangesBRG;</span>
+<span class='co'># therefore will import using rtracklayer</span>
+<span class='no'>bw</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rtracklayer</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/rtracklayer/man/BigWigFile.html'>import.bw</a></span>(<span class='no'>bw_file</span>)
+<span class='fu'>strand</span>(<span class='no'>bw</span>) <span class='kw'>&lt;-</span> <span class='st'>"+"</span>
+
+<span class='fu'><a href='https://rdrr.io/r/base/range.html'>range</a></span>(<span class='fu'>width</span>(<span class='no'>bw</span>))</div><div class='output co'>#&gt; [1] 1 6</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>bw</span>)</div><div class='output co'>#&gt; [1] 16587</div><div class='input'>
+<span class='co'># make basepair-resolution (single-width)</span>
+<span class='no'>gr</span> <span class='kw'>&lt;-</span> <span class='fu'>makeGRangesBRG</span>(<span class='no'>bw</span>)
+
+<span class='fu'><a href='https://rdrr.io/r/base/range.html'>range</a></span>(<span class='fu'>width</span>(<span class='no'>gr</span>))</div><div class='output co'>#&gt; [1] 1 1</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>gr</span>)</div><div class='output co'>#&gt; [1] 18035</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>gr</span>) <span class='kw'>==</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='fu'>width</span>(<span class='no'>bw</span>))</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='fu'>score</span>(<span class='no'>gr</span>)) <span class='kw'>==</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='fu'>score</span>(<span class='no'>bw</span>) * <span class='fu'>width</span>(<span class='no'>bw</span>))</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='co'>#--------------------------------------------------#</span>
+<span class='co'># Reverse using getStrandedCoverage</span>
+<span class='co'>#--------------------------------------------------#</span>
+<span class='co'># -&gt; for more examples, see getStranded Coverage</span>
+
+<span class='no'>undo</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='getStrandedCoverage.html'>getStrandedCoverage</a></span>(<span class='no'>gr</span>)
+
+<span class='fu'><a href='https://rdrr.io/r/base/range.html'>range</a></span>(<span class='fu'>width</span>(<span class='no'>undo</span>))</div><div class='output co'>#&gt; [1] 1 6</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>undo</span>) <span class='kw'>==</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>bw</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/all.html'>all</a></span>(<span class='fu'>score</span>(<span class='no'>undo</span>) <span class='kw'>==</span> <span class='fu'>score</span>(<span class='no'>bw</span>))</div><div class='output co'>#&gt; [1] TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -287,7 +287,7 @@ in <code>args.DESeq</code> will supersede this option for the call to
                            <span class='kw'>comparisons.list</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"B"</span>, <span class='st'>"A"</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"C"</span>, <span class='st'>"A"</span>)),
                            <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>reslist</span>)</div><div class='output co'>#&gt; [1] "B_vs_A" "C_vs_A"</div><div class='input'>
-<span class='no'>reslist</span><span class='kw'>[[</span><span class='fl'>1</span>]]</div><div class='output co'>#&gt; log2 fold change (MLE): condition B vs A 
+<span class='no'>reslist</span>$<span class='no'>B_vs_A</span></div><div class='output co'>#&gt; log2 fold change (MLE): condition B vs A 
 #&gt; Wald test p-value: condition B vs A 
 #&gt; DataFrame with 111 rows and 6 columns
 #&gt;               baseMean log2FoldChange     lfcSE        stat    pvalue      padj
