@@ -36,8 +36,8 @@
 
 
 <meta property="og:title" content="Get signal counts in regions of interest — getCountsByRegions" />
-<meta property="og:description" content="Returns a vector the same length as regions.gr containing signal found
-in each range." />
+<meta property="og:description" content="Get the sum of the signal in dataset.gr that overlaps each range in
+regions.gr." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -70,7 +70,7 @@ in each range." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -107,8 +107,8 @@ in each range." />
     </div>
 
     <div class="ref-description">
-    <p>Returns a vector the same length as <code>regions.gr</code> containing signal found
-in each range.</p>
+    <p>Get the sum of the signal in <code>dataset.gr</code> that overlaps each range in
+<code>regions.gr</code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>getCountsByRegions</span>(
@@ -128,7 +128,7 @@ in each range.</p>
     </tr>
     <tr>
       <th>regions.gr</th>
-      <td><p>A GRanges object containing all the regions of interest.</p></td>
+      <td><p>A GRanges object containing regions of interest.</p></td>
     </tr>
     <tr>
       <th>field</th>
@@ -142,6 +142,10 @@ each region in each field.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>An atomic vector the same length as <code>regions.gr</code> containing
+the sum of the signal overlapping each range of <code>regions.gr</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='getCountsByPositions.html'>getCountsByPositions</a></code></p></div>
@@ -172,6 +176,7 @@ each region in each field.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>

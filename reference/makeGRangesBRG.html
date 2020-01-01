@@ -72,7 +72,7 @@ non-destructive." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -126,20 +126,27 @@ non-destructive.</p>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A GRanges object for which <code>length(output) ==
+  sum(width(dataset.gr))</code>, and for which <code><a href='https://rdrr.io/r/base/all.html'>all(width(output) == 1)</a></code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Note that this function doesn't perform any transformation on the
   metadata in the input. This function assumes that for an input GRanges
   object, any metadata for each range is equally correct when inherited by
   each individual base in that range. In other words, the dataset's "signal"
-  (usually readcounts) is derived from a single basepair position.</p>
-<p>The motivating case for this function is a bigWig file (e.g. one imported
-  by <code>rtracklayer</code>), as bigWig files typically use run-length
-  compression on the data signal (the 'score' column), such that adjacent
-  bases sharing the same signal are combined into a single range. The
-  base-pair resolution GRanges objects produced by this function remove this
-  compression, resulting in each index (each range) of the GRanges object
-  addressing a single genomic position.</p>
+  (usually readcounts) fundamentally belongs to a single basepair position.</p>
+    <h2 class="hasAnchor" id="motivation"><a class="anchor" href="#motivation"></a>Motivation</h2>
+
+    <p>The motivating case for this function is a bigWig file
+  (e.g. one imported by <code>rtracklayer</code>), as bigWig files typically use
+  run-length compression on the data signal (the 'score' column), such that
+  adjacent bases sharing the same signal are combined into a single range. As
+  basepair-resolution genomic data is typically sparse, this compression has
+  a minimal impact on memory usage, and removing it greatly enhances data
+  handling as each index (each range) of the GRanges object corresponds to a
+  single genomic position.</p>
     <h2 class="hasAnchor" id="generating-basepair-resolution-granges-from-whole-reads"><a class="anchor" href="#generating-basepair-resolution-granges-from-whole-reads"></a>Generating basepair-resolution GRanges from whole reads</h2>
 
     <p>If working
@@ -150,6 +157,16 @@ non-destructive.</p>
   argument to choose the strand-specific 5' or 3' end. Then, strand-specific
   coverage can be calculated using
   <code><a href='getStrandedCoverage.html'>getStrandedCoverage</a></code>.</p>
+    <h2 class="hasAnchor" id="on-the-use-of-granges-instead-of-gpos"><a class="anchor" href="#on-the-use-of-granges-instead-of-gpos"></a>On the use of GRanges instead of GPos</h2>
+
+    <p>The
+  <code><a href='https://rdrr.io/pkg/GenomicRanges/man/GPos-class.html'>GPos</a></code> class is a more suitable container
+  for data of this type, as the GPos class is specific to 1-bp-wide ranges.
+  However, in early testing, we encountered some kind of compatibility
+  limitations with the newer GPos class, and have not re-tested it since. If
+  you have feedback on switching to this class, please contact the author.
+  Users can readily coerce a basepair-resolution GRanges object to a GPos
+  object via <code>gp &lt;- GPos(gr, score = score(gr))</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='getStrandedCoverage.html'>getStrandedCoverage</a></code>,
@@ -187,8 +204,11 @@ non-destructive.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
       <li><a href="#details">Details</a></li>
+      <li><a href="#motivation">Motivation</a></li>
       <li><a href="#generating-basepair-resolution-granges-from-whole-reads">Generating basepair-resolution GRanges from whole reads</a></li>
+      <li><a href="#on-the-use-of-granges-instead-of-gpos">On the use of GRanges instead of GPos</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>

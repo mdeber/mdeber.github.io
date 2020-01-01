@@ -37,12 +37,9 @@
 
 <meta property="og:title" content="Randomly subsample reads from GRanges dataset — subsampleGRanges" />
 <meta property="og:description" content="Random subsampling is not performed on ranges, but on reads. Readcounts
-should be given as a metadata field (usually &quot;score&quot;), and should normally be
-integers. If normalized readcounts are given, an attempt will be made to
-infer the normalization factor based on the least-common-multiple of the
-signal found in the specified field. This function can also subsample ranges
-directly if field = NULL, but the sample function can be used
-in this scenario." />
+should be given as a metadata field (usually &quot;score&quot;). This function can also
+subsample ranges directly if field = NULL, but the sample
+function can be used in this scenario." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -75,7 +72,7 @@ in this scenario." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -113,12 +110,9 @@ in this scenario." />
 
     <div class="ref-description">
     <p>Random subsampling is not performed on ranges, but on reads. Readcounts
-should be given as a metadata field (usually "score"), and should normally be
-integers. If normalized readcounts are given, an attempt will be made to
-infer the normalization factor based on the least-common-multiple of the
-signal found in the specified field. This function can also subsample ranges
-directly if <code>field = NULL</code>, but the <code>sample</code> function can be used
-in this scenario.</p>
+should be given as a metadata field (usually "score"). This function can also
+subsample ranges directly if <code>field = NULL</code>, but the <code>sample</code>
+function can be used in this scenario.</p>
     </div>
 
     <pre class="usage"><span class='fu'>subsampleGRanges</span>(<span class='no'>dataset.gr</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prop</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"score"</span>)</pre>
@@ -148,6 +142,18 @@ for reach position. If each range represents a single read, set <code>field
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A GRanges object identical in format to <code>dataset.gr</code>, but
+  containing a random subset of its data. If <code>field != NULL</code>, the length
+  of the output cannot be known <em>a priori</em>, but the sum of its score
+  can.</p>
+    <h2 class="hasAnchor" id="use-with-normalized-readcounts"><a class="anchor" href="#use-with-normalized-readcounts"></a>Use with normalized readcounts</h2>
+
+    <p>If the metadata field contains
+  normalized readcounts, an attempt will be made to infer the normalization
+  factor based on the least-common-multiple of the signal found in the
+  specified field.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"PROseq"</span>) <span class='co'># load included PROseq data</span>
@@ -177,6 +183,8 @@ for reach position. If each range represents a single read, set <code>field
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
+      <li><a href="#use-with-normalized-readcounts">Use with normalized readcounts</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

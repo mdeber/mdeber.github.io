@@ -36,9 +36,10 @@
 
 
 <meta property="og:title" content="Get signal counts at each position within regions of interest — getCountsByPositions" />
-<meta property="og:description" content="Generate a matrix containing a row for each region of interest, and
-columns for each position (each base if binsize = 1) within each
-region." />
+<meta property="og:description" content="Get the sum of the signal in dataset.gr that overlaps each position
+within each range in regions.gr. If binning is used (i.e. positions
+are wider than 1 bp), any function can be used to summarize the signal
+overlapping each bin." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -71,7 +72,7 @@ region." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -108,9 +109,10 @@ region." />
     </div>
 
     <div class="ref-description">
-    <p>Generate a matrix containing a row for each region of interest, and
-columns for each position (each base if <code>binsize = 1</code>) within each
-region.</p>
+    <p>Get the sum of the signal in <code>dataset.gr</code> that overlaps each position
+within each range in <code>regions.gr</code>. If binning is used (i.e. positions
+are wider than 1 bp), any function can be used to summarize the signal
+overlapping each bin.</p>
     </div>
 
     <pre class="usage"><span class='fu'>getCountsByPositions</span>(
@@ -164,18 +166,22 @@ output for generated each field.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>If the widths of all ranges in <code>regions.gr</code> are equal, a matrix
-  is returned containing a row for each range in <code>regions.gr</code>, and a
-  column for each bin. For input <code>regions.gr</code> with varying widths,
-  setting <code>simplify.multi.widths = "list"</code> will output a list of
-  variable-length vectors, with each vector corresponding to an input region.
-  If <code>simplify.multi.widths = "pad 0"</code> or <code>"pad NA"</code>, the output
-  is a matrix containing a row for each range in <code>regions.gr</code>, and a
-  column for each position in each range. The number of columns is determined
-  by the largest range in <code>regions.gr</code>, and columns corresponding to
-  positions outside of each range are either set to <code>0</code> or <code>NA</code>,
+  is returned that contains a row for each region of interest, and a column
+  for each position (each base if <code>binsize = 1</code>) within each region.</p>
+    <h2 class="hasAnchor" id="use-of-multi-width-regions-of-interest"><a class="anchor" href="#use-of-multi-width-regions-of-interest"></a>Use of multi-width regions of interest</h2>
+
+    <p>If the input
+  <code>regions.gr</code> contains ranges of varying widths, setting
+  <code>simplify.multi.widths = "list"</code> will output a list of variable-length
+  vectors, with each vector corresponding to an individual input region. If
+  <code>simplify.multi.widths = "pad 0"</code> or <code>"pad NA"</code>, the output is a
+  matrix containing a row for each range in <code>regions.gr</code>, but the number
+  of columns is determined by the <em>largest</em> range in <code>regions.gr</code>.
+  For each region of interest, columns that correspond to positions outside
+  of the outside of the input range are either set to <code>0</code> or <code>NA</code>,
   depending on the argument.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -242,7 +248,8 @@ output for generated each field.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#details">Details</a></li>
+      <li><a href="#value">Value</a></li>
+      <li><a href="#use-of-multi-width-regions-of-interest">Use of multi-width regions of interest</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>

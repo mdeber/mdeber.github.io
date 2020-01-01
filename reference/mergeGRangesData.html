@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Merge base-pair resolution GRanges objects — mergeGRangesData • BRGenomics</title>
+<title>Merge basepair-resolution GRanges objects — mergeGRangesData • BRGenomics</title>
 
 
 <!-- jquery -->
@@ -35,11 +35,9 @@
 
 
 
-<meta property="og:title" content="Merge base-pair resolution GRanges objects — mergeGRangesData" />
-<meta property="og:description" content="Merges 2 or more GRanges objects. For each object, the range widths must all
-be 1, and the score metadata column contains coverage information at
-each site. This function returns a single GRange object containing all sites
-of the input objects, and the sum of all scores at all sites." />
+<meta property="og:title" content="Merge basepair-resolution GRanges objects — mergeGRangesData" />
+<meta property="og:description" content="Merges 2 or more basepair-resolution (single-width) GRanges objects by
+combining all of their ranges and associated signal (e.g. readcounts)." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -72,7 +70,7 @@ of the input objects, and the sum of all scores at all sites." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -103,16 +101,14 @@ of the input objects, and the sum of all scores at all sites." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Merge base-pair resolution GRanges objects</h1>
+    <h1>Merge basepair-resolution GRanges objects</h1>
     
     <div class="hidden name"><code>mergeGRangesData.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Merges 2 or more GRanges objects. For each object, the range widths must all
-be 1, and the <code>score</code> metadata column contains coverage information at
-each site. This function returns a single GRange object containing all sites
-of the input objects, and the sum of all scores at all sites.</p>
+    <p>Merges 2 or more basepair-resolution (single-width) GRanges objects by
+combining all of their ranges and associated signal (e.g. readcounts).</p>
     </div>
 
     <pre class="usage"><span class='fu'>mergeGRangesData</span>(<span class='no'>...</span>, <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"score"</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fu'>detectCores</span>())</pre>
@@ -123,7 +119,8 @@ of the input objects, and the sum of all scores at all sites.</p>
     <tr>
       <th>...</th>
       <td><p>Any number of GRanges objects in which signal (e.g. readcounts)
-are contained within metadata.</p></td>
+are contained within metadata. GRanges not single-width will be coerced
+using <code><a href='makeGRangesBRG.html'>makeGRangesBRG</a></code>.</p></td>
     </tr>
     <tr>
       <th>field</th>
@@ -137,6 +134,11 @@ GRanges objects using <code>makeGRangesBRG</code>.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A disjoint, basepair-resolution (single-width) GRanges object
+  comprised of all ranges found in the input GRanges objects, and whose total
+  readcount is the sum of all input GRanges.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='makeGRangesBRG.html'>makeGRangesBRG</a></code></p></div>
@@ -189,6 +191,7 @@ GRanges objects using <code>makeGRangesBRG</code>.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>

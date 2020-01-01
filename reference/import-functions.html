@@ -36,7 +36,8 @@
 
 
 <meta property="og:title" content="Import basepair-resolution files — import-functions" />
-<meta property="og:description" content="Import basepair-resolution files" />
+<meta property="og:description" content="Import functions for plus/minus pairs of bigWig or bedGraph
+files." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -69,7 +70,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -106,7 +107,8 @@
     </div>
 
     <div class="ref-description">
-    <p>Import basepair-resolution files</p>
+    <p>Import functions for plus/minus pairs of <code>bigWig</code> or <code>bedGraph</code>
+files.</p>
     </div>
 
     <pre class="usage"><span class='fu'>import_bigWig</span>(
@@ -150,15 +152,21 @@ mitochondrial and non-standard chromosomes are removed.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Imports a GRanges object containing base-pair resolution data, with
   the <code>score</code> metadata column indicating the number of reads represented
   by each range.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>For <code>import_bigWig</code>, the output GRanges is formatted by
+  <code>makeGRangesBR</code>, such that all ranges
+  are disjoint and have width = 1, and the <code>score</code> is single-base
+  coverage, i.e. the number of reads for each position.</p>
 <p><code>import_bedGraph</code> is useful for when both 5'- and 3'-end information
   is to be maintained for each sequenced molecule. It effectively imports the
-  entire read.</p>
-<p>For <code>import_bigWig</code>, all ranges are of width = 1.</p>
+  entire read, and the <code>score</code> represents the number of reads sharing
+  identical 5' and 3' ends.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='tidyChromosomes.html'>tidyChromosomes</a></code>,
@@ -226,6 +234,7 @@ mitochondrial and non-standard chromosomes are removed.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
       <li><a href="#details">Details</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>

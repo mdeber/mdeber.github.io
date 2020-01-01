@@ -72,7 +72,7 @@ into a &quot;basepair-resolution&quot; GRanges object." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -221,7 +221,7 @@ read, set to NULL.</p></td>
 <span class='co'># -&gt; Look specifically at ranges that could be combined</span>
 <span class='no'>neighbors</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'>shift</span>(<span class='no'>PROseq</span>, <span class='fl'>1</span>), <span class='fu'>shift</span>(<span class='no'>PROseq</span>, -<span class='fl'>1</span>))
 <span class='no'>hits</span> <span class='kw'>&lt;-</span> <span class='fu'>findOverlaps</span>(<span class='no'>PROseq</span>, <span class='no'>neighbors</span>)
-<span class='no'>idx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='no'>hits</span>@<span class='kw'>from</span>) <span class='co'># indices for PROseq with neighbor</span>
+<span class='no'>idx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='fu'>from</span>(<span class='no'>hits</span>)) <span class='co'># indices for PROseq with neighbor</span>
 
 <span class='no'>PROseq</span>[<span class='no'>idx</span>]</div><div class='output co'>#&gt; GRanges object with 13758 ranges and 1 metadata column:
 #&gt;           seqnames    ranges strand |     score

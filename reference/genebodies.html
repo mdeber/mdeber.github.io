@@ -37,16 +37,7 @@
 
 <meta property="og:title" content="Extract Genebodies — genebodies" />
 <meta property="og:description" content="This function returns ranges that are defined relative to the strand-specific
-start and end sites of regions of interest (usually genes). Unlike
-GenomicRanges::promoters, distances
-can be upstream or downstream based on the sign, and both the start and end
-of the returned regions can be defined in terms of either the start of end
-site of the input ranges. For example, genebodies(txs, -50, 150,
-fix.end = &quot;start&quot;) is equivalent to promoters(txs, 50, 151) (the
-downstream edge is off by 1 because promoters keeps the downstream
-interval closed). The default arguments return ranges that begin 300 bases
-downstream of the original start positions, and end 300 bases upstream of the
-original end positions." />
+start and end sites of regions of interest (usually genes)." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -79,7 +70,7 @@ original end positions." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -117,16 +108,7 @@ original end positions." />
 
     <div class="ref-description">
     <p>This function returns ranges that are defined relative to the strand-specific
-start and end sites of regions of interest (usually genes). Unlike
-<code><a href='https://rdrr.io/pkg/GenomicRanges/man/intra-range-methods.html'>GenomicRanges::promoters</a></code>, distances
-can be upstream or downstream based on the sign, and both the start and end
-of the returned regions can be defined in terms of either the start of end
-site of the input ranges. For example, <code>genebodies(txs, -50, 150,
-fix.end = "start")</code> is equivalent to <code>promoters(txs, 50, 151)</code> (the
-downstream edge is off by 1 because <code>promoters</code> keeps the downstream
-interval closed). The default arguments return ranges that begin 300 bases
-downstream of the original start positions, and end 300 bases upstream of the
-original end positions.</p>
+start and end sites of regions of interest (usually genes).</p>
     </div>
 
     <pre class="usage"><span class='fu'>genebodies</span>(
@@ -184,6 +166,18 @@ width, and <code>min.window</code> simply size-filters the input ranges.</p></td
     <p>A GRanges object that may be shorter than <code>genelist</code> due to
   filtering of short ranges. For example, using the default arguments, genes
   shorter than 600 bp would be removed.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Unlike
+  <code><a href='https://rdrr.io/pkg/GenomicRanges/man/intra-range-methods.html'>GenomicRanges::promoters</a></code>, distances
+  can be defined to be upstream or downstream by changing the sign of the
+  argument, and both the start and end of the returned regions can be defined
+  in terms of the strand-specific start or end site of the input ranges. For
+  example, <code>genebodies(txs, -50, 150, fix.end = "start")</code> is equivalent
+  to <code>promoters(txs, 50, 151)</code> (the downstream edge is off by 1 because
+  <code>promoters</code> keeps the downstream interval closed). The default
+  arguments return ranges that begin 300 bases downstream of the original
+  start positions, and end 300 bases upstream of the original end positions.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/GenomicRanges/man/intra-range-methods.html'>intra-range-methods</a></code></p></div>
@@ -257,6 +251,7 @@ width, and <code>min.window</code> simply size-filters the input ranges.</p></td
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#details">Details</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
