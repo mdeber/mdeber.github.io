@@ -72,7 +72,7 @@ overlapping each bin." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
       </span>
     </div>
 
@@ -138,7 +138,7 @@ overlapping each bin.</p>
     </tr>
     <tr>
       <th>regions.gr</th>
-      <td><p>A GRanges object containing all the regions of interest.</p></td>
+      <td><p>A GRanges object containing regions of interest.</p></td>
     </tr>
     <tr>
       <th>binsize</th>
@@ -147,14 +147,14 @@ overlapping each bin.</p>
     </tr>
     <tr>
       <th>FUN</th>
-      <td><p>If <code>binsize &gt; 1</code>, the function used to aggregate the
-signal within each bin. By default, the signal is summed, but any function
+      <td><p>If <code>binsize &gt; 1</code>, the function used to aggregate the signal
+within each bin. By default, the signal is summed, but any function
 operating on a numeric vector can be used.</p></td>
     </tr>
     <tr>
       <th>simplify.multi.widths</th>
       <td><p>A string indicating the output format if the
-ranges in <code>regions.gr</code> have variable widths. Default = <code>"list"</code>.
+ranges in <code>regions.gr</code> have variable widths. Default is <code>"list"</code>.
 See details below.</p></td>
     </tr>
     <tr>
@@ -182,10 +182,10 @@ output for generated each field.</p></td>
   vectors, with each vector corresponding to an individual input region. If
   <code>simplify.multi.widths = "pad 0"</code> or <code>"pad NA"</code>, the output is a
   matrix containing a row for each range in <code>regions.gr</code>, but the number
-  of columns is determined by the <em>largest</em> range in <code>regions.gr</code>.
-  For each region of interest, columns that correspond to positions outside
-  of the outside of the input range are either set to <code>0</code> or <code>NA</code>,
-  depending on the argument.</p>
+  of columns is determined by the largest range in <code>regions.gr</code>. For
+  each region of interest, columns that correspond to positions outside of
+  the input range are set, depending on the argument, to <code>0</code> or
+  <code>NA</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='getCountsByRegions.html'>getCountsByRegions</a></code></p></div>

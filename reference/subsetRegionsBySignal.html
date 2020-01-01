@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
       </span>
     </div>
 
@@ -140,27 +140,28 @@
     <tr>
       <th>quantiles</th>
       <td><p>A value pair giving the lower quantile and upper quantile of
-regions to keep. Regions with signal quantiles below than the lower
-quantile are removed, while regions with signal quantiles above the upper
-quantile are removed. Quantiles must be in range <code>(0, 1)</code>. An empty
-GRanges object is returned if <code>lower quantile = 1</code> or <code>upper
-quantile = 0</code>.</p></td>
+regions to keep. Regions with signal quantiles below the lower quantile are
+removed, and likewise for regions with signal quantiles above the upper
+quantile. Quantiles must be in range <code>(0, 1)</code>. An empty GRanges object
+is returned if the lower quantile is set to <code>1</code> or if the upper
+quantile is set to <code>0</code>.</p></td>
     </tr>
     <tr>
       <th>field</th>
-      <td><p>The metadata field of <code>dataset.gr</code> to be counted.</p></td>
+      <td><p>The metadata field of <code>dataset.gr</code> to be counted, typically
+"score".</p></td>
     </tr>
     <tr>
       <th>order.by.rank</th>
       <td><p>If <code>TRUE</code>, the output regions are sorted based on
-the amount of signal contained (in decreasing order). If <code>FALSE</code> (the
+the amount of overlapping signal (in decreasing order). If <code>FALSE</code> (the
 default), genes are sorted by their positions.</p></td>
     </tr>
     <tr>
       <th>density</th>
       <td><p>A logical indicating whether signal counts should be
-normalized to the width of ranges in <code>regions.gr</code>. By default, the
-function only considers the total signal in each range.</p></td>
+normalized to the width (chromosomal length) of ranges in <code>regions.gr</code>.
+By default, no length normalization is performed.</p></td>
     </tr>
     </table>
 
@@ -168,15 +169,6 @@ function only considers the total signal in each range.</p></td>
 
     <p>A GRanges object of length <code>length(regions.gr) * (upper_quantile
   - lower_quantile)</code>.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Typical uses may include removing the 5<!-- % of genes with the lowest -->
-  signal (<code>lower_quantile = 0.05</code>) and the 5<!-- % with the highest signal -->
-  (<code>upper_quantile = 0.95</code>), or returning the middle 50<!-- % of genes by -->
-  signal (<code>lower_quantile = 0.25</code>, <code>upper_quantile = 0.75</code>). If
-  <code>lower_quantile = 0</code> and <code>upper_quantile = 1</code>, all regions are
-  returned, but the returned regions will be sorted by position, or by score
-  if <code>order.by.rank = TRUE</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='getCountsByRegions.html'>getCountsByRegions</a></code></p></div>
@@ -262,6 +254,27 @@ function only considers the total signal in each range.</p></td>
 #&gt;   [33]     chr4 132220-140083      + | FBtr0089447 FBgn0052000
 #&gt;   [34]     chr4 132220-140083      + | FBtr0089446 FBgn0052000
 #&gt;   -------
+#&gt;   seqinfo: 7 sequences from dm6 genome</div><div class='input'>
+<span class='co'>#--------------------------------------------------#</span>
+<span class='co'># remove the most extreme 10% of regions</span>
+<span class='co'>#--------------------------------------------------#</span>
+
+<span class='fu'>subsetRegionsBySignal</span>(<span class='no'>txs_dm6_chr4</span>, <span class='no'>PROseq</span>,
+                      <span class='kw'>quantiles</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.05</span>, <span class='fl'>0.95</span>))</div><div class='output co'>#&gt; GRanges object with 305 ranges and 2 metadata columns:
+#&gt;         seqnames          ranges strand |     tx_name     gene_id
+#&gt;            &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;character&gt;
+#&gt;     [1]     chr4     42774-43374      + | FBtr0344900 FBgn0266617
+#&gt;     [2]     chr4     44774-46074      + | FBtr0340499 FBgn0265633
+#&gt;     [3]     chr4     56497-60974      + | FBtr0333704 FBgn0264617
+#&gt;     [4]     chr4     56497-63124      + | FBtr0333705 FBgn0264617
+#&gt;     [5]     chr4    90355-110059      + | FBtr0112657 FBgn0085432
+#&gt;     ...      ...             ...    ... .         ...         ...
+#&gt;   [301]     chr4 1192419-1196848      - | FBtr0100543 FBgn0039924
+#&gt;   [302]     chr4 1192419-1196848      - | FBtr0100544 FBgn0039924
+#&gt;   [303]     chr4 1225089-1230713      - | FBtr0100406 FBgn0027101
+#&gt;   [304]     chr4 1225737-1230713      - | FBtr0100402 FBgn0027101
+#&gt;   [305]     chr4 1225737-1230713      - | FBtr0100404 FBgn0027101
+#&gt;   -------
 #&gt;   seqinfo: 7 sequences from dm6 genome</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -269,7 +282,6 @@ function only considers the total signal in each range.</p></td>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#details">Details</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
