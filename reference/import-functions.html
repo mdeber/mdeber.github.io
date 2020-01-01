@@ -70,7 +70,7 @@ files." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
       </span>
     </div>
 
@@ -84,6 +84,9 @@ files." />
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -160,8 +163,8 @@ mitochondrial and non-standard chromosomes are removed.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>For <code>import_bigWig</code>, the output GRanges is formatted by
-  <code>makeGRangesBR</code>, such that all ranges
-  are disjoint and have width = 1, and the <code>score</code> is single-base
+  <code><a href='makeGRangesBRG.html'>makeGRangesBRG</a></code>, such that all
+  ranges are disjoint and have width = 1, and the <code>score</code> is single-base
   coverage, i.e. the number of reads for each position.</p>
 <p><code>import_bedGraph</code> is useful for when both 5'- and 3'-end information
   is to be maintained for each sequenced molecule. It effectively imports the

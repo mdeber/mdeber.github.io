@@ -36,10 +36,8 @@
 
 
 <meta property="og:title" content="Get strand-specific coverage — getStrandedCoverage" />
-<meta property="og:description" content="Computes strand-specific coverage signal, and returns a GRanges object with
-signal in the &quot;score&quot; metadata column. Function also works for
-non-strand-specific data. Note that output is not automatically converted
-into a &quot;basepair-resolution&quot; GRanges object." />
+<meta property="og:description" content="Computes strand-specific coverage signal, and returns a GRanges object.
+Function also works for non-strand-specific data." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -72,7 +70,7 @@ into a &quot;basepair-resolution&quot; GRanges object." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
       </span>
     </div>
 
@@ -86,6 +84,9 @@ into a &quot;basepair-resolution&quot; GRanges object." />
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -109,10 +110,8 @@ into a &quot;basepair-resolution&quot; GRanges object." />
     </div>
 
     <div class="ref-description">
-    <p>Computes strand-specific coverage signal, and returns a GRanges object with
-signal in the "score" metadata column. Function also works for
-non-strand-specific data. Note that output is not automatically converted
-into a "basepair-resolution" GRanges object.</p>
+    <p>Computes strand-specific coverage signal, and returns a GRanges object.
+Function also works for non-strand-specific data.</p>
     </div>
 
     <pre class="usage"><span class='fu'>getStrandedCoverage</span>(<span class='no'>dataset.gr</span>, <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"score"</span>)</pre>
@@ -134,6 +133,12 @@ read, set to NULL.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A GRanges object with signal in the "score" metadata column. Note
+  that the output is <em>not</em> automatically converted into a
+  <code><a href='makeGRangesBRG.html'>"basepair-resolution"</a></code> GRanges
+  object.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='makeGRangesBRG.html'>makeGRangesBRG</a></code>,
@@ -260,6 +265,7 @@ read, set to NULL.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
