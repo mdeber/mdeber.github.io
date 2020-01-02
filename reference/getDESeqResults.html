@@ -75,7 +75,7 @@ being compared, and not for all samples present." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2</span>
       </span>
     </div>
 
@@ -128,7 +128,7 @@ being compared, and not for all samples present.</p>
   <span class='no'>dds</span>,
   <span class='no'>contrast.numer</span>,
   <span class='no'>contrast.denom</span>,
-  <span class='kw'>comparisons.list</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>comparisons</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>sizeFactors</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
   <span class='kw'>args.DESeq</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -160,11 +160,13 @@ numerator in the DESeq2 comparison, typically the perturbative condition.</p></t
 denominator in the DESeq2 comparison, typically the control condition.</p></td>
     </tr>
     <tr>
-      <th>comparisons.list</th>
+      <th>comparisons</th>
       <td><p>As an optional alternative to supplying a single
 <code>contrast.numer</code> and <code>contrast.denom</code>, users can supply a list of
 character vectors containing numerator-denominator pairs, e.g.
-<code><a href='https://rdrr.io/r/base/list.html'>list(c("B", "A"), c("C", "A"), c("C", "B"))</a></code>.</p></td>
+<code><a href='https://rdrr.io/r/base/list.html'>list(c("B", "A"), c("C", "A"), c("C", "B"))</a></code>. <code>comparisons</code> can
+also be a dataframe in which each row is a comparison, the first column
+contains the numerators, and  the second column contains the denominators.</p></td>
     </tr>
     <tr>
       <th>sizeFactors</th>
@@ -201,8 +203,8 @@ arguments are given, all defaults will be used.</p></td>
       <th>ncores</th>
       <td><p>The number of cores to use for parallel processing. Multicore
 processing is only used if more than one comparison is being made (i.e.
-argument <code>comparisons.list</code> is used), and the number of cores utilized
-will not be greater than the number of comparisons being performed.</p></td>
+argument <code>comparisons</code> is used), and the number of cores utilized will
+not be greater than the number of comparisons being performed.</p></td>
     </tr>
     <tr>
       <th>quiet</th>
@@ -216,7 +218,7 @@ in <code>args.DESeq</code> will supersede this option for the call to
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>For a single comparison, the output is the <code>DESeqResults</code> result
-  table. If a <code>comparisons.list</code> is used to make multiple comparisons,
+  table. If a <code>comparisons</code> is used to make multiple comparisons,
   the output is a named list of <code>DESeqResults</code> objects, with elements
   named following the pattern <code>"X_vs_Y"</code>, where <code>X</code> is the name of
   the numerator condition, and <code>Y</code> is the name of the denominator
@@ -287,9 +289,29 @@ in <code>args.DESeq</code> will supersede this option for the call to
 #&gt; FBgn0039924    162.633     0.30042713  0.465331   0.6456196  0.518526   0.99766
 #&gt; FBgn0027101    357.788    -0.12638095  0.236357  -0.5347032  0.592855   0.99766</div><div class='input'>
 <span class='no'>reslist</span> <span class='kw'>&lt;-</span> <span class='fu'>getDESeqResults</span>(<span class='no'>dds</span>,
-                           <span class='kw'>comparisons.list</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"B"</span>, <span class='st'>"A"</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"C"</span>, <span class='st'>"A"</span>)),
+                           <span class='kw'>comparisons</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"B"</span>, <span class='st'>"A"</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"C"</span>, <span class='st'>"A"</span>)),
                            <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>reslist</span>)</div><div class='output co'>#&gt; [1] "B_vs_A" "C_vs_A"</div><div class='input'>
+<span class='no'>reslist</span>$<span class='no'>B_vs_A</span></div><div class='output co'>#&gt; log2 fold change (MLE): condition B vs A 
+#&gt; Wald test p-value: condition B vs A 
+#&gt; DataFrame with 111 rows and 6 columns
+#&gt;               baseMean log2FoldChange     lfcSE        stat    pvalue      padj
+#&gt;              &lt;numeric&gt;      &lt;numeric&gt; &lt;numeric&gt;   &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;
+#&gt; FBgn0267363    0.25000     -1.4283946  4.997107 -0.28584433  0.774997   0.99766
+#&gt; FBgn0266617   10.34365      0.0838289  0.897865  0.09336470  0.925614   0.99766
+#&gt; FBgn0265633    2.01884      0.0120837  1.785163  0.00676898  0.994599   0.99766
+#&gt; FBgn0264617   64.61865      0.2152746  0.390560  0.55119533  0.581500   0.99766
+#&gt; FBgn0085432 4575.85639     -0.2116051  0.207035 -1.02207177  0.306747   0.99766
+#&gt; ...                ...            ...       ...         ...       ...       ...
+#&gt; FBgn0039928    696.376     0.00585552  0.242563   0.0241402  0.980741   0.99766
+#&gt; FBgn0052017    121.156    -0.04873622  0.338569  -0.1439476  0.885542   0.99766
+#&gt; FBgn0002521    172.065    -0.14843126  0.307854  -0.4821480  0.629701   0.99766
+#&gt; FBgn0039924    162.633     0.30042713  0.465331   0.6456196  0.518526   0.99766
+#&gt; FBgn0027101    357.788    -0.12638095  0.236357  -0.5347032  0.592855   0.99766</div><div class='input'>
+<span class='co'># or using a dataframe</span>
+<span class='no'>reslist</span> <span class='kw'>&lt;-</span> <span class='fu'>getDESeqResults</span>(<span class='no'>dds</span>, <span class='kw'>comparisons</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>num</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"B"</span>, <span class='st'>"C"</span>),
+                                                         <span class='kw'>den</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"A"</span>, <span class='st'>"A"</span>)),
+                           <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='no'>reslist</span>$<span class='no'>B_vs_A</span></div><div class='output co'>#&gt; log2 fold change (MLE): condition B vs A 
 #&gt; Wald test p-value: condition B vs A 
 #&gt; DataFrame with 111 rows and 6 columns
