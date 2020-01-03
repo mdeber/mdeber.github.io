@@ -73,7 +73,7 @@ base-pair resolution, or over larger bins." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
       </span>
     </div>
 
@@ -130,8 +130,8 @@ base-pair resolution, or over larger bins.</p>
   <span class='kw'>prop.sample</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
   <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>0.125</span>,
   <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>0.875</span>,
-  <span class='kw'>NF</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"score"</span>,
+  <span class='kw'>NF</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>remove.empty</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fu'>detectCores</span>()
 )
@@ -201,18 +201,20 @@ to return. The defaults, <code>0.125</code> and <code>0.875</code> (i.e. the 12.
 bootstrapped mean.</p></td>
     </tr>
     <tr>
-      <th>NF</th>
-      <td><p>Optional normalization factor by which to multiply the counts.</p></td>
-    </tr>
-    <tr>
       <th>field</th>
       <td><p>The metadata field of <code>dataset.gr</code> to be counted.</p></td>
+    </tr>
+    <tr>
+      <th>NF</th>
+      <td><p>An optional normalization factor by which to multiply the counts.
+If given, <code><a href='https://rdrr.io/r/base/length.html'>length(NF)</a></code> must be equal to <code><a href='https://rdrr.io/r/base/length.html'>length(field)</a></code>.</p></td>
     </tr>
     <tr>
       <th>remove.empty</th>
       <td><p>A logical indicating whether regions
 (<code>metaSubsample</code>) or rows (<code>metaSubsampleMatrix</code>) without signal
-should be removed from the analysis.</p></td>
+should be removed from the analysis. Not recommended if using multiple
+fields, as the gene lists will no longer be equivalent.</p></td>
     </tr>
     <tr>
       <th>ncores</th>

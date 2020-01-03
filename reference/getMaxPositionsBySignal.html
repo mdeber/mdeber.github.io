@@ -71,7 +71,7 @@ larger bins." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
       </span>
     </div>
 
@@ -122,7 +122,7 @@ larger bins.</p>
   <span class='kw'>binsize</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='kw'>bin.centers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"score"</span>,
-  <span class='kw'>keep.score</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+  <span class='kw'>keep.signal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -151,10 +151,10 @@ opposed to the entire bin. By default, entire bins are returned.</p></td>
       <td><p>The metadata field of <code>dataset.gr</code> to be counted.</p></td>
     </tr>
     <tr>
-      <th>keep.score</th>
+      <th>keep.signal</th>
       <td><p>Logical indicating if the signal value at the max site
 should be reported. If set to <code>TRUE</code>, the values are kept as a new
-metadata column in <code>regions.gr</code>.</p></td>
+<code>MaxSiteSignal</code> metadata column in the output GRanges.</p></td>
     </tr>
     </table>
 
@@ -166,12 +166,12 @@ metadata column in <code>regions.gr</code>.</p></td>
   <code>bin.centers = TRUE</code>, in which case a single-base site is returned.
   The site is set to the center of the bin, and if the binsize is even, the
   site is rounded to be closer to the beginning of the range.</p>
-<p>If <code>keep.score = TRUE</code>, the output will also contain metadata for the
-  signal at the max site. The output is <em>not</em> necessarily same length as
-  <code>regions.gr</code>, as regions without signal are not returned. If <em>no
-  regions</em> have signal (e.g. as could happen if running this function on
-  single regions), the function will return an empty GRanges object with
-  intact metadata columns.</p>
+<p>The output may not be the same length as <code>regions.gr</code>, as regions
+  without signal are not returned. If no regions have signal (e.g. as could
+  happen if running this function on single regions), the function will
+  return an empty GRanges object with intact metadata columns.</p>
+<p>If <code>keep.signal = TRUE</code>, the output will also contain metadata for the
+  signal at the max site, named <code>MaxSiteSignal</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='getCountsByPositions.html'>getCountsByPositions</a></code></p></div>
@@ -197,22 +197,22 @@ metadata column in <code>regions.gr</code>.</p></td>
 <span class='co'># max sites</span>
 <span class='co'>#--------------------------------------------------#</span>
 
-<span class='fu'>getMaxPositionsBySignal</span>(<span class='no'>pr</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='no'>PROseq</span>, <span class='kw'>keep.score</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; GRanges object with 2 ranges and 3 metadata columns:
-#&gt;       seqnames    ranges strand |     tx_name     gene_id MaxSiteScore
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;character&gt;    &lt;numeric&gt;
-#&gt;   [1]     chr4     42799      + | FBtr0344900 FBgn0266617            3
-#&gt;   [2]     chr4     44801      + | FBtr0340499 FBgn0265633            1
+<span class='fu'>getMaxPositionsBySignal</span>(<span class='no'>pr</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='no'>PROseq</span>, <span class='kw'>keep.signal</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; GRanges object with 2 ranges and 3 metadata columns:
+#&gt;       seqnames    ranges strand |     tx_name     gene_id MaxSiteSignal
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;character&gt;     &lt;numeric&gt;
+#&gt;   [1]     chr4     42799      + | FBtr0344900 FBgn0266617             3
+#&gt;   [2]     chr4     44801      + | FBtr0340499 FBgn0265633             1
 #&gt;   -------
 #&gt;   seqinfo: 7 sequences from dm6 genome</div><div class='input'>
 <span class='co'>#--------------------------------------------------#</span>
 <span class='co'># max sites in 5 bp bins</span>
 <span class='co'>#--------------------------------------------------#</span>
 
-<span class='fu'>getMaxPositionsBySignal</span>(<span class='no'>pr</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='no'>PROseq</span>, <span class='kw'>binsize</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>keep.score</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; GRanges object with 2 ranges and 3 metadata columns:
-#&gt;       seqnames      ranges strand |     tx_name     gene_id MaxSiteScore
-#&gt;          &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;character&gt;    &lt;numeric&gt;
-#&gt;   [1]     chr4 42794-42798      + | FBtr0344900 FBgn0266617            4
-#&gt;   [2]     chr4 44799-44803      + | FBtr0340499 FBgn0265633            1
+<span class='fu'>getMaxPositionsBySignal</span>(<span class='no'>pr</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='no'>PROseq</span>, <span class='kw'>binsize</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>keep.signal</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; GRanges object with 2 ranges and 3 metadata columns:
+#&gt;       seqnames      ranges strand |     tx_name     gene_id MaxSiteSignal
+#&gt;          &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;character&gt;     &lt;numeric&gt;
+#&gt;   [1]     chr4 42794-42798      + | FBtr0344900 FBgn0266617             4
+#&gt;   [2]     chr4 44799-44803      + | FBtr0340499 FBgn0265633             1
 #&gt;   -------
 #&gt;   seqinfo: 7 sequences from dm6 genome</div></pre>
   </div>
