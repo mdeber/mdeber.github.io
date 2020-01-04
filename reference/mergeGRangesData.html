@@ -37,7 +37,9 @@
 
 <meta property="og:title" content="Merge basepair-resolution GRanges objects — mergeGRangesData" />
 <meta property="og:description" content="Merges 2 or more basepair-resolution (single-width) GRanges objects by
-combining all of their ranges and associated signal (e.g. readcounts)." />
+combining all of their ranges and associated signal (e.g. readcounts). If
+multiplex = TRUE, the input datasets are reversibly combined into a
+multiplexed GRanges containing a field for each input dataset." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -70,7 +72,7 @@ combining all of their ranges and associated signal (e.g. readcounts)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.7</span>
       </span>
     </div>
 
@@ -111,10 +113,17 @@ combining all of their ranges and associated signal (e.g. readcounts)." />
 
     <div class="ref-description">
     <p>Merges 2 or more basepair-resolution (single-width) GRanges objects by
-combining all of their ranges and associated signal (e.g. readcounts).</p>
+combining all of their ranges and associated signal (e.g. readcounts). If
+<code>multiplex = TRUE</code>, the input datasets are reversibly combined into a
+multiplexed GRanges containing a field for each input dataset.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mergeGRangesData</span>(<span class='no'>...</span>, <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"score"</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fu'>detectCores</span>())</pre>
+    <pre class="usage"><span class='fu'>mergeGRangesData</span>(
+  <span class='no'>...</span>,
+  <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"score"</span>,
+  <span class='kw'>multiplex</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fu'>detectCores</span>()
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -123,25 +132,52 @@ combining all of their ranges and associated signal (e.g. readcounts).</p>
       <th>...</th>
       <td><p>Any number of GRanges objects in which signal (e.g. readcounts)
 are contained within metadata. GRanges not single-width will be coerced
-using <code><a href='makeGRangesBRG.html'>makeGRangesBRG</a></code>.</p></td>
+using <code><a href='makeGRangesBRG.html'>makeGRangesBRG</a></code>. Lists of
+GRanges can also be passed, but they must be named lists if
+<code>multiplex = TRUE</code>. Multiple lists can be passed, but if any inputs
+are lists, then all inputs must be lists.</p></td>
     </tr>
     <tr>
       <th>field</th>
-      <td><p>One or more metadata fields to be combined, typically the
-"score" field. Fields typically contain coverage information.</p></td>
+      <td><p>One or more <em>input</em> metadata fields to be combined,
+typically the "score" field. Fields typically contain coverage information.
+If only a single field is given (i.e. all input GRanges use the same
+field), that same field will be used for the output. Otherwise, the
+<code>score</code> metadata field will be used by default. The output metadata
+fields are different if <code>multiplex</code> is enabled.</p></td>
+    </tr>
+    <tr>
+      <th>multiplex</th>
+      <td><p>When set to <code>FALSE</code> (the default), input GRanges are
+merged irreversibly into a single new GRange, effectively combining the
+reads from different experiments. When <code>multiplex = TRUE</code>, the input
+GRanges data are reversibly combined into a multiplexed GRanges object,
+such that each input GRanges object has its own metadata field in the
+output.</p></td>
     </tr>
     <tr>
       <th>ncores</th>
-      <td><p>More than one core can be used to coerce non-single-width
-GRanges objects using <code>makeGRangesBRG</code>.</p></td>
+      <td><p>Number of cores to use for computations.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A disjoint, basepair-resolution (single-width) GRanges object
-  comprised of all ranges found in the input GRanges objects, and whose total
-  readcount is the sum of all input GRanges.</p>
+  comprised of all ranges found in the input GRanges objects.</p>
+<p>If <code>multiplex = FALSE</code>, single fields from each input are combined
+  into a single field in the output, the total signal of which is the sum of
+  all input GRanges.</p>
+<p>If <code>multiplex = TRUE</code>, each field of the output corresponds to an
+  input GRanges object.</p>
+    <h2 class="hasAnchor" id="subsetting-a-multiplexed-granges-object"><a class="anchor" href="#subsetting-a-multiplexed-granges-object"></a>Subsetting a multiplexed GRanges object</h2>
+
+    <p>If <code>multiplex = TRUE</code>,
+  the datasets are only combined into a single object, but the data
+  themselves are not combined. To subset <code>field_i</code>, corresponding to
+  input <code>dataset_i</code>:</p>
+<p><code>multi.gr &lt;- mergeGRangesData(gr1, gr2, multiplex = TRUE)</code>
+  <code><a href='https://rdrr.io/r/base/subset.html'>subset(multi.gr, gr1 != 0, select = gr1)</a></code> # select gr1</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='makeGRangesBRG.html'>makeGRangesBRG</a></code></p></div>
@@ -188,6 +224,35 @@ GRanges objects using <code>makeGRangesBRG</code>.</p></td>
 #&gt;   [5]     chr4     42653      + |         3
 #&gt;   [6]     chr4     42658      + |         1
 #&gt;   -------
+#&gt;   seqinfo: 7 sequences from dm6 genome</div><div class='input'>
+<span class='co'>#--------------------------------------------------#</span>
+<span class='co'># multiplex separate PRO-seq experiments</span>
+<span class='co'>#--------------------------------------------------#</span>
+
+<span class='no'>multi.gr</span> <span class='kw'>&lt;-</span> <span class='fu'>mergeGRangesData</span>(<span class='no'>gr1</span>, <span class='no'>gr2</span>, <span class='kw'>multiplex</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>multi.gr</span></div><div class='output co'>#&gt; GRanges object with 6 ranges and 2 metadata columns:
+#&gt;       seqnames    ranges strand |       gr1       gr2
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt; &lt;integer&gt;
+#&gt;   [1]     chr4     42619      + |         1         0
+#&gt;   [2]     chr4     42620      + |         2         0
+#&gt;   [3]     chr4     42622      + |         1         1
+#&gt;   [4]     chr4     42623      + |         2         2
+#&gt;   [5]     chr4     42653      + |         0         3
+#&gt;   [6]     chr4     42658      + |         0         1
+#&gt;   -------
+#&gt;   seqinfo: 7 sequences from dm6 genome</div><div class='input'>
+<span class='co'>#--------------------------------------------------#</span>
+<span class='co'># subset a multiplexed GRanges object</span>
+<span class='co'>#--------------------------------------------------#</span>
+
+<span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='no'>multi.gr</span>, <span class='no'>gr1</span> <span class='kw'>!=</span> <span class='fl'>0</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='no'>gr1</span>)</div><div class='output co'>#&gt; GRanges object with 4 ranges and 1 metadata column:
+#&gt;       seqnames    ranges strand |       gr1
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
+#&gt;   [1]     chr4     42619      + |         1
+#&gt;   [2]     chr4     42620      + |         2
+#&gt;   [3]     chr4     42622      + |         1
+#&gt;   [4]     chr4     42623      + |         2
+#&gt;   -------
 #&gt;   seqinfo: 7 sequences from dm6 genome</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -195,6 +260,7 @@ GRanges objects using <code>makeGRangesBRG</code>.</p></td>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#subsetting-a-multiplexed-granges-object">Subsetting a multiplexed GRanges object</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
