@@ -70,7 +70,7 @@ Function also works for non-strand-specific data." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -164,7 +164,7 @@ read, set to NULL.</p></td>
 #&gt;   [5]     chr4 42559-42594      + |         3
 #&gt;   [6]     chr4 42560-42594      + |         2
 #&gt;   -------
-#&gt;   seqinfo: 7 sequences from dm6 genome</div><div class='input'>
+#&gt;   seqinfo: 1870 sequences from an unspecified genome</div><div class='input'>
 <span class='fu'>getStrandedCoverage</span>(<span class='no'>PROseq_paired</span>)[<span class='fl'>1</span>:<span class='fl'>6</span>]</div><div class='output co'>#&gt; GRanges object with 6 ranges and 1 metadata column:
 #&gt;       seqnames      ranges strand |     score
 #&gt;          &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
@@ -175,7 +175,7 @@ read, set to NULL.</p></td>
 #&gt;   [5]     chr4       42560      + |         9
 #&gt;   [6]     chr4 42561-42562      + |        10
 #&gt;   -------
-#&gt;   seqinfo: 7 sequences from dm6 genome</div><div class='input'>
+#&gt;   seqinfo: 1870 sequences from an unspecified genome</div><div class='input'>
 <span class='co'>#--------------------------------------------------#</span>
 <span class='co'># Getting coverage from single bases of single reads</span>
 <span class='co'>#--------------------------------------------------#</span>
@@ -198,7 +198,7 @@ read, set to NULL.</p></td>
 #&gt;   [5]     chr4     42591      +
 #&gt;   [6]     chr4     42594      +
 #&gt;   -------
-#&gt;   seqinfo: 7 sequences from dm6 genome</div><div class='input'>
+#&gt;   seqinfo: 1870 sequences from an unspecified genome</div><div class='input'>
 <span class='co'># re-create coverage</span>
 <span class='fu'>getStrandedCoverage</span>(<span class='no'>ps_reads</span>, <span class='kw'>field</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)[<span class='fl'>1</span>:<span class='fl'>6</span>]</div><div class='output co'>#&gt; GRanges object with 6 ranges and 1 metadata column:
 #&gt;       seqnames    ranges strand |     score
@@ -210,7 +210,7 @@ read, set to NULL.</p></td>
 #&gt;   [5]     chr4     42594      + |         5
 #&gt;   [6]     chr4     42595      + |         2
 #&gt;   -------
-#&gt;   seqinfo: 7 sequences from dm6 genome</div><div class='input'>
+#&gt;   seqinfo: 1870 sequences from an unspecified genome</div><div class='input'>
 <span class='co'>#--------------------------------------------------#</span>
 <span class='co'># Reversing makeGRangesBRG</span>
 <span class='co'>#--------------------------------------------------#</span>
@@ -228,7 +228,7 @@ read, set to NULL.</p></td>
 <span class='no'>hits</span> <span class='kw'>&lt;-</span> <span class='fu'>findOverlaps</span>(<span class='no'>PROseq</span>, <span class='no'>neighbors</span>)
 <span class='no'>idx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='fu'>from</span>(<span class='no'>hits</span>)) <span class='co'># indices for PROseq with neighbor</span>
 
-<span class='no'>PROseq</span>[<span class='no'>idx</span>]</div><div class='output co'>#&gt; GRanges object with 13758 ranges and 1 metadata column:
+<span class='no'>PROseq</span>[<span class='no'>idx</span>]</div><div class='output co'>#&gt; GRanges object with 13699 ranges and 1 metadata column:
 #&gt;           seqnames    ranges strand |     score
 #&gt;              &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
 #&gt;       [1]     chr4     42594      + |         5
@@ -237,14 +237,14 @@ read, set to NULL.</p></td>
 #&gt;       [4]     chr4     42597      + |         1
 #&gt;       [5]     chr4     42619      + |         1
 #&gt;       ...      ...       ...    ... .       ...
-#&gt;   [13754]     chr4   1306888      - |         1
-#&gt;   [13755]     chr4   1307113      - |         1
-#&gt;   [13756]     chr4   1307114      - |         2
-#&gt;   [13757]     chr4   1307299      - |         1
-#&gt;   [13758]     chr4   1307300      - |         1
+#&gt;   [13695]     chr4   1306888      - |         1
+#&gt;   [13696]     chr4   1307113      - |         1
+#&gt;   [13697]     chr4   1307114      - |         2
+#&gt;   [13698]     chr4   1307299      - |         1
+#&gt;   [13699]     chr4   1307300      - |         1
 #&gt;   -------
-#&gt;   seqinfo: 7 sequences from dm6 genome</div><div class='input'>
-<span class='fu'>getStrandedCoverage</span>(<span class='no'>PROseq</span>[<span class='no'>idx</span>])</div><div class='output co'>#&gt; GRanges object with 9744 ranges and 1 metadata column:
+#&gt;   seqinfo: 1870 sequences from an unspecified genome</div><div class='input'>
+<span class='fu'>getStrandedCoverage</span>(<span class='no'>PROseq</span>[<span class='no'>idx</span>])</div><div class='output co'>#&gt; GRanges object with 9704 ranges and 1 metadata column:
 #&gt;          seqnames          ranges strand |     score
 #&gt;             &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
 #&gt;      [1]     chr4           42594      + |         5
@@ -253,13 +253,13 @@ read, set to NULL.</p></td>
 #&gt;      [4]     chr4           42619      + |         1
 #&gt;      [5]     chr4           42620      + |         2
 #&gt;      ...      ...             ...    ... .       ...
-#&gt;   [9740]     chr4 1305971-1305972      - |         1
-#&gt;   [9741]     chr4 1306887-1306888      - |         1
-#&gt;   [9742]     chr4         1307113      - |         1
-#&gt;   [9743]     chr4         1307114      - |         2
-#&gt;   [9744]     chr4 1307299-1307300      - |         1
+#&gt;   [9700]     chr4 1305971-1305972      - |         1
+#&gt;   [9701]     chr4 1306887-1306888      - |         1
+#&gt;   [9702]     chr4         1307113      - |         1
+#&gt;   [9703]     chr4         1307114      - |         2
+#&gt;   [9704]     chr4 1307299-1307300      - |         1
 #&gt;   -------
-#&gt;   seqinfo: 7 sequences from dm6 genome</div></pre>
+#&gt;   seqinfo: 1870 sequences from an unspecified genome</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

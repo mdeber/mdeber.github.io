@@ -70,7 +70,7 @@ files." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -188,7 +188,7 @@ mitochondrial and non-standard chromosomes are removed.</p></td>
 
 <span class='co'># import bigWigs</span>
 <span class='no'>PROseq</span> <span class='kw'>&lt;-</span> <span class='fu'>import_bigWig</span>(<span class='no'>p.bw</span>, <span class='no'>m.bw</span>, <span class='kw'>genome</span> <span class='kw'>=</span> <span class='st'>"dm6"</span>)
-<span class='no'>PROseq</span></div><div class='output co'>#&gt; GRanges object with 47533 ranges and 1 metadata column:
+<span class='no'>PROseq</span></div><div class='output co'>#&gt; GRanges object with 47380 ranges and 1 metadata column:
 #&gt;           seqnames    ranges strand |     score
 #&gt;              &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
 #&gt;       [1]     chr4      1296      + |         1
@@ -197,11 +197,11 @@ mitochondrial and non-standard chromosomes are removed.</p></td>
 #&gt;       [4]     chr4     42591      + |         2
 #&gt;       [5]     chr4     42594      + |         5
 #&gt;       ...      ...       ...    ... .       ...
-#&gt;   [47529]     chr4   1307874      - |         1
-#&gt;   [47530]     chr4   1316536      - |         1
-#&gt;   [47531]     chr4   1318959      - |         1
-#&gt;   [47532]     chr4   1319003      - |         1
-#&gt;   [47533]     chr4   1319368      - |         1
+#&gt;   [47376]     chr4   1307741      - |         1
+#&gt;   [47377]     chr4   1316536      - |         1
+#&gt;   [47378]     chr4   1318959      - |         1
+#&gt;   [47379]     chr4   1319003      - |         1
+#&gt;   [47380]     chr4   1319368      - |         1
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from dm6 genome</div><div class='input'>
 <span class='co'>#--------------------------------------------------#</span>
@@ -216,7 +216,7 @@ mitochondrial and non-standard chromosomes are removed.</p></td>
 
 <span class='co'># import bedGraphs</span>
 <span class='no'>PROseq_paired</span> <span class='kw'>&lt;-</span> <span class='fu'>import_bedGraph</span>(<span class='no'>p.bg</span>, <span class='no'>m.bg</span>, <span class='kw'>genome</span> <span class='kw'>=</span> <span class='st'>"dm6"</span>)
-<span class='no'>PROseq_paired</span></div><div class='output co'>#&gt; GRanges object with 52464 ranges and 1 metadata column:
+<span class='no'>PROseq_paired</span></div><div class='output co'>#&gt; GRanges object with 53179 ranges and 1 metadata column:
 #&gt;           seqnames          ranges strand |     score
 #&gt;              &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
 #&gt;       [1]     chr4       1270-1296      + |         1
@@ -225,11 +225,11 @@ mitochondrial and non-standard chromosomes are removed.</p></td>
 #&gt;       [4]     chr4     42559-42589      + |         1
 #&gt;       [5]     chr4     42559-42594      + |         3
 #&gt;       ...      ...             ...    ... .       ...
-#&gt;   [52460]     chr4 1307741-1307776      - |         1
-#&gt;   [52461]     chr4 1316536-1316563      - |         1
-#&gt;   [52462]     chr4 1318959-1318994      - |         1
-#&gt;   [52463]     chr4 1319003-1319038      - |         1
-#&gt;   [52464]     chr4 1319368-1319403      - |         1
+#&gt;   [53175]     chr4 1307741-1307776      - |         1
+#&gt;   [53176]     chr4 1316536-1316563      - |         1
+#&gt;   [53177]     chr4 1318959-1318994      - |         1
+#&gt;   [53178]     chr4 1319003-1319038      - |         1
+#&gt;   [53179]     chr4 1319368-1319403      - |         1
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from dm6 genome; no seqlengths</div></pre>
   </div>

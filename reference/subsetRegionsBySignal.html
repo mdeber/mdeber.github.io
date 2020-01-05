@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -245,8 +245,7 @@ the output GRanges object.</p></td>
 <span class='co'># get the top 10% of transcripts by signal, and sort them by highest signal</span>
 <span class='co'>#--------------------------------------------------#</span>
 
-<span class='fu'>subsetRegionsBySignal</span>(<span class='no'>txs_dm6_chr4</span>, <span class='no'>PROseq</span>,
-                      <span class='kw'>quantiles</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.9</span>, <span class='fl'>1</span>),
+<span class='fu'>subsetRegionsBySignal</span>(<span class='no'>txs_dm6_chr4</span>, <span class='no'>PROseq</span>, <span class='kw'>quantiles</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.9</span>, <span class='fl'>1</span>),
                       <span class='kw'>order.by.rank</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; GRanges object with 34 ranges and 2 metadata columns:
 #&gt;        seqnames        ranges strand |     tx_name     gene_id
 #&gt;           &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;character&gt;
@@ -267,8 +266,7 @@ the output GRanges object.</p></td>
 <span class='co'># remove the most extreme 10% of regions, and keep scores</span>
 <span class='co'>#--------------------------------------------------#</span>
 
-<span class='fu'>subsetRegionsBySignal</span>(<span class='no'>txs_dm6_chr4</span>, <span class='no'>PROseq</span>,
-                      <span class='kw'>quantiles</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.05</span>, <span class='fl'>0.95</span>),
+<span class='fu'>subsetRegionsBySignal</span>(<span class='no'>txs_dm6_chr4</span>, <span class='no'>PROseq</span>, <span class='kw'>quantiles</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.05</span>, <span class='fl'>0.95</span>),
                       <span class='kw'>keep.signal</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; GRanges object with 305 ranges and 3 metadata columns:
 #&gt;         seqnames          ranges strand |     tx_name     gene_id    Signal
 #&gt;            &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;character&gt; &lt;integer&gt;
@@ -276,13 +274,13 @@ the output GRanges object.</p></td>
 #&gt;     [2]     chr4     44774-46074      + | FBtr0340499 FBgn0265633        13
 #&gt;     [3]     chr4     56497-60974      + | FBtr0333704 FBgn0264617       125
 #&gt;     [4]     chr4     56497-63124      + | FBtr0333705 FBgn0264617       263
-#&gt;     [5]     chr4    90355-110059      + | FBtr0112657 FBgn0085432      1469
+#&gt;     [5]     chr4    90355-110059      + | FBtr0112657 FBgn0085432      1464
 #&gt;     ...      ...             ...    ... .         ...         ...       ...
-#&gt;   [301]     chr4 1192419-1196848      - | FBtr0100543 FBgn0039924       458
-#&gt;   [302]     chr4 1192419-1196848      - | FBtr0100544 FBgn0039924       458
-#&gt;   [303]     chr4 1225089-1230713      - | FBtr0100406 FBgn0027101       769
-#&gt;   [304]     chr4 1225737-1230713      - | FBtr0100402 FBgn0027101       668
-#&gt;   [305]     chr4 1225737-1230713      - | FBtr0100404 FBgn0027101       668
+#&gt;   [301]     chr4 1192419-1196848      - | FBtr0100543 FBgn0039924       454
+#&gt;   [302]     chr4 1192419-1196848      - | FBtr0100544 FBgn0039924       454
+#&gt;   [303]     chr4 1225089-1230713      - | FBtr0100406 FBgn0027101       766
+#&gt;   [304]     chr4 1225737-1230713      - | FBtr0100402 FBgn0027101       665
+#&gt;   [305]     chr4 1225737-1230713      - | FBtr0100404 FBgn0027101       665
 #&gt;   -------
 #&gt;   seqinfo: 7 sequences from dm6 genome</div></pre>
   </div>

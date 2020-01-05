@@ -71,7 +71,7 @@ regions." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -133,7 +133,9 @@ regions.</p>
     <tr>
       <th>dataset.list</th>
       <td><p>A list of GRanges datasets that can be individually
-passed to <code><a href='getCountsByRegions.html'>getCountsByRegions</a></code>.</p></td>
+passed to <code><a href='getCountsByRegions.html'>getCountsByRegions</a></code>.
+Alternatively, a <code><a href='mergeGRangesData.html'>
+multiplexed GRanges</a></code> object can also be used (see details below).</p></td>
     </tr>
     <tr>
       <th>regions.gr</th>
@@ -166,12 +168,13 @@ time.</p></td>
     </tr>
     <tr>
       <th>field</th>
-      <td><p>Argument passed to <code>getCountsByRegions</code>.</p></td>
+      <td><p>Argument passed to <code>getCountsByRegions</code>. Optional if
+<code>dataset.list</code> is a multiplexed GRanges object (see details below).</p></td>
     </tr>
     <tr>
       <th>ncores</th>
       <td><p>Number of cores to use for read counting across all samples.
-Default is the total number of cores available.</p></td>
+By default, all available cores are used.</p></td>
     </tr>
     <tr>
       <th>quiet</th>
@@ -198,6 +201,15 @@ Default is the total number of cores available.</p></td>
   in <code>gene_names</code>, this function will generate counts across all ranges
   for that gene, but be aware that it will only keep the largest range for
   each gene in the resulting <code>DESeqDataSet</code> object's <code>rowRanges</code>.</p>
+    <h2 class="hasAnchor" id="using-multiplexed-granges-as-input"><a class="anchor" href="#using-multiplexed-granges-as-input"></a>Using multiplexed GRanges as input</h2>
+
+    <p>If a single multiplexed GRanges
+  object is used in lieu of a list of GRanges, the default arguments for
+  <code>field</code> and <code>sample_names</code> can be left, and <code>sample_names</code>
+  will match the names of the fields in <code>dataset.list</code>. If provided,
+  <code>field</code> will be used to access/subset the multiplexed GRanges object,
+  and thus all elements of <code>field</code> must be found in
+  <code><a href='https://rdrr.io/r/base/names.html'>names(mcols(dataset.list))</a></code>.</p>
     <h2 class="hasAnchor" id="a-note-on-deseq-sizefactors"><a class="anchor" href="#a-note-on-deseq-sizefactors"></a>A note on DESeq2 sizeFactors</h2>
 
     <p>DESeq2 <code>sizeFactors</code> are
@@ -257,6 +269,7 @@ Default is the total number of cores available.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
       <li><a href="#use-of-non-contiguous-gene-regions">Use of non-contiguous gene regions</a></li>
+      <li><a href="#using-multiplexed-granges-as-input">Using multiplexed GRanges as input</a></li>
       <li><a href="#a-note-on-deseq-sizefactors">A note on DESeq2 sizeFactors</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>

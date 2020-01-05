@@ -72,7 +72,7 @@ multiplexed GRanges containing a field for each input dataset." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -195,7 +195,7 @@ output.</p></td>
 <span class='no'>ps_3</span> <span class='kw'>&lt;-</span> <span class='no'>PROseq</span>[(<span class='no'>thirds</span>[<span class='fl'>2</span>]+<span class='fl'>1</span>):<span class='no'>thirds</span>[<span class='fl'>3</span>]]
 
 <span class='co'># re-merge</span>
-<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>PROseq</span>)</div><div class='output co'>#&gt; [1] 47533</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>ps_1</span>)</div><div class='output co'>#&gt; [1] 15844</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='fu'>mergeGRangesData</span>(<span class='no'>ps_1</span>, <span class='no'>ps_2</span>))</div><div class='output co'>#&gt; [1] 31688</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='fu'>mergeGRangesData</span>(<span class='no'>ps_1</span>, <span class='no'>ps_2</span>, <span class='no'>ps_3</span>))</div><div class='output co'>#&gt; [1] 47533</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>PROseq</span>)</div><div class='output co'>#&gt; [1] 47380</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>ps_1</span>)</div><div class='output co'>#&gt; [1] 15793</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='fu'>mergeGRangesData</span>(<span class='no'>ps_1</span>, <span class='no'>ps_2</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>2</span>))</div><div class='output co'>#&gt; [1] 31586</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='fu'>mergeGRangesData</span>(<span class='no'>ps_1</span>, <span class='no'>ps_2</span>, <span class='no'>ps_3</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>2</span>))</div><div class='output co'>#&gt; [1] 47380</div><div class='input'>
 <span class='co'>#--------------------------------------------------#</span>
 <span class='co'># combine PRO-seq with overlapping positions</span>
 <span class='co'>#--------------------------------------------------#</span>
@@ -213,8 +213,8 @@ output.</p></td>
 #&gt;   [5]     chr4     42653      + |         3
 #&gt;   [6]     chr4     42658      + |         1
 #&gt;   -------
-#&gt;   seqinfo: 7 sequences from dm6 genome</div><div class='input'>
-<span class='fu'>mergeGRangesData</span>(<span class='no'>gr1</span>, <span class='no'>gr2</span>)</div><div class='output co'>#&gt; GRanges object with 6 ranges and 1 metadata column:
+#&gt;   seqinfo: 1870 sequences from an unspecified genome</div><div class='input'>
+<span class='fu'>mergeGRangesData</span>(<span class='no'>gr1</span>, <span class='no'>gr2</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; GRanges object with 6 ranges and 1 metadata column:
 #&gt;       seqnames    ranges strand |     score
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
 #&gt;   [1]     chr4     42619      + |         1
@@ -224,12 +224,12 @@ output.</p></td>
 #&gt;   [5]     chr4     42653      + |         3
 #&gt;   [6]     chr4     42658      + |         1
 #&gt;   -------
-#&gt;   seqinfo: 7 sequences from dm6 genome</div><div class='input'>
+#&gt;   seqinfo: 1870 sequences from an unspecified genome</div><div class='input'>
 <span class='co'>#--------------------------------------------------#</span>
 <span class='co'># multiplex separate PRO-seq experiments</span>
 <span class='co'>#--------------------------------------------------#</span>
 
-<span class='no'>multi.gr</span> <span class='kw'>&lt;-</span> <span class='fu'>mergeGRangesData</span>(<span class='no'>gr1</span>, <span class='no'>gr2</span>, <span class='kw'>multiplex</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>multi.gr</span> <span class='kw'>&lt;-</span> <span class='fu'>mergeGRangesData</span>(<span class='no'>gr1</span>, <span class='no'>gr2</span>, <span class='kw'>multiplex</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 <span class='no'>multi.gr</span></div><div class='output co'>#&gt; GRanges object with 6 ranges and 2 metadata columns:
 #&gt;       seqnames    ranges strand |       gr1       gr2
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt; &lt;integer&gt;
@@ -240,12 +240,21 @@ output.</p></td>
 #&gt;   [5]     chr4     42653      + |         0         3
 #&gt;   [6]     chr4     42658      + |         0         1
 #&gt;   -------
-#&gt;   seqinfo: 7 sequences from dm6 genome</div><div class='input'>
+#&gt;   seqinfo: 1870 sequences from an unspecified genome</div><div class='input'>
 <span class='co'>#--------------------------------------------------#</span>
 <span class='co'># subset a multiplexed GRanges object</span>
 <span class='co'>#--------------------------------------------------#</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='no'>multi.gr</span>, <span class='no'>gr1</span> <span class='kw'>!=</span> <span class='fl'>0</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='no'>gr1</span>)</div><div class='output co'>#&gt; GRanges object with 4 ranges and 1 metadata column:
+<span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='no'>multi.gr</span>, <span class='no'>gr1</span> <span class='kw'>&gt;</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; GRanges object with 4 ranges and 2 metadata columns:
+#&gt;       seqnames    ranges strand |       gr1       gr2
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt; &lt;integer&gt;
+#&gt;   [1]     chr4     42619      + |         1         0
+#&gt;   [2]     chr4     42620      + |         2         0
+#&gt;   [3]     chr4     42622      + |         1         1
+#&gt;   [4]     chr4     42623      + |         2         2
+#&gt;   -------
+#&gt;   seqinfo: 1870 sequences from an unspecified genome</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='no'>multi.gr</span>, <span class='no'>gr1</span> <span class='kw'>&gt;</span> <span class='fl'>0</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='no'>gr1</span>)</div><div class='output co'>#&gt; GRanges object with 4 ranges and 1 metadata column:
 #&gt;       seqnames    ranges strand |       gr1
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
 #&gt;   [1]     chr4     42619      + |         1
@@ -253,7 +262,7 @@ output.</p></td>
 #&gt;   [3]     chr4     42622      + |         1
 #&gt;   [4]     chr4     42623      + |         2
 #&gt;   -------
-#&gt;   seqinfo: 7 sequences from dm6 genome</div></pre>
+#&gt;   seqinfo: 1870 sequences from an unspecified genome</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

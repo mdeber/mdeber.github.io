@@ -75,7 +75,7 @@ calculated." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -156,7 +156,9 @@ interest.</p></td>
       <th>field</th>
       <td><p>The metadata field of <code>dataset.gr</code> to be counted. If
 <code>length(field) &gt; 1</code>, a dataframe is returned containing the pausing
-indices for each region in each field.</p></td>
+indices for each region in each field. If <code>field</code> not found in
+<code><a href='https://rdrr.io/r/base/names.html'>names(mcols(dataset.gr))</a></code>, will default to using all fields found in
+<code>dataset.gr</code>.</p></td>
     </tr>
     <tr>
       <th>length.normalize</th>
@@ -207,12 +209,12 @@ is recommended, especially if input regions don't all have the same width.</p></
 
 <span class='no'>pidx</span> <span class='kw'>&lt;-</span> <span class='fu'>getPausingIndices</span>(<span class='no'>PROseq</span>, <span class='no'>pr</span>, <span class='no'>gb</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>txs</span>)</div><div class='output co'>#&gt; [1] 318</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>pidx</span>)</div><div class='output co'>#&gt; [1] 318</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>pidx</span>)</div><div class='output co'>#&gt; [1]  0.00000  3.50500  0.00000  0.00000 29.03505 28.15400</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>txs</span>)</div><div class='output co'>#&gt; [1] 318</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>pidx</span>)</div><div class='output co'>#&gt; [1] 318</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>pidx</span>)</div><div class='output co'>#&gt; [1]  0.00000  3.50500  0.00000  0.00000 29.06279 28.14643</div><div class='input'>
 <span class='co'>#--------------------------------------------------#</span>
 <span class='co'># Without length normalization</span>
 <span class='co'>#--------------------------------------------------#</span>
 
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>( <span class='fu'>getPausingIndices</span>(<span class='no'>PROseq</span>, <span class='no'>pr</span>, <span class='no'>gb</span>, <span class='kw'>length.normalize</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) )</div><div class='output co'>#&gt; [1] 0.00000000 0.50000000 0.00000000 0.00000000 0.09219232 0.07261987</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>( <span class='fu'>getPausingIndices</span>(<span class='no'>PROseq</span>, <span class='no'>pr</span>, <span class='no'>gb</span>, <span class='kw'>length.normalize</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) )</div><div class='output co'>#&gt; [1] 0.00000000 0.50000000 0.00000000 0.00000000 0.09228039 0.07260035</div><div class='input'>
 <span class='co'>#--------------------------------------------------#</span>
 <span class='co'># Removing empty means the values no longer match the genelist</span>
 <span class='co'>#--------------------------------------------------#</span>
