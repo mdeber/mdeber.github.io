@@ -67,7 +67,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.3</span>
       </span>
     </div>
 
@@ -105,13 +105,29 @@
       
     </div>
 
+    <div id="brgenomics-0-5-3" class="section level2">
+<h2 class="hasAnchor">
+<a href="#brgenomics-0-5-3" class="anchor"></a>BRGenomics 0.5.3</h2>
+<ul>
+<li>Substantial performance improvement for <code>mergeGRangesData</code>
+</li>
+<li>Make single-core the default for <code>getDESeqResults</code>
+</li>
+<li>Fixed errant warning message in <code>binNdimensions</code> for integer inputs</li>
+<li>Update namespace to fully import GenomicRanges and S4Vectors</li>
+<li>Changed R dependency, evidently required by the updated data objects</li>
+<li>Various documentation updates</li>
+<li>Added package documentation page</li>
+<li>Minor changes to examples</li>
+</ul>
+</div>
     <div id="brgenomics-0-5-0" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brgenomics-0-5-0" class="anchor"></a>BRGenomics 0.5.0</h2>
 <ul>
 <li>Increased support for multiplexed GRanges objects across all functions</li>
 <li>Increased performance for bootstrapping over multiple fields/multiplexed GRanges objects</li>
-<li>Removed requirement to seed ‘field’ argument for gettings counts over multiplexed GRanges</li>
+<li>Removed requirement to set ‘field’ argument for gettings counts over multiplexed GRanges</li>
 </ul>
 </div>
     <div id="brgenomics-0-4-7" class="section level2">
@@ -152,6 +168,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#brgenomics-0-5-3">0.5.3</a></li>
         <li><a href="#brgenomics-0-5-0">0.5.0</a></li>
         <li><a href="#brgenomics-0-4-7">0.4.7</a></li>
         <li><a href="#brgenomics-0-4-5">0.4.5</a></li>

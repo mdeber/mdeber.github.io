@@ -75,7 +75,7 @@ being compared, and not for all samples present." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.3</span>
       </span>
     </div>
 
@@ -133,7 +133,7 @@ being compared, and not for all samples present.</p>
   <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
   <span class='kw'>args.DESeq</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>args.results</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fu'>detectCores</span>(),
+  <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )</pre>
 
@@ -245,12 +245,9 @@ in <code>args.DESeq</code> will supersede this option for the call to
 <span class='no'>ps_b_rep2</span> <span class='kw'>&lt;-</span> <span class='no'>PROseq</span>[<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>5</span>, <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>PROseq</span>), <span class='fl'>6</span>)]
 <span class='no'>ps_c_rep2</span> <span class='kw'>&lt;-</span> <span class='no'>PROseq</span>[<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>6</span>, <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>PROseq</span>), <span class='fl'>6</span>)]
 
-<span class='no'>ps_list</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>A_rep1</span> <span class='kw'>=</span> <span class='no'>ps_a_rep1</span>,
-                <span class='kw'>A_rep2</span> <span class='kw'>=</span> <span class='no'>ps_a_rep2</span>,
-                <span class='kw'>B_rep1</span> <span class='kw'>=</span> <span class='no'>ps_b_rep1</span>,
-                <span class='kw'>B_rep2</span> <span class='kw'>=</span> <span class='no'>ps_b_rep2</span>,
-                <span class='kw'>C_rep1</span> <span class='kw'>=</span> <span class='no'>ps_c_rep1</span>,
-                <span class='kw'>C_rep2</span> <span class='kw'>=</span> <span class='no'>ps_c_rep2</span>)
+<span class='no'>ps_list</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>A_rep1</span> <span class='kw'>=</span> <span class='no'>ps_a_rep1</span>, <span class='kw'>A_rep2</span> <span class='kw'>=</span> <span class='no'>ps_a_rep2</span>,
+                <span class='kw'>B_rep1</span> <span class='kw'>=</span> <span class='no'>ps_b_rep1</span>, <span class='kw'>B_rep2</span> <span class='kw'>=</span> <span class='no'>ps_b_rep2</span>,
+                <span class='kw'>C_rep1</span> <span class='kw'>=</span> <span class='no'>ps_c_rep1</span>, <span class='kw'>C_rep2</span> <span class='kw'>=</span> <span class='no'>ps_c_rep2</span>)
 
 <span class='co'># make flawed dataset (ranges in txs_dm6_chr4 not disjoint)</span>
 <span class='co'>#    this means there is double-counting</span>
@@ -258,7 +255,8 @@ in <code>args.DESeq</code> will supersede this option for the call to
 <span class='no'>dds</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='getDESeqDataSet.html'>getDESeqDataSet</a></span>(<span class='no'>ps_list</span>,
                        <span class='no'>txs_dm6_chr4</span>,
                        <span class='kw'>gene_names</span> <span class='kw'>=</span> <span class='no'>txs_dm6_chr4</span>$<span class='no'>gene_id</span>,
-                       <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; <span class='message'>renaming the first element in assays to 'counts'</span></div><div class='input'>
+                       <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+
 <span class='no'>dds</span></div><div class='output co'>#&gt; class: DESeqDataSet 
 #&gt; dim: 111 6 
 #&gt; metadata(1): version
@@ -288,8 +286,7 @@ in <code>args.DESeq</code> will supersede this option for the call to
 #&gt; FBgn0002521     174.390      -0.110923  0.342767  -0.323611  0.746232   0.99742
 #&gt; FBgn0039924     161.144       0.322238  0.456505   0.705881  0.480262   0.99742
 #&gt; FBgn0027101     362.015       0.233610  0.294520   0.793190  0.427667   0.99742</div><div class='input'>
-<span class='no'>reslist</span> <span class='kw'>&lt;-</span> <span class='fu'>getDESeqResults</span>(<span class='no'>dds</span>,
-                           <span class='kw'>comparisons</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"B"</span>, <span class='st'>"A"</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"C"</span>, <span class='st'>"A"</span>)),
+<span class='no'>reslist</span> <span class='kw'>&lt;-</span> <span class='fu'>getDESeqResults</span>(<span class='no'>dds</span>, <span class='kw'>comparisons</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"B"</span>, <span class='st'>"A"</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"C"</span>, <span class='st'>"A"</span>)),
                            <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>reslist</span>)</div><div class='output co'>#&gt; [1] "B_vs_A" "C_vs_A"</div><div class='input'>
 <span class='no'>reslist</span>$<span class='no'>B_vs_A</span></div><div class='output co'>#&gt; log2 fold change (MLE): condition B vs A 
