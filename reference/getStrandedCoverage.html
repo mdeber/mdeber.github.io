@@ -85,6 +85,18 @@ Function also works for non-strand-specific data." />
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/BRGenomicsOverview.html">Basepair-Resolution Analysis with BRGenomics</a>
+    </li>
+  </ul>
+</li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
@@ -114,7 +126,7 @@ Function also works for non-strand-specific data." />
 Function also works for non-strand-specific data.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>getStrandedCoverage</span>(<span class='no'>dataset.gr</span>, <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"score"</span>)</pre>
+    <pre class="usage"><span class='fu'>getStrandedCoverage</span>(<span class='no'>dataset.gr</span>, <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"score"</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fu'>detectCores</span>())</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -130,6 +142,12 @@ one in which readcounts for individual ranges are contained in metadata
       <td><p>The name of the metadata field that contains readcounts. If no
 metadata field contains readcounts, and each range represents a single
 read, set to NULL.</p></td>
+    </tr>
+    <tr>
+      <th>ncores</th>
+      <td><p>Number of cores to use for calculating coverage. The max that
+will be used is 3, one for each possible strand (plus, minus, and
+unstranded).</p></td>
     </tr>
     </table>
 
@@ -165,7 +183,7 @@ read, set to NULL.</p></td>
 #&gt;   [6]     chr4 42560-42594      + |         2
 #&gt;   -------
 #&gt;   seqinfo: 1870 sequences from an unspecified genome</div><div class='input'>
-<span class='fu'>getStrandedCoverage</span>(<span class='no'>PROseq_paired</span>)[<span class='fl'>1</span>:<span class='fl'>6</span>]</div><div class='output co'>#&gt; GRanges object with 6 ranges and 1 metadata column:
+<span class='fu'>getStrandedCoverage</span>(<span class='no'>PROseq_paired</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>2</span>)[<span class='fl'>1</span>:<span class='fl'>6</span>]</div><div class='output co'>#&gt; GRanges object with 6 ranges and 1 metadata column:
 #&gt;       seqnames      ranges strand |     score
 #&gt;          &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
 #&gt;   [1]     chr4   1270-1296      + |         1
@@ -200,7 +218,7 @@ read, set to NULL.</p></td>
 #&gt;   -------
 #&gt;   seqinfo: 1870 sequences from an unspecified genome</div><div class='input'>
 <span class='co'># re-create coverage</span>
-<span class='fu'>getStrandedCoverage</span>(<span class='no'>ps_reads</span>, <span class='kw'>field</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)[<span class='fl'>1</span>:<span class='fl'>6</span>]</div><div class='output co'>#&gt; GRanges object with 6 ranges and 1 metadata column:
+<span class='fu'>getStrandedCoverage</span>(<span class='no'>ps_reads</span>, <span class='kw'>field</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>2</span>)[<span class='fl'>1</span>:<span class='fl'>6</span>]</div><div class='output co'>#&gt; GRanges object with 6 ranges and 1 metadata column:
 #&gt;       seqnames    ranges strand |     score
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
 #&gt;   [1]     chr4      1296      + |         1
@@ -220,7 +238,7 @@ read, set to NULL.</p></td>
 
 <span class='co'># included PROseq data is already single-width</span>
 <span class='fu'><a href='https://rdrr.io/r/base/range.html'>range</a></span>(<span class='fu'>width</span>(<span class='no'>PROseq</span>))</div><div class='output co'>#&gt; [1] 1 1</div><div class='input'><span class='fu'>isDisjoint</span>(<span class='no'>PROseq</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
-<span class='no'>ps_cov</span> <span class='kw'>&lt;-</span> <span class='fu'>getStrandedCoverage</span>(<span class='no'>PROseq</span>)
+<span class='no'>ps_cov</span> <span class='kw'>&lt;-</span> <span class='fu'>getStrandedCoverage</span>(<span class='no'>PROseq</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 
 <span class='fu'><a href='https://rdrr.io/r/base/range.html'>range</a></span>(<span class='fu'>width</span>(<span class='no'>ps_cov</span>))</div><div class='output co'>#&gt; [1] 1 6</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='fu'>score</span>(<span class='no'>PROseq</span>)) <span class='kw'>==</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='fu'>score</span>(<span class='no'>ps_cov</span>) * <span class='fu'>width</span>(<span class='no'>ps_cov</span>))</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'># -&gt; Look specifically at ranges that could be combined</span>
@@ -244,7 +262,7 @@ read, set to NULL.</p></td>
 #&gt;   [13699]     chr4   1307300      - |         1
 #&gt;   -------
 #&gt;   seqinfo: 1870 sequences from an unspecified genome</div><div class='input'>
-<span class='fu'>getStrandedCoverage</span>(<span class='no'>PROseq</span>[<span class='no'>idx</span>])</div><div class='output co'>#&gt; GRanges object with 9704 ranges and 1 metadata column:
+<span class='fu'>getStrandedCoverage</span>(<span class='no'>PROseq</span>[<span class='no'>idx</span>], <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; GRanges object with 9704 ranges and 1 metadata column:
 #&gt;          seqnames          ranges strand |     score
 #&gt;             &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
 #&gt;      [1]     chr4           42594      + |         5

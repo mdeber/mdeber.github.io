@@ -84,6 +84,18 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/BRGenomicsOverview.html">Basepair-Resolution Analysis with BRGenomics</a>
+    </li>
+  </ul>
+</li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
@@ -177,17 +189,17 @@ output GRanges will be equal to the number of input reads.</p></td>
 <span class='fu'>import_bam</span>(<span class='no'>ps.bam</span>, <span class='kw'>revcomp</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; GRanges object with 53179 ranges and 1 metadata column:
 #&gt;           seqnames          ranges strand |     score
 #&gt;              &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
-#&gt;       [1]     chr4       1189-1224      + |         1
-#&gt;       [2]     chr4     31442-31477      + |         1
-#&gt;       [3]     chr4     31707-31728      + |         1
-#&gt;       [4]     chr4     33805-33831      + |         1
-#&gt;       [5]     chr4     34253-34288      + |         1
+#&gt;       [1]     chr4       1270-1296      + |         1
+#&gt;       [2]     chr4     41411-41429      + |         1
+#&gt;       [3]     chr4     42556-42591      + |         1
+#&gt;       [4]     chr4     42559-42589      + |         1
+#&gt;       [5]     chr4     42559-42594      + |         3
 #&gt;       ...      ...             ...    ... .       ...
-#&gt;   [53175]     chr4 1307518-1307553      - |         1
-#&gt;   [53176]     chr4 1307615-1307650      - |         1
-#&gt;   [53177]     chr4 1316417-1316452      - |         1
-#&gt;   [53178]     chr4 1316506-1316541      - |         1
-#&gt;   [53179]     chr4 1316671-1316706      - |         2
+#&gt;   [53175]     chr4 1307741-1307776      - |         1
+#&gt;   [53176]     chr4 1316536-1316563      - |         1
+#&gt;   [53177]     chr4 1318959-1318994      - |         1
+#&gt;   [53178]     chr4 1319003-1319038      - |         1
+#&gt;   [53179]     chr4 1319368-1319403      - |         1
 #&gt;   -------
 #&gt;   seqinfo: 1870 sequences from an unspecified genome</div><div class='input'>
 <span class='co'>#--------------------------------------------------#</span>
@@ -197,17 +209,17 @@ output GRanges will be equal to the number of input reads.</p></td>
 <span class='fu'>import_bam</span>(<span class='no'>ps.bam</span>, <span class='kw'>revcomp</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>field</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</div><div class='output co'>#&gt; GRanges object with 73887 ranges and 0 metadata columns:
 #&gt;           seqnames          ranges strand
 #&gt;              &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt;
-#&gt;       [1]     chr4       1189-1224      +
-#&gt;       [2]     chr4     31442-31477      +
-#&gt;       [3]     chr4     31707-31728      +
-#&gt;       [4]     chr4     33805-33831      +
-#&gt;       [5]     chr4     34253-34288      +
+#&gt;       [1]     chr4       1270-1296      +
+#&gt;       [2]     chr4     41411-41429      +
+#&gt;       [3]     chr4     42556-42591      +
+#&gt;       [4]     chr4     42559-42589      +
+#&gt;       [5]     chr4     42559-42594      +
 #&gt;       ...      ...             ...    ...
-#&gt;   [73883]     chr4 1307615-1307650      -
-#&gt;   [73884]     chr4 1316417-1316452      -
-#&gt;   [73885]     chr4 1316506-1316541      -
-#&gt;   [73886]     chr4 1316671-1316706      -
-#&gt;   [73887]     chr4 1316671-1316706      -
+#&gt;   [73883]     chr4 1307741-1307776      -
+#&gt;   [73884]     chr4 1316536-1316563      -
+#&gt;   [73885]     chr4 1318959-1318994      -
+#&gt;   [73886]     chr4 1319003-1319038      -
+#&gt;   [73887]     chr4 1319368-1319403      -
 #&gt;   -------
 #&gt;   seqinfo: 1870 sequences from an unspecified genome</div><div class='input'>
 <span class='co'>#--------------------------------------------------#</span>
@@ -215,20 +227,20 @@ output GRanges will be equal to the number of input reads.</p></td>
 <span class='co'>#--------------------------------------------------#</span>
 
 <span class='co'># the typical manner to import PRO-seq data:</span>
-<span class='fu'>import_bam</span>(<span class='no'>ps.bam</span>, <span class='kw'>revcomp</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>trim.to</span> <span class='kw'>=</span> <span class='st'>"3p"</span>)</div><div class='output co'>#&gt; GRanges object with 48697 ranges and 1 metadata column:
+<span class='fu'>import_bam</span>(<span class='no'>ps.bam</span>, <span class='kw'>revcomp</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>trim.to</span> <span class='kw'>=</span> <span class='st'>"3p"</span>)</div><div class='output co'>#&gt; GRanges object with 47380 ranges and 1 metadata column:
 #&gt;           seqnames    ranges strand |     score
 #&gt;              &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
-#&gt;       [1]     chr4      1224      + |         1
-#&gt;       [2]     chr4     31477      + |         1
-#&gt;       [3]     chr4     31728      + |         1
-#&gt;       [4]     chr4     33831      + |         1
-#&gt;       [5]     chr4     34285      + |         1
+#&gt;       [1]     chr4      1296      + |         1
+#&gt;       [2]     chr4     41429      + |         1
+#&gt;       [3]     chr4     42589      + |         1
+#&gt;       [4]     chr4     42591      + |         2
+#&gt;       [5]     chr4     42594      + |         5
 #&gt;       ...      ...       ...    ... .       ...
-#&gt;   [48693]     chr4   1307518      - |         1
-#&gt;   [48694]     chr4   1307615      - |         1
-#&gt;   [48695]     chr4   1316417      - |         1
-#&gt;   [48696]     chr4   1316506      - |         1
-#&gt;   [48697]     chr4   1316671      - |         2
+#&gt;   [47376]     chr4   1307741      - |         1
+#&gt;   [47377]     chr4   1316536      - |         1
+#&gt;   [47378]     chr4   1318959      - |         1
+#&gt;   [47379]     chr4   1319003      - |         1
+#&gt;   [47380]     chr4   1319368      - |         1
 #&gt;   -------
 #&gt;   seqinfo: 1870 sequences from an unspecified genome</div><div class='input'>
 <span class='co'>#--------------------------------------------------#</span>
@@ -236,20 +248,20 @@ output GRanges will be equal to the number of input reads.</p></td>
 <span class='co'>#--------------------------------------------------#</span>
 
 <span class='co'># will include bona fide TSSes as well as hydrolysis products</span>
-<span class='fu'>import_bam</span>(<span class='no'>ps.bam</span>, <span class='kw'>revcomp</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>trim.to</span> <span class='kw'>=</span> <span class='st'>"5p"</span>)</div><div class='output co'>#&gt; GRanges object with 47380 ranges and 1 metadata column:
+<span class='fu'>import_bam</span>(<span class='no'>ps.bam</span>, <span class='kw'>revcomp</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>trim.to</span> <span class='kw'>=</span> <span class='st'>"5p"</span>)</div><div class='output co'>#&gt; GRanges object with 48697 ranges and 1 metadata column:
 #&gt;           seqnames    ranges strand |     score
 #&gt;              &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
-#&gt;       [1]     chr4      1189      + |         1
-#&gt;       [2]     chr4     31442      + |         1
-#&gt;       [3]     chr4     31707      + |         1
-#&gt;       [4]     chr4     33805      + |         1
-#&gt;       [5]     chr4     34253      + |         1
+#&gt;       [1]     chr4      1270      + |         1
+#&gt;       [2]     chr4     41411      + |         1
+#&gt;       [3]     chr4     42556      + |         1
+#&gt;       [4]     chr4     42559      + |         4
+#&gt;       [5]     chr4     42560      + |         4
 #&gt;       ...      ...       ...    ... .       ...
-#&gt;   [47376]     chr4   1307553      - |         1
-#&gt;   [47377]     chr4   1307650      - |         1
-#&gt;   [47378]     chr4   1316452      - |         1
-#&gt;   [47379]     chr4   1316541      - |         1
-#&gt;   [47380]     chr4   1316706      - |         2
+#&gt;   [48693]     chr4   1307776      - |         1
+#&gt;   [48694]     chr4   1316563      - |         1
+#&gt;   [48695]     chr4   1318994      - |         1
+#&gt;   [48696]     chr4   1319038      - |         1
+#&gt;   [48697]     chr4   1319403      - |         1
 #&gt;   -------
 #&gt;   seqinfo: 1870 sequences from an unspecified genome</div></pre>
   </div>

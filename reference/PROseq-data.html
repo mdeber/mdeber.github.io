@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>BRGenomics: Tools for the Efficient Analysis of High-Resolution Genomics Data — BRGenomics-package • BRGenomics</title>
+<title>PRO-seq data from Drosophila S2 cells — PROseq-data • BRGenomics</title>
 
 
 <!-- jquery -->
@@ -35,13 +35,8 @@
 
 
 
-<meta property="og:title" content="BRGenomics: Tools for the Efficient Analysis of High-Resolution Genomics Data — BRGenomics-package" />
-<meta property="og:description" content="BRGenomics provides useful functions for analyzing genomics data
-  at base-pair resolution, and for doing so in a way that maximizes
-  compatibility with the wide array of packages available through
-  Bioconductor.
-For interactive documentation with code examples, see the online
-  documentation: https://mdeber.github.io/" />
+<meta property="og:title" content="PRO-seq data from Drosophila S2 cells — PROseq-data" />
+<meta property="og:description" content="PRO-seq data from chromosome 4 of Drosophila S2 cells." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -120,31 +115,46 @@ For interactive documentation with code examples, see the online
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>BRGenomics: Tools for the Efficient Analysis of High-Resolution Genomics Data</h1>
+    <h1>PRO-seq data from Drosophila S2 cells</h1>
     
-    <div class="hidden name"><code>BRGenomics-package.Rd</code></div>
+    <div class="hidden name"><code>PROseq-data.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>BRGenomics provides useful functions for analyzing genomics data
-  at base-pair resolution, and for doing so in a way that maximizes
-  compatibility with the wide array of packages available through
-  Bioconductor.</p>
-<p>For interactive documentation with code examples, see the online
-  documentation: <a href='https://mdeber.github.io/'>https://mdeber.github.io/</a></p>
+    <p>PRO-seq data from chromosome 4 of Drosophila S2 cells.</p>
     </div>
 
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>PROseq</span>)
+
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>PROseq_paired</span>)</pre>
 
 
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>A disjoint GRanges object with 47533 ranges with 1 metadata column:</p><dl class='dl-horizontal'>
+  <dt>score</dt><dd><p>coverage of PRO-seq read 3'-ends</p></dd>
+  ...
+
+</dl>
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+
+    <p>GEO Accession GSM1032758, run SRR611828.</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Hojoong Kwak, Nicholas J. Fuda, Leighton J. Core, John T. Lis
+  (2013). Precise Maps of RNA Polymerase Reveal How Promoters Direct
+  Initiation and Pausing. Science, 339(6122), 950–953.
+  <a href='https://doi.org/10.1126/science.1229386'>https://doi.org/10.1126/science.1229386</a></p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#format">Format</a></li>
+      <li><a href="#source">Source</a></li>
+      <li><a href="#references">References</a></li>
     </ul>
 
-    <h2>Author</h2>
-    <p>Mike DeBerardine <a href='mailto:mike.deberardine@gmail.com'>mike.deberardine@gmail.com</a></p>
   </div>
 </div>
 

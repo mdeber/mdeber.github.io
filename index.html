@@ -48,6 +48,18 @@
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="articles/BRGenomicsOverview.html">Basepair-Resolution Analysis with BRGenomics</a>
+    </li>
+  </ul>
+</li>
 <li>
   <a href="news/index.html">Changelog</a>
 </li>
@@ -82,51 +94,22 @@
 <div id="features" class="section level2">
 <h2 class="hasAnchor">
 <a href="#features" class="anchor"></a>Features</h2>
-<p>A full introductory vignette is in the works, but some quick highlights include:</p>
-<ul>
-<li>Simple data import for bigWig, bedGraph, and bam files</li>
-<li>Read counting by genes and positions in genes (e.g. for heatmaps)</li>
-<li>Bootstrapping mean signals at positions within genes (e.g. for metaplotting)</li>
-<li>Straightforward integration with DESeq2, including:
-<ul>
-<li>Added support for discontinuous gene regions, so you can do things like filter out dREG peaks within a gene</li>
-<li>Automatic use of reduced dispersion matrices, which means that DESeq2 won’t calculate dispersion from all samples within the dataset, but only those being compared – <em>important for perturbations with genome-wide consequences, whether or not there’s a global shift</em>
-</li>
-<li>Easy, simultaneous generation of numerous sets of DESeq results</li>
-</ul>
-</li>
-<li>Random subsampling of reads from datasets</li>
-<li>Convenient, easy-to-use modification of gene regions, e.g. to define promoters or genebodies</li>
-<li>Consistent support for binning measurements throughout</li>
-</ul>
-<p>For more, see the <a href="https://mdeber.github.io/reference/index.html">documentation</a>, which includes demonstrative example code. The package currently includes example PRO-seq data<sup>[1]</sup>.</p>
-</div>
-<div id="coming-soon" class="section level2">
-<h2 class="hasAnchor">
-<a href="#coming-soon" class="anchor"></a>Coming Soon</h2>
-<ul>
-<li>Calculation of spike-in normalization factors using several different methods</li>
-<li>Functions to assess sufficiency of sequencing depth using meaningful metrics, e.g. pausing indices</li>
-<li>Support for length-scaled, bootstrapped signal counting, i.e. signal is binned by percentage of gene length</li>
-<li>Function to summarize/aggregate data in bins generated using <code>binNdimensions</code>
-</li>
-<li>
-<em>Potentially:</em> Support of “Views” objects to avoid loading data into memory</li>
-</ul>
+<p>See the <a href="https://mdeber.github.io/">documentation website</a>, which includes a draft version of the introductory vignette, as well as the documentation for currently implemented functions, complete with demonstrative example code. The package currently includes example PRO-seq data<sup>[1]</sup>.</p>
 </div>
 <div id="known-issues-and-limitations" class="section level2">
 <h2 class="hasAnchor">
 <a href="#known-issues-and-limitations" class="anchor"></a>Known issues and limitations</h2>
 <ul>
 <li>Currently no support for multicore processing on Windows</li>
-<li>Currently no support for multiple fields in <code>getStrandedCoverage</code>
-</li>
 <li>Certain gene names can cause <code>getDESeqDataSet</code> to return an error
 <ul>
 <li>Systematic naming schemes work (e.g. ensembl IDs) while some lists of conventional gene names, i.e. “symbols”, will cause failure</li>
 </ul>
 </li>
-<li>In some contexts, using multicore causes errors in <code>getDESeqResults</code> If this occurs in your environment, set <code>ncores = 1</code>
+<li>In some contexts, using multicore causes errors in <code>getDESeqResults</code> If this occurs in your environment, set <code>ncores = 1</code>. If there’s no error, I highly recommend using multiple cores for this function.
+<ul>
+<li><em>Yet to be verified, but I believe the problem only affects users who are using modified BLAS libraries in lieu of R’s defaults</em></li>
+</ul>
 </li>
 </ul>
 <hr>
