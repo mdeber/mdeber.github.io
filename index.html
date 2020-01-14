@@ -100,7 +100,10 @@
 <h2 class="hasAnchor">
 <a href="#known-issues-and-limitations" class="anchor"></a>Known issues and limitations</h2>
 <ul>
+<li>
+<strong>NOTE:</strong> The <code>import_bam</code> function is currently for <strong>single-end sequencing only</strong>. Patch for paired-end reads is coming soon.</li>
 <li>Currently no support for multicore processing on Windows</li>
+<li>No support for importing bigWig files on Windows</li>
 <li>Certain gene names can cause <code>getDESeqDataSet</code> to return an error
 <ul>
 <li>Systematic naming schemes work (e.g. ensembl IDs) while some lists of conventional gene names, i.e. “symbols”, will cause failure</li>
