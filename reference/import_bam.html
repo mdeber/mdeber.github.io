@@ -36,7 +36,8 @@
 
 
 <meta property="og:title" content="Import bam files — import_bam" />
-<meta property="og:description" content="CURRENTLY ONLY FOR SINGLE-END SEQUENCING. Patch for paired-end support is coming soon." />
+<meta property="og:description" content="Import single-end or paired-end bam files as GRanges objects, with various
+processing options." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -69,7 +70,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.6</span>
       </span>
     </div>
 
@@ -121,16 +122,20 @@
     </div>
 
     <div class="ref-description">
-    <p>CURRENTLY ONLY FOR SINGLE-END SEQUENCING. Patch for paired-end support is coming soon.</p>
+    <p>Import single-end or paired-end bam files as GRanges objects, with various
+processing options.</p>
     </div>
 
     <pre class="usage"><span class='fu'>import_bam</span>(
   <span class='no'>file</span>,
   <span class='kw'>mapq</span> <span class='kw'>=</span> <span class='fl'>20</span>,
   <span class='kw'>revcomp</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>shift</span> <span class='kw'>=</span> <span class='fl'>0L</span>,
   <span class='kw'>trim.to</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"whole"</span>, <span class='st'>"5p"</span>, <span class='st'>"3p"</span>, <span class='st'>"center"</span>),
   <span class='kw'>ignore.strand</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"score"</span>
+  <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"score"</span>,
+  <span class='kw'>paired_end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>yieldSize</span> <span class='kw'>=</span> <span class='fl'>250000</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -151,17 +156,27 @@ filter multi-aligners.</p></td>
 reverse-complemented.</p></td>
     </tr>
     <tr>
+      <th>shift</th>
+      <td><p>Either an integer giving the number of bases by which to shift
+the entire read upstream or downstream, or a pair of integers indicating
+shifts to be applied to the 5' and 3' ends of the reads, respectively.
+Shifting is strand-specific, with negative numbers shifting the reads
+upstream, and positive numbers shiftem them downstream. This option is
+applied <em>after</em> the <code>revcomp</code>, but before <code>trim.to</code> and
+<code>ignore.strand</code> options are applied.</p></td>
+    </tr>
+    <tr>
       <th>trim.to</th>
       <td><p>Option for selecting specific bases from the reads, applied
-after the <code>revcomp</code> option. By default, the entire read is maintained.
-Other options are to take only the 5' base, only the 3' base, or the only
-the center base of the read.</p></td>
+after the <code>revcomp</code> and <code>shift</code> options. By default, the entire
+read is maintained. Other options are to take only the 5' base, only the 3'
+base, or the only the center base of the read.</p></td>
     </tr>
     <tr>
       <th>ignore.strand</th>
       <td><p>Logical indicating if the strand information should be
 discarded. If <code>TRUE</code>, strand information is discarded <em>after</em>
-<code>revcomp</code> and <code>trim.to</code> options are applied.</p></td>
+<code>revcomp</code>, <code>trim.to</code>, and <code>shift</code> options are applied.</p></td>
     </tr>
     <tr>
       <th>field</th>
@@ -170,11 +185,28 @@ set to <code>NULL</code>, identical reads (or identical positions if
 <code>trim.to</code> options applied) are not combined, and the length of the
 output GRanges will be equal to the number of input reads.</p></td>
     </tr>
+    <tr>
+      <th>paired_end</th>
+      <td><p>Logical indicating if reads should be treated as paired end
+reads. When set to <code>NULL</code> (the default), a test is performed to
+determine if the bam file contains any paired-end reads.</p></td>
+    </tr>
+    <tr>
+      <th>yieldSize</th>
+      <td><p>The number of bam file records to process simultaneously,
+e.g. the "chunk size". Setting a higher chunk size will use more memory,
+which can increase speed if there is enough memory available. If chunking
+is not necessary, set to <code>NA</code>.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A GRanges object.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>If function produces an error, make the <code>paired_end</code> parameter
+  explicit, i.e. <code>TRUE</code> or <code>FALSE</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># get local address for included bam file</span>
@@ -186,7 +218,7 @@ output GRanges will be equal to the number of input reads.</p></td>
 <span class='co'>#--------------------------------------------------#</span>
 
 <span class='co'># Note that PRO-seq reads are sequenced as reverse complement</span>
-<span class='fu'>import_bam</span>(<span class='no'>ps.bam</span>, <span class='kw'>revcomp</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; GRanges object with 53179 ranges and 1 metadata column:
+<span class='fu'>import_bam</span>(<span class='no'>ps.bam</span>, <span class='kw'>revcomp</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>paired_end</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; GRanges object with 53179 ranges and 1 metadata column:
 #&gt;           seqnames          ranges strand |     score
 #&gt;              &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
 #&gt;       [1]     chr4       1270-1296      + |         1
@@ -206,7 +238,8 @@ output GRanges will be equal to the number of input reads.</p></td>
 <span class='co'># Import entire reads, 1 range per read</span>
 <span class='co'>#--------------------------------------------------#</span>
 
-<span class='fu'>import_bam</span>(<span class='no'>ps.bam</span>, <span class='kw'>revcomp</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>field</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</div><div class='output co'>#&gt; GRanges object with 73887 ranges and 0 metadata columns:
+<span class='fu'>import_bam</span>(<span class='no'>ps.bam</span>, <span class='kw'>revcomp</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>field</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+           <span class='kw'>paired_end</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; GRanges object with 73887 ranges and 0 metadata columns:
 #&gt;           seqnames          ranges strand
 #&gt;              &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt;
 #&gt;       [1]     chr4       1270-1296      +
@@ -227,7 +260,8 @@ output GRanges will be equal to the number of input reads.</p></td>
 <span class='co'>#--------------------------------------------------#</span>
 
 <span class='co'># the typical manner to import PRO-seq data:</span>
-<span class='fu'>import_bam</span>(<span class='no'>ps.bam</span>, <span class='kw'>revcomp</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>trim.to</span> <span class='kw'>=</span> <span class='st'>"3p"</span>)</div><div class='output co'>#&gt; GRanges object with 47380 ranges and 1 metadata column:
+<span class='fu'>import_bam</span>(<span class='no'>ps.bam</span>, <span class='kw'>revcomp</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>trim.to</span> <span class='kw'>=</span> <span class='st'>"3p"</span>,
+           <span class='kw'>paired_end</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; GRanges object with 47380 ranges and 1 metadata column:
 #&gt;           seqnames    ranges strand |     score
 #&gt;              &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
 #&gt;       [1]     chr4      1296      + |         1
@@ -244,11 +278,35 @@ output GRanges will be equal to the number of input reads.</p></td>
 #&gt;   -------
 #&gt;   seqinfo: 1870 sequences from an unspecified genome</div><div class='input'>
 <span class='co'>#--------------------------------------------------#</span>
+<span class='co'># Import PRO-seq reads, removing the run-on base</span>
+<span class='co'>#--------------------------------------------------#</span>
+
+<span class='co'># the best way to import PRO-seq data; removes the</span>
+<span class='co'># most 3' base, which was added in the run-on</span>
+<span class='fu'>import_bam</span>(<span class='no'>ps.bam</span>, <span class='kw'>revcomp</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>trim.to</span> <span class='kw'>=</span> <span class='st'>"3p"</span>,
+           <span class='kw'>shift</span> <span class='kw'>=</span> -<span class='fl'>1</span>, <span class='kw'>paired_end</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; GRanges object with 47380 ranges and 1 metadata column:
+#&gt;           seqnames    ranges strand |     score
+#&gt;              &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
+#&gt;       [1]     chr4      1295      + |         1
+#&gt;       [2]     chr4     41428      + |         1
+#&gt;       [3]     chr4     42588      + |         1
+#&gt;       [4]     chr4     42590      + |         2
+#&gt;       [5]     chr4     42593      + |         5
+#&gt;       ...      ...       ...    ... .       ...
+#&gt;   [47376]     chr4   1307742      - |         1
+#&gt;   [47377]     chr4   1316537      - |         1
+#&gt;   [47378]     chr4   1318960      - |         1
+#&gt;   [47379]     chr4   1319004      - |         1
+#&gt;   [47380]     chr4   1319369      - |         1
+#&gt;   -------
+#&gt;   seqinfo: 1870 sequences from an unspecified genome</div><div class='input'>
+<span class='co'>#--------------------------------------------------#</span>
 <span class='co'># Import 5' ends of PRO-seq reads</span>
 <span class='co'>#--------------------------------------------------#</span>
 
 <span class='co'># will include bona fide TSSes as well as hydrolysis products</span>
-<span class='fu'>import_bam</span>(<span class='no'>ps.bam</span>, <span class='kw'>revcomp</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>trim.to</span> <span class='kw'>=</span> <span class='st'>"5p"</span>)</div><div class='output co'>#&gt; GRanges object with 48697 ranges and 1 metadata column:
+<span class='fu'>import_bam</span>(<span class='no'>ps.bam</span>, <span class='kw'>revcomp</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>trim.to</span> <span class='kw'>=</span> <span class='st'>"5p"</span>,
+           <span class='kw'>paired_end</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; GRanges object with 48697 ranges and 1 metadata column:
 #&gt;           seqnames    ranges strand |     score
 #&gt;              &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
 #&gt;       [1]     chr4      1270      + |         1
@@ -270,9 +328,12 @@ output GRanges will be equal to the number of input reads.</p></td>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#details">Details</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 
+    <h2>Author</h2>
+    <p>Mike DeBerardine &amp; Nate Tippens</p>
   </div>
 </div>
 

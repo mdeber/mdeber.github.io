@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.6</span>
       </span>
     </div>
 
@@ -169,7 +169,7 @@
 <a class="sourceLine" id="cb2-4" data-line-number="4">bfile &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"PROseq_dm6_chr4.bam"</span>, </a>
 <a class="sourceLine" id="cb2-5" data-line-number="5">                     <span class="dt">package =</span> <span class="st">"BRGenomics"</span>)</a>
 <a class="sourceLine" id="cb2-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">ps_reads &lt;-<span class="st"> </span><span class="kw"><a href="../reference/import_bam.html">import_bam</a></span>(bfile, <span class="dt">mapq =</span> <span class="dv">20</span>, <span class="dt">revcomp =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">ps_reads &lt;-<span class="st"> </span><span class="kw"><a href="../reference/import_bam.html">import_bam</a></span>(bfile, <span class="dt">mapq =</span> <span class="dv">20</span>, <span class="dt">revcomp =</span> <span class="ot">TRUE</span>, <span class="dt">paired_end =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb2-8" data-line-number="8">ps_reads</a></code></pre></div>
 <pre><code>## GRanges object with 53179 ranges and 1 metadata column:
 ##           seqnames          ranges strand |     score
@@ -196,7 +196,7 @@
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">## [1] 73887</span></a></code></pre></div>
 <p>Alternatively, you can import each read as its own range by setting <code>field = NULL</code>:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">reads_expanded &lt;-<span class="st"> </span><span class="kw"><a href="../reference/import_bam.html">import_bam</a></span>(bfile, <span class="dt">mapq =</span> <span class="dv">20</span>, <span class="dt">revcomp =</span> <span class="ot">TRUE</span>, </a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">                             <span class="dt">field =</span> <span class="ot">NULL</span>)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">                             <span class="dt">field =</span> <span class="ot">NULL</span>, <span class="dt">paired_end =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb5-3" data-line-number="3">ps_reads[<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>]</a></code></pre></div>
 <pre><code>## GRanges object with 8 ranges and 1 metadata column:
 ##       seqnames      ranges strand |     score
@@ -231,26 +231,28 @@
 <div id="basepair-resolution-granges-objects" class="section level1">
 <h1 class="hasAnchor">
 <a href="#basepair-resolution-granges-objects" class="anchor"></a>Basepair-Resolution GRanges Objects</h1>
-<p>The 3’ end of a mapped PRO-seq read gives the position of an RNA polymerase at basepair-resolution. The <code>import_bam</code> function also includes options for selecting specific bases of each read, which are applied after reverse-complementing:</p>
+<p>The base immediately before the 3’ end of a mapped PRO-seq read gives the position of an RNA polymerase at basepair-resolution. The <code>import_bam</code> function also includes options for selecting specific bases of each read, which are applied after reverse-complementing. Here, we reverse complement, take the 3’ end of the read, and then shift that base upstream by 1 base:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">ps &lt;-<span class="st"> </span><span class="kw"><a href="../reference/import_bam.html">import_bam</a></span>(bfile, </a>
 <a class="sourceLine" id="cb11-2" data-line-number="2">                 <span class="dt">mapq =</span> <span class="dv">20</span>, </a>
 <a class="sourceLine" id="cb11-3" data-line-number="3">                 <span class="dt">revcomp =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb11-4" data-line-number="4">                 <span class="dt">trim.to =</span> <span class="st">"3p"</span>)</a>
-<a class="sourceLine" id="cb11-5" data-line-number="5">ps</a></code></pre></div>
+<a class="sourceLine" id="cb11-4" data-line-number="4">                 <span class="dt">shift =</span> <span class="dv">-1</span>,</a>
+<a class="sourceLine" id="cb11-5" data-line-number="5">                 <span class="dt">trim.to =</span> <span class="st">"3p"</span>,</a>
+<a class="sourceLine" id="cb11-6" data-line-number="6">                 <span class="dt">paired_end =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb11-7" data-line-number="7">ps</a></code></pre></div>
 <pre><code>## GRanges object with 47380 ranges and 1 metadata column:
 ##           seqnames    ranges strand |     score
 ##              &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
-##       [1]     chr4      1296      + |         1
-##       [2]     chr4     41429      + |         1
-##       [3]     chr4     42589      + |         1
-##       [4]     chr4     42591      + |         2
-##       [5]     chr4     42594      + |         5
+##       [1]     chr4      1295      + |         1
+##       [2]     chr4     41428      + |         1
+##       [3]     chr4     42588      + |         1
+##       [4]     chr4     42590      + |         2
+##       [5]     chr4     42593      + |         5
 ##       ...      ...       ...    ... .       ...
-##   [47376]     chr4   1307741      - |         1
-##   [47377]     chr4   1316536      - |         1
-##   [47378]     chr4   1318959      - |         1
-##   [47379]     chr4   1319003      - |         1
-##   [47380]     chr4   1319368      - |         1
+##   [47376]     chr4   1307742      - |         1
+##   [47377]     chr4   1316537      - |         1
+##   [47378]     chr4   1318960      - |         1
+##   [47379]     chr4   1319004      - |         1
+##   [47380]     chr4   1319369      - |         1
 ##   -------
 ##   seqinfo: 1870 sequences from an unspecified genome</code></pre>
 <p>You may have noticed that this GRanges object isn’t the same length as when we imported the entire reads. That’s because after trimming, identical positions were collapsed together, and the <code>score</code> column contains the readcounts at each position.</p>
@@ -269,17 +271,17 @@
 <pre><code>## GRanges object with 309 ranges and 1 metadata column:
 ##         seqnames    ranges strand |     score
 ##            &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
-##     [1]     chr4     69378      + |        12
-##     [2]     chr4     69392      + |        12
-##     [3]     chr4     69398      + |        25
-##     [4]     chr4     69402      + |       122
-##     [5]     chr4     69693      + |        17
+##     [1]     chr4     69377      + |        12
+##     [2]     chr4     69391      + |        12
+##     [3]     chr4     69397      + |        25
+##     [4]     chr4     69401      + |       122
+##     [5]     chr4     69692      + |        17
 ##     ...      ...       ...    ... .       ...
-##   [305]     chr4   1176184      - |        13
-##   [306]     chr4   1182427      - |        52
-##   [307]     chr4   1196792      - |        54
-##   [308]     chr4   1196793      - |        14
-##   [309]     chr4   1226557      - |        13
+##   [305]     chr4   1176185      - |        13
+##   [306]     chr4   1182428      - |        52
+##   [307]     chr4   1196793      - |        54
+##   [308]     chr4   1196794      - |        14
+##   [309]     chr4   1226558      - |        13
 ##   -------
 ##   seqinfo: 1870 sequences from an unspecified genome</code></pre>
 <p>We can write a simple test to determine if a GRanges object is “basepair-resolution”:</p>
@@ -293,14 +295,16 @@
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">ps &lt;-<span class="st"> </span><span class="kw"><a href="../reference/import_bam.html">import_bam</a></span>(bfile, </a>
 <a class="sourceLine" id="cb17-2" data-line-number="2">                 <span class="dt">mapq =</span> <span class="dv">20</span>, </a>
 <a class="sourceLine" id="cb17-3" data-line-number="3">                 <span class="dt">revcomp =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb17-4" data-line-number="4">                 <span class="dt">trim.to =</span> <span class="st">"3p"</span>)</a>
-<a class="sourceLine" id="cb17-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb17-6" data-line-number="6">ps_plus &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(ps, strand <span class="op">==</span><span class="st"> "+"</span>)</a>
-<a class="sourceLine" id="cb17-7" data-line-number="7">ps_minus &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(ps, strand <span class="op">==</span><span class="st"> "-"</span>)</a>
-<a class="sourceLine" id="cb17-8" data-line-number="8"><span class="kw">score</span>(ps_minus) &lt;-<span class="st"> </span><span class="op">-</span><span class="kw">score</span>(ps_minus) <span class="co"># make minus-strand scores negative</span></a>
-<a class="sourceLine" id="cb17-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb17-10" data-line-number="10">rtracklayer<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/rtracklayer/man/BigWigFile.html">export.bw</a></span>(ps_plus, <span class="st">"~/Data/PROseq_plus.bw"</span>)</a>
-<a class="sourceLine" id="cb17-11" data-line-number="11">rtracklayer<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/rtracklayer/man/BigWigFile.html">export.bw</a></span>(ps_minus, <span class="st">"~/Data/PROseq_minus.bw"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb17-4" data-line-number="4">                 <span class="dt">shift =</span> <span class="dv">-1</span>,</a>
+<a class="sourceLine" id="cb17-5" data-line-number="5">                 <span class="dt">trim.to =</span> <span class="st">"3p"</span>,</a>
+<a class="sourceLine" id="cb17-6" data-line-number="6">                 <span class="dt">paired_end =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb17-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb17-8" data-line-number="8">ps_plus &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(ps, strand <span class="op">==</span><span class="st"> "+"</span>)</a>
+<a class="sourceLine" id="cb17-9" data-line-number="9">ps_minus &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(ps, strand <span class="op">==</span><span class="st"> "-"</span>)</a>
+<a class="sourceLine" id="cb17-10" data-line-number="10"><span class="kw">score</span>(ps_minus) &lt;-<span class="st"> </span><span class="op">-</span><span class="kw">score</span>(ps_minus) <span class="co"># make minus-strand scores negative</span></a>
+<a class="sourceLine" id="cb17-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb17-12" data-line-number="12">rtracklayer<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/rtracklayer/man/BigWigFile.html">export.bw</a></span>(ps_plus, <span class="st">"~/Data/PROseq_plus.bw"</span>)</a>
+<a class="sourceLine" id="cb17-13" data-line-number="13">rtracklayer<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/rtracklayer/man/BigWigFile.html">export.bw</a></span>(ps_minus, <span class="st">"~/Data/PROseq_minus.bw"</span>)</a></code></pre></div>
 </div>
 <div id="working-with-annotations" class="section level1">
 <h1 class="hasAnchor">
@@ -353,31 +357,37 @@
 ##  collate  en_US.UTF-8                                       
 ##  ctype    en_US.UTF-8                                       
 ##  tz       America/New_York                                  
-##  date     2020-01-14                                        
+##  date     2020-01-30                                        
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────
 ##  package              * version   date       lib source        
 ##  annotate               1.65.0    2019-11-06 [3] Bioconductor  
 ##  AnnotationDbi          1.49.0    2019-11-07 [3] Bioconductor  
+##  askpass                1.1       2019-01-13 [3] CRAN (R 4.0.0)
 ##  assertthat             0.2.1     2019-03-21 [3] CRAN (R 4.0.0)
 ##  backports              1.1.5     2019-10-02 [3] CRAN (R 4.0.0)
 ##  Biobase                2.47.2    2019-12-19 [3] Bioconductor  
+##  BiocFileCache          1.11.4    2019-12-02 [3] Bioconductor  
 ##  BiocGenerics         * 0.33.0    2019-11-06 [3] Bioconductor  
 ##  BiocManager            1.30.10   2019-11-16 [3] CRAN (R 4.0.0)
 ##  BiocParallel           1.21.2    2019-12-21 [3] Bioconductor  
 ##  BiocStyle            * 2.15.5    2020-01-09 [3] Bioconductor  
+##  biomaRt                2.43.1    2020-01-07 [3] Bioconductor  
 ##  Biostrings             2.55.4    2019-12-14 [3] Bioconductor  
 ##  bit                    1.1-14    2018-05-29 [3] CRAN (R 4.0.0)
 ##  bit64                  0.9-7     2017-05-08 [3] CRAN (R 4.0.0)
 ##  bitops                 1.0-6     2013-08-17 [3] CRAN (R 4.0.0)
 ##  blob                   1.2.0     2019-07-09 [3] CRAN (R 4.0.0)
 ##  bookdown               0.17      2020-01-11 [3] CRAN (R 4.0.0)
-##  BRGenomics           * 0.5.3     2020-01-14 [1] Bioconductor  
+##  BRGenomics           * 0.5.6     2020-01-30 [1] Bioconductor  
+##  BSgenome               1.55.2    2019-12-13 [3] Bioconductor  
 ##  callr                  3.4.0     2019-12-09 [3] CRAN (R 4.0.0)
 ##  cli                    2.0.1     2020-01-08 [3] CRAN (R 4.0.0)
 ##  colorspace             1.4-1     2019-03-18 [3] CRAN (R 4.0.0)
 ##  crayon                 1.3.4     2017-09-16 [3] CRAN (R 4.0.0)
+##  curl                   4.3       2019-12-02 [3] CRAN (R 4.0.0)
 ##  DBI                    1.1.0     2019-12-15 [3] CRAN (R 4.0.0)
+##  dbplyr                 1.4.2     2019-06-17 [3] CRAN (R 4.0.0)
 ##  DelayedArray           0.13.2    2020-01-06 [3] Bioconductor  
 ##  desc                   1.2.0     2018-05-01 [3] CRAN (R 4.0.0)
 ##  DESeq2                 1.27.19   2020-01-07 [3] Bioconductor  
@@ -393,11 +403,15 @@
 ##  GenomeInfoDb         * 1.23.3    2020-01-11 [3] Bioconductor  
 ##  GenomeInfoDbData       1.2.2     2020-01-12 [3] Bioconductor  
 ##  GenomicAlignments      1.23.1    2019-11-12 [3] Bioconductor  
+##  GenomicFeatures        1.39.2    2019-12-20 [3] Bioconductor  
+##  GenomicFiles           1.23.0    2019-11-06 [3] Bioconductor  
 ##  GenomicRanges        * 1.39.1    2019-11-07 [3] Bioconductor  
 ##  ggplot2                3.2.1     2019-08-10 [3] CRAN (R 4.0.0)
 ##  glue                   1.3.1     2019-03-12 [3] CRAN (R 4.0.0)
 ##  gtable                 0.3.0     2019-03-25 [3] CRAN (R 4.0.0)
+##  hms                    0.5.3     2020-01-08 [3] CRAN (R 4.0.0)
 ##  htmltools              0.4.0     2019-10-04 [3] CRAN (R 4.0.0)
+##  httr                   1.4.1     2019-08-05 [3] CRAN (R 4.0.0)
 ##  IRanges              * 2.21.2    2019-11-20 [3] Bioconductor  
 ##  knitr                  1.26      2019-11-12 [3] CRAN (R 4.0.0)
 ##  lattice                0.20-38   2018-11-04 [3] CRAN (R 4.0.0)
@@ -410,6 +424,7 @@
 ##  matrixStats            0.55.0    2019-09-07 [3] CRAN (R 4.0.0)
 ##  memoise                1.1.0     2017-04-21 [3] CRAN (R 4.0.0)
 ##  munsell                0.5.0     2018-06-12 [3] CRAN (R 4.0.0)
+##  openssl                1.4.1     2019-07-18 [3] CRAN (R 4.0.0)
 ##  pillar                 1.4.3     2019-12-20 [3] CRAN (R 4.0.0)
 ##  pkgbuild               1.0.6     2019-10-09 [3] CRAN (R 4.0.0)
 ##  pkgconfig              2.0.3     2019-09-22 [3] CRAN (R 4.0.0)
@@ -417,9 +432,11 @@
 ##  pkgload                1.0.2     2018-10-29 [3] CRAN (R 4.0.0)
 ##  prettyunits            1.1.0     2020-01-09 [3] CRAN (R 4.0.0)
 ##  processx               3.4.1     2019-07-18 [3] CRAN (R 4.0.0)
+##  progress               1.2.2     2019-05-16 [3] CRAN (R 4.0.0)
 ##  ps                     1.3.0     2018-12-21 [3] CRAN (R 4.0.0)
 ##  purrr                  0.3.3     2019-10-18 [3] CRAN (R 4.0.0)
 ##  R6                     2.4.1     2019-11-12 [3] CRAN (R 4.0.0)
+##  rappdirs               0.3.1     2016-03-28 [3] CRAN (R 4.0.0)
 ##  RColorBrewer           1.1-2     2014-12-07 [3] CRAN (R 4.0.0)
 ##  Rcpp                   1.0.3     2019-11-08 [3] CRAN (R 4.0.0)
 ##  RCurl                  1.95-4.12 2019-03-04 [3] CRAN (R 4.0.0)
@@ -430,6 +447,7 @@
 ##  Rsamtools              2.3.2     2019-11-07 [3] Bioconductor  
 ##  RSQLite                2.2.0     2020-01-07 [3] CRAN (R 4.0.0)
 ##  rstudioapi             0.10      2019-03-19 [3] CRAN (R 4.0.0)
+##  rtracklayer            1.47.0    2019-11-06 [3] Bioconductor  
 ##  S4Vectors            * 0.25.9    2020-01-09 [3] Bioconductor  
 ##  scales                 1.1.0     2019-11-18 [3] CRAN (R 4.0.0)
 ##  sessioninfo            1.1.1     2018-11-05 [3] CRAN (R 4.0.0)
@@ -441,6 +459,7 @@
 ##  tibble                 2.1.3     2019-06-06 [3] CRAN (R 4.0.0)
 ##  tidyselect             0.2.5     2018-10-11 [3] CRAN (R 4.0.0)
 ##  usethis                1.5.1     2019-07-04 [3] CRAN (R 4.0.0)
+##  VariantAnnotation      1.33.0    2019-11-06 [3] Bioconductor  
 ##  vctrs                  0.2.1     2019-12-17 [3] CRAN (R 4.0.0)
 ##  withr                  2.1.2     2018-03-15 [3] CRAN (R 4.0.0)
 ##  xfun                   0.11      2019-11-12 [3] CRAN (R 4.0.0)
@@ -451,8 +470,8 @@
 ##  zeallot                0.1.0     2018-01-28 [3] CRAN (R 4.0.0)
 ##  zlibbioc               1.33.0    2019-11-06 [3] Bioconductor  
 ## 
-## [1] /private/var/folders/zt/m504_3g569g6gqzjbqg34qn40000gn/T/Rtmpv51nDi/temp_libpath672463290d2
-## [2] /private/var/folders/zt/m504_3g569g6gqzjbqg34qn40000gn/T/Rtmpv51nDi/temp_libpath67218f9151c
+## [1] /private/var/folders/zt/m504_3g569g6gqzjbqg34qn40000gn/T/Rtmp65bn4D/temp_libpath12c731ec211ca
+## [2] /private/var/folders/zt/m504_3g569g6gqzjbqg34qn40000gn/T/Rtmp65bn4D/temp_libpath12c73496f39f6
 ## [3] /Library/Frameworks/R.framework/Versions/4.0/Resources/library</code></pre>
 <!-- SCRAP -->
 <!-- The `import_bam` function provides several options for processing aligned reads, and in conjunction with functions from the *[rtracklayer](https://bioconductor.org/packages/3.11/rtracklayer)* package, we can easily write a post-alignment pipeline for generating bigWig files for viewing in a genome browser. -->
