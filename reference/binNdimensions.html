@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>N-dimensional binning — binNdimensions • BRGenomics</title>
+<title>Generating and Aggregating Data Within N-dimensional Bins — binNdimensions • BRGenomics</title>
 
 
 <!-- jquery -->
@@ -35,16 +35,9 @@
 
 
 
-<meta property="og:title" content="N-dimensional binning — binNdimensions" />
-<meta property="og:description" content="This function takes in data along 1 or more dimensions, and for each
-dimension the data is divided into evenly-sized bins from the minimum
-value to the maximum value, and bin numbers are returned. For instance, if
-each index of the input data were a gene, the input dimensions would be
-various quantitative measures of that gene, e.g. expression level, number of
-exons, length, etc. If plotted in cartesian coordinates, each gene would be a
-single datapoint, and each measurement would be a separate dimension. The bin
-numbers for each datapoint in each dimension are returned in a dataframe,
-with a column for each dimension and a row for each index." />
+<meta property="og:title" content="Generating and Aggregating Data Within N-dimensional Bins — binNdimensions" />
+<meta property="og:description" content="Divide data along different dimensions into equally spaced bins, and
+summarize the datapoints that fall into any of these n-dimensional bins." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -77,7 +70,7 @@ with a column for each dimension and a row for each index." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.5</span>
       </span>
     </div>
 
@@ -123,48 +116,114 @@ with a column for each dimension and a row for each index." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>N-dimensional binning</h1>
+    <h1>Generating and Aggregating Data Within N-dimensional Bins</h1>
     
     <div class="hidden name"><code>binNdimensions.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function takes in data along 1 or more dimensions, and for each
-dimension the data is divided into evenly-sized bins from the minimum
-value to the maximum value, and bin numbers are returned. For instance, if
-each index of the input data were a gene, the input dimensions would be
-various quantitative measures of that gene, e.g. expression level, number of
-exons, length, etc. If plotted in cartesian coordinates, each gene would be a
-single datapoint, and each measurement would be a separate dimension. The bin
-numbers for each datapoint in each dimension are returned in a dataframe,
-with a column for each dimension and a row for each index.</p>
+    <p>Divide data along different dimensions into equally spaced bins, and
+summarize the datapoints that fall into any of these n-dimensional bins.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>binNdimensions</span>(<span class='no'>...</span>, <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>10</span>)</pre>
+    <pre class="usage"><span class='fu'>binNdimensions</span>(<span class='no'>dims.df</span>, <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fu'>detectCores</span>())
+
+<span class='fu'>aggregateByNdimensionalBins</span>(
+  <span class='no'>x</span>,
+  <span class='no'>dims.df</span>,
+  <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>10</span>,
+  <span class='kw'>FUN</span> <span class='kw'>=</span> <span class='no'>mean</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>ignore.na</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>drop</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>empty</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fu'>detectCores</span>()
+)
+
+<span class='fu'>densityInNdimensionalBins</span>(<span class='no'>dims.df</span>, <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fu'>detectCores</span>())</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>...</th>
-      <td><p>A single dataframe, or any number of lists or vectors containing
-different measurements across the same datapoints. If a dataframe is given,
-columns should correspond to measurements (dimensions). If lists or
-vectors are given, they must all have the same lengths. Other input classes
-will be coerced into a single dataframe.</p></td>
+      <th>dims.df</th>
+      <td><p>A dataframe containing one or more columns of numerical data
+for which bins will be generated.</p></td>
     </tr>
     <tr>
       <th>nbins</th>
-      <td><p>Either a number giving the number of bins to use for
-all dimensions (default = 10), or a vector containing the number of
-bins to use for each dimension of input data given.</p></td>
+      <td><p>Either a number giving the number of bins to use for all
+dimensions (default = 10), or a vector containing the number of bins to use
+for each dimension of input data given.</p></td>
+    </tr>
+    <tr>
+      <th>ncores</th>
+      <td><p>Number of cores to use for computations.</p></td>
+    </tr>
+    <tr>
+      <th>x</th>
+      <td><p>The name of the dimension in <code>dims.df</code> to aggregate, or a
+separate numerical vector or dataframe of data to be aggregated. If
+<code>x</code> is a numerical vector, each value in <code>x</code> corresponds to a row
+of <code>dims.df</code>, and so <code><a href='https://rdrr.io/r/base/length.html'>length(x)</a></code> must be equal to
+<code><a href='https://rdrr.io/r/base/nrow.html'>nrow(dims.df)</a></code>. Likewise, if <code>x</code> is a dataframe, <code><a href='https://rdrr.io/r/base/nrow.html'>nrow(x)</a></code>
+must equal <code><a href='https://rdrr.io/r/base/nrow.html'>nrow(dims.df)</a></code>. Supplying a dataframe for <code>x</code> has the
+advantage of simultaneously aggregating different sets of data, and
+returning a single dataframe.</p></td>
+    </tr>
+    <tr>
+      <th>FUN</th>
+      <td><p>A function to use for aggregating data within each bin.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments passed to <code>FUN</code>.</p></td>
+    </tr>
+    <tr>
+      <th>ignore.na</th>
+      <td><p>Logical indicating if <code>NA</code> values of <code>x</code> should be
+ignored. Default is <code>TRUE</code>.</p></td>
+    </tr>
+    <tr>
+      <th>drop</th>
+      <td><p>A logical indicating if empty bin combinations should be removed
+from the output. By default (<code>FALSE</code>), all possible combinations of
+bins are returned, and empty bins contain a value given by <code>empty</code>.</p></td>
+    </tr>
+    <tr>
+      <th>empty</th>
+      <td><p>When <code>drop = FALSE</code>, the value returned for empty bins. By
+default, empty bins return <code>NA</code>. However, in many circumstances (e.g.
+if <code>FUN = sum</code>), the empty value should be <code>0</code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A dataframe containing indices in <code>1:nbins</code> for each
-  datapoint in each dimension.</p>
+    <p>A dataframe.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>These functions take in data along 1 or more dimensions, and for
+  each dimension the data is divided into evenly-sized bins from the minimum
+  value to the maximum value. For instance, if each row of <code>dims.df</code>
+  were a gene, the columns (the different dimensions) would be various
+  quantitative measures of that gene, e.g. expression level, number of exons,
+  length, etc. If plotted in cartesian coordinates, each gene would be a
+  single datapoint, and each measurement would be a separate dimension.</p>
+<p><code>binNdimensions</code> returns the bin numbers themselves. The output
+  dataframe has the same dimensions as the input <code>dims.df</code>, but each
+  input data has been replaced by its bin number (an integer).</p>
+<p><code>aggregateByNdimensionalBins</code> summarizes some input data <code>x</code> in
+  each combination of bins, i.e. in each n-dimensional bin. Each row of the
+  output dataframe is a unique combination of the input bins (i.e. each
+  n-dimensional bin), and the output columns are identical to those in
+  <code>dims.df</code>, with the addition of one or more columns containing the
+  aggregated data in each n-dimensional bin. If the input <code>x</code> was a
+  vector, the column is named "value"; if the input <code>x</code> was a dataframe,
+  the column names from <code>x</code> are maintained.</p>
+<p><code>densityInNdimensionalBins</code> returns a dataframe just like
+  <code>aggregateByNdimensionalBins</code>, except the "value" column contains the
+  number of observations that fall into each n-dimensional bin.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"PROseq"</span>) <span class='co'># import included PROseq data</span>
@@ -178,33 +237,86 @@ bins to use for each dimension of input data given.</p></td>
 <span class='no'>early_gb</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='genebodies.html'>genebodies</a></span>(<span class='no'>txs_dm6_chr4</span>, <span class='fl'>500</span>, <span class='fl'>1000</span>, <span class='kw'>fix.end</span> <span class='kw'>=</span> <span class='st'>"start"</span>)
 <span class='no'>cps</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='genebodies.html'>genebodies</a></span>(<span class='no'>txs_dm6_chr4</span>, -<span class='fl'>500</span>, <span class='fl'>500</span>, <span class='kw'>fix.start</span> <span class='kw'>=</span> <span class='st'>"end"</span>)
 
-<span class='no'>counts_pr</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='getCountsByRegions.html'>getCountsByRegions</a></span>(<span class='no'>PROseq</span>, <span class='no'>pr</span>)
-<span class='no'>counts_gb</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='getCountsByRegions.html'>getCountsByRegions</a></span>(<span class='no'>PROseq</span>, <span class='no'>early_gb</span>)
-<span class='no'>counts_cps</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='getCountsByRegions.html'>getCountsByRegions</a></span>(<span class='no'>PROseq</span>, <span class='no'>cps</span>)
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>counts_pr</span> <span class='kw'>=</span> <span class='fu'><a href='getCountsByRegions.html'>getCountsByRegions</a></span>(<span class='no'>PROseq</span>, <span class='no'>pr</span>),
+                 <span class='kw'>counts_gb</span> <span class='kw'>=</span> <span class='fu'><a href='getCountsByRegions.html'>getCountsByRegions</a></span>(<span class='no'>PROseq</span>, <span class='no'>early_gb</span>),
+                 <span class='kw'>counts_cps</span> <span class='kw'>=</span> <span class='fu'><a href='getCountsByRegions.html'>getCountsByRegions</a></span>(<span class='no'>PROseq</span>, <span class='no'>cps</span>))
 
 <span class='co'>#--------------------------------------------------#</span>
 <span class='co'># divide genes into 20 bins for each measurement</span>
 <span class='co'>#--------------------------------------------------#</span>
 
-<span class='no'>count_bins</span> <span class='kw'>&lt;-</span> <span class='fu'>binNdimensions</span>(<span class='no'>counts_pr</span>, <span class='no'>counts_gb</span>, <span class='no'>counts_cps</span>, <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>20</span>)
+<span class='no'>bin3d</span> <span class='kw'>&lt;-</span> <span class='fu'>binNdimensions</span>(<span class='no'>df</span>, <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>txs_dm6_chr4</span>)</div><div class='output co'>#&gt; [1] 339</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>count_bins</span>)</div><div class='output co'>#&gt; [1] 339</div><div class='input'><span class='no'>count_bins</span>[<span class='fl'>1</span>:<span class='fl'>10</span>, ]</div><div class='output co'>#&gt;    bin.counts_pr bin.counts_gb bin.counts_cps
-#&gt; 1              1             1              1
-#&gt; 2              1             5              3
-#&gt; 3              1             1              1
-#&gt; 4              1             1              3
-#&gt; 5              1             1              1
-#&gt; 6              5             3              3
-#&gt; 7              5             3              2
-#&gt; 8              5             3              2
-#&gt; 9              5             3              2
-#&gt; 10             5             3              2</div></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>txs_dm6_chr4</span>)</div><div class='output co'>#&gt; [1] 339</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>bin3d</span>)</div><div class='output co'>#&gt; [1] 339</div><div class='input'><span class='no'>bin3d</span>[<span class='fl'>1</span>:<span class='fl'>6</span>, ]</div><div class='output co'>#&gt;   bin.counts_pr bin.counts_gb bin.counts_cps
+#&gt; 1             1             1              1
+#&gt; 2             1             5              3
+#&gt; 3             1             1              1
+#&gt; 4             1             1              3
+#&gt; 5             1             1              1
+#&gt; 6             5             3              3</div><div class='input'>
+<span class='co'>#--------------------------------------------------#</span>
+<span class='co'># get number of genes in each bin</span>
+<span class='co'>#--------------------------------------------------#</span>
+
+<span class='no'>bin_counts</span> <span class='kw'>&lt;-</span> <span class='fu'>densityInNdimensionalBins</span>(<span class='no'>df</span>, <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>20</span>,
+                                        <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+
+<span class='no'>bin_counts</span>[<span class='fl'>1</span>:<span class='fl'>6</span>, ]</div><div class='output co'>#&gt;   bin.counts_pr bin.counts_gb bin.counts_cps value
+#&gt; 1             1             1              1   131
+#&gt; 2             2             1              1     2
+#&gt; 3             3             1              1     0
+#&gt; 4             4             1              1     0
+#&gt; 5             5             1              1     0
+#&gt; 6             9             1              1     0</div><div class='input'>
+<span class='co'>#--------------------------------------------------#</span>
+<span class='co'># get mean cps reads in bins of promoter and genebody reads</span>
+<span class='co'>#--------------------------------------------------#</span>
+
+<span class='no'>bin2d_cps</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregateByNdimensionalBins</span>(<span class='st'>"counts_cps"</span>, <span class='no'>df</span>,
+                                         <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+
+<span class='no'>bin2d_cps</span>[<span class='fl'>1</span>:<span class='fl'>6</span>, ]</div><div class='output co'>#&gt;   bin.counts_pr bin.counts_gb    value
+#&gt; 1             1             1 27.72258
+#&gt; 2             2             1  0.00000
+#&gt; 3             3             1       NA
+#&gt; 4             4             1       NA
+#&gt; 5             5             1       NA
+#&gt; 6             9             1       NA</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='no'>bin2d_cps</span>, <span class='fu'><a href='https://rdrr.io/r/base/is.finite.html'>is.finite</a></span>(<span class='no'>value</span>))[<span class='fl'>1</span>:<span class='fl'>6</span>, ]</div><div class='output co'>#&gt;    bin.counts_pr bin.counts_gb    value
+#&gt; 1              1             1 27.72258
+#&gt; 2              2             1  0.00000
+#&gt; 9              1             2 68.91304
+#&gt; 10             2             2 91.57143
+#&gt; 11             3             2 39.00000
+#&gt; 14             9             2 79.00000</div><div class='input'>
+<span class='co'>#--------------------------------------------------#</span>
+<span class='co'># get median cps reads for those bins</span>
+<span class='co'>#--------------------------------------------------#</span>
+
+<span class='no'>bin2d_cps_med</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregateByNdimensionalBins</span>(<span class='st'>"counts_cps"</span>, <span class='no'>df</span>, <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>20</span>,
+                                             <span class='kw'>FUN</span> <span class='kw'>=</span> <span class='no'>median</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+
+<span class='no'>bin2d_cps_med</span>[<span class='fl'>1</span>:<span class='fl'>6</span>, ]</div><div class='output co'>#&gt;   bin.counts_pr bin.counts_gb value
+#&gt; 1             1             1     3
+#&gt; 2             2             1     0
+#&gt; 3             3             1    NA
+#&gt; 4             4             1    NA
+#&gt; 5             5             1    NA
+#&gt; 6             9             1    NA</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='no'>bin2d_cps_med</span>, <span class='fu'><a href='https://rdrr.io/r/base/is.finite.html'>is.finite</a></span>(<span class='no'>value</span>))[<span class='fl'>1</span>:<span class='fl'>6</span>, ]</div><div class='output co'>#&gt;    bin.counts_pr bin.counts_gb value
+#&gt; 1              1             1     3
+#&gt; 2              2             1     0
+#&gt; 9              1             2    69
+#&gt; 10             2             2    60
+#&gt; 11             3             2    39
+#&gt; 14             9             2    79</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#details">Details</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

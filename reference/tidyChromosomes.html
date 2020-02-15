@@ -70,7 +70,7 @@ chromosomes from any GRanges object." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.5</span>
       </span>
     </div>
 
@@ -139,8 +139,10 @@ chromosomes from any GRanges object.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>gr</th>
-      <td><p>Any GRanges object, however the object should have a standard
-genome set, e.g. <code>genome(gr) &lt;- "hg38"</code></p></td>
+      <td><p>Any GRanges object, or any another object with associated
+<code>seqinfo</code> (or a <code>Seqinfo</code> object itself). The object should
+typically have a standard genome associated with it, e.g. <code>genome(gr)
+&lt;- "hg38"</code>.</p></td>
     </tr>
     <tr>
       <th>keep.X, keep.Y, keep.M, keep.nonstandard</th>
@@ -157,12 +159,12 @@ mitochondrial and non-standard chromosomes are removed.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Standard chromosomes are defined using the
-<code><a href='https://rdrr.io/pkg/GenomeInfoDb/man/seqlevels-wrappers.html'>standardChromosomes</a></code> function
-from the <code>GenomeInfoDb</code> package.</p>
+  <code><a href='https://rdrr.io/pkg/GenomeInfoDb/man/seqlevels-wrappers.html'>standardChromosomes</a></code>
+  function from the <code>GenomeInfoDb</code> package.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/GenomeInfoDb/man/seqlevels-wrappers.html'>
-   GenomeInfoDb::standardChromosomes</a></code></p></div>
+GenomeInfoDb::standardChromosomes</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># make a GRanges</span>

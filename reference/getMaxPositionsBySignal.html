@@ -71,7 +71,7 @@ larger bins." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.5</span>
       </span>
     </div>
 
@@ -129,8 +129,8 @@ larger bins.</p>
     </div>
 
     <pre class="usage"><span class='fu'>getMaxPositionsBySignal</span>(
-  <span class='no'>regions.gr</span>,
   <span class='no'>dataset.gr</span>,
+  <span class='no'>regions.gr</span>,
   <span class='kw'>binsize</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='kw'>bin.centers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"score"</span>,
@@ -141,13 +141,13 @@ larger bins.</p>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>regions.gr</th>
-      <td><p>A GRanges object containing regions of interest.</p></td>
-    </tr>
-    <tr>
       <th>dataset.gr</th>
       <td><p>A GRanges object in which signal is contained in metadata
 (typically in the "score" field).</p></td>
+    </tr>
+    <tr>
+      <th>regions.gr</th>
+      <td><p>A GRanges object containing regions of interest.</p></td>
     </tr>
     <tr>
       <th>binsize</th>
@@ -209,9 +209,9 @@ should be reported. If set to <code>TRUE</code>, the values are kept as a new
 <span class='co'># max sites</span>
 <span class='co'>#--------------------------------------------------#</span>
 
-<span class='fu'>getMaxPositionsBySignal</span>(<span class='no'>pr</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='no'>PROseq</span>, <span class='kw'>keep.signal</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; GRanges object with 2 ranges and 3 metadata columns:
+<span class='fu'>getMaxPositionsBySignal</span>(<span class='no'>PROseq</span>, <span class='no'>pr</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='kw'>keep.signal</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; GRanges object with 2 ranges and 3 metadata columns:
 #&gt;       seqnames    ranges strand |     tx_name     gene_id MaxSiteSignal
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;character&gt;     &lt;numeric&gt;
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;character&gt;     &lt;integer&gt;
 #&gt;   [1]     chr4     42799      + | FBtr0344900 FBgn0266617             3
 #&gt;   [2]     chr4     44801      + | FBtr0340499 FBgn0265633             1
 #&gt;   -------
@@ -220,9 +220,9 @@ should be reported. If set to <code>TRUE</code>, the values are kept as a new
 <span class='co'># max sites in 5 bp bins</span>
 <span class='co'>#--------------------------------------------------#</span>
 
-<span class='fu'>getMaxPositionsBySignal</span>(<span class='no'>pr</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='no'>PROseq</span>, <span class='kw'>binsize</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>keep.signal</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; GRanges object with 2 ranges and 3 metadata columns:
+<span class='fu'>getMaxPositionsBySignal</span>(<span class='no'>PROseq</span>, <span class='no'>pr</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='kw'>binsize</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>keep.signal</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; GRanges object with 2 ranges and 3 metadata columns:
 #&gt;       seqnames      ranges strand |     tx_name     gene_id MaxSiteSignal
-#&gt;          &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;character&gt;     &lt;numeric&gt;
+#&gt;          &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;character&gt;     &lt;integer&gt;
 #&gt;   [1]     chr4 42794-42798      + | FBtr0344900 FBgn0266617             4
 #&gt;   [2]     chr4 44799-44803      + | FBtr0340499 FBgn0265633             1
 #&gt;   -------

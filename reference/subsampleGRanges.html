@@ -72,7 +72,7 @@ function can be used in this scenario." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.5</span>
       </span>
     </div>
 
@@ -130,7 +130,13 @@ subsample ranges directly if <code>field = NULL</code>, but the <code>sample</co
 function can be used in this scenario.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>subsampleGRanges</span>(<span class='no'>dataset.gr</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prop</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"score"</span>)</pre>
+    <pre class="usage"><span class='fu'>subsampleGRanges</span>(
+  <span class='no'>dataset.gr</span>,
+  <span class='kw'>n</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>prop</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"score"</span>,
+  <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fu'>detectCores</span>()
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -138,22 +144,31 @@ function can be used in this scenario.</p>
     <tr>
       <th>dataset.gr</th>
       <td><p>A GRanges object in which signal (e.g. readcounts) are
-contained within metadata.</p></td>
+contained within metadata, or a list of such GRanges objects.</p></td>
     </tr>
     <tr>
-      <th>n</th>
-      <td><p>Number of reads to subsample. Either <code>n</code> or <code>prop</code> can be
-given.</p></td>
-    </tr>
-    <tr>
-      <th>prop</th>
-      <td><p>Proportion of total signal to subsample.</p></td>
+      <th>n, prop</th>
+      <td><p>Either the number of reads to subsample (<code>n</code>), or the
+proportion of total <em>signal</em> to subsample (<code>prop</code>). Either
+<code>n</code> or <code>prop</code> can be given, but not both. If <code>dataset.gr</code> is
+a list, or if <code>length(field) &gt; 1</code>, users can supply a vector or list
+of <code>n</code> or <code>prop</code> values to match the individual datasets, but
+care should be taken to ensure that a value is given for each and every
+dataset.</p></td>
     </tr>
     <tr>
       <th>field</th>
       <td><p>The metadata field of <code>dataset.gr</code> that contains readcounts
 for reach position. If each range represents a single read, set <code>field
-= NULL</code></p></td>
+= NULL</code>. If multiple fields are given, and <code>dataset.gr</code> is not a list,
+then <code>dataset.gr</code> will be treated as a multiplexed GRanges, and each
+field will be treated as an indpendent dataset. See
+<code><a href='mergeGRangesData.html'>mergeGRangesData</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>ncores</th>
+      <td><p>Number of cores to use for computations. Multicore only used
+when <code>dataset.gr</code> is a list, or if <code>length(field) &gt; 1</code>.</p></td>
     </tr>
     </table>
 

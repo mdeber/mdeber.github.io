@@ -73,7 +73,7 @@ base-pair resolution, or over larger bins." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.5</span>
       </span>
     </div>
 
@@ -145,6 +145,8 @@ base-pair resolution, or over larger bins.</p>
   <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"score"</span>,
   <span class='kw'>NF</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>remove.empty</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>blacklist</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>zero_blacklisted</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fu'>detectCores</span>()
 )
 
@@ -168,7 +170,7 @@ base-pair resolution, or over larger bins.</p>
     <tr>
       <th>dataset.gr</th>
       <td><p>A GRanges object in which signal is contained in metadata
-(typically in the <code>"score"</code> field).</p></td>
+(typically in the <code>"score"</code> field), or a list of such GRanges objects.</p></td>
     </tr>
     <tr>
       <th>regions.gr</th>
@@ -231,6 +233,19 @@ should be removed from the analysis. Not recommended if using multiple
 fields, as the gene lists will no longer be equivalent.</p></td>
     </tr>
     <tr>
+      <th>blacklist</th>
+      <td><p>An optional GRanges object containing regions that should be
+excluded from signal counting.</p></td>
+    </tr>
+    <tr>
+      <th>zero_blacklisted</th>
+      <td><p>When set to <code>FALSE</code> (the default), signal at
+blacklisted sites is ignored from computations. If set to <code>TRUE</code>,
+signal at blacklisted sites will be treated as equal to zero. For
+bootstrapping, the default behavior of ignoring signal at blacklisted sites
+should almost always be kept.</p></td>
+    </tr>
+    <tr>
       <th>ncores</th>
       <td><p>Number of cores to use for computations.</p></td>
     </tr>
@@ -244,10 +259,11 @@ and columns for positions within those genes.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Dataframe containing x-values, means, lower quantiles, upper
+    <p>A dataframe containing x-values, means, lower quantiles, upper
   quantiles, and the sample name (as a convenience for row-binding multiple
-  of these dataframes). If multiple fields are given, a single dataframe is
-  still returned, but will contain data for all fields.</p>
+  of these dataframes). If a list of GRanges is given as input, or if
+  multiple fields are given, a single, combined dataframe is returned
+  containing data for all fields/datasets.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='getCountsByPositions.html'>getCountsByPositions</a></code></p></div>

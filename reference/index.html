@@ -67,7 +67,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.5</span>
       </span>
     </div>
 
@@ -146,9 +146,9 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="binNdimensions.html">binNdimensions()</a></code> </p>
+          <p><code><a href="binNdimensions.html">binNdimensions()</a></code> <code><a href="binNdimensions.html">aggregateByNdimensionalBins()</a></code> <code><a href="binNdimensions.html">densityInNdimensionalBins()</a></code> </p>
         </td>
-        <td><p>N-dimensional binning</p></td>
+        <td><p>Generating and Aggregating Data Within N-dimensional Bins</p></td>
       </tr><tr>
         
         <td>
@@ -200,6 +200,18 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="getSpikeInCounts.html">getSpikeInCounts()</a></code> <code><a href="getSpikeInCounts.html">removeSpikeInReads()</a></code> <code><a href="getSpikeInCounts.html">getSpikeInReads()</a></code> </p>
+        </td>
+        <td><p>Filtering and counting spike-in reads</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="getSpikeInNFs.html">getSpikeInNFs()</a></code> <code><a href="getSpikeInNFs.html">spikeInNormGRanges()</a></code> </p>
+        </td>
+        <td><p>Calculating spike-in normalization factors</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="getStrandedCoverage.html">getStrandedCoverage()</a></code> </p>
         </td>
         <td><p>Get strand-specific coverage</p></td>
@@ -212,7 +224,7 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="import_bam.html">import_bam()</a></code> </p>
+          <p><code><a href="import_bam.html">import_bam()</a></code> <code><a href="import_bam.html">import_bam_PROseq()</a></code> <code><a href="import_bam.html">import_bam_PROcap()</a></code> <code><a href="import_bam.html">import_bam_ATACseq()</a></code> </p>
         </td>
         <td><p>Import bam files</p></td>
       </tr><tr>
@@ -227,6 +239,12 @@
           <p><code><a href="mergeGRangesData.html">mergeGRangesData()</a></code> </p>
         </td>
         <td><p>Merge basepair-resolution GRanges objects</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="subsampleBySpikeIn.html">subsampleBySpikeIn()</a></code> </p>
+        </td>
+        <td><p>Randomly subsample reads according to spike-in normalization</p></td>
       </tr><tr>
         
         <td>

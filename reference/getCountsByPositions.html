@@ -72,7 +72,7 @@ overlapping each bin." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.5</span>
       </span>
     </div>
 
@@ -135,9 +135,12 @@ overlapping each bin.</p>
   <span class='no'>regions.gr</span>,
   <span class='kw'>binsize</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='kw'>FUN</span> <span class='kw'>=</span> <span class='no'>sum</span>,
-  <span class='kw'>simplify.multi.widths</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"list"</span>, <span class='st'>"pad 0"</span>, <span class='st'>"pad NA"</span>),
+  <span class='kw'>simplify.multi.widths</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"error"</span>, <span class='st'>"list"</span>, <span class='st'>"pad 0"</span>, <span class='st'>"pad NA"</span>),
   <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"score"</span>,
   <span class='kw'>NF</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>blacklist</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>NA_blacklisted</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>melt</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fu'>detectCores</span>()
 )</pre>
 
@@ -147,7 +150,7 @@ overlapping each bin.</p>
     <tr>
       <th>dataset.gr</th>
       <td><p>A GRanges object in which signal is contained in metadata
-(typically in the "score" field).</p></td>
+(typically in the "score" field), or a named list of such GRanges objects.</p></td>
     </tr>
     <tr>
       <th>regions.gr</th>
@@ -167,8 +170,8 @@ operating on a numeric vector can be used.</p></td>
     <tr>
       <th>simplify.multi.widths</th>
       <td><p>A string indicating the output format if the
-ranges in <code>regions.gr</code> have variable widths. Default is <code>"list"</code>.
-See details below.</p></td>
+ranges in <code>regions.gr</code> have variable widths. By default, an error is
+returned. See details below.</p></td>
     </tr>
     <tr>
       <th>field</th>
@@ -184,8 +187,32 @@ output for generated each field. If <code>field</code> not found in
 If given, <code><a href='https://rdrr.io/r/base/length.html'>length(NF)</a></code> must be equal to <code><a href='https://rdrr.io/r/base/length.html'>length(field)</a></code>.</p></td>
     </tr>
     <tr>
+      <th>blacklist</th>
+      <td><p>An optional GRanges object containing regions that should be
+excluded from signal counting.</p></td>
+    </tr>
+    <tr>
+      <th>NA_blacklisted</th>
+      <td><p>A logical indicating if NA values should be returned
+for blacklisted regions. By default, signal in the blacklisted sites is
+ignored, i.e. the reads are excluded. If <code>NA_blacklisted = TRUE</code>,
+those positions are set to <code>NA</code> in the final output.</p></td>
+    </tr>
+    <tr>
+      <th>melt</th>
+      <td><p>A logical indicating if the count matrices should be melted. If
+set to <code>TRUE</code>, a dataframe is returned in containing columns for
+"region", "position", and "signal". If <code>dataset.gr</code> is a list of
+multiple GRanges, or if <code>length(field) &gt; 1</code>, a single dataframe is
+returned, which contains an additional column "sample", which contains
+individual sample names. If used with multi-width <code>regions.gr</code>, the
+resulting dataframe will only contain positions that are found within each
+respective region.</p></td>
+    </tr>
+    <tr>
       <th>ncores</th>
-      <td><p>Multiple cores can only be used if <code>length(field) &gt; 1</code>.</p></td>
+      <td><p>Multiple cores will only be used if <code>dataset.gr</code> is a list
+of multiple datasets, or if <code>length(field) &gt; 1</code>.</p></td>
     </tr>
     </table>
 
@@ -193,7 +220,9 @@ If given, <code><a href='https://rdrr.io/r/base/length.html'>length(NF)</a></cod
 
     <p>If the widths of all ranges in <code>regions.gr</code> are equal, a matrix
   is returned that contains a row for each region of interest, and a column
-  for each position (each base if <code>binsize = 1</code>) within each region.</p>
+  for each position (each base if <code>binsize = 1</code>) within each region. If
+  <code>dataset.gr</code> is a list, a parallel list is returned containing a
+  matrix for each input dataset.</p>
     <h2 class="hasAnchor" id="use-of-multi-width-regions-of-interest"><a class="anchor" href="#use-of-multi-width-regions-of-interest"></a>Use of multi-width regions of interest</h2>
 
     <p>If the input

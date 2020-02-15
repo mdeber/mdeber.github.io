@@ -72,7 +72,7 @@ non-destructive." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.5</span>
       </span>
     </div>
 
@@ -130,14 +130,19 @@ inherited by its daughter ranges, and therefore the transformation is
 non-destructive.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>makeGRangesBRG</span>(<span class='no'>dataset.gr</span>)</pre>
+    <pre class="usage"><span class='fu'>makeGRangesBRG</span>(<span class='no'>dataset.gr</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fu'>detectCores</span>())</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>dataset.gr</th>
-      <td><p>A disjoint GRanges object</p></td>
+      <td><p>A disjoint GRanges object, or a list of such objects.</p></td>
+    </tr>
+    <tr>
+      <th>ncores</th>
+      <td><p>If <code>dataset.gr</code> is a list, the number of cores to use for
+computations.</p></td>
     </tr>
     </table>
 

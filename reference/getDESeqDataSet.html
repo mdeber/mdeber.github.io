@@ -71,7 +71,7 @@ regions." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.5</span>
       </span>
     </div>
 
@@ -131,10 +131,11 @@ regions.</p>
     <pre class="usage"><span class='fu'>getDESeqDataSet</span>(
   <span class='no'>dataset.list</span>,
   <span class='no'>regions.gr</span>,
-  <span class='kw'>sample_names</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>dataset.list</span>),
+  <span class='kw'>sample_names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>gene_names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>sizeFactors</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"score"</span>,
+  <span class='kw'>blacklist</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fu'>detectCores</span>(),
   <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )</pre>
@@ -144,10 +145,11 @@ regions.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>dataset.list</th>
-      <td><p>A list of GRanges datasets that can be individually
-passed to <code><a href='getCountsByRegions.html'>getCountsByRegions</a></code>.
-Alternatively, a <code><a href='mergeGRangesData.html'>
-multiplexed GRanges</a></code> object can also be used (see details below).</p></td>
+      <td><p>An object containing GRanges datasets that can be passed
+to <code><a href='getCountsByRegions.html'>getCountsByRegions</a></code>,
+typically a list of GRanges objects, or a
+<code><a href='mergeGRangesData.html'> multiplexed GRanges</a></code> object (see
+details below).</p></td>
     </tr>
     <tr>
       <th>regions.gr</th>
@@ -156,10 +158,12 @@ multiplexed GRanges</a></code> object can also be used (see details below).</p><
     <tr>
       <th>sample_names</th>
       <td><p>Names for each dataset in <code>dataset.list</code> are
-required, and by default the names of the list elements are used. The names
-must each contain the string "_rep#", where "#" is a single character
-(usually a number) indicating the replicate. Sample names across different
-replicates must be otherwise identical.</p></td>
+required. By default (<code>sample_names = NULL</code>), if <code>dataset.list</code>
+is a list, the names of the list elements are used; for a multiplexed
+GRanges object, the field names are used. The names must each contain the
+string "_rep#", where "#" is a single character (usually a number)
+indicating the replicate. Sample names across different replicates must be
+otherwise identical.</p></td>
     </tr>
     <tr>
       <th>gene_names</th>
@@ -176,17 +180,28 @@ the <code>DESeqDataSet</code> object in this function, or they can be applied
 later on, either by the user or in a call to <code>getDESeqResults</code>.
 Applying the <code>sizeFactors</code> later is useful if multiple sets of factors
 will be explored, although <code>sizeFactors</code> can be overwritten at any
-time.</p></td>
+time. Note that DESeq2 <code>sizeFactors</code> are <em>not</em> the same as
+normalization factors defined elsewhere in this package. See details below.</p></td>
     </tr>
     <tr>
       <th>field</th>
-      <td><p>Argument passed to <code>getCountsByRegions</code>. Optional if
-<code>dataset.list</code> is a multiplexed GRanges object (see details below).</p></td>
+      <td><p>Argument passed to <code>getCountsByRegions</code>. Can be used to
+specify fields in a single multiplexed GRanges object, or individual fields
+for each GRanges object in <code>dataset.list</code>.</p></td>
+    </tr>
+    <tr>
+      <th>blacklist</th>
+      <td><p>An optional GRanges object containing regions that should be
+excluded from signal counting. Use of this argument is distinct from the
+use of non-contiguous gene regions (see details below), and the two can be
+used simultaneously. Blacklisting doesn't affect the ranges returned as
+rowRanges in the output DESeqDataSet object (unlike the use of
+non-contiguous regions).</p></td>
     </tr>
     <tr>
       <th>ncores</th>
-      <td><p>Number of cores to use for read counting across all samples.
-By default, all available cores are used.</p></td>
+      <td><p>Number of cores to use for read counting across all samples. By
+default, all available cores are used.</p></td>
     </tr>
     <tr>
       <th>quiet</th>
@@ -206,22 +221,15 @@ By default, all available cores are used.</p></td>
     <h2 class="hasAnchor" id="use-of-non-contiguous-gene-regions"><a class="anchor" href="#use-of-non-contiguous-gene-regions"></a>Use of non-contiguous gene regions</h2>
 
     <p>In DESeq2, genes must be defined
-  by single, contiguous chromosomal locations. This function allows
-  individual genes to be encompassed by multiple distinct ranges in
+  by single, contiguous chromosomal locations. In contrast, this function
+  allows individual genes to be encompassed by multiple distinct ranges in
   <code>regions.gr</code>. To use non-contiguous gene regions, provide
   <code>gene_names</code> in which some names are duplicated. For each unique gene
   in <code>gene_names</code>, this function will generate counts across all ranges
   for that gene, but be aware that it will only keep the largest range for
-  each gene in the resulting <code>DESeqDataSet</code> object's <code>rowRanges</code>.</p>
-    <h2 class="hasAnchor" id="using-multiplexed-granges-as-input"><a class="anchor" href="#using-multiplexed-granges-as-input"></a>Using multiplexed GRanges as input</h2>
-
-    <p>If a single multiplexed GRanges
-  object is used in lieu of a list of GRanges, the default arguments for
-  <code>field</code> and <code>sample_names</code> can be left, and <code>sample_names</code>
-  will match the names of the fields in the input GRanges. If provided,
-  <code>field</code> will be used to access/subset the multiplexed GRanges object,
-  and thus all elements of <code>field</code> must be found in
-  <code><a href='https://rdrr.io/r/base/names.html'>names(mcols(dataset.list))</a></code>.</p>
+  each gene in the resulting <code>DESeqDataSet</code> object's <code>rowRanges</code>.
+  If the desired use is to blacklist certain sites in a genelist, note that
+  the <code>blacklist</code> argument can be used.</p>
     <h2 class="hasAnchor" id="a-note-on-deseq-sizefactors"><a class="anchor" href="#a-note-on-deseq-sizefactors"></a>A note on DESeq2 sizeFactors</h2>
 
     <p>DESeq2 <code>sizeFactors</code> are
@@ -278,7 +286,6 @@ By default, all available cores are used.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
       <li><a href="#use-of-non-contiguous-gene-regions">Use of non-contiguous gene regions</a></li>
-      <li><a href="#using-multiplexed-granges-as-input">Using multiplexed GRanges as input</a></li>
       <li><a href="#a-note-on-deseq-sizefactors">A note on DESeq2 sizeFactors</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>

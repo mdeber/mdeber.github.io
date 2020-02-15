@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.5</span>
       </span>
     </div>
 
@@ -99,7 +99,7 @@
 <a href="#motivation" class="anchor"></a>Motivation</h1>
 <p>This package is designed to:</p>
 <ul>
-<li>Replace the use of command-line utilities for typical post-alignment processing, e.g. <code>bedtools</code> and <code>deeptools</code>
+<li>Replace the use of command-line utilities for most post-alignment processing, e.g. <code>bedtools</code> and <code>deeptools</code>
 </li>
 <li>Be easy-to-use and easy-to-install, without requiring external dependencies, e.g. <code>hitslib</code> or the kent source utilities from the UCSC genome browser</li>
 <li>Allow users to string together common analysis pipelines with simple, fast-running one-liners</li>
@@ -114,9 +114,11 @@
 <h1 class="hasAnchor">
 <a href="#features" class="anchor"></a>Features</h1>
 <ul>
-<li>Process and import bam files quickly and easily; or import existing bedGraph or bigWig files</li>
+<li>Process and import bedGraoh, bigWig, and bam files quickly and easily, with several pre-configured defaults for typical uses</li>
+<li>Count and filter spike-in reads</li>
+<li>Calculate spike-in normalization factors using several methods and options, including options for batch normalization</li>
 <li>Count reads by regions of interest</li>
-<li>Counts reads at positions within regions of interest, at single-base resolution or in larger bins, and generate count matrices for heatmapping</li>
+<li>Count reads at positions within regions of interest, at single-base resolution or in larger bins, and generate count matrices for heatmapping</li>
 <li>Calculate bootstrapped signal (e.g. readcount) profiles with confidence intervals (i.e. meta-profiles)</li>
 <li>Modify gene regions (e.g. extract promoters or genebody regions) using a single simple and straightforward function</li>
 <li>Conveniently, efficiently, and <em>correctly</em> call <code>DESeq2</code> to calculate differential expression between numerous <em>pairs</em> of samples<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>
@@ -125,6 +127,7 @@
 <li>Efficiently generate results across a list of comparisons</li>
 </ul>
 </li>
+<li>Support for blacklisting throughout, and proper accounting of blacklisted sites in relevant calculations</li>
 <li>Users interact with an intuitive and computationally efficient data structure (the “basepair resolution <code>GRanges</code>” object), which is already supported by a rich, user-friendly suite of tools that greatly simplify working with datasets and annotations</li>
 </ul>
 <div id="coming-soon" class="section level3">
@@ -132,16 +135,12 @@
 <a href="#coming-soon" class="anchor"></a>Coming Soon</h3>
 <p>Data processing:</p>
 <ul>
-<li>UMI deduplification</li>
-<li>Separating and counting spike-in reads</li>
-<li>Generating normalization factors, including several distinct and meaningful methods for calculating spike-in normalization factors</li>
 <li>Summarizing and plotting replicate correlations</li>
 <li>Function to use random read sampling to assess if sequencing depth sufficient to stabilize arbitrary calculations (so a user can supply anonymous function to calculate things like RMP-normalized gene expression, or DESeq2 differential expression, pausing indices, etc.)</li>
 </ul>
 <p>Signal counting and analysis:</p>
 <ul>
 <li>Two-stranded meta-profile calculations</li>
-<li>Support for region black-listing in generating signal matrices and in meta-profiling, and increased support in DESeq2 functions</li>
 <li>Automated generation of a list of DESeq2 comparisons using all possible combinations; all possible permutations; or by defining a simple hierarchy of each-vs-one comparisons</li>
 </ul>
 </div>
@@ -357,12 +356,12 @@
 ##  collate  en_US.UTF-8                                       
 ##  ctype    en_US.UTF-8                                       
 ##  tz       America/New_York                                  
-##  date     2020-01-30                                        
+##  date     2020-02-15                                        
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────
 ##  package              * version   date       lib source        
-##  annotate               1.65.0    2019-11-06 [3] Bioconductor  
-##  AnnotationDbi          1.49.0    2019-11-07 [3] Bioconductor  
+##  annotate               1.65.1    2020-01-27 [3] Bioconductor  
+##  AnnotationDbi          1.49.1    2020-01-25 [3] Bioconductor  
 ##  askpass                1.1       2019-01-13 [3] CRAN (R 4.0.0)
 ##  assertthat             0.2.1     2019-03-21 [3] CRAN (R 4.0.0)
 ##  backports              1.1.5     2019-10-02 [3] CRAN (R 4.0.0)
@@ -371,15 +370,15 @@
 ##  BiocGenerics         * 0.33.0    2019-11-06 [3] Bioconductor  
 ##  BiocManager            1.30.10   2019-11-16 [3] CRAN (R 4.0.0)
 ##  BiocParallel           1.21.2    2019-12-21 [3] Bioconductor  
-##  BiocStyle            * 2.15.5    2020-01-09 [3] Bioconductor  
-##  biomaRt                2.43.1    2020-01-07 [3] Bioconductor  
+##  BiocStyle            * 2.15.6    2020-02-01 [3] Bioconductor  
+##  biomaRt                2.43.3    2020-02-08 [3] Bioconductor  
 ##  Biostrings             2.55.4    2019-12-14 [3] Bioconductor  
 ##  bit                    1.1-14    2018-05-29 [3] CRAN (R 4.0.0)
 ##  bit64                  0.9-7     2017-05-08 [3] CRAN (R 4.0.0)
 ##  bitops                 1.0-6     2013-08-17 [3] CRAN (R 4.0.0)
 ##  blob                   1.2.0     2019-07-09 [3] CRAN (R 4.0.0)
 ##  bookdown               0.17      2020-01-11 [3] CRAN (R 4.0.0)
-##  BRGenomics           * 0.5.6     2020-01-30 [1] Bioconductor  
+##  BRGenomics           * 0.7.5     2020-02-15 [1] Bioconductor  
 ##  BSgenome               1.55.2    2019-12-13 [3] Bioconductor  
 ##  callr                  3.4.0     2019-12-09 [3] CRAN (R 4.0.0)
 ##  cli                    2.0.1     2020-01-08 [3] CRAN (R 4.0.0)
@@ -412,7 +411,7 @@
 ##  hms                    0.5.3     2020-01-08 [3] CRAN (R 4.0.0)
 ##  htmltools              0.4.0     2019-10-04 [3] CRAN (R 4.0.0)
 ##  httr                   1.4.1     2019-08-05 [3] CRAN (R 4.0.0)
-##  IRanges              * 2.21.2    2019-11-20 [3] Bioconductor  
+##  IRanges              * 2.21.3    2020-01-13 [3] Bioconductor  
 ##  knitr                  1.26      2019-11-12 [3] CRAN (R 4.0.0)
 ##  lattice                0.20-38   2018-11-04 [3] CRAN (R 4.0.0)
 ##  lazyeval               0.2.2     2019-03-15 [3] CRAN (R 4.0.0)
@@ -448,7 +447,7 @@
 ##  RSQLite                2.2.0     2020-01-07 [3] CRAN (R 4.0.0)
 ##  rstudioapi             0.10      2019-03-19 [3] CRAN (R 4.0.0)
 ##  rtracklayer            1.47.0    2019-11-06 [3] Bioconductor  
-##  S4Vectors            * 0.25.9    2020-01-09 [3] Bioconductor  
+##  S4Vectors            * 0.25.10   2020-01-13 [3] Bioconductor  
 ##  scales                 1.1.0     2019-11-18 [3] CRAN (R 4.0.0)
 ##  sessioninfo            1.1.1     2018-11-05 [3] CRAN (R 4.0.0)
 ##  stringi                1.4.5     2020-01-11 [3] CRAN (R 4.0.0)
@@ -470,8 +469,8 @@
 ##  zeallot                0.1.0     2018-01-28 [3] CRAN (R 4.0.0)
 ##  zlibbioc               1.33.0    2019-11-06 [3] Bioconductor  
 ## 
-## [1] /private/var/folders/zt/m504_3g569g6gqzjbqg34qn40000gn/T/Rtmp65bn4D/temp_libpath12c731ec211ca
-## [2] /private/var/folders/zt/m504_3g569g6gqzjbqg34qn40000gn/T/Rtmp65bn4D/temp_libpath12c73496f39f6
+## [1] /private/var/folders/zt/m504_3g569g6gqzjbqg34qn40000gn/T/Rtmp123Vub/temp_libpathfb2f617e006f
+## [2] /private/var/folders/zt/m504_3g569g6gqzjbqg34qn40000gn/T/Rtmp123Vub/temp_libpathfb2f152237b5
 ## [3] /Library/Frameworks/R.framework/Versions/4.0/Resources/library</code></pre>
 <!-- SCRAP -->
 <!-- The `import_bam` function provides several options for processing aligned reads, and in conjunction with functions from the *[rtracklayer](https://bioconductor.org/packages/3.11/rtracklayer)* package, we can easily write a post-alignment pipeline for generating bigWig files for viewing in a genome browser. -->

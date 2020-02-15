@@ -70,7 +70,7 @@ Function also works for non-strand-specific data." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.5</span>
       </span>
     </div>
 
@@ -135,7 +135,8 @@ Function also works for non-strand-specific data.</p>
       <th>dataset.gr</th>
       <td><p>A GRanges object either containing ranges for each read, or
 one in which readcounts for individual ranges are contained in metadata
-(typically in the "score" field).</p></td>
+(typically in the "score" field). <code>dataset.gr</code> can also be a list of
+such GRanges objects.</p></td>
     </tr>
     <tr>
       <th>field</th>
@@ -145,9 +146,10 @@ read, set to NULL.</p></td>
     </tr>
     <tr>
       <th>ncores</th>
-      <td><p>Number of cores to use for calculating coverage. The max that
-will be used is 3, one for each possible strand (plus, minus, and
-unstranded).</p></td>
+      <td><p>Number of cores to use for calculating coverage. For a single
+dataset, the max that will be used is 3, one for each possible strand
+(plus, minus, and unstranded). More cores can be used if <code>dataset.gr</code>
+is a list.</p></td>
     </tr>
     </table>
 

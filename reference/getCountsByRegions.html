@@ -70,7 +70,7 @@ regions.gr." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.5</span>
       </span>
     </div>
 
@@ -131,6 +131,9 @@ regions.gr." />
   <span class='no'>regions.gr</span>,
   <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"score"</span>,
   <span class='kw'>NF</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>blacklist</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>melt</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>region_names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fu'>detectCores</span>()
 )</pre>
 
@@ -140,7 +143,9 @@ regions.gr." />
     <tr>
       <th>dataset.gr</th>
       <td><p>A GRanges object in which signal is contained in metadata
-(typically in the "score" field).</p></td>
+(typically in the "score" field), or a named list of such GRanges objects.
+If a list is given, a dataframe is returned containing the counts in each
+region for each dataset.</p></td>
     </tr>
     <tr>
       <th>regions.gr</th>
@@ -160,15 +165,42 @@ each region in each field. If <code>field</code> not found in
 If given, <code><a href='https://rdrr.io/r/base/length.html'>length(NF)</a></code> must be equal to <code><a href='https://rdrr.io/r/base/length.html'>length(field)</a></code>.</p></td>
     </tr>
     <tr>
+      <th>blacklist</th>
+      <td><p>An optional GRanges object containing regions that should be
+excluded from signal counting.</p></td>
+    </tr>
+    <tr>
+      <th>melt</th>
+      <td><p>If <code>melt = TRUE</code>, a dataframe is returned containing a
+column for regions and another column for signal. If multiple datasets are
+given (if <code>dataset.gr</code> is a list or if <code>length(field) &gt; 1</code>), the
+output dataframe is melted to contain a third column indicating the sample
+names. (See section on return values below).</p></td>
+    </tr>
+    <tr>
+      <th>region_names</th>
+      <td><p>If <code>melt = TRUE</code>, an optional vector of names for
+the regions in <code>regions.gr</code>. If left as <code>NULL</code>, indices of
+<code>regions.gr</code> are used instead.</p></td>
+    </tr>
+    <tr>
       <th>ncores</th>
-      <td><p>Multiple cores can only be used if <code>length(field) &gt; 1</code>.</p></td>
+      <td><p>Multiple cores will only be used if <code>dataset.gr</code> is a list
+of multiple datasets, or if <code>length(field) &gt; 1</code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An atomic vector the same length as <code>regions.gr</code> containing the
-  sum of the signal overlapping each range of <code>regions.gr</code>.</p>
+  sum of the signal overlapping each range of <code>regions.gr</code>. If
+  <code>dataset.gr</code> is a list of multiple GRanges, or if <code>length(field)
+  &gt; 1</code>, a dataframe is returned. If <code>melt = FALSE</code> (the default),
+  dataframes have a column for each dataset and a row for each region. If
+  <code>melt = TRUE</code>, dataframes contain one column to indicate regions
+  (either by their indices, or by <code>region_names</code>, if given), another
+  column to indicate signal, and a third column containing the sample name
+  (unless <code>dataset.gr</code> is a single GRanges object).</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='getCountsByPositions.html'>getCountsByPositions</a></code></p></div>
