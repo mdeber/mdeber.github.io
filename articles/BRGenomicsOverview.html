@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.7</span>
       </span>
     </div>
 
@@ -114,14 +114,14 @@
 <h1 class="hasAnchor">
 <a href="#features" class="anchor"></a>Features</h1>
 <ul>
-<li>Process and import bedGraoh, bigWig, and bam files quickly and easily, with several pre-configured defaults for typical uses</li>
+<li>Process and import bedGraph, bigWig, and bam files quickly and easily, with several pre-configured defaults for typical uses</li>
 <li>Count and filter spike-in reads</li>
 <li>Calculate spike-in normalization factors using several methods and options, including options for batch normalization</li>
 <li>Count reads by regions of interest</li>
 <li>Count reads at positions within regions of interest, at single-base resolution or in larger bins, and generate count matrices for heatmapping</li>
 <li>Calculate bootstrapped signal (e.g. readcount) profiles with confidence intervals (i.e. meta-profiles)</li>
 <li>Modify gene regions (e.g. extract promoters or genebody regions) using a single simple and straightforward function</li>
-<li>Conveniently, efficiently, and <em>correctly</em> call <code>DESeq2</code> to calculate differential expression between numerous <em>pairs</em> of samples<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>
+<li>Conveniently and efficiently call <code>DESeq2</code> to calculate differential expression in a manner that is robust to global changes<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>
 <ul>
 <li>Use non-contiguous genes in <code>DESeq2</code> analysis, e.g. to exclude of specific sites/peaks from the analysis (not usually supported by DESeq2)</li>
 <li>Efficiently generate results across a list of comparisons</li>
@@ -136,7 +136,7 @@
 <p>Data processing:</p>
 <ul>
 <li>Summarizing and plotting replicate correlations</li>
-<li>Function to use random read sampling to assess if sequencing depth sufficient to stabilize arbitrary calculations (so a user can supply anonymous function to calculate things like RMP-normalized gene expression, or DESeq2 differential expression, pausing indices, etc.)</li>
+<li>Function to use random read sampling to assess if sequencing depth sufficient to stabilize arbitrary calculations (so a user can supply anonymous function to calculate things like rank expression, power analysis or differential expression by DESeq2, pausing indices, etc.)</li>
 </ul>
 <p>Signal counting and analysis:</p>
 <ul>
@@ -287,43 +287,32 @@
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/all.html">all</a></span>(<span class="kw">width</span>(ps) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)</a>
 <a class="sourceLine" id="cb16-2" data-line-number="2"><span class="co">## [1] TRUE</span></a></code></pre></div>
 </div>
-<div id="example-pipeline-for-generating-pro-seq-browser-tracks" class="section level1">
+<div id="example-bam-to-bigwig-conversion" class="section level1">
 <h1 class="hasAnchor">
-<a href="#example-pipeline-for-generating-pro-seq-browser-tracks" class="anchor"></a>Example: Pipeline for Generating PRO-seq Browser Tracks</h1>
-<p>The <code>import_bam</code> function provides several options for processing aligned reads, and in conjunction with functions from the <em><a href="https://bioconductor.org/packages/3.11/rtracklayer">rtracklayer</a></em> package, we can easily write a post-alignment pipeline for generating bigWig files for viewing in a genome browser.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">ps &lt;-<span class="st"> </span><span class="kw"><a href="../reference/import_bam.html">import_bam</a></span>(bfile, </a>
-<a class="sourceLine" id="cb17-2" data-line-number="2">                 <span class="dt">mapq =</span> <span class="dv">20</span>, </a>
-<a class="sourceLine" id="cb17-3" data-line-number="3">                 <span class="dt">revcomp =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb17-4" data-line-number="4">                 <span class="dt">shift =</span> <span class="dv">-1</span>,</a>
-<a class="sourceLine" id="cb17-5" data-line-number="5">                 <span class="dt">trim.to =</span> <span class="st">"3p"</span>,</a>
-<a class="sourceLine" id="cb17-6" data-line-number="6">                 <span class="dt">paired_end =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb17-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb17-8" data-line-number="8">ps_plus &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(ps, strand <span class="op">==</span><span class="st"> "+"</span>)</a>
-<a class="sourceLine" id="cb17-9" data-line-number="9">ps_minus &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(ps, strand <span class="op">==</span><span class="st"> "-"</span>)</a>
-<a class="sourceLine" id="cb17-10" data-line-number="10"><span class="kw">score</span>(ps_minus) &lt;-<span class="st"> </span><span class="op">-</span><span class="kw">score</span>(ps_minus) <span class="co"># make minus-strand scores negative</span></a>
-<a class="sourceLine" id="cb17-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb17-12" data-line-number="12">rtracklayer<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/rtracklayer/man/BigWigFile.html">export.bw</a></span>(ps_plus, <span class="st">"~/Data/PROseq_plus.bw"</span>)</a>
-<a class="sourceLine" id="cb17-13" data-line-number="13">rtracklayer<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/rtracklayer/man/BigWigFile.html">export.bw</a></span>(ps_minus, <span class="st">"~/Data/PROseq_minus.bw"</span>)</a></code></pre></div>
+<a href="#example-bam-to-bigwig-conversion" class="anchor"></a>Example: BAM to bigWig Conversion</h1>
+<p>The <code>import_bam</code> function provides several options for processing aligned reads, and in conjunction with functions from the <em><a href="https://bioconductor.org/packages/3.11/rtracklayer">rtracklayer</a></em> package, we can easily write a post-alignment pipeline for generating bigWig files for viewing in a genome browser. Here, we use the <code>import_bam_PROseq</code> function, which has preset defaults for PRO-seq data. For other pre-configured importation functions, see the documentation for the <code>import_bam</code> function.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">ps &lt;-<span class="st"> </span><span class="kw"><a href="../reference/import_bam.html">import_bam_PROseq</a></span>(bfile, <span class="dt">mapq =</span> <span class="dv">20</span>, <span class="dt">paired_end =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb17-3" data-line-number="3">ps_plus &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(ps, strand <span class="op">==</span><span class="st"> "+"</span>)</a>
+<a class="sourceLine" id="cb17-4" data-line-number="4">ps_minus &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(ps, strand <span class="op">==</span><span class="st"> "-"</span>)</a>
+<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="kw">score</span>(ps_minus) &lt;-<span class="st"> </span><span class="op">-</span><span class="kw">score</span>(ps_minus) <span class="co"># make minus-strand scores negative</span></a>
+<a class="sourceLine" id="cb17-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb17-7" data-line-number="7">rtracklayer<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/rtracklayer/man/BigWigFile.html">export.bw</a></span>(ps_plus, <span class="st">"~/Data/PROseq_plus.bw"</span>)</a>
+<a class="sourceLine" id="cb17-8" data-line-number="8">rtracklayer<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/rtracklayer/man/BigWigFile.html">export.bw</a></span>(ps_minus, <span class="st">"~/Data/PROseq_minus.bw"</span>)</a></code></pre></div>
+</div>
+<div id="spike-in-normalizing-data" class="section level1">
+<h1 class="hasAnchor">
+<a href="#spike-in-normalizing-data" class="anchor"></a>Spike-in Normalizing Data</h1>
 </div>
 <div id="working-with-annotations" class="section level1">
 <h1 class="hasAnchor">
 <a href="#working-with-annotations" class="anchor"></a>Working With Annotations</h1>
-</div>
-<div id="efficient-analysis-of-multiple-datasets" class="section level1">
-<h1 class="hasAnchor">
-<a href="#efficient-analysis-of-multiple-datasets" class="anchor"></a>Efficient Analysis of Multiple Datasets</h1>
-</div>
-<div id="saving-binary-r-files" class="section level1">
-<h1 class="hasAnchor">
-<a href="#saving-binary-r-files" class="anchor"></a>Saving Binary R Files</h1>
-</div>
-<div id="deseq" class="section level1">
-<h1 class="hasAnchor">
-<a href="#deseq" class="anchor"></a>DESeq</h1>
-</div>
-<div id="combining-replicates" class="section level1">
-<h1 class="hasAnchor">
-<a href="#combining-replicates" class="anchor"></a>Combining Replicates</h1>
+<!--
+* Importing genelists
+* Modifying genelists using genebodies for instance
+* Finding max positions
+* (Use example, find max position, then make heatmap centered on it)
+-->
 </div>
 <div id="heatmaps" class="section level1">
 <h1 class="hasAnchor">
@@ -334,6 +323,68 @@
 <h1 class="hasAnchor">
 <a href="#metaplots" class="anchor"></a>Metaplots</h1>
 <!-- (Use R plotting, and ggplot) -->
+</div>
+<div id="efficient-analysis-of-multiple-datasets" class="section level1">
+<h1 class="hasAnchor">
+<a href="#efficient-analysis-of-multiple-datasets" class="anchor"></a>Efficient Analysis of Multiple Datasets</h1>
+<p>To efficiently work with several datasets, we recommend storing the GRanges objects within a standard, named list, e.g. <code>grl &lt;- list(a_rep1 = gr1, b_rep1 = gr2, ...)</code>. A named list like this can be passed as an argument to nearly every function in BRGenomics, and many functions will automatically return dataframes, or melted dataframes that use the list names as the sample names.</p>
+<p>BRGenomics does not currently support the use of <code>GRangesList</code> or <code>CompressedGRangesList</code> classes for grouping multiple datasets.<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a></p>
+<!--
+
+(Recommend storing GRanges objects within standard R list elements. 
+
+(And there is a GRangesList class and a compressed version, but we've found 
+substantial performance penalties in using them. Note that these classes may scale
+better for analyzing a large number of datasets simultaneously, when memory is
+limiting. They're currently not supported).
+
+## Multiplexed GRanges
+
+(Depending on the dataset, it may make sense to combine many datasets into a single
+GRanges object, with readcounts for each dataset contained in the `mcols` metadata.
+We've termed these "multiplexed GRanges" objects, and they are supported throughout
+the package.)
+
+((make one and demonstrate))
+
+(While this format is tempting, and on first inspection would appear to be more
+efficient, in our experience there is a substantial performance penalty when
+used with sparse data. With sparse data, like PRO-seq, it's more efficient to have
+a number of smaller GRanges objects than to have a single very large one containing
+numerous metadata columns containing mostly zeroes. This may change if Bioconductor
+core classes implement future support for efficient handling of sparse matrices.)
+
+-->
+</div>
+<div id="saving-binary-r-files" class="section level1">
+<h1 class="hasAnchor">
+<a href="#saving-binary-r-files" class="anchor"></a>Saving Binary R Files</h1>
+<p>While the handling of GRanges data in BRGenomics is relatively fast, the initial importation of bigWig or bedGraph files as GRanges objects remains a noticeable bottleneck. This may be tolerable for interactive workflows, in which data is imported once before undergoing lengthy analysis, but the bottleneck is a significant detriment for users who regularly import data.</p>
+<p>To avoid this bottleneck, users can save reusable data structures as binary R files, which effectively save the memory state of R objects. Not only are these objects rapidly reloaded into memory upon importation, but they have the added benefit of saving the user from repeating data formatting (like naming).</p>
+<!--(maybe footnote the save/read vs. saveRDS/readRDS) -->
+<p>Any R object can be saved to storage using the <code>save</code> or <code>saveRDS</code> commands, and re-imported using the <code>load</code> or <code>readRDS</code> commands. The <code>saveRDS</code>/<code>readRDS</code> commands work like other data exporting and importing commands, while the <code>read</code>/<code>load</code> commands maintain the original name of the objects. For instance, if you <code><a href="https://rdrr.io/r/base/save.html">save(PROseq, file = "~/ps.RData")</a></code>, and in a new R session run <code>read("~/ps.RData")</code>, a new object called <code>PROseq</code> will be created in your new environment.<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a></p>
+</div>
+<div id="deseq" class="section level1">
+<h1 class="hasAnchor">
+<a href="#deseq" class="anchor"></a>DESeq</h1>
+<p>DESeq2’s default treatment of data relies on the assumption that genewise estimates of dispersion are largely unchanged across samples. While this assumption holds for a typical RNA-seq data, it can be violated if there exist <em>any</em> conditions represented in the <code>DESeqDataSet</code> object that caused meaningful signal changes across a majority of regions of interest. The BRGenomics functions <code>getDESeqDataSet</code> and <code>getDESeqResults</code> are simple and flexible wrappers for making pairwise comparisons between individual samples, without relying on the assumption of globally-similar dispersion estimates.</p>
+<p>For making simple, pairwise comparisons between individual (replicated) samples, the <code>getDESeqResults</code> follows the logic that the presence of a dataset <span class="math inline">\(X\)</span> within the <code>DESeqDataSet</code> object will not affect the comparison of datasets <span class="math inline">\(Y\)</span> and <span class="math inline">\(Z\)</span>. However, while this intuition is appealing, users should note that if the globally-similar dispersions assumption <em>does</em> hold, then DESeq2’s default behavior should be more sensitive in its estimates of genewise dispersion. In this case, users can still take advantage of the convenience of the BRGenomics function <code>getDESeqDataSet</code> before calling <code><a href="https://rdrr.io/pkg/DESeq2/man/DESeq.html">DESeq2::DESeq</a></code> and <code><a href="https://rdrr.io/pkg/DESeq2/man/results.html">DESeq2::results</a></code>.</p>
+<p>If the globally-similar dispersions assumption is violated, but something beyond simple pairwise comparisons is desired (e.g. group comparisons or additional model terms), we note that DESeq2 can be used without “blind dispersion estimation” (see the DESeq2 manual).</p>
+<!-- (Using list) -->
+</div>
+<div id="combining-replicates" class="section level1">
+<h1 class="hasAnchor">
+<a href="#combining-replicates" class="anchor"></a>Combining Replicates</h1>
+<p>Biological replicates are best used to independently reproduce and measure effects, and therefore we often want to handle them separately. However, there are times when combining replicates can allow for more sensitive measurements, assuming that the replicates are indistinguishable.</p>
+<p>The <code>mergeGRangesData</code> function can be used to combine basepair-resolution GRanges objects, e.g. <code>a_combined &lt;- mergeGRangesData(a_rep1, a_rep2)</code></p>
+<!-- 
+
+((Later on))
+
+(There are other times when it makes sense to combine a large number of datasets.
+This can be accomplished by passing an entire list of GRanges objects)
+
+-->
 </div>
 <div id="browser-shots" class="section level1">
 <h1 class="hasAnchor">
@@ -356,7 +407,7 @@
 ##  collate  en_US.UTF-8                                       
 ##  ctype    en_US.UTF-8                                       
 ##  tz       America/New_York                                  
-##  date     2020-02-15                                        
+##  date     2020-02-19                                        
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────
 ##  package              * version   date       lib source        
@@ -378,8 +429,8 @@
 ##  bitops                 1.0-6     2013-08-17 [3] CRAN (R 4.0.0)
 ##  blob                   1.2.0     2019-07-09 [3] CRAN (R 4.0.0)
 ##  bookdown               0.17      2020-01-11 [3] CRAN (R 4.0.0)
-##  BRGenomics           * 0.7.5     2020-02-15 [1] Bioconductor  
-##  BSgenome               1.55.2    2019-12-13 [3] Bioconductor  
+##  BRGenomics           * 0.7.7     2020-02-19 [1] Bioconductor  
+##  BSgenome               1.55.3    2020-01-29 [3] Bioconductor  
 ##  callr                  3.4.0     2019-12-09 [3] CRAN (R 4.0.0)
 ##  cli                    2.0.1     2020-01-08 [3] CRAN (R 4.0.0)
 ##  colorspace             1.4-1     2019-03-18 [3] CRAN (R 4.0.0)
@@ -387,9 +438,9 @@
 ##  curl                   4.3       2019-12-02 [3] CRAN (R 4.0.0)
 ##  DBI                    1.1.0     2019-12-15 [3] CRAN (R 4.0.0)
 ##  dbplyr                 1.4.2     2019-06-17 [3] CRAN (R 4.0.0)
-##  DelayedArray           0.13.2    2020-01-06 [3] Bioconductor  
+##  DelayedArray           0.13.4    2020-02-13 [3] Bioconductor  
 ##  desc                   1.2.0     2018-05-01 [3] CRAN (R 4.0.0)
-##  DESeq2                 1.27.19   2020-01-07 [3] Bioconductor  
+##  DESeq2                 1.27.24   2020-02-09 [3] Bioconductor  
 ##  devtools               2.2.1     2019-09-24 [3] CRAN (R 4.0.0)
 ##  digest                 0.6.23    2019-11-23 [3] CRAN (R 4.0.0)
 ##  dplyr                  0.8.3     2019-07-04 [3] CRAN (R 4.0.0)
@@ -399,12 +450,12 @@
 ##  fs                     1.3.1     2019-05-06 [3] CRAN (R 4.0.0)
 ##  genefilter             1.69.0    2019-11-06 [3] Bioconductor  
 ##  geneplotter            1.65.0    2019-11-06 [3] Bioconductor  
-##  GenomeInfoDb         * 1.23.3    2020-01-11 [3] Bioconductor  
+##  GenomeInfoDb         * 1.23.13   2020-02-12 [3] Bioconductor  
 ##  GenomeInfoDbData       1.2.2     2020-01-12 [3] Bioconductor  
 ##  GenomicAlignments      1.23.1    2019-11-12 [3] Bioconductor  
-##  GenomicFeatures        1.39.2    2019-12-20 [3] Bioconductor  
+##  GenomicFeatures        1.39.5    2020-02-15 [3] Bioconductor  
 ##  GenomicFiles           1.23.0    2019-11-06 [3] Bioconductor  
-##  GenomicRanges        * 1.39.1    2019-11-07 [3] Bioconductor  
+##  GenomicRanges        * 1.39.2    2020-02-04 [3] Bioconductor  
 ##  ggplot2                3.2.1     2019-08-10 [3] CRAN (R 4.0.0)
 ##  glue                   1.3.1     2019-03-12 [3] CRAN (R 4.0.0)
 ##  gtable                 0.3.0     2019-03-25 [3] CRAN (R 4.0.0)
@@ -443,16 +494,16 @@
 ##  rlang                  0.4.2     2019-11-23 [3] CRAN (R 4.0.0)
 ##  rmarkdown              2.0       2019-12-12 [3] CRAN (R 4.0.0)
 ##  rprojroot              1.3-2     2018-01-03 [3] CRAN (R 4.0.0)
-##  Rsamtools              2.3.2     2019-11-07 [3] Bioconductor  
+##  Rsamtools              2.3.4     2020-02-11 [3] Bioconductor  
 ##  RSQLite                2.2.0     2020-01-07 [3] CRAN (R 4.0.0)
 ##  rstudioapi             0.10      2019-03-19 [3] CRAN (R 4.0.0)
 ##  rtracklayer            1.47.0    2019-11-06 [3] Bioconductor  
-##  S4Vectors            * 0.25.10   2020-01-13 [3] Bioconductor  
+##  S4Vectors            * 0.25.12   2020-02-01 [3] Bioconductor  
 ##  scales                 1.1.0     2019-11-18 [3] CRAN (R 4.0.0)
 ##  sessioninfo            1.1.1     2018-11-05 [3] CRAN (R 4.0.0)
 ##  stringi                1.4.5     2020-01-11 [3] CRAN (R 4.0.0)
 ##  stringr                1.4.0     2019-02-10 [3] CRAN (R 4.0.0)
-##  SummarizedExperiment   1.17.1    2019-12-19 [3] Bioconductor  
+##  SummarizedExperiment   1.16.1    2019-12-19 [3] local         
 ##  survival               3.1-8     2019-12-03 [3] CRAN (R 4.0.0)
 ##  testthat               2.3.1     2019-12-01 [3] CRAN (R 4.0.0)
 ##  tibble                 2.1.3     2019-06-06 [3] CRAN (R 4.0.0)
@@ -467,10 +518,10 @@
 ##  XVector                0.27.0    2019-11-06 [3] Bioconductor  
 ##  yaml                   2.2.0     2018-07-25 [3] CRAN (R 4.0.0)
 ##  zeallot                0.1.0     2018-01-28 [3] CRAN (R 4.0.0)
-##  zlibbioc               1.33.0    2019-11-06 [3] Bioconductor  
+##  zlibbioc               1.33.1    2020-01-24 [3] Bioconductor  
 ## 
-## [1] /private/var/folders/zt/m504_3g569g6gqzjbqg34qn40000gn/T/Rtmp123Vub/temp_libpathfb2f617e006f
-## [2] /private/var/folders/zt/m504_3g569g6gqzjbqg34qn40000gn/T/Rtmp123Vub/temp_libpathfb2f152237b5
+## [1] /private/var/folders/zt/m504_3g569g6gqzjbqg34qn40000gn/T/RtmpxjLCNK/temp_libpath186a25cc629e
+## [2] /private/var/folders/zt/m504_3g569g6gqzjbqg34qn40000gn/T/RtmpxjLCNK/temp_libpath186a585299c6
 ## [3] /Library/Frameworks/R.framework/Versions/4.0/Resources/library</code></pre>
 <!-- SCRAP -->
 <!-- The `import_bam` function provides several options for processing aligned reads, and in conjunction with functions from the *[rtracklayer](https://bioconductor.org/packages/3.11/rtracklayer)* package, we can easily write a post-alignment pipeline for generating bigWig files for viewing in a genome browser. -->
@@ -479,10 +530,12 @@
 <div class="footnotes">
 <hr>
 <ol>
-<li id="fn1"><p>By avoiding the default behavior of calculating genewise dispersion across all samples present, which is invalid if any experimental condition causes broad changes<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn1"><p>Avoid the default behavior of calculating genewise dispersion across all samples present, which is invalid if any experimental condition causes broad changes<a href="#fnref1" class="footnote-back">↩</a></p></li>
 <li id="fn2"><p>Hojoong Kwak, Nicholas J. Fuda, Leighton J. Core, John T. Lis (2013). Precise Maps of RNA Polymerase Reveal How Promoters Direct Initiation and Pausing. <em>Science</em> <strong>339</strong>(6122): 950–953. <a href="https://doi.org/10.1126/science.1229386" class="uri">https://doi.org/10.1126/science.1229386</a><a href="#fnref2" class="footnote-back">↩</a></p></li>
 <li id="fn3"><p>Chromosome 4 in Drosophila, often referred to as the “dot” chromosome, is very small and contains very few genes<a href="#fnref3" class="footnote-back">↩</a></p></li>
 <li id="fn4"><p>The <code>GPos</code> class is designed for a similar purpose, but we currently do not use it. There is a note on this in the documentation for <code>makeGRangesBRG</code><a href="#fnref4" class="footnote-back">↩</a></p></li>
+<li id="fn5"><p>The <code>GRangesList</code> and <code>CompressedGRangesList</code> classes, particularly the latter, often cause performance penalties. But more importantly, these classes are often used to store fundamentally “single” objects that have constituent subgroups, like exons organized by transcript. Especially given their wide support by Bioconductor packages, using them as a simple container for multiple GRanges objects creates the potential for undesired method dispatch, and moreover reduces their compatability with non-Bioconductor list-focused methods, like <code>mclapply</code>.<a href="#fnref5" class="footnote-back">↩</a></p></li>
+<li id="fn6"><p>Note that this is the same way that RStudio saves your current working environment to disk, i.e. it saves the entire environment into an RData file.<a href="#fnref6" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
   </div>
@@ -499,14 +552,15 @@
       <li><a href="#getting-started">Getting started</a></li>
       <li><a href="#working-with-bam-files">Working With Bam Files</a></li>
       <li><a href="#basepair-resolution-granges-objects">Basepair-Resolution GRanges Objects</a></li>
-      <li><a href="#example-pipeline-for-generating-pro-seq-browser-tracks">Example: Pipeline for Generating PRO-seq Browser Tracks</a></li>
+      <li><a href="#example-bam-to-bigwig-conversion">Example: BAM to bigWig Conversion</a></li>
+      <li><a href="#spike-in-normalizing-data">Spike-in Normalizing Data</a></li>
       <li><a href="#working-with-annotations">Working With Annotations</a></li>
+      <li><a href="#heatmaps">Heatmaps</a></li>
+      <li><a href="#metaplots">Metaplots</a></li>
       <li><a href="#efficient-analysis-of-multiple-datasets">Efficient Analysis of Multiple Datasets</a></li>
       <li><a href="#saving-binary-r-files">Saving Binary R Files</a></li>
       <li><a href="#deseq">DESeq</a></li>
       <li><a href="#combining-replicates">Combining Replicates</a></li>
-      <li><a href="#heatmaps">Heatmaps</a></li>
-      <li><a href="#metaplots">Metaplots</a></li>
       <li><a href="#browser-shots">“Browser Shots”</a></li>
       <li><a href="#sequence-extraction">Sequence Extraction</a></li>
       <li><a href="#session-info">Session info</a></li>
