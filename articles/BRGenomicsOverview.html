@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.8</span>
       </span>
     </div>
 
@@ -76,8 +76,7 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Basepair-Resolution Analysis with BRGenomics</h1>
-            <h3 class="subtitle">
-<em>Straightforward and efficient tools for analyzing genomics data</em> [EARLY DRAFT]</h3>
+            <h3 class="subtitle"><em>Straightforward and efficient tools for analyzing genomics data</em></h3>
                         <h4 class="author">Mike DeBerardine</h4>
                   <a class="author_email" href="mailto:#"></a><a href="mailto:mike.deberardine@gmail.com" class="email">mike.deberardine@gmail.com</a>
       
@@ -94,9 +93,12 @@
       BRGenomics is designed to help users avoid code repetition by providing efficient and tested functions to accomplish common, discrete tasks in the analysis of high-throughput sequencing data. The included functions are geared toward analyzing basepair-resolution sequencing data, the properties of which are exploited to increase performance and user-friendliness. We leverage standard Bioconductor methods and classes to maximize compatability with its rich ecoystem of bioinformatics tools, and we aim to make BRGenomics sufficient for most post-alignment data processing. Common data processing and analytical steps are turned into fast-running one-liners that can be simultaneously applied across numerous datasets. BRGenomics is fully-documented, and we aim it to be beginner-friendly.
     </div>
     
-<div id="motivation" class="section level1">
+<div id="overview" class="section level1">
 <h1 class="hasAnchor">
-<a href="#motivation" class="anchor"></a>Motivation</h1>
+<a href="#overview" class="anchor"></a>Overview</h1>
+<div id="motivation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#motivation" class="anchor"></a>Motivation</h2>
 <p>This package is designed to:</p>
 <ul>
 <li>Replace the use of command-line utilities for most post-alignment processing, e.g. <code>bedtools</code> and <code>deeptools</code>
@@ -110,9 +112,9 @@
 <li>Fully replace the <code>bigWig</code> R package</li>
 </ul>
 </div>
-<div id="features" class="section level1">
-<h1 class="hasAnchor">
-<a href="#features" class="anchor"></a>Features</h1>
+<div id="features" class="section level2">
+<h2 class="hasAnchor">
+<a href="#features" class="anchor"></a>Features</h2>
 <ul>
 <li>Process and import bedGraph, bigWig, and bam files quickly and easily, with several pre-configured defaults for typical uses</li>
 <li>Count and filter spike-in reads</li>
@@ -130,9 +132,10 @@
 <li>Support for blacklisting throughout, and proper accounting of blacklisted sites in relevant calculations</li>
 <li>Users interact with an intuitive and computationally efficient data structure (the “basepair resolution <code>GRanges</code>” object), which is already supported by a rich, user-friendly suite of tools that greatly simplify working with datasets and annotations</li>
 </ul>
-<div id="coming-soon" class="section level3">
-<h3 class="hasAnchor">
-<a href="#coming-soon" class="anchor"></a>Coming Soon</h3>
+</div>
+<div id="coming-soon" class="section level2">
+<h2 class="hasAnchor">
+<a href="#coming-soon" class="anchor"></a>Coming Soon</h2>
 <p>Data processing:</p>
 <ul>
 <li>Summarizing and plotting replicate correlations</li>
@@ -145,31 +148,395 @@
 </ul>
 </div>
 </div>
-<div id="installation" class="section level1">
+<div id="getting-started" class="section level1">
 <h1 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h1>
+<a href="#getting-started" class="anchor"></a>Getting started</h1>
+<div id="installation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h2>
 <p>Install development version from <a href="https://github.com/mdeber/BRGenomics">GitHub</a>:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install.packages("devtools")</span></a>
 <a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"mdeber/BRGenomics"</span>)</a></code></pre></div>
 <p>If you’re using Windows, <a href="https://cran.rstudio.com/bin/windows/Rtools/">Rtools for Windows</a> is required.</p>
 </div>
-<div id="getting-started" class="section level1">
-<h1 class="hasAnchor">
-<a href="#getting-started" class="anchor"></a>Getting started</h1>
-<p>The package ships with an example dataset of PRO-seq data from Drosophila melanogaster<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. PRO-seq is a basepair-resolution method that uses 3’-end sequencing of nascent RNA to map the locations of actively engaged RNA polymerases. To keep the dataset small, we’ve only included reads mapping to the fourth chromosome<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>. The data is included in several formats, all of which can be derived from the included bam file.</p>
+<div id="included-datasets" class="section level2">
+<h2 class="hasAnchor">
+<a href="#included-datasets" class="anchor"></a>Included Datasets</h2>
+<p>BRGenomics ships with an example dataset of PRO-seq data from Drosophila melanogaster<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. PRO-seq is a basepair-resolution method that uses 3’-end sequencing of nascent RNA to map the locations of actively engaged RNA polymerases.</p>
+<p>To keep the dataset small, we’ve only included reads mapping to the fourth chromosome<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.</p>
+<p>The included datasets can be accessed using the <code><a href="https://rdrr.io/r/utils/data.html">data()</a></code> function:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(BRGenomics)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"PROseq"</span>)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">PROseq</a></code></pre></div>
+<pre><code>## GRanges object with 47380 ranges and 1 metadata column:
+##           seqnames    ranges strand |     score
+##              &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
+##       [1]     chr4      1296      + |         1
+##       [2]     chr4     41429      + |         1
+##       [3]     chr4     42589      + |         1
+##       [4]     chr4     42591      + |         2
+##       [5]     chr4     42594      + |         5
+##       ...      ...       ...    ... .       ...
+##   [47376]     chr4   1307741      - |         1
+##   [47377]     chr4   1316536      - |         1
+##   [47378]     chr4   1318959      - |         1
+##   [47379]     chr4   1319003      - |         1
+##   [47380]     chr4   1319368      - |         1
+##   -------
+##   seqinfo: 1870 sequences from an unspecified genome</code></pre>
+<p>Notice that the data is contained within a <code>GRanges</code> object. GRanges objects, from the <em><a href="https://bioconductor.org/packages/3.11/GenomicRanges">GenomicRanges</a></em> package, are very easy to work with, and are supported by a plethora of useful functions and packages.</p>
+<p>The structure of the data will be described later on (in section <em>“Basepair-Resolution GRanges Objects”</em>). For now, we’ll just note that both annotations (e.g. genelists) and data are contained using the same GRanges class.</p>
+<p>We’ve included an example genelist to accompany the PRO-seq data:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"txs_dm6_chr4"</span>)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">txs_dm6_chr4</a></code></pre></div>
+<pre><code>## GRanges object with 339 ranges and 2 metadata columns:
+##         seqnames          ranges strand |     tx_name     gene_id
+##            &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;character&gt;
+##     [1]     chr4        879-5039      + | FBtr0346692 FBgn0267363
+##     [2]     chr4     42774-43374      + | FBtr0344900 FBgn0266617
+##     [3]     chr4     44774-46074      + | FBtr0340499 FBgn0265633
+##     [4]     chr4     56497-60974      + | FBtr0333704 FBgn0264617
+##     [5]     chr4     56497-63124      + | FBtr0333705 FBgn0264617
+##     ...      ...             ...    ... .         ...         ...
+##   [335]     chr4 1192419-1196848      - | FBtr0100543 FBgn0039924
+##   [336]     chr4 1192419-1196848      - | FBtr0100544 FBgn0039924
+##   [337]     chr4 1225089-1230713      - | FBtr0100406 FBgn0027101
+##   [338]     chr4 1225737-1230713      - | FBtr0100402 FBgn0027101
+##   [339]     chr4 1225737-1230713      - | FBtr0100404 FBgn0027101
+##   -------
+##   seqinfo: 7 sequences from dm6 genome</code></pre>
+<p>The GRanges above contains all Flybase annotated transcripts from chromosome 4, with no filtering of any kind.</p>
 </div>
-<div id="working-with-bam-files" class="section level1">
+<div id="basic-operations-on-granges" class="section level2">
+<h2 class="hasAnchor">
+<a href="#basic-operations-on-granges" class="anchor"></a>Basic Operations on GRanges</h2>
+<p>For users who are unfamiliar with GRanges objects, this section demonstrates a number of basic operations.</p>
+<p>A quick summary of the general strcture: Each element of a GRanges object is called a “range”. As you can see above, each range consists of several components: <code>seqnames</code>, <code>ranges</code>, and <code>strand</code>. These essential attributes are all found to the left of the vertical divider above; everything to the right of that divider is an optional, metadata attribute.</p>
+<p>The core attributes can be accessed using the functions <code>seqnames()</code>, <code>ranges()</code>, and <code>strand()</code>. All metadata can be accessed using <code>mcols()</code>, and individual columns are accessable with the <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code> operator. The only reserved metadata column is the <code>score</code> column, which is just like any other metadata column, except that users can use the <code>score()</code> function to assess it.</p>
+<p>All of the above functions are both “getters” and “setters”, e.g. <code>strand(x)</code> returns the strand information, and <code>strand(x) &lt;- "+"</code> assigns it.</p>
+<p>These and other operations are demonstrated below.</p>
+<hr>
+<p>Get the length of the genelist:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(txs_dm6_chr4) </a></code></pre></div>
+<pre><code>## [1] 339</code></pre>
+<p>Select the 2nd transcript:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">txs_dm6_chr4[<span class="dv">2</span>]</a></code></pre></div>
+<pre><code>## GRanges object with 1 range and 2 metadata columns:
+##       seqnames      ranges strand |     tx_name     gene_id
+##          &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;character&gt;
+##   [1]     chr4 42774-43374      + | FBtr0344900 FBgn0266617
+##   -------
+##   seqinfo: 7 sequences from dm6 genome</code></pre>
+<p>Select 4 transcipts:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">tx4 &lt;-<span class="st"> </span>txs_dm6_chr4[<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">200</span>, <span class="dv">300</span>)]</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2">tx4</a></code></pre></div>
+<pre><code>## GRanges object with 4 ranges and 2 metadata columns:
+##       seqnames          ranges strand |     tx_name     gene_id
+##          &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;character&gt;
+##   [1]     chr4        879-5039      + | FBtr0346692 FBgn0267363
+##   [2]     chr4    69326-110059      + | FBtr0308615 FBgn0085432
+##   [3]     chr4   184225-193489      - | FBtr0089150 FBgn0039890
+##   [4]     chr4 1009895-1027101      - | FBtr0309865 FBgn0025741
+##   -------
+##   seqinfo: 7 sequences from dm6 genome</code></pre>
+<p>Get the lengths of the first 4 transcripts:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">width</span>(tx4)</a></code></pre></div>
+<pre><code>## [1]  4161 40734  9265 17207</code></pre>
+<p>Get a dataframe of the metadata for the first 4 transcripts:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">mcols</span>(tx4)</a></code></pre></div>
+<pre><code>## DataFrame with 4 rows and 2 columns
+##       tx_name     gene_id
+##   &lt;character&gt; &lt;character&gt;
+## 1 FBtr0346692 FBgn0267363
+## 2 FBtr0308615 FBgn0085432
+## 3 FBtr0089150 FBgn0039890
+## 4 FBtr0309865 FBgn0025741</code></pre>
+<p>Access a single metadata column for the first 4 transcripts:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">mcols</span>(tx4)[, <span class="dv">2</span>]</a></code></pre></div>
+<pre><code>## [1] "FBgn0267363" "FBgn0085432" "FBgn0039890" "FBgn0025741"</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw">mcols</span>(tx4)[, <span class="st">"gene_id"</span>]</a></code></pre></div>
+<pre><code>## [1] "FBgn0267363" "FBgn0085432" "FBgn0039890" "FBgn0025741"</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">tx4<span class="op">$</span>gene_id</a></code></pre></div>
+<pre><code>## [1] "FBgn0267363" "FBgn0085432" "FBgn0039890" "FBgn0025741"</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">tx4_names &lt;-<span class="st"> </span>tx4<span class="op">$</span>tx_name</a>
+<a class="sourceLine" id="cb23-2" data-line-number="2">tx4_names</a></code></pre></div>
+<pre><code>## [1] "FBtr0346692" "FBtr0308615" "FBtr0089150" "FBtr0309865"</code></pre>
+<p>Get the first gene_id (a metadata element):</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">tx4<span class="op">$</span>gene_id[<span class="dv">1</span>]</a></code></pre></div>
+<pre><code>## [1] "FBgn0267363"</code></pre>
+<p>Remove a metadata column:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="kw">mcols</span>(tx4) &lt;-<span class="st"> </span><span class="kw">mcols</span>(tx4)[, <span class="dv">-1</span>]</a>
+<a class="sourceLine" id="cb27-2" data-line-number="2">tx4</a></code></pre></div>
+<pre><code>## GRanges object with 4 ranges and 1 metadata column:
+##       seqnames          ranges strand |           X
+##          &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;
+##   [1]     chr4        879-5039      + | FBgn0267363
+##   [2]     chr4    69326-110059      + | FBgn0085432
+##   [3]     chr4   184225-193489      - | FBgn0039890
+##   [4]     chr4 1009895-1027101      - | FBgn0025741
+##   -------
+##   seqinfo: 7 sequences from dm6 genome</code></pre>
+<p>Rename metadata:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="kw">mcols</span>(tx4)) &lt;-<span class="st"> "gene_id"</span></a>
+<a class="sourceLine" id="cb29-2" data-line-number="2">tx4</a></code></pre></div>
+<pre><code>## GRanges object with 4 ranges and 1 metadata column:
+##       seqnames          ranges strand |     gene_id
+##          &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;
+##   [1]     chr4        879-5039      + | FBgn0267363
+##   [2]     chr4    69326-110059      + | FBgn0085432
+##   [3]     chr4   184225-193489      - | FBgn0039890
+##   [4]     chr4 1009895-1027101      - | FBgn0025741
+##   -------
+##   seqinfo: 7 sequences from dm6 genome</code></pre>
+<p>Add metadata; same as access methods (<code>mcols()[]</code>, <code>mcols()$</code>, or simply <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code>):</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">tx4<span class="op">$</span>tx_name &lt;-<span class="st"> </span>tx4_names</a>
+<a class="sourceLine" id="cb31-2" data-line-number="2">tx4</a></code></pre></div>
+<pre><code>## GRanges object with 4 ranges and 2 metadata columns:
+##       seqnames          ranges strand |     gene_id     tx_name
+##          &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;character&gt;
+##   [1]     chr4        879-5039      + | FBgn0267363 FBtr0346692
+##   [2]     chr4    69326-110059      + | FBgn0085432 FBtr0308615
+##   [3]     chr4   184225-193489      - | FBgn0039890 FBtr0089150
+##   [4]     chr4 1009895-1027101      - | FBgn0025741 FBtr0309865
+##   -------
+##   seqinfo: 7 sequences from dm6 genome</code></pre>
+<p>Modify metadata:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1">tx4<span class="op">$</span>gene_id[<span class="dv">1</span>] &lt;-<span class="st"> "gene1"</span></a>
+<a class="sourceLine" id="cb33-2" data-line-number="2">tx4<span class="op">$</span>tx_name &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">4</span></a>
+<a class="sourceLine" id="cb33-3" data-line-number="3">tx4</a></code></pre></div>
+<pre><code>## GRanges object with 4 ranges and 2 metadata columns:
+##       seqnames          ranges strand |     gene_id   tx_name
+##          &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;integer&gt;
+##   [1]     chr4        879-5039      + |       gene1         1
+##   [2]     chr4    69326-110059      + | FBgn0085432         2
+##   [3]     chr4   184225-193489      - | FBgn0039890         3
+##   [4]     chr4 1009895-1027101      - | FBgn0025741         4
+##   -------
+##   seqinfo: 7 sequences from dm6 genome</code></pre>
+<p>Get beginning of ranges (not strand specific):</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/stats/start.html">start</a></span>(tx4)</a></code></pre></div>
+<pre><code>## [1]     879   69326  184225 1009895</code></pre>
+<p>Get beginning of ranges (strand specific):</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">tx4_tss &lt;-<span class="st"> </span><span class="kw">resize</span>(tx4, <span class="dt">width =</span> <span class="dv">1</span>, <span class="dt">fix =</span> <span class="st">"start"</span>)</a>
+<a class="sourceLine" id="cb37-2" data-line-number="2">tx4_tss</a></code></pre></div>
+<pre><code>## GRanges object with 4 ranges and 2 metadata columns:
+##       seqnames    ranges strand |     gene_id   tx_name
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;integer&gt;
+##   [1]     chr4       879      + |       gene1         1
+##   [2]     chr4     69326      + | FBgn0085432         2
+##   [3]     chr4    193489      - | FBgn0039890         3
+##   [4]     chr4   1027101      - | FBgn0025741         4
+##   -------
+##   seqinfo: 7 sequences from dm6 genome</code></pre>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/stats/start.html">start</a></span>(tx4_tss)</a></code></pre></div>
+<pre><code>## [1]     879   69326  193489 1027101</code></pre>
+<p>Remove all metadata:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="kw">mcols</span>(tx4) &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
+<a class="sourceLine" id="cb41-2" data-line-number="2">tx4</a></code></pre></div>
+<pre><code>## GRanges object with 4 ranges and 0 metadata columns:
+##       seqnames          ranges strand
+##          &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt;
+##   [1]     chr4        879-5039      +
+##   [2]     chr4    69326-110059      +
+##   [3]     chr4   184225-193489      -
+##   [4]     chr4 1009895-1027101      -
+##   -------
+##   seqinfo: 7 sequences from dm6 genome</code></pre>
+<hr>
+<p><em>To learn more about GRanges objects, including a general overview of their components, see the useful vignette <a href="https://bioconductor.org/packages/release/bioc/vignettes/GenomicRanges/inst/doc/GenomicRangesIntroduction.html"><em>An Introduction to the GenomicRanges Package</em></a>. Alternatively, see the archived materials from the 2018 Bioconductor workshop <a href="https://bioconductor.github.io/BiocWorkshops/solving-common-bioinformatic-challenges-using-genomicranges.html"><em>Solving Common Bioinformatic Challenges Using GenomicRanges</em></a>. Note that this package will implement and streamline a number of common operations, but users should still have a basic familiarity with GRanges objects.</em></p>
+<hr>
+</div>
+</div>
+<div id="importing-modifying-genelists" class="section level1">
 <h1 class="hasAnchor">
-<a href="#working-with-bam-files" class="anchor"></a>Working With Bam Files</h1>
-<p>The <code>import_bam</code> function provides a number of options for filtering and processing bam files. Because PRO-seq data is sequenced in the 3’-to-5’ direction of the original RNA molecule, we’ll use the <code>revcomp</code> option to reverse-complement all the input reads. We’ll also set a minimum MAPQ score of 20:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(BRGenomics)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co"># path of included bam file</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">bfile &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"PROseq_dm6_chr4.bam"</span>, </a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">                     <span class="dt">package =</span> <span class="st">"BRGenomics"</span>)</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">ps_reads &lt;-<span class="st"> </span><span class="kw"><a href="../reference/import_bam.html">import_bam</a></span>(bfile, <span class="dt">mapq =</span> <span class="dv">20</span>, <span class="dt">revcomp =</span> <span class="ot">TRUE</span>, <span class="dt">paired_end =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">ps_reads</a></code></pre></div>
+<a href="#importing-modifying-genelists" class="anchor"></a>Importing &amp; Modifying Genelists</h1>
+<div id="importing-annotations-with-rtracklayer" class="section level2">
+<h2 class="hasAnchor">
+<a href="#importing-annotations-with-rtracklayer" class="anchor"></a>Importing Annotations with rtracklayer</h2>
+<p>Importing genomics files is accomplished using the <code>rtracklayer</code> package, which contains a variety of functions and options for importing and exporting.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="co"># import bed file</span></a>
+<a class="sourceLine" id="cb43-2" data-line-number="2">genelist &lt;-<span class="st"> </span><span class="kw">import.bed</span>(<span class="st">"~/data/genelists/genes.bed"</span>)</a>
+<a class="sourceLine" id="cb43-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb43-4" data-line-number="4"><span class="co"># import gff</span></a>
+<a class="sourceLine" id="cb43-5" data-line-number="5">genelist &lt;-<span class="st"> </span><span class="kw">import.gff</span>(<span class="st">"~/data/genelists/genes.gff"</span>)</a>
+<a class="sourceLine" id="cb43-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb43-7" data-line-number="7"><span class="co"># export a bed file after modifying</span></a>
+<a class="sourceLine" id="cb43-8" data-line-number="8"><span class="kw">export.bed</span>(genelist, <span class="st">"~/data/genelists/filtered_genes.bed"</span>)</a></code></pre></div>
+</div>
+<div id="defining-regions-using-the-genebodies-function" class="section level2">
+<h2 class="hasAnchor">
+<a href="#defining-regions-using-the-genebodies-function" class="anchor"></a>Defining Regions Using the genebodies Function</h2>
+<p>One of the more useful <code>GenomicRanges</code> functions is the <code>promoters</code> function, which returns ranges centered on the strand-specific start of the input ranges:</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1">tx4</a></code></pre></div>
+<pre><code>## GRanges object with 4 ranges and 0 metadata columns:
+##       seqnames          ranges strand
+##          &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt;
+##   [1]     chr4        879-5039      +
+##   [2]     chr4    69326-110059      +
+##   [3]     chr4   184225-193489      -
+##   [4]     chr4 1009895-1027101      -
+##   -------
+##   seqinfo: 7 sequences from dm6 genome</code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1">tx4_pr &lt;-<span class="st"> </span><span class="kw">promoters</span>(tx4, <span class="dt">upstream =</span> <span class="dv">50</span>, <span class="dt">downstream =</span> <span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb46-2" data-line-number="2">tx4_pr</a></code></pre></div>
+<pre><code>## GRanges object with 4 ranges and 0 metadata columns:
+##       seqnames          ranges strand
+##          &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt;
+##   [1]     chr4         829-978      +
+##   [2]     chr4     69276-69425      +
+##   [3]     chr4   193390-193539      -
+##   [4]     chr4 1027002-1027151      -
+##   -------
+##   seqinfo: 7 sequences from dm6 genome</code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1"><span class="kw">width</span>(tx4_pr)</a></code></pre></div>
+<pre><code>## [1] 150 150 150 150</code></pre>
+<p>BRGenomics ships with a more flexible alternative function called <code>genebodies</code>. While <code>promoters</code> has the arguments <code>upstream</code> and <code>downstream</code>, which take only positive values, the <code>genebodies</code> function uses <code>start</code> and <code>end</code> arguments that can be positive or negative, and arguments <code>fix.start</code> and <code>fix.end</code> for determining whether to define the positions in relation to the (strand-specific) beginning or ends of genes.</p>
+<p>Below, we demonstrate several uses of the <code>genebodies</code> function, using a list of transcripts which start at a transcription start site (TSS) and end at a cleavage and polyadenylation site (CPS).</p>
+<hr>
+<p>Original regions:</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1">tx4</a></code></pre></div>
+<pre><code>## GRanges object with 4 ranges and 0 metadata columns:
+##       seqnames          ranges strand
+##          &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt;
+##   [1]     chr4        879-5039      +
+##   [2]     chr4    69326-110059      +
+##   [3]     chr4   184225-193489      -
+##   [4]     chr4 1009895-1027101      -
+##   -------
+##   seqinfo: 7 sequences from dm6 genome</code></pre>
+<p>Genebody regions from 300 bp downstream of the TSS to 300 bp upstream of the CPS:</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" data-line-number="1"><span class="kw"><a href="../reference/genebodies.html">genebodies</a></span>(tx4, <span class="dv">300</span>, <span class="dv">-300</span>) </a></code></pre></div>
+<pre><code>## GRanges object with 4 ranges and 0 metadata columns:
+##       seqnames          ranges strand
+##          &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt;
+##   [1]     chr4       1179-4739      +
+##   [2]     chr4    69626-109759      +
+##   [3]     chr4   184525-193189      -
+##   [4]     chr4 1010195-1026801      -
+##   -------
+##   seqinfo: 7 sequences from dm6 genome</code></pre>
+<p>Promoter regions from 50 bp upstream to 100 bp downstream of the TSS:</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1"><span class="kw"><a href="../reference/genebodies.html">genebodies</a></span>(tx4, <span class="dv">-50</span>, <span class="dv">100</span>, <span class="dt">fix.end =</span> <span class="st">"start"</span>)</a></code></pre></div>
+<pre><code>## GRanges object with 4 ranges and 0 metadata columns:
+##       seqnames          ranges strand
+##          &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt;
+##   [1]     chr4         829-979      +
+##   [2]     chr4     69276-69426      +
+##   [3]     chr4   193389-193539      -
+##   [4]     chr4 1027001-1027151      -
+##   -------
+##   seqinfo: 7 sequences from dm6 genome</code></pre>
+<p><em>(The defaults are <code>fix.start = "start"</code> and <code>fix.end = "end"</code>)</em></p>
+<p>Regions from 100 bp upstream of to 50 bp upstream of the TSS:</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" data-line-number="1"><span class="kw"><a href="../reference/genebodies.html">genebodies</a></span>(tx4, <span class="dv">-100</span>, <span class="dv">-50</span>, <span class="dt">fix.end =</span> <span class="st">"start"</span>)</a></code></pre></div>
+<pre><code>## GRanges object with 4 ranges and 0 metadata columns:
+##       seqnames          ranges strand
+##          &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt;
+##   [1]     chr4         779-829      +
+##   [2]     chr4     69226-69276      +
+##   [3]     chr4   193539-193589      -
+##   [4]     chr4 1027151-1027201      -
+##   -------
+##   seqinfo: 7 sequences from dm6 genome</code></pre>
+<p>Regions from 1kb upstream of the CPS to 1kb downstream of the CPS</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" data-line-number="1"><span class="kw"><a href="../reference/genebodies.html">genebodies</a></span>(tx4, <span class="dv">-1000</span>, <span class="dv">1000</span>, <span class="dt">fix.start =</span> <span class="st">"end"</span>)</a></code></pre></div>
+<pre><code>## GRanges object with 4 ranges and 0 metadata columns:
+##       seqnames          ranges strand
+##          &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt;
+##   [1]     chr4       4039-6039      +
+##   [2]     chr4   109059-111059      +
+##   [3]     chr4   183225-185225      -
+##   [4]     chr4 1008895-1010895      -
+##   -------
+##   seqinfo: 7 sequences from dm6 genome</code></pre>
+<p>Regions within the first 10kb downstream of the CPS:</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" data-line-number="1"><span class="kw"><a href="../reference/genebodies.html">genebodies</a></span>(tx4, <span class="dv">0</span>, <span class="dv">10000</span>, <span class="dt">fix.start =</span> <span class="st">"end"</span>)</a></code></pre></div>
+<pre><code>## GRanges object with 4 ranges and 0 metadata columns:
+##       seqnames         ranges strand
+##          &lt;Rle&gt;      &lt;IRanges&gt;  &lt;Rle&gt;
+##   [1]     chr4     5039-15039      +
+##   [2]     chr4  110059-120059      +
+##   [3]     chr4  174225-184225      -
+##   [4]     chr4 999895-1009895      -
+##   -------
+##   seqinfo: 7 sequences from dm6 genome</code></pre>
+</div>
+</div>
+<div id="basepair-resolution-granges-objects" class="section level1">
+<h1 class="hasAnchor">
+<a href="#basepair-resolution-granges-objects" class="anchor"></a>Basepair-Resolution GRanges Objects</h1>
+<p>Let’s look again at the included PRO-seq data:</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" data-line-number="1">PROseq</a></code></pre></div>
+<pre><code>## GRanges object with 47380 ranges and 1 metadata column:
+##           seqnames    ranges strand |     score
+##              &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
+##       [1]     chr4      1296      + |         1
+##       [2]     chr4     41429      + |         1
+##       [3]     chr4     42589      + |         1
+##       [4]     chr4     42591      + |         2
+##       [5]     chr4     42594      + |         5
+##       ...      ...       ...    ... .       ...
+##   [47376]     chr4   1307741      - |         1
+##   [47377]     chr4   1316536      - |         1
+##   [47378]     chr4   1318959      - |         1
+##   [47379]     chr4   1319003      - |         1
+##   [47380]     chr4   1319368      - |         1
+##   -------
+##   seqinfo: 1870 sequences from an unspecified genome</code></pre>
+<p>This GRanges object is constructed such that each range has a width of 1 (i.e. each range represents a single base in the genome), and each range has an associated <code>score</code>, which contains signal information for that base.</p>
+<p>We refer to a GRanges object formatted in this way as a <strong>basepair-resolution GRanges object</strong><a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>, and this structure underpins much of BRGenomics.</p>
+<p>In the included PRO-seq data, the positional information is determined by the 3’ end of mapped reads, and the signal information is the number of reads containing that 3’ end.</p>
+<hr>
+<p><em>bigWig files, as well as <code>coverage</code> objects in <code>GenomicRanges</code>, use a form of compression in which adjacent positions sharing the same signal are combined. For whole-read coverage methods, this run-length encoding enhances performance and efficiency. However, basepair resolution data is not nearly as smooth, and its rare that adjacent bases share the same signal. With basepair resolution data, combining adjacent positions increases complexity, while providing a negligible storage benefit.</em></p>
+<hr>
+<p>Splitting up each base into its own range (its own index) results in a number of downstream computational benefits. Perhaps more importantly, however, is the added simplicity for the user: each index of a basepair-resolution GRanges object addresses a single genomic position and its associated signal.</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(PROseq) <span class="co"># number of unique positions in dataset</span></a>
+<a class="sourceLine" id="cb64-2" data-line-number="2"><span class="co">## [1] 47380</span></a>
+<a class="sourceLine" id="cb64-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="kw">score</span>(PROseq)) <span class="co"># total number of reads</span></a>
+<a class="sourceLine" id="cb64-4" data-line-number="4"><span class="co">## [1] 73887</span></a>
+<a class="sourceLine" id="cb64-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="kw">score</span>(PROseq) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="co"># number of sites with only a single read</span></a>
+<a class="sourceLine" id="cb64-6" data-line-number="6"><span class="co">## [1] 37559</span></a></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(PROseq, score <span class="op">&gt;</span><span class="st"> </span><span class="dv">10</span>) <span class="co"># sites with more than 10 reads</span></a></code></pre></div>
+<pre><code>## GRanges object with 309 ranges and 1 metadata column:
+##         seqnames    ranges strand |     score
+##            &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
+##     [1]     chr4     69378      + |        12
+##     [2]     chr4     69392      + |        12
+##     [3]     chr4     69398      + |        25
+##     [4]     chr4     69402      + |       122
+##     [5]     chr4     69693      + |        17
+##     ...      ...       ...    ... .       ...
+##   [305]     chr4   1176184      - |        13
+##   [306]     chr4   1182427      - |        52
+##   [307]     chr4   1196792      - |        54
+##   [308]     chr4   1196793      - |        14
+##   [309]     chr4   1226557      - |        13
+##   -------
+##   seqinfo: 1870 sequences from an unspecified genome</code></pre>
+<p>We can write a simple test to determine if a GRanges object is “basepair-resolution”: all ranges have widths of 1, and no position is duplicated.</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/all.html">all</a></span>(<span class="kw">width</span>(PROseq) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb67-2" data-line-number="2"><span class="co">## [1] TRUE</span></a>
+<a class="sourceLine" id="cb67-3" data-line-number="3"><span class="kw">isDisjoint</span>(PROseq) <span class="co"># [*]</span></a>
+<a class="sourceLine" id="cb67-4" data-line-number="4"><span class="co">## [1] TRUE</span></a></code></pre></div>
+<p><em>[*] A “disjoint” GRanges is one in which none of the ranges overlap one another.</em></p>
+<p>For convenience, we’ve included a test function:</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" data-line-number="1"><span class="kw"><a href="../reference/makeGRangesBRG.html">isBRG</a></span>(PROseq)</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>The next section, covering data importation, also serves to emphasize the characteristics of the basepair-resolution GRanges object, and demonstrates some alternatives that can be used within this pacakge.</p>
+</div>
+<div id="importing-and-processing-data" class="section level1">
+<h1 class="hasAnchor">
+<a href="#importing-and-processing-data" class="anchor"></a>Importing and Processing Data</h1>
+<p>BRGenomics provides several functions for conveniently importing and processing BAM, bigWig, bedGraph files.</p>
+<div id="importing-bam-files" class="section level2">
+<h2 class="hasAnchor">
+<a href="#importing-bam-files" class="anchor"></a>Importing BAM Files</h2>
+<p>The <code>import_bam</code> function provides a number of options for filtering and processing bam files. BRGenomics includes an example BAM file of the included PRO-seq data, whose local location can be found as follows:</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" data-line-number="1">bfile &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"PROseq_dm6_chr4.bam"</span>, </a>
+<a class="sourceLine" id="cb70-2" data-line-number="2">                     <span class="dt">package =</span> <span class="st">"BRGenomics"</span>)</a></code></pre></div>
+<p>Because PRO-seq data is sequenced in the 3’-to-5’ direction of the original RNA molecule, we’ll use the <code>revcomp</code> option to reverse-complement all the input reads. We’ll also set a minimum MAPQ score of 20:</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" data-line-number="1">ps_reads &lt;-<span class="st"> </span><span class="kw"><a href="../reference/import_bam.html">import_bam</a></span>(bfile, <span class="dt">mapq =</span> <span class="dv">20</span>, <span class="dt">revcomp =</span> <span class="ot">TRUE</span>, <span class="dt">paired_end =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb71-2" data-line-number="2">ps_reads</a></code></pre></div>
 <pre><code>## GRanges object with 53179 ranges and 1 metadata column:
 ##           seqnames          ranges strand |     score
 ##              &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
@@ -186,17 +553,13 @@
 ##   [53179]     chr4 1319368-1319403      - |         1
 ##   -------
 ##   seqinfo: 1870 sequences from an unspecified genome</code></pre>
-<p>Files are imported as <code>GRanges</code> objects from the <em><a href="https://bioconductor.org/packages/3.11/GenomicRanges">GenomicRanges</a></em> package. GRanges objects are very easy to work with, and are supported by a plethora of useful functions and packages.</p>
-<hr>
-<p><em>To learn more about GRanges objects, including a general overview of their components, see the useful vignette <a href="https://bioconductor.org/packages/release/bioc/vignettes/GenomicRanges/inst/doc/GenomicRangesIntroduction.html"><em>An Introduction to the GenomicRanges Package</em></a>. Alternatively, see the archived materials from the 2018 Bioconductor workshop <a href="https://bioconductor.github.io/BiocWorkshops/solving-common-bioinformatic-challenges-using-genomicranges.html"><em>Solving Common Bioinformatic Challenges Using GenomicRanges</em></a>. Note that this package will implement and streamline a number of common operations, but users should still have a basic familiarity with GRanges objects.</em></p>
-<hr>
-<p>By default, <code>import_bam</code> combines identical reads into the same range, and uses the <code>score</code> metadata column to represent how many times that read occurs. This means that the total number of reads in the dataset is equal to the total score:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="kw">score</span>(ps_reads))</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">## [1] 73887</span></a></code></pre></div>
+<p>By default, <code>import_bam</code> combines identical reads into the same range, and the <code>score</code> metadata column indicatea the number of perfectly-overlapping alignments. This means that the total number of alignments (reads) is equal to the sum of the score:</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="kw">score</span>(ps_reads))</a></code></pre></div>
+<pre><code>## [1] 73887</code></pre>
 <p>Alternatively, you can import each read as its own range by setting <code>field = NULL</code>:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">reads_expanded &lt;-<span class="st"> </span><span class="kw"><a href="../reference/import_bam.html">import_bam</a></span>(bfile, <span class="dt">mapq =</span> <span class="dv">20</span>, <span class="dt">revcomp =</span> <span class="ot">TRUE</span>, </a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">                             <span class="dt">field =</span> <span class="ot">NULL</span>, <span class="dt">paired_end =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">ps_reads[<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1">reads_expanded &lt;-<span class="st"> </span><span class="kw"><a href="../reference/import_bam.html">import_bam</a></span>(bfile, <span class="dt">mapq =</span> <span class="dv">20</span>, <span class="dt">revcomp =</span> <span class="ot">TRUE</span>, </a>
+<a class="sourceLine" id="cb75-2" data-line-number="2">                             <span class="dt">field =</span> <span class="ot">NULL</span>, <span class="dt">paired_end =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb75-3" data-line-number="3">ps_reads[<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>]</a></code></pre></div>
 <pre><code>## GRanges object with 8 ranges and 1 metadata column:
 ##       seqnames      ranges strand |     score
 ##          &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
@@ -210,7 +573,7 @@
 ##   [8]     chr4 42561-42596      + |         1
 ##   -------
 ##   seqinfo: 1870 sequences from an unspecified genome</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">reads_expanded[<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" data-line-number="1">reads_expanded[<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>]</a></code></pre></div>
 <pre><code>## GRanges object with 8 ranges and 0 metadata columns:
 ##       seqnames      ranges strand
 ##          &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt;
@@ -224,20 +587,30 @@
 ##   [8]     chr4 42560-42594      +
 ##   -------
 ##   seqinfo: 1870 sequences from an unspecified genome</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(reads_expanded) <span class="op">==</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="kw">score</span>(ps_reads))</a></code></pre></div>
+<p>Notice that reads 5-7 are now identical, rather than combined into a single range with a score = 3.</p>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(reads_expanded) <span class="op">==</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="kw">score</span>(ps_reads))</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
+<p>Many BRGenomics function have a <code>field</code> argument, and setting <code>field = NULL</code> will treat each range has a single read.</p>
 </div>
-<div id="basepair-resolution-granges-objects" class="section level1">
-<h1 class="hasAnchor">
-<a href="#basepair-resolution-granges-objects" class="anchor"></a>Basepair-Resolution GRanges Objects</h1>
-<p>The base immediately before the 3’ end of a mapped PRO-seq read gives the position of an RNA polymerase at basepair-resolution. The <code>import_bam</code> function also includes options for selecting specific bases of each read, which are applied after reverse-complementing. Here, we reverse complement, take the 3’ end of the read, and then shift that base upstream by 1 base:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">ps &lt;-<span class="st"> </span><span class="kw"><a href="../reference/import_bam.html">import_bam</a></span>(bfile, </a>
-<a class="sourceLine" id="cb11-2" data-line-number="2">                 <span class="dt">mapq =</span> <span class="dv">20</span>, </a>
-<a class="sourceLine" id="cb11-3" data-line-number="3">                 <span class="dt">revcomp =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb11-4" data-line-number="4">                 <span class="dt">shift =</span> <span class="dv">-1</span>,</a>
-<a class="sourceLine" id="cb11-5" data-line-number="5">                 <span class="dt">trim.to =</span> <span class="st">"3p"</span>,</a>
-<a class="sourceLine" id="cb11-6" data-line-number="6">                 <span class="dt">paired_end =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb11-7" data-line-number="7">ps</a></code></pre></div>
+<div id="example-importing-pro-seq-bam-files-at-basepair-resolution" class="section level2">
+<h2 class="hasAnchor">
+<a href="#example-importing-pro-seq-bam-files-at-basepair-resolution" class="anchor"></a>Example: Importing PRO-seq BAM files at Basepair Resolution</h2>
+<p>We can use the <code>import_bam</code> function to extract the positions of interest from BAM files. Below, we construct an import function for PRO-seq data that returns a basepair-resolution GRanges object.</p>
+<p>In PRO-seq, a “run-on” reaction is performed in which actively engaged RNA polymerases incorporate a biotinylated nucleotide at the 3’ end of a nascent RNA. Our base of interest is therefore the base immediately preceding the RNA 3’ end, as this was the original position of a polymerase active site.</p>
+<p>The processing options in <code>import_bam</code> are applied in the same order that they’re listed (see the documentation). Following this order, we will apply the options:</p>
+<ol style="list-style-type: decimal">
+<li>Filter reads by a minimum MAPQ score</li>
+<li>Take the reverse complement</li>
+<li>Shift reads upstream by 1 base</li>
+<li>Extract the 3’ base</li>
+</ol>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" data-line-number="1">ps &lt;-<span class="st"> </span><span class="kw"><a href="../reference/import_bam.html">import_bam</a></span>(bfile, </a>
+<a class="sourceLine" id="cb81-2" data-line-number="2">                 <span class="dt">mapq =</span> <span class="dv">20</span>, </a>
+<a class="sourceLine" id="cb81-3" data-line-number="3">                 <span class="dt">revcomp =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb81-4" data-line-number="4">                 <span class="dt">shift =</span> <span class="dv">-1</span>,</a>
+<a class="sourceLine" id="cb81-5" data-line-number="5">                 <span class="dt">trim.to =</span> <span class="st">"3p"</span>,</a>
+<a class="sourceLine" id="cb81-6" data-line-number="6">                 <span class="dt">paired_end =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb81-7" data-line-number="7">ps</a></code></pre></div>
 <pre><code>## GRanges object with 47380 ranges and 1 metadata column:
 ##           seqnames    ranges strand |     score
 ##              &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
@@ -254,145 +627,1044 @@
 ##   [47380]     chr4   1319369      - |         1
 ##   -------
 ##   seqinfo: 1870 sequences from an unspecified genome</code></pre>
-<p>You may have noticed that this GRanges object isn’t the same length as when we imported the entire reads. That’s because after trimming, identical positions were collapsed together, and the <code>score</code> column contains the readcounts at each position.</p>
-<p>The returned data is a GRanges object in which all ranges represent a single base, and in which a metadata field (usually <code>score</code>) contains readcounts. This data structure underpins much of this package, and we refer to it as a <strong>basepair-resolution GRanges object</strong><a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>.</p>
-<hr>
-<p><em>bigWig files, as well as <code>coverage</code> objects in <code>GenomicRanges</code>, use a form of compression in which adjacent positions sharing the same signal are combined. For whole-read coverage methods, this run-length encoding enhances performance and efficiency. However, basepair resolution data is not nearly as smooth, and its rare that adjacent bases share the same signal. With basepair resolution data, combining adjacent positions increases complexity, while providing a negligible storage benefit.</em></p>
-<hr>
-<p>Splitting up each base into its own range (its own index) results in a number of downstream computational benefits. Perhaps more importantly, however, is the added simplicity for the user: each index of a basepair-resolution GRanges object addresses a single genomic position and its associated signal.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(ps) <span class="co"># number of unique positions in dataset</span></a>
-<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="co">## [1] 47380</span></a>
-<a class="sourceLine" id="cb13-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="kw">score</span>(ps)) <span class="co"># total number of reads</span></a>
-<a class="sourceLine" id="cb13-4" data-line-number="4"><span class="co">## [1] 73887</span></a>
-<a class="sourceLine" id="cb13-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="kw">score</span>(ps) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="co"># number of sites with only a single read</span></a>
-<a class="sourceLine" id="cb13-6" data-line-number="6"><span class="co">## [1] 37559</span></a></code></pre></div>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(ps, score <span class="op">&gt;</span><span class="st"> </span><span class="dv">10</span>) <span class="co"># sites with more than 10 reads</span></a></code></pre></div>
-<pre><code>## GRanges object with 309 ranges and 1 metadata column:
-##         seqnames    ranges strand |     score
-##            &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
-##     [1]     chr4     69377      + |        12
-##     [2]     chr4     69391      + |        12
-##     [3]     chr4     69397      + |        25
-##     [4]     chr4     69401      + |       122
-##     [5]     chr4     69692      + |        17
-##     ...      ...       ...    ... .       ...
-##   [305]     chr4   1176185      - |        13
-##   [306]     chr4   1182428      - |        52
-##   [307]     chr4   1196793      - |        54
-##   [308]     chr4   1196794      - |        14
-##   [309]     chr4   1226558      - |        13
+<p><em>Note that for paired-end data, <code>import_bam</code> will automatically filter unmatched read pairs.</em></p>
+<p>Notice that the number of ranges in <code>ps</code> is not the same as for <code>ps_reads</code>, in which we imported the entire read lengths:</p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(ps_reads)</a>
+<a class="sourceLine" id="cb83-2" data-line-number="2"><span class="co">## [1] 53179</span></a>
+<a class="sourceLine" id="cb83-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(ps)</a>
+<a class="sourceLine" id="cb83-4" data-line-number="4"><span class="co">## [1] 47380</span></a></code></pre></div>
+<p>This is because identical positions are collapsed together after applying the processing options. However, we can check that all of the same reads are represented:</p>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="kw">score</span>(ps)) <span class="op">==</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="kw">score</span>(ps_reads))</a>
+<a class="sourceLine" id="cb84-2" data-line-number="2"><span class="co">## [1] TRUE</span></a></code></pre></div>
+<p>And we can check that collapsing identical positions has created a basepair-resolution GRanges object:</p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" data-line-number="1"><span class="kw"><a href="../reference/makeGRangesBRG.html">isBRG</a></span>(ps)</a>
+<a class="sourceLine" id="cb85-2" data-line-number="2"><span class="co">## [1] TRUE</span></a></code></pre></div>
+</div>
+<div id="pre-formatted-input-functions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#pre-formatted-input-functions" class="anchor"></a>Pre-formatted Input Functions</h2>
+<p>For convenience, we’ve included several functions with default options for several kinds of data, including <code>import_bam_PROseq</code>, <code>import_bam_PROcap</code>, and <code>import_bam_ATACseq</code>, the latter of which corrects for the 9 bp offset between Tn5 insertion sites.<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a></p>
+</div>
+<div id="example-converting-bams-to-bigwigs" class="section level2">
+<h2 class="hasAnchor">
+<a href="#example-converting-bams-to-bigwigs" class="anchor"></a>Example: Converting BAMs to bigWigs</h2>
+<p>In conjunction with export functions from the <em><a href="https://bioconductor.org/packages/3.11/rtracklayer">rtracklayer</a></em> package, we can use the functions described above to write a post-alignment pipeline for generating bigWig files for PRO-seq data:</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" data-line-number="1"><span class="co"># import bam, automatically applying processing steps for PRO-seq</span></a>
+<a class="sourceLine" id="cb86-2" data-line-number="2">ps &lt;-<span class="st"> </span><span class="kw"><a href="../reference/import_bam.html">import_bam_PROseq</a></span>(bfile, <span class="dt">mapq =</span> <span class="dv">30</span>, <span class="dt">paired_end =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb86-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb86-4" data-line-number="4"><span class="co"># separate strands, and make minus-strand scores negative</span></a>
+<a class="sourceLine" id="cb86-5" data-line-number="5">ps_plus &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(ps, strand <span class="op">==</span><span class="st"> "+"</span>)</a>
+<a class="sourceLine" id="cb86-6" data-line-number="6">ps_minus &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(ps, strand <span class="op">==</span><span class="st"> "-"</span>)</a>
+<a class="sourceLine" id="cb86-7" data-line-number="7"><span class="kw">score</span>(ps_minus) &lt;-<span class="st"> </span><span class="op">-</span><span class="kw">score</span>(ps_minus)</a>
+<a class="sourceLine" id="cb86-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb86-9" data-line-number="9"><span class="co"># use rtracklayer to export bigWig files</span></a>
+<a class="sourceLine" id="cb86-10" data-line-number="10"><span class="kw">export.bw</span>(ps_plus, <span class="st">"~/Data/PROseq_plus.bw"</span>)</a>
+<a class="sourceLine" id="cb86-11" data-line-number="11"><span class="kw">export.bw</span>(ps_minus, <span class="st">"~/Data/PROseq_minus.bw"</span>)</a></code></pre></div>
+<p>An expanded example pipeline is included later in the vignette.</p>
+</div>
+<div id="importing-bedgraphs-and-bigwigs" class="section level2">
+<h2 class="hasAnchor">
+<a href="#importing-bedgraphs-and-bigwigs" class="anchor"></a>Importing bedGraphs and bigWigs</h2>
+<p>bedGraph and bigWig files are efficient and portable, but unstranded representations of basepair-resolution genomics data.</p>
+<p>As compared to <code><a href="https://rdrr.io/pkg/rtracklayer/man/BEDFile-class.html">rtracklayer::import.bedGraph</a></code>, the BRGenomics function <code>import_bedGraph</code> imports both plus-strand and minus-strand files as a single object, and has options for filtering out odd chromosomes, mitochondrial chromosomes, and sex chromosomes.</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" data-line-number="1"><span class="co"># local paths to included bedGraph files</span></a>
+<a class="sourceLine" id="cb87-2" data-line-number="2">bg.p &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"PROseq_dm6_chr4_plus.bedGraph"</span>,</a>
+<a class="sourceLine" id="cb87-3" data-line-number="3">                    <span class="dt">package =</span> <span class="st">"BRGenomics"</span>)</a>
+<a class="sourceLine" id="cb87-4" data-line-number="4">bg.m &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"PROseq_dm6_chr4_minus.bedGraph"</span>,</a>
+<a class="sourceLine" id="cb87-5" data-line-number="5">                    <span class="dt">package =</span> <span class="st">"BRGenomics"</span>)</a>
+<a class="sourceLine" id="cb87-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb87-7" data-line-number="7"><span class="kw"><a href="../reference/import-functions.html">import_bedGraph</a></span>(bg.p, bg.m, <span class="dt">genome =</span> <span class="st">"dm6"</span>)</a></code></pre></div>
+<pre><code>## GRanges object with 53179 ranges and 1 metadata column:
+##           seqnames          ranges strand |     score
+##              &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
+##       [1]     chr4       1270-1296      + |         1
+##       [2]     chr4     41411-41429      + |         1
+##       [3]     chr4     42556-42591      + |         1
+##       [4]     chr4     42559-42589      + |         1
+##       [5]     chr4     42559-42594      + |         3
+##       ...      ...             ...    ... .       ...
+##   [53175]     chr4 1307741-1307776      - |         1
+##   [53176]     chr4 1316536-1316563      - |         1
+##   [53177]     chr4 1318959-1318994      - |         1
+##   [53178]     chr4 1319003-1319038      - |         1
+##   [53179]     chr4 1319368-1319403      - |         1
 ##   -------
-##   seqinfo: 1870 sequences from an unspecified genome</code></pre>
-<p>We can write a simple test to determine if a GRanges object is “basepair-resolution”:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/all.html">all</a></span>(<span class="kw">width</span>(ps) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="co">## [1] TRUE</span></a></code></pre></div>
+##   seqinfo: 1 sequence from dm6 genome; no seqlengths</code></pre>
+<p>The <code>import_bigWig</code> function provides the same functionality on top of <code><a href="https://rdrr.io/pkg/rtracklayer/man/BigWigFile.html">rtracklayer::import.bw</a></code>, but also removes run-length compression and returns a basepair-resolution GRanges object.</p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" data-line-number="1"><span class="co"># local paths to included bigWig files</span></a>
+<a class="sourceLine" id="cb89-2" data-line-number="2">bw.p &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"PROseq_dm6_chr4_plus.bw"</span>,</a>
+<a class="sourceLine" id="cb89-3" data-line-number="3">                    <span class="dt">package =</span> <span class="st">"BRGenomics"</span>)</a>
+<a class="sourceLine" id="cb89-4" data-line-number="4">bw.m &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"PROseq_dm6_chr4_minus.bw"</span>,</a>
+<a class="sourceLine" id="cb89-5" data-line-number="5">                    <span class="dt">package =</span> <span class="st">"BRGenomics"</span>)</a>
+<a class="sourceLine" id="cb89-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb89-7" data-line-number="7"><span class="kw"><a href="../reference/import-functions.html">import_bigWig</a></span>(bw.p, bw.m, <span class="dt">genome =</span> <span class="st">"dm6"</span>)</a></code></pre></div>
+<pre><code>## GRanges object with 47380 ranges and 1 metadata column:
+##           seqnames    ranges strand |     score
+##              &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
+##       [1]     chr4      1296      + |         1
+##       [2]     chr4     41429      + |         1
+##       [3]     chr4     42589      + |         1
+##       [4]     chr4     42591      + |         2
+##       [5]     chr4     42594      + |         5
+##       ...      ...       ...    ... .       ...
+##   [47376]     chr4   1307741      - |         1
+##   [47377]     chr4   1316536      - |         1
+##   [47378]     chr4   1318959      - |         1
+##   [47379]     chr4   1319003      - |         1
+##   [47380]     chr4   1319368      - |         1
+##   -------
+##   seqinfo: 1 sequence from dm6 genome</code></pre>
 </div>
-<div id="example-bam-to-bigwig-conversion" class="section level1">
-<h1 class="hasAnchor">
-<a href="#example-bam-to-bigwig-conversion" class="anchor"></a>Example: BAM to bigWig Conversion</h1>
-<p>The <code>import_bam</code> function provides several options for processing aligned reads, and in conjunction with functions from the <em><a href="https://bioconductor.org/packages/3.11/rtracklayer">rtracklayer</a></em> package, we can easily write a post-alignment pipeline for generating bigWig files for viewing in a genome browser. Here, we use the <code>import_bam_PROseq</code> function, which has preset defaults for PRO-seq data. For other pre-configured importation functions, see the documentation for the <code>import_bam</code> function.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">ps &lt;-<span class="st"> </span><span class="kw"><a href="../reference/import_bam.html">import_bam_PROseq</a></span>(bfile, <span class="dt">mapq =</span> <span class="dv">20</span>, <span class="dt">paired_end =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb17-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb17-3" data-line-number="3">ps_plus &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(ps, strand <span class="op">==</span><span class="st"> "+"</span>)</a>
-<a class="sourceLine" id="cb17-4" data-line-number="4">ps_minus &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(ps, strand <span class="op">==</span><span class="st"> "-"</span>)</a>
-<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="kw">score</span>(ps_minus) &lt;-<span class="st"> </span><span class="op">-</span><span class="kw">score</span>(ps_minus) <span class="co"># make minus-strand scores negative</span></a>
-<a class="sourceLine" id="cb17-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb17-7" data-line-number="7">rtracklayer<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/rtracklayer/man/BigWigFile.html">export.bw</a></span>(ps_plus, <span class="st">"~/Data/PROseq_plus.bw"</span>)</a>
-<a class="sourceLine" id="cb17-8" data-line-number="8">rtracklayer<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/rtracklayer/man/BigWigFile.html">export.bw</a></span>(ps_minus, <span class="st">"~/Data/PROseq_minus.bw"</span>)</a></code></pre></div>
 </div>
-<div id="spike-in-normalizing-data" class="section level1">
+<div id="signal-counting" class="section level1">
 <h1 class="hasAnchor">
-<a href="#spike-in-normalizing-data" class="anchor"></a>Spike-in Normalizing Data</h1>
+<a href="#signal-counting" class="anchor"></a>Signal Counting</h1>
+<div id="signal-by-region-gene" class="section level2">
+<h2 class="hasAnchor">
+<a href="#signal-by-region-gene" class="anchor"></a>Signal by Region (Gene)</h2>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb91-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(PROseq) <span class="co"># load included PRO-seq data</span></a></code></pre></div>
+<p>The <code>getCountsByRegion</code> function counts signal within regions of interest, and returns a simple vector. For instance, we can count PROseq signal within our transcripts:</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" data-line-number="1">counts_txs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getCountsByRegions.html">getCountsByRegions</a></span>(PROseq, txs_dm6_chr4)</a>
+<a class="sourceLine" id="cb92-2" data-line-number="2">counts_txs[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</a>
+<a class="sourceLine" id="cb92-3" data-line-number="3"><span class="co">## [1]   1  58  13 125 263</span></a>
+<a class="sourceLine" id="cb92-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(txs_dm6_chr4) <span class="op">==</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(counts_txs)</a>
+<a class="sourceLine" id="cb92-5" data-line-number="5"><span class="co">## [1] TRUE</span></a></code></pre></div>
 </div>
-<div id="working-with-annotations" class="section level1">
-<h1 class="hasAnchor">
-<a href="#working-with-annotations" class="anchor"></a>Working With Annotations</h1>
-<!--
-* Importing genelists
-* Modifying genelists using genebodies for instance
-* Finding max positions
-* (Use example, find max position, then make heatmap centered on it)
--->
+<div id="signal-by-position-and-region" class="section level2">
+<h2 class="hasAnchor">
+<a href="#signal-by-position-and-region" class="anchor"></a>Signal by Position and Region</h2>
+<p>The <code>getCountsByPositions</code> function will count signal at each position within each region of interest. By default, a matrix is returned, with a row for each region, and a column for each position.</p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb93-1" data-line-number="1"><span class="co"># get first 100 bases of each transcript</span></a>
+<a class="sourceLine" id="cb93-2" data-line-number="2">txs_pr &lt;-<span class="st"> </span><span class="kw">promoters</span>(txs_dm6_chr4, <span class="dv">0</span>, <span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb93-3" data-line-number="3"><span class="co"># get signal at each base within each promoter region</span></a>
+<a class="sourceLine" id="cb93-4" data-line-number="4">countmatrix_pr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span>(PROseq, txs_pr)</a></code></pre></div>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/class.html">class</a></span>(countmatrix_pr)</a>
+<a class="sourceLine" id="cb94-2" data-line-number="2"><span class="co">## [1] "matrix"</span></a>
+<a class="sourceLine" id="cb94-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(countmatrix_pr) <span class="op">==</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(txs_pr)</a>
+<a class="sourceLine" id="cb94-4" data-line-number="4"><span class="co">## [1] TRUE</span></a>
+<a class="sourceLine" id="cb94-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(countmatrix_pr) <span class="op">==</span><span class="st"> </span><span class="kw">width</span>(txs_pr[<span class="dv">1</span>])</a>
+<a class="sourceLine" id="cb94-6" data-line-number="6"><span class="co">## [1] TRUE</span></a></code></pre></div>
+<p>By default, each “position” (each column) is a single base, but counting can be done in bins as well:</p>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb95-1" data-line-number="1"><span class="co"># get signal in 10 bp bins within each promoter region</span></a>
+<a class="sourceLine" id="cb95-2" data-line-number="2">countmatrix_pr_bin &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span>(PROseq, txs_pr, <span class="dt">binsize =</span> <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb95-3" data-line-number="3">countmatrix_pr_bin[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ]</a></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+## [1,]    0    0    0    0    0    0    0    0    0     0
+## [2,]    2    1    7    1    0    0    0    1    4     0
+## [3,]    0    0    1    0    0    0    0    1    0     0
+## [4,]    0    0    0    0    0    0    0    0    0     0
+## [5,]    0    0    0    0    0    0    0    0    0     0</code></pre>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb97-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/all.html">all</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span>(countmatrix_pr_bin) <span class="op">==</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span>(countmatrix_pr))</a>
+<a class="sourceLine" id="cb97-2" data-line-number="2"><span class="co">## [1] TRUE</span></a></code></pre></div>
+<p>By default, an error is returned if input regions aren’t all the same size:</p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb98-1" data-line-number="1"><span class="kw"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span>(PROseq, txs_dm6_chr4)</a></code></pre></div>
+<pre><code>## Error in .check_mw_arg(smw, melt, mw = TRUE): regions.gr contains ranges with multiple widths, but simplify.multi.widths is set to 'error'. Did you mean to call getCountsByRegions instead?</code></pre>
+<p>An error is returned by default to avoid accidental use of <code>getCountsByPositions</code> in lieu of <code>getCountsByRegions</code>. However, for the rare case when users do intend to use multi-width regions, there is support for this using the <code>simplify.multi.widths</code> argument, which contains several useful options for how to do this (see the documentation for more details).</p>
 </div>
-<div id="heatmaps" class="section level1">
-<h1 class="hasAnchor">
-<a href="#heatmaps" class="anchor"></a>Heatmaps</h1>
-<!-- (Use image, and use ComplexHeatmap; and show reshape2::melt to use ggplot or lattice) -->
+<div id="example-plot-signal-over-a-gene" class="section level2">
+<h2 class="hasAnchor">
+<a href="#example-plot-signal-over-a-gene" class="anchor"></a>Example: Plot Signal Over a Gene</h2>
+<p>We can use <code>getCountsByPositions</code> to get the signal profile over a single gene. Let’s have a look at the gene with the highest signal near the TSS:</p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" data-line-number="1">idx &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/which.min.html">which.max</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span>(countmatrix_pr))</a>
+<a class="sourceLine" id="cb100-2" data-line-number="2">idx</a>
+<a class="sourceLine" id="cb100-3" data-line-number="3"><span class="co">## [1] 135</span></a>
+<a class="sourceLine" id="cb100-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb100-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(countmatrix_pr), </a>
+<a class="sourceLine" id="cb100-6" data-line-number="6">     <span class="dt">y =</span> countmatrix_pr[idx, ], </a>
+<a class="sourceLine" id="cb100-7" data-line-number="7">     <span class="dt">type =</span> <span class="st">"h"</span>, </a>
+<a class="sourceLine" id="cb100-8" data-line-number="8">     <span class="dt">main =</span> txs_pr<span class="op">$</span>tx_name[idx],</a>
+<a class="sourceLine" id="cb100-9" data-line-number="9">     <span class="dt">xlab =</span> <span class="st">"Distance to TSS"</span>,</a>
+<a class="sourceLine" id="cb100-10" data-line-number="10">     <span class="dt">ylab =</span> <span class="st">"PRO-seq Signal"</span>)</a></code></pre></div>
+<p><img src="BRGenomicsOverview_files/figure-html/unnamed-chunk-52-1.png" width="700"></p>
 </div>
-<div id="metaplots" class="section level1">
-<h1 class="hasAnchor">
-<a href="#metaplots" class="anchor"></a>Metaplots</h1>
-<!-- (Use R plotting, and ggplot) -->
+<div id="example-plot-signal-heatmap" class="section level2">
+<h2 class="hasAnchor">
+<a href="#example-plot-signal-heatmap" class="anchor"></a>Example: Plot Signal Heatmap</h2>
+<p>A typical use of <code>getCountsByPositions</code> is to generate a heatmap of signal by position within a list of genes. The <code>ComplexHeatmap</code> package is well documented and offers a high level of functionality, but we can also use <code>ggplot2</code> to generate customizable heatmaps.</p>
+<p>To format our matrix for ggplot, we want to “melt” it. The package <code>reshape2</code> can melt matrices into dataframes, but BRGenomics also provides a <code>melt</code> argument for several functions, including <code>getCountsByPositions</code>:</p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb101-1" data-line-number="1">cbp.df &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span>(PROseq, txs_pr, <span class="dt">binsize =</span> <span class="dv">10</span>, <span class="dt">melt =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb101-2" data-line-number="2">                               <span class="dt">ncores =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb101-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(cbp.df)</a></code></pre></div>
+<pre><code>##   region position signal
+## 1      1        1      0
+## 2      1        2      0
+## 3      1        3      0
+## 4      1        4      0
+## 5      1        5      0
+## 6      1        6      0</code></pre>
+<p>As you can see, the rows and columns of the matrix are now described in columns of this dataframe, and the signal held at each position is in the third column. Now we can plot:</p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb103-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</a></code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" data-line-number="1"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(cbp.df, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> <span class="dv">10</span><span class="op">*</span>position <span class="op">-</span><span class="st"> </span><span class="dv">5</span>, <span class="dt">y =</span> region, <span class="dt">fill =</span> signal)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb104-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html">geom_raster</a></span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb104-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html">coord_cartesian</a></span>(<span class="dt">expand =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb104-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="dt">x =</span> <span class="st">"Distance from TSS"</span>, <span class="dt">y =</span> <span class="st">"Transcript"</span>, </a>
+<a class="sourceLine" id="cb104-5" data-line-number="5">       <span class="dt">title =</span> <span class="st">"PRO-seq"</span>, <span class="dt">fill =</span> <span class="st">"Reads"</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb104-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>()</a></code></pre></div>
+<p><img src="BRGenomicsOverview_files/figure-html/unnamed-chunk-55-1.png" width="700"></p>
+</div>
 </div>
 <div id="efficient-analysis-of-multiple-datasets" class="section level1">
 <h1 class="hasAnchor">
 <a href="#efficient-analysis-of-multiple-datasets" class="anchor"></a>Efficient Analysis of Multiple Datasets</h1>
-<p>To efficiently work with several datasets, we recommend storing the GRanges objects within a standard, named list, e.g. <code>grl &lt;- list(a_rep1 = gr1, b_rep1 = gr2, ...)</code>. A named list like this can be passed as an argument to nearly every function in BRGenomics, and many functions will automatically return dataframes, or melted dataframes that use the list names as the sample names.</p>
-<p>BRGenomics does not currently support the use of <code>GRangesList</code> or <code>CompressedGRangesList</code> classes for grouping multiple datasets.<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a></p>
-<!--
-
-(Recommend storing GRanges objects within standard R list elements. 
-
-(And there is a GRangesList class and a compressed version, but we've found 
-substantial performance penalties in using them. Note that these classes may scale
-better for analyzing a large number of datasets simultaneously, when memory is
-limiting. They're currently not supported).
-
-## Multiplexed GRanges
-
-(Depending on the dataset, it may make sense to combine many datasets into a single
-GRanges object, with readcounts for each dataset contained in the `mcols` metadata.
-We've termed these "multiplexed GRanges" objects, and they are supported throughout
-the package.)
-
-((make one and demonstrate))
-
-(While this format is tempting, and on first inspection would appear to be more
-efficient, in our experience there is a substantial performance penalty when
-used with sparse data. With sparse data, like PRO-seq, it's more efficient to have
-a number of smaller GRanges objects than to have a single very large one containing
-numerous metadata columns containing mostly zeroes. This may change if Bioconductor
-core classes implement future support for efficient handling of sparse matrices.)
-
--->
+<p>To efficiently work with several datasets, we recommend storing the GRanges objects within a standard, named list, e.g. <code>grl &lt;- list(a_rep1 = gr1, b_rep1 = gr2, ...)</code>.</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb105-1" data-line-number="1"><span class="co"># make 3 datasets</span></a>
+<a class="sourceLine" id="cb105-2" data-line-number="2">ps1 &lt;-<span class="st"> </span>PROseq[<span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="dv">1</span>, <span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(PROseq), <span class="dv">3</span>)]</a>
+<a class="sourceLine" id="cb105-3" data-line-number="3">ps2 &lt;-<span class="st"> </span>PROseq[<span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="dv">2</span>, <span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(PROseq), <span class="dv">3</span>)]</a>
+<a class="sourceLine" id="cb105-4" data-line-number="4">ps3 &lt;-<span class="st"> </span>PROseq[<span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="dv">3</span>, <span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(PROseq), <span class="dv">3</span>)]</a>
+<a class="sourceLine" id="cb105-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb105-6" data-line-number="6"><span class="co"># use the "=" assignment in list() to give names to the list elements</span></a>
+<a class="sourceLine" id="cb105-7" data-line-number="7">ps_list &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">ps1 =</span> ps1, <span class="dt">ps2 =</span> ps2, <span class="dt">ps3 =</span> ps3)</a>
+<a class="sourceLine" id="cb105-8" data-line-number="8"><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(ps_list)</a></code></pre></div>
+<pre><code>## [1] "ps1" "ps2" "ps3"</code></pre>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb107-1" data-line-number="1">ps_list</a></code></pre></div>
+<pre><code>## $ps1
+## GRanges object with 15794 ranges and 1 metadata column:
+##           seqnames    ranges strand |     score
+##              &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
+##       [1]     chr4      1296      + |         1
+##       [2]     chr4     42591      + |         2
+##       [3]     chr4     42596      + |         1
+##       [4]     chr4     42619      + |         1
+##       [5]     chr4     42623      + |         2
+##       ...      ...       ...    ... .       ...
+##   [15790]     chr4   1307113      - |         1
+##   [15791]     chr4   1307121      - |         1
+##   [15792]     chr4   1307299      - |         1
+##   [15793]     chr4   1316536      - |         1
+##   [15794]     chr4   1319368      - |         1
+##   -------
+##   seqinfo: 1870 sequences from an unspecified genome
+## 
+## $ps2
+## GRanges object with 15793 ranges and 1 metadata column:
+##           seqnames    ranges strand |     score
+##              &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
+##       [1]     chr4     41429      + |         1
+##       [2]     chr4     42594      + |         5
+##       [3]     chr4     42597      + |         1
+##       [4]     chr4     42620      + |         2
+##       [5]     chr4     42653      + |         3
+##       ...      ...       ...    ... .       ...
+##   [15789]     chr4   1307031      - |         1
+##   [15790]     chr4   1307114      - |         2
+##   [15791]     chr4   1307125      - |         1
+##   [15792]     chr4   1307300      - |         1
+##   [15793]     chr4   1318959      - |         1
+##   -------
+##   seqinfo: 1870 sequences from an unspecified genome
+## 
+## $ps3
+## GRanges object with 15793 ranges and 1 metadata column:
+##           seqnames    ranges strand |     score
+##              &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
+##       [1]     chr4     42589      + |         1
+##       [2]     chr4     42595      + |         2
+##       [3]     chr4     42602      + |         1
+##       [4]     chr4     42622      + |         1
+##       [5]     chr4     42658      + |         1
+##       ...      ...       ...    ... .       ...
+##   [15789]     chr4   1307074      - |         1
+##   [15790]     chr4   1307119      - |         1
+##   [15791]     chr4   1307282      - |         1
+##   [15792]     chr4   1307741      - |         1
+##   [15793]     chr4   1319003      - |         1
+##   -------
+##   seqinfo: 1870 sequences from an unspecified genome</code></pre>
+<p>A named list like the one above can be passed as an argument to nearly every function in BRGenomics, and many functions will automatically return dataframes, or melted dataframes that use the list names as the sample names (which can simplify plotting with <code>ggplot2</code> or <code>lattice</code>).</p>
+<p><em>Note that BRGenomics does not currently support the use of <code>GRangesList</code> or <code>CompressedGRangesList</code> classes for grouping multiple datasets.</em><a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a></p>
+<div id="example-summarizing-signal-from-multiple-samples" class="section level2">
+<h2 class="hasAnchor">
+<a href="#example-summarizing-signal-from-multiple-samples" class="anchor"></a>Example: Summarizing Signal from Multiple Samples</h2>
+<p>We can pass our list of GRanges directly to <code>getCountsByRegions</code> to simultaneously count reads for each dataset, and melt the result for plotting with <code>ggplot</code>:</p>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb109-1" data-line-number="1"><span class="kw"><a href="../reference/getCountsByRegions.html">getCountsByRegions</a></span>(ps_list, txs_dm6_chr4[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>], <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
+<pre><code>##   ps1 ps2 ps3
+## 1   1   0   0
+## 2  20  21  17
+## 3   4   4   5
+## 4  35  47  43
+## 5  84  90  89</code></pre>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb111-1" data-line-number="1"><span class="co"># melt, and use the optional region_names argument</span></a>
+<a class="sourceLine" id="cb111-2" data-line-number="2">txs_counts &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getCountsByRegions.html">getCountsByRegions</a></span>(ps_list, txs_dm6_chr4, <span class="dt">melt =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb111-3" data-line-number="3">                                 <span class="dt">region_names =</span> txs_dm6_chr4<span class="op">$</span>tx_name,</a>
+<a class="sourceLine" id="cb111-4" data-line-number="4">                                 <span class="dt">ncores =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb111-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(txs_counts)</a></code></pre></div>
+<pre><code>##        region signal sample
+## 1 FBtr0346692      1    ps1
+## 2 FBtr0344900     20    ps1
+## 3 FBtr0340499      4    ps1
+## 4 FBtr0333704     35    ps1
+## 5 FBtr0333705     84    ps1
+## 6 FBtr0100246   1017    ps1</code></pre>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb113-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</a>
+<a class="sourceLine" id="cb113-2" data-line-number="2"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(txs_counts, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> sample, <span class="dt">y =</span> signal, <span class="dt">fill =</span> sample)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb113-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin</a></span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb113-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>()</a></code></pre></div>
+<p><img src="BRGenomicsOverview_files/figure-html/unnamed-chunk-59-1.png" width="700"></p>
+</div>
+<div id="example-making-browser-shots-in-r" class="section level2">
+<h2 class="hasAnchor">
+<a href="#example-making-browser-shots-in-r" class="anchor"></a>Example: Making Browser Shots in R</h2>
+<p>Plotting signal over a single locus for several datasets, we can use <code>getCountsByPositions</code> to bake our own genome browser shots within R. Using the same region we plotted earlier:</p>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb114-1" data-line-number="1">cbp_maxtx &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span>(ps_list, txs_dm6_chr4[idx], </a>
+<a class="sourceLine" id="cb114-2" data-line-number="2">                                  <span class="dt">melt =</span> <span class="ot">TRUE</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb114-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(cbp_maxtx)</a></code></pre></div>
+<pre><code>##   region position signal sample
+## 1      1        1      0    ps1
+## 2      1        2      0    ps1
+## 3      1        3      0    ps1
+## 4      1        4      0    ps1
+## 5      1        5      0    ps1
+## 6      1        6      0    ps1</code></pre>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb116-1" data-line-number="1"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(cbp_maxtx, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> position, <span class="dt">y =</span> signal)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb116-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="op">~</span>sample, <span class="dt">ncol =</span> <span class="dv">1</span>, <span class="dt">strip.position =</span> <span class="st">"left"</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb116-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span>(<span class="dt">size =</span> <span class="fl">0.5</span>, <span class="dt">color =</span> <span class="st">"darkgray"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb116-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="dt">title =</span> txs_dm6_chr4<span class="op">$</span>tx_name[idx],</a>
+<a class="sourceLine" id="cb116-5" data-line-number="5">       <span class="dt">x =</span> <span class="st">"Distance from TSS"</span>, <span class="dt">y =</span> <span class="st">"PRO-seq Signal"</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb116-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>()</a></code></pre></div>
+<p><img src="BRGenomicsOverview_files/figure-html/unnamed-chunk-61-1.png" width="576"></p>
+<p>The <code>Gviz</code> package contains a good deal browser-oriented plotting functionality, like plotting gene models.</p>
+</div>
+<div id="multiplexed-granges" class="section level2">
+<h2 class="hasAnchor">
+<a href="#multiplexed-granges" class="anchor"></a>Multiplexed GRanges</h2>
+<p>There is another data structure that is widely supported with BRGenomics, called a <strong>multiplexed GRanges</strong>. A multiplexed GRanges is a single GRanges object that contains multiple metadata fields containing basepair-resolution coverage data for different datasets. We currently recommend users use lists of GRanges objects, but you might find that multiplexed GRanges objects have performance benefits for your data (notes on this below).</p>
+<p>A multiplexed GRanges object can be made using the <code>mergeGRangesData</code> with option <code>multiplex = TRUE</code>.</p>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb117-1" data-line-number="1">ps_multi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mergeGRangesData.html">mergeGRangesData</a></span>(ps1, ps2, ps3, <span class="dt">multiplex =</span> <span class="ot">TRUE</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb117-2" data-line-number="2">ps_multi</a></code></pre></div>
+<pre><code>## GRanges object with 47380 ranges and 3 metadata columns:
+##           seqnames    ranges strand |       ps1       ps2       ps3
+##              &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
+##       [1]     chr4      1296      + |         1         0         0
+##       [2]     chr4     41429      + |         0         1         0
+##       [3]     chr4     42589      + |         0         0         1
+##       [4]     chr4     42591      + |         2         0         0
+##       [5]     chr4     42594      + |         0         5         0
+##       ...      ...       ...    ... .       ...       ...       ...
+##   [47376]     chr4   1307741      - |         0         0         1
+##   [47377]     chr4   1316536      - |         1         0         0
+##   [47378]     chr4   1318959      - |         0         1         0
+##   [47379]     chr4   1319003      - |         0         0         1
+##   [47380]     chr4   1319368      - |         1         0         0
+##   -------
+##   seqinfo: 1870 sequences from an unspecified genome</code></pre>
+<p>As in any GRanges object, the metadata fields are accessible as a dataframe with the <code>mcols()</code> function, and individual columns are accessible with the <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code> operator.<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a></p>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb119-1" data-line-number="1"><span class="kw">mcols</span>(ps_multi)</a></code></pre></div>
+<pre><code>## DataFrame with 47380 rows and 3 columns
+##             ps1       ps2       ps3
+##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
+## 1             1         0         0
+## 2             0         1         0
+## 3             0         0         1
+## 4             2         0         0
+## 5             0         5         0
+## ...         ...       ...       ...
+## 47376         0         0         1
+## 47377         1         0         0
+## 47378         0         1         0
+## 47379         0         0         1
+## 47380         1         0         0</code></pre>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb121-1" data-line-number="1">ps_multi<span class="op">$</span>ps1[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</a>
+<a class="sourceLine" id="cb121-2" data-line-number="2"><span class="co">## [1] 1 0 0 2 0</span></a></code></pre></div>
+<p>This data structure can be passed to most functions in BRGenomics. To be explicit, users should set the <code>field</code> argument, when it exists, to set the datasets for which calculations should be performed:</p>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb122-1" data-line-number="1"><span class="co"># for all datasets (all fields), get counts in the first 5 transcripts</span></a>
+<a class="sourceLine" id="cb122-2" data-line-number="2"><span class="kw"><a href="../reference/getCountsByRegions.html">getCountsByRegions</a></span>(ps_multi, txs_dm6_chr4[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>], <span class="dt">field =</span> <span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="kw">mcols</span>(ps_multi)),</a>
+<a class="sourceLine" id="cb122-3" data-line-number="3">                   <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
+<pre><code>##   ps1 ps2 ps3
+## 1   1   0   0
+## 2  20  21  17
+## 3   4   4   5
+## 4  35  47  43
+## 5  84  90  89</code></pre>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb124-1" data-line-number="1"><span class="co"># get counts for ps2 dataset only</span></a>
+<a class="sourceLine" id="cb124-2" data-line-number="2"><span class="kw"><a href="../reference/getCountsByRegions.html">getCountsByRegions</a></span>(ps_multi, txs_dm6_chr4[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>], <span class="dt">field =</span> <span class="st">"ps2"</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
+<pre><code>## [1]  0 21  4 47 90</code></pre>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb126-1" data-line-number="1"><span class="co"># if no field is given, most functions will default to using all fields</span></a>
+<a class="sourceLine" id="cb126-2" data-line-number="2"><span class="kw"><a href="../reference/getCountsByRegions.html">getCountsByRegions</a></span>(ps_multi, txs_dm6_chr4[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>], <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
+<pre><code>## field not found in dataset.gr; will default to using all fields in dataset.gr</code></pre>
+<pre><code>##   ps1 ps2 ps3
+## 1   1   0   0
+## 2  20  21  17
+## 3   4   4   5
+## 4  35  47  43
+## 5  84  90  89</code></pre>
+<p>In our experience with PRO-seq data, and to our surprise, a list of GRanges objects typically outperforms multiplexed GRanges on a typical laptop, despite the theoretical benefits of multiplexing.</p>
+<hr>
+<p><em>In principle, the multiplexed GRanges structure is designed to reduce memory usage and increase performance, but this has not been our experience when dealing with sparse, basepair-resolution data like PRO-seq. Overlapping signal with regions of interest (e.g. in <code>getCountsByRegions</code> or <code>getCountsByPosition</code>) is relatively efficient for reasonably sized GRanges objects, and these calculations scale reasonably well with multicore processing. While multiplexing means that signal overlapping only has to be performed once, we’ve found that this is a relatively small benefit in practice that is easily offset by having to do signal calculations on large sparse vectors of signal counts. However, the relative benefits of using lists or multiplexing are likely to depend on the nature of the data being analyzed, as well as well as computer hardware.</em></p>
+<hr>
+</div>
 </div>
 <div id="saving-binary-r-files" class="section level1">
 <h1 class="hasAnchor">
 <a href="#saving-binary-r-files" class="anchor"></a>Saving Binary R Files</h1>
 <p>While the handling of GRanges data in BRGenomics is relatively fast, the initial importation of bigWig or bedGraph files as GRanges objects remains a noticeable bottleneck. This may be tolerable for interactive workflows, in which data is imported once before undergoing lengthy analysis, but the bottleneck is a significant detriment for users who regularly import data.</p>
-<p>To avoid this bottleneck, users can save reusable data structures as binary R files, which effectively save the memory state of R objects. Not only are these objects rapidly reloaded into memory upon importation, but they have the added benefit of saving the user from repeating data formatting (like naming).</p>
-<!--(maybe footnote the save/read vs. saveRDS/readRDS) -->
-<p>Any R object can be saved to storage using the <code>save</code> or <code>saveRDS</code> commands, and re-imported using the <code>load</code> or <code>readRDS</code> commands. The <code>saveRDS</code>/<code>readRDS</code> commands work like other data exporting and importing commands, while the <code>read</code>/<code>load</code> commands maintain the original name of the objects. For instance, if you <code><a href="https://rdrr.io/r/base/save.html">save(PROseq, file = "~/ps.RData")</a></code>, and in a new R session run <code>read("~/ps.RData")</code>, a new object called <code>PROseq</code> will be created in your new environment.<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a></p>
+<p>To avoid this bottleneck, users can save reusable data structures as binary R files, which effectively save the memory state of R objects. Not only are these objects rapidly reloaded into memory upon importation, but they have the added benefit of saving the user from repeating data formatting.</p>
+<p>Any R object can be saved to storage using the <code>saveRDS</code> function, and re-imported using <code>readRDS</code>.</p>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb129-1" data-line-number="1"><span class="co"># save the PRO-seq GRanges for later import</span></a>
+<a class="sourceLine" id="cb129-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/readRDS.html">saveRDS</a></span>(PROseq, <span class="dt">file =</span> <span class="st">"~/PROseq.RData"</span>) </a>
+<a class="sourceLine" id="cb129-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb129-4" data-line-number="4"><span class="co"># save a list of GRanges</span></a>
+<a class="sourceLine" id="cb129-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/readRDS.html">saveRDS</a></span>(ps_list, <span class="dt">file =</span> <span class="st">"~/ps_list.RData"</span>)</a>
+<a class="sourceLine" id="cb129-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb129-7" data-line-number="7"><span class="co"># re-import</span></a>
+<a class="sourceLine" id="cb129-8" data-line-number="8">ps_list &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span>(<span class="st">"~/ps_list.RData"</span>)</a></code></pre></div>
+<p>The <code>save</code> and <code>load</code> commands can also be used to accomplish the same thing, although they work slightly differently.<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a></p>
 </div>
-<div id="deseq" class="section level1">
+<div id="profile-plots-bootstrapping" class="section level1">
 <h1 class="hasAnchor">
-<a href="#deseq" class="anchor"></a>DESeq</h1>
-<p>DESeq2’s default treatment of data relies on the assumption that genewise estimates of dispersion are largely unchanged across samples. While this assumption holds for a typical RNA-seq data, it can be violated if there exist <em>any</em> conditions represented in the <code>DESeqDataSet</code> object that caused meaningful signal changes across a majority of regions of interest. The BRGenomics functions <code>getDESeqDataSet</code> and <code>getDESeqResults</code> are simple and flexible wrappers for making pairwise comparisons between individual samples, without relying on the assumption of globally-similar dispersion estimates.</p>
-<p>For making simple, pairwise comparisons between individual (replicated) samples, the <code>getDESeqResults</code> follows the logic that the presence of a dataset <span class="math inline">\(X\)</span> within the <code>DESeqDataSet</code> object will not affect the comparison of datasets <span class="math inline">\(Y\)</span> and <span class="math inline">\(Z\)</span>. However, while this intuition is appealing, users should note that if the globally-similar dispersions assumption <em>does</em> hold, then DESeq2’s default behavior should be more sensitive in its estimates of genewise dispersion. In this case, users can still take advantage of the convenience of the BRGenomics function <code>getDESeqDataSet</code> before calling <code><a href="https://rdrr.io/pkg/DESeq2/man/DESeq.html">DESeq2::DESeq</a></code> and <code><a href="https://rdrr.io/pkg/DESeq2/man/results.html">DESeq2::results</a></code>.</p>
-<p>If the globally-similar dispersions assumption is violated, but something beyond simple pairwise comparisons is desired (e.g. group comparisons or additional model terms), we note that DESeq2 can be used without “blind dispersion estimation” (see the DESeq2 manual).</p>
-<!-- (Using list) -->
+<a href="#profile-plots-bootstrapping" class="anchor"></a>Profile Plots &amp; Bootstrapping</h1>
+<div id="conventional-profiles" class="section level2">
+<h2 class="hasAnchor">
+<a href="#conventional-profiles" class="anchor"></a>Conventional Profiles</h2>
+<p>As an example, we’ll plot PRO-seq signal in promoter-proximal regions by calculating the mean signal intensity at each base in the first 100 bases of a transcript.</p>
+<p>First, calculate signal at each base for all promoter-proximal regions:</p>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb130-1" data-line-number="1">countmatrix_pr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span>(PROseq, txs_pr, <span class="dt">ncores =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb130-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/dim.html">dim</a></span>(countmatrix_pr)</a>
+<a class="sourceLine" id="cb130-3" data-line-number="3"><span class="co">## [1] 339 100</span></a>
+<a class="sourceLine" id="cb130-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/base/dim.html">dim</a></span>(countmatrix_pr) <span class="op">==</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(txs_pr), <span class="kw"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="kw">width</span>(txs_pr)))</a>
+<a class="sourceLine" id="cb130-5" data-line-number="5"><span class="co">## [1] TRUE TRUE</span></a></code></pre></div>
+<p>For each position (each column of the matrix), calculate the mean, and plot:</p>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb131-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(countmatrix_pr),</a>
+<a class="sourceLine" id="cb131-2" data-line-number="2">     <span class="dt">y =</span> <span class="kw"><a href="https://rdrr.io/r/base/colSums.html">colMeans</a></span>(countmatrix_pr),</a>
+<a class="sourceLine" id="cb131-3" data-line-number="3">     <span class="dt">type =</span> <span class="st">"l"</span>, </a>
+<a class="sourceLine" id="cb131-4" data-line-number="4">     <span class="dt">xlab =</span> <span class="st">"Distance to TSS (bp)"</span>,</a>
+<a class="sourceLine" id="cb131-5" data-line-number="5">     <span class="dt">ylab =</span> <span class="st">"Mean PRO-seq Reads"</span>)</a></code></pre></div>
+<p><img src="BRGenomicsOverview_files/figure-html/unnamed-chunk-68-1.png" width="700"></p>
+<p>One drawback of using the arithmatic mean is that means are not robust to outliers. In other words, the mean signal at any position is liable to be determined by a small number of highly influential points. This is especially problematic for high dynamic range data like PRO-seq.</p>
+<p>It’s common to see this issue addressed through the use medians/quantiles in place of arithmatic means. However, observe what happens as we plot the median signal across our gene list using several different gene-filtering thresholds:</p>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb132-1" data-line-number="1">plot_meds &lt;-<span class="st"> </span><span class="cf">function</span>(sig_thresh) {</a>
+<a class="sourceLine" id="cb132-2" data-line-number="2">  idx &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span>(countmatrix_pr) <span class="op">&gt;</span><span class="st"> </span>sig_thresh)</a>
+<a class="sourceLine" id="cb132-3" data-line-number="3">  <span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(countmatrix_pr),</a>
+<a class="sourceLine" id="cb132-4" data-line-number="4">       <span class="dt">y =</span> <span class="kw"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(countmatrix_pr[idx, ], <span class="dv">2</span>, median),</a>
+<a class="sourceLine" id="cb132-5" data-line-number="5">       <span class="dt">type =</span> <span class="st">"l"</span>, </a>
+<a class="sourceLine" id="cb132-6" data-line-number="6">       <span class="dt">main =</span> <span class="kw"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span>(<span class="st">"Regions with &gt;%s reads"</span>, sig_thresh),</a>
+<a class="sourceLine" id="cb132-7" data-line-number="7">       <span class="dt">xlab =</span> <span class="st">"Distance to TSS (bp)"</span>,</a>
+<a class="sourceLine" id="cb132-8" data-line-number="8">       <span class="dt">ylab =</span> <span class="st">"Median PRO-seq Reads"</span>)</a>
+<a class="sourceLine" id="cb132-9" data-line-number="9">}</a>
+<a class="sourceLine" id="cb132-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb132-11" data-line-number="11"><span class="kw"><a href="https://rdrr.io/r/graphics/par.html">par</a></span>(<span class="dt">mfrow =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">3</span>, <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb132-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb132-13" data-line-number="13"><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>, <span class="dv">30</span><span class="op">*</span><span class="dv">2</span><span class="op">^</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">4</span>))) {</a>
+<a class="sourceLine" id="cb132-14" data-line-number="14">  <span class="kw">plot_meds</span>(i)</a>
+<a class="sourceLine" id="cb132-15" data-line-number="15">}</a></code></pre></div>
+<p><img src="BRGenomicsOverview_files/figure-html/unnamed-chunk-69-1.png" width="576"></p>
+<p>The paucity of transcription on Drosophila chromosome 4 makes this a somewhat extreme example, but the above plots demonstrate the potential fragility of medians. A common rule of thumb is that a given cell is only apt to express around half of its genes; if that holds true, the median of an unfiltered genelist will be close to zero, and likely insensitive to any changes occuring at expressed genes.</p>
 </div>
-<div id="combining-replicates" class="section level1">
-<h1 class="hasAnchor">
-<a href="#combining-replicates" class="anchor"></a>Combining Replicates</h1>
-<p>Biological replicates are best used to independently reproduce and measure effects, and therefore we often want to handle them separately. However, there are times when combining replicates can allow for more sensitive measurements, assuming that the replicates are indistinguishable.</p>
-<p>The <code>mergeGRangesData</code> function can be used to combine basepair-resolution GRanges objects, e.g. <code>a_combined &lt;- mergeGRangesData(a_rep1, a_rep2)</code></p>
-<!-- 
-
-((Later on))
-
-(There are other times when it makes sense to combine a large number of datasets.
-This can be accomplished by passing an entire list of GRanges objects)
-
--->
+<div id="the-rationale-for-bootstrapping" class="section level2">
+<h2 class="hasAnchor">
+<a href="#the-rationale-for-bootstrapping" class="anchor"></a>The Rationale for Bootstrapping</h2>
+<p>A robust alternative to plotting mean or median signal profiles is to plot <strong>bootstrapped</strong> mean signal profiles, known as metaprofile plots or metaplots.</p>
+<p>To bootstrap the mean signal by position, a small number of genes are randomly sampled from a genelist, and the mean signal at each position is calculated for that group of genes. This process of randomly sampling genes and calculating mean signals is repeated over many iterations, and the final bootstrapped mean for each position is the median of the sampled means.</p>
+<p>One feature of bootstrapping is that it is robust to outliers. But more than that, the a bootstrapped mean provides an <em>expectation</em> for what the mean signal would be for any arbitrary group of genes, and associated with that expectation is a measure of uncertainty. By taking quantiles of the subsampled means <em>other than</em> the median (the expected value), we can estimate the extent to which the mean varies across arbitrary groups of genes.</p>
+<p>For example, the 75th percentile of the subsampled means is a number for which, 25% of the time, we calculated a higher mean. Similarly, a 90% confidence interval about the bootstrapped mean encompasses all values between the 5th and 95th percentiles of the subsampled means.</p>
 </div>
-<div id="browser-shots" class="section level1">
+<div id="generating-and-plotting-metaprofiles" class="section level2">
+<h2 class="hasAnchor">
+<a href="#generating-and-plotting-metaprofiles" class="anchor"></a>Generating and Plotting Metaprofiles</h2>
+<p>We can use the <code>metaSubsample</code> function to bootstrap mean values by position for a genelist. The function accepts the same arguments as <code>getCountsByPositions</code>, in addition to other arguments related to the bootstrapping.</p>
+<p>By default, 10% of the genelist is randomly sampled 1000 times, and confidence bands are returned for the 12.5th and 87.5th percentiles (i.e. a 75% confidence interval).</p>
+<p>Given the small size our dataset, we’ll reduce this to a 30% confidence interval, and we’ll additionally use 5 bp bins:</p>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb133-1" data-line-number="1">bootmeans.df &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bootstrap-signal-by-position.html">metaSubsample</a></span>(PROseq, txs_pr, <span class="dt">binsize =</span> <span class="dv">5</span>, </a>
+<a class="sourceLine" id="cb133-2" data-line-number="2">                              <span class="dt">lower =</span> <span class="fl">0.35</span>, <span class="dt">upper =</span> <span class="fl">0.65</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb133-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(bootmeans.df)</a></code></pre></div>
+<pre><code>##    x       mean      lower      upper sample.name
+## 1  3 0.04117647 0.02941176 0.05882353      PROseq
+## 2  8 0.05294118 0.04117647 0.06470588      PROseq
+## 3 13 0.06470588 0.04705882 0.08823529      PROseq
+## 4 18 0.06470588 0.04500000 0.08823529      PROseq
+## 5 23 0.11764706 0.10000000 0.15500000      PROseq
+## 6 28 0.10588235 0.08823529 0.11764706      PROseq</code></pre>
+<p>A dataframe is returned for plotting, and notice how the x-values have been automatically adjusted to be the center of the bins.</p>
+<p>Below, we show how to plot the confidence bands using base R plotting, as well as <code>ggplot2</code>.</p>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb135-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(mean <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> bootmeans.df, <span class="dt">type =</span> <span class="st">"l"</span>, </a>
+<a class="sourceLine" id="cb135-2" data-line-number="2">     <span class="dt">main =</span> <span class="st">"PRO-seq Signal"</span>, <span class="dt">ylim =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>, <span class="fl">1.4</span>),</a>
+<a class="sourceLine" id="cb135-3" data-line-number="3">     <span class="dt">xlab =</span> <span class="st">"Distance from TSS"</span>,</a>
+<a class="sourceLine" id="cb135-4" data-line-number="4">     <span class="dt">ylab =</span> <span class="st">"Mean Signal + 30% CI"</span>)</a>
+<a class="sourceLine" id="cb135-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb135-6" data-line-number="6"><span class="co"># draw a polygon to add confidence bands,</span></a>
+<a class="sourceLine" id="cb135-7" data-line-number="7"><span class="co"># and use adjustcolor() to add transparency</span></a>
+<a class="sourceLine" id="cb135-8" data-line-number="8"><span class="kw"><a href="https://rdrr.io/r/graphics/polygon.html">polygon</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(bootmeans.df<span class="op">$</span>x, <span class="kw"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(bootmeans.df<span class="op">$</span>x)), </a>
+<a class="sourceLine" id="cb135-9" data-line-number="9">        <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(bootmeans.df<span class="op">$</span>lower, <span class="kw"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(bootmeans.df<span class="op">$</span>upper)),</a>
+<a class="sourceLine" id="cb135-10" data-line-number="10">        <span class="dt">col =</span> <span class="kw"><a href="https://rdrr.io/r/grDevices/adjustcolor.html">adjustcolor</a></span>(<span class="st">"black"</span>, <span class="fl">0.1</span>), <span class="dt">border =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<p><img src="BRGenomicsOverview_files/figure-html/unnamed-chunk-71-1.png" width="700"></p>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb136-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span>(ggplot2)</a>
+<a class="sourceLine" id="cb136-2" data-line-number="2"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(bootmeans.df, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x, mean)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb136-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb136-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html">geom_ribbon</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x, <span class="dt">ymin =</span> lower, <span class="dt">ymax =</span> upper),</a>
+<a class="sourceLine" id="cb136-5" data-line-number="5">              <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb136-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="dt">title =</span> <span class="st">"PRO-seq Signal"</span>, </a>
+<a class="sourceLine" id="cb136-7" data-line-number="7">       <span class="dt">x =</span> <span class="st">"Distance from TSS"</span>, </a>
+<a class="sourceLine" id="cb136-8" data-line-number="8">       <span class="dt">y =</span> <span class="st">"Mean Signal + 30% CI"</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb136-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>()</a></code></pre></div>
+<p><img src="BRGenomicsOverview_files/figure-html/unnamed-chunk-72-1.png" width="700"></p>
+</div>
+<div id="example-comparative-metaplots" class="section level2">
+<h2 class="hasAnchor">
+<a href="#example-comparative-metaplots" class="anchor"></a>Example: Comparative Metaplots</h2>
+<p>Like other functions in BRGenomics, we can pass a list of GRanges to <code>metaSubsample</code>, and the output is conveniently combined for plotting.</p>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb137-1" data-line-number="1">bm_list.df &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bootstrap-signal-by-position.html">metaSubsample</a></span>(ps_list, txs_pr, <span class="dt">binsize =</span> <span class="dv">5</span>, </a>
+<a class="sourceLine" id="cb137-2" data-line-number="2">                            <span class="dt">lower =</span> <span class="fl">0.35</span>, <span class="dt">upper =</span> <span class="fl">0.65</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb137-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(bm_list.df)</a></code></pre></div>
+<pre><code>##    x        mean       lower      upper sample.name
+## 1  3 0.005882353 0.005882353 0.01176471         ps1
+## 2  8 0.023529412 0.017647059 0.02352941         ps1
+## 3 13 0.011764706 0.011764706 0.01764706         ps1
+## 4 18 0.029411765 0.017647059 0.04117647         ps1
+## 5 23 0.047058824 0.035294118 0.06470588         ps1
+## 6 28 0.029411765 0.023529412 0.03529412         ps1</code></pre>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb139-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span>(ggplot2)</a>
+<a class="sourceLine" id="cb139-2" data-line-number="2"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(bm_list.df, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x, mean, <span class="dt">color =</span> sample.name)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb139-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb139-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html">geom_ribbon</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x, <span class="dt">ymin =</span> lower, <span class="dt">ymax =</span> upper,</a>
+<a class="sourceLine" id="cb139-5" data-line-number="5">                  <span class="dt">color =</span> <span class="ot">NULL</span>, <span class="dt">fill =</span> sample.name),</a>
+<a class="sourceLine" id="cb139-6" data-line-number="6">              <span class="dt">alpha =</span> <span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb139-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="dt">title =</span> <span class="st">"PRO-seq Signal"</span>, </a>
+<a class="sourceLine" id="cb139-8" data-line-number="8">       <span class="dt">x =</span> <span class="st">"Distance from TSS"</span>, </a>
+<a class="sourceLine" id="cb139-9" data-line-number="9">       <span class="dt">y =</span> <span class="st">"Mean Signal + 30% CI"</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb139-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>()</a></code></pre></div>
+<p><img src="BRGenomicsOverview_files/figure-html/unnamed-chunk-74-1.png" width="700"></p>
+<p><em>Bear in mind that the above confidence intervals are ignoring 70% of the data, which is very atypical. More reasonable parameters would reveal how lacking this data is.</em></p>
+</div>
+</div>
+<div id="spike-in-normalization" class="section level1">
 <h1 class="hasAnchor">
-<a href="#browser-shots" class="anchor"></a>“Browser Shots”</h1>
+<a href="#spike-in-normalization" class="anchor"></a>Spike-in Normalization</h1>
+<p>BRGenomics includes useful utilities for spike-in normalization.</p>
+<p>A typical approach is to add the spike-in (either exogenous cells or synthetic oligonucleotides) before library preparation, and to subsequently map to a <strong>combined genome</strong> containing both the target organisms chromosomes (to map the experimental reads) as well as sequences/chromosomes for the spike-in.</p>
+<p>This so-called “competitive alignment” results in the creation of BAM files containing a mix of chromosomes, for which it should be straightforward to identify the spike-in chromosomes.</p>
+<div id="counting-spike-in-reads" class="section level2">
+<h2 class="hasAnchor">
+<a href="#counting-spike-in-reads" class="anchor"></a>Counting Spike-in Reads</h2>
+<p>For this section, we’ll use a list of 4 dummy datasets containing normal, as well as spike-in chromosomes. Consider the first 2 datasets:</p>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb140-1" data-line-number="1">grl[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]</a></code></pre></div>
+<pre><code>## $gr1_rep1
+## GRanges object with 4 ranges and 1 metadata column:
+##        seqnames    ranges strand |     score
+##           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
+##   [1]      chr1         1      + |         1
+##   [2]      chr2         2      + |         1
+##   [3] spikechr1         3      + |         1
+##   [4] spikechr2         4      + |         1
+##   -------
+##   seqinfo: 4 sequences from an unspecified genome; no seqlengths
+## 
+## $gr2_rep1
+## GRanges object with 4 ranges and 1 metadata column:
+##        seqnames    ranges strand |     score
+##           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
+##   [1]      chr1         1      + |         2
+##   [2]      chr2         2      + |         2
+##   [3] spikechr1         3      + |         1
+##   [4] spikechr2         4      + |         1
+##   -------
+##   seqinfo: 4 sequences from an unspecified genome; no seqlengths</code></pre>
+<p>We can identify the spike-in chromosomes either by full names, or by a regular expression that matches the spike-in chromosomes. In this case, we named our spike-in chromosomes to contain the string “spike” which makes them easy to identify.</p>
+<p>To count the reads for each dataset:</p>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb142-1" data-line-number="1"><span class="kw"><a href="../reference/getSpikeInCounts.html">getSpikeInCounts</a></span>(grl, <span class="dt">si_pattern =</span> <span class="st">"spike"</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
+<pre><code>##     sample total_reads exp_reads spike_reads
+## 1 gr1_rep1           4         2           2
+## 2 gr2_rep1           6         4           2
+## 3 gr1_rep2           5         2           3
+## 4 gr2_rep2          12         8           4</code></pre>
+</div>
+<div id="filtering-spike-in-reads" class="section level2">
+<h2 class="hasAnchor">
+<a href="#filtering-spike-in-reads" class="anchor"></a>Filtering Spike-in Reads</h2>
+<p>We can also remove the spike-in reads from our data:</p>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb144-1" data-line-number="1"><span class="kw"><a href="../reference/getSpikeInCounts.html">removeSpikeInReads</a></span>(grl[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>], <span class="dt">si_pattern =</span> <span class="st">"spike"</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
+<pre><code>## $gr1_rep1
+## GRanges object with 2 ranges and 1 metadata column:
+##       seqnames    ranges strand |     score
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
+##   [1]     chr1         1      + |         1
+##   [2]     chr2         2      + |         1
+##   -------
+##   seqinfo: 2 sequences from an unspecified genome; no seqlengths
+## 
+## $gr2_rep1
+## GRanges object with 2 ranges and 1 metadata column:
+##       seqnames    ranges strand |     score
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
+##   [1]     chr1         1      + |         2
+##   [2]     chr2         2      + |         2
+##   -------
+##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
+<p>And if we wanted to isolate the spike-in reads, there is an analagous <code>getSpikeInReads</code> function.</p>
+</div>
+<div id="the-spike-in-normalization-factor" class="section level2">
+<h2 class="hasAnchor">
+<a href="#the-spike-in-normalization-factor" class="anchor"></a>The Spike-in Normalization Factor</h2>
+<p>There are several methods by which to generate spike-in normalization factors, but we advocate for a particular method, which generates units we call <b>S</b>pike-in normalized <b>R</b>eads <b>P</b>er <b>M</b>illion mapped reads in the negative <b>C</b>ontrol (<b>SRPMC</b>). The SRPMC normalization factor for a given sample <span class="math inline">\(i\)</span> is defined as such:</p>
+<p><span class="math display">\[SRPMC:\ NF_i = \frac{\sum reads_{spikein, control}}{\sum reads_{spikein, i}} 
+\cdot \frac{10^6}{\sum reads_{experimental, control}}\]</span></p>
+<p>This expression effectively calculates Reads Per Million (RPM) normalization for the negative control, and all other samples <span class="math inline">\(i\)</span> are scaled into equivalent units according to the ratio of their spike-in reads. We provide a more explicit derivation below.</p>
+<div id="derivation-of-srpmc" class="section level3">
+<h3 class="hasAnchor">
+<a href="#derivation-of-srpmc" class="anchor"></a>Derivation of SRPMC</h3>
+<p>The fundamental concept of spike-in normalization is that the ratio of experimental reads to spike-in reads can be used to correct for global changes in starting material. Let’s call this ratio <u>R</u>eads <u>P</u>er <u>S</u>pike-in read (<b>RPS</b>):</p>
+<p><span class="math display">\[RPS = \frac{\sum reads_{experimental}}{\sum reads_{spikein}}\]</span></p>
+<p>In isolation, this number only reflects the relative amounts of spike-in material recovered and mapped. The meaningful information about changes in material can only arise from making direct comparisons between samples. For any sample, <span class="math inline">\(i\)</span>, we can calculate the global change in signal as a proportion of the material recovered from a negative control:</p>
+<p><span class="math display">\[RelativeSignal_i = \frac{RPS_i}{RPS_{control}}\]</span></p>
+<p>The usual purpose of spike-in normalization is to measure a biological difference in total material (e.g. RNA) between samples, and the above ratio is a direct measurement of this.</p>
+<p>To generate normalization factors, we use the above ratio to adjust RPM (Reads Per Million mapped reads) normalization factors, which we define below for clarity:</p>
+<p><span class="math display">\[RPM:\ NF_i = \frac{1}{\frac{\sum{reads_i}}{10^6}} = \frac{10^6}{\sum{reads_i}}\]</span></p>
+<p>(Unless indicated, <span class="math inline">\(reads\)</span> refers to non-spike-in reads).</p>
+<p>RPM normalization (i.e. read depth normalization) is the simplest and likely most familiar form of normalization. For a basal (unperturbed) negative control, RPM should produce the most portable metric of signal, given that we intend for the negative control to demonstrate typical physiology, and we hope that this state is reproducible. We therefore want to have our normalized signal in unit terms of RPM in the negative control.</p>
+<p>To accomplish this, we multiply the ratio of spike-in normalized reads between the sample <span class="math inline">\(i\)</span> and the negative control to the RPM normalization factor for sample <span class="math inline">\(i\)</span>. This converts readcounts into units we summarize as <u>S</u>pike-in normalized <u>R</u>eads <u>P</u>er <u>M</u>illion mapped reads in the negative <u>C</u>ontrol (SRPMC):</p>
+<p><span class="math display">\[SRPMC:\ NF_i = \frac{RPS_i}{RPS_{control}} \cdot \frac{10^6}{\sum{reads_i}}\]</span></p>
+<p>Again, SRPMC results in the negative control being RPM (sequencing depth) normalized, while all other samples are in equivalent, directly comparable units. And we’ve effectively determined the relative scaling of those samples based on the ratios of spike-in reads.</p>
+<p>This becomes more apparent if we substitute the <span class="math inline">\(RPS\)</span> variables above. <span class="math inline">\(\sum{reads_i}\)</span> cancels, and simplifying the fraction produces the original formula:</p>
+<p><span class="math display">\[SRPMC:\ NF_i = \frac{\sum reads_{spikein, control}}{\sum reads_{spikein, i}} 
+\cdot \frac{10^6}{\sum reads_{experimental, control}}\]</span></p>
+</div>
+</div>
+<div id="calculating-normalization-factors" class="section level2">
+<h2 class="hasAnchor">
+<a href="#calculating-normalization-factors" class="anchor"></a>Calculating Normalization Factors</h2>
+<p>We can calculate SRPMC normalization factors for each sample using the <code>getSpikeInNFs</code> function, using the same syntax we used to count the spike-in reads.</p>
+<p>However, we have to also identify the negative control, which is the sample that will have the “reference” (RPM) normalization. We do this either using a regular expression (<code>ctrl_pattern</code> argument) or by supplying the name(s) of the negative controls (the <code>ctrl_names</code> argument).</p>
+<p>The default method is “SRPMC”, but there are other options, as well.</p>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb146-1" data-line-number="1"><span class="kw"><a href="../reference/getSpikeInNFs.html">getSpikeInNFs</a></span>(grl, <span class="dt">si_pattern =</span> <span class="st">"spike"</span>, <span class="dt">ctrl_pattern =</span> <span class="st">"gr1"</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
+<pre><code>## [1] 500000 500000 500000 375000</code></pre>
+<p>(The NFs are high because our dummy data contain only a few reads).</p>
+<p>By default, normalization factors utilize <strong>batch normalization</strong>, such that in any replicate (identified by the characters following “rep” in the sample names), the negative control is RPM normalized, and the other conditions are normlized to the within-replicate negative control (see the documentation for further details).</p>
+<p>Currently, batch normalization requires the sample names end with strings matching the format <code>"_rep1"</code>, <code>"_rep2"</code>, etc. If sample names do not conform to this pattern, you can rename them by using the <code>sample_names</code> argument.</p>
+</div>
+<div id="normalizing-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#normalizing-data" class="anchor"></a>Normalizing Data</h2>
+<p>We can also use the <code>spikeInNormGRanges</code> function to simultaneously find the spike-in reads, calculate the spike-in normalization factors, filter out spike-in reads, and normalize the readcounts:</p>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb148-1" data-line-number="1"><span class="kw"><a href="../reference/getSpikeInNFs.html">spikeInNormGRanges</a></span>(grl, <span class="dt">si_pattern =</span> <span class="st">"spike"</span>, <span class="dt">ctrl_pattern =</span> <span class="st">"gr1"</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
+<pre><code>## $gr1_rep1
+## GRanges object with 2 ranges and 1 metadata column:
+##       seqnames    ranges strand |     score
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
+##   [1]     chr1         1      + |     5e+05
+##   [2]     chr2         2      + |     5e+05
+##   -------
+##   seqinfo: 2 sequences from an unspecified genome; no seqlengths
+## 
+## $gr2_rep1
+## GRanges object with 2 ranges and 1 metadata column:
+##       seqnames    ranges strand |     score
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
+##   [1]     chr1         1      + |     1e+06
+##   [2]     chr2         2      + |     1e+06
+##   -------
+##   seqinfo: 2 sequences from an unspecified genome; no seqlengths
+## 
+## $gr1_rep2
+## GRanges object with 2 ranges and 1 metadata column:
+##       seqnames    ranges strand |     score
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
+##   [1]     chr1         1      + |     5e+05
+##   [2]     chr2         2      + |     5e+05
+##   -------
+##   seqinfo: 2 sequences from an unspecified genome; no seqlengths
+## 
+## $gr2_rep2
+## GRanges object with 2 ranges and 1 metadata column:
+##       seqnames    ranges strand |     score
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
+##   [1]     chr1         1      + |   1500000
+##   [2]     chr2         2      + |   1500000
+##   -------
+##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
+</div>
+</div>
+<div id="normalization-by-subsampling" class="section level1">
+<h1 class="hasAnchor">
+<a href="#normalization-by-subsampling" class="anchor"></a>Normalization by Subsampling</h1>
+<div id="rationale" class="section level2">
+<h2 class="hasAnchor">
+<a href="#rationale" class="anchor"></a>Rationale</h2>
+<p>When viewing genomics data in a genome browser (or otherwise plotting signal for a single gene), the sparsity of basepair resolution data can challenge our visual perception.</p>
+<p>Consider two datasets from identical samples, but where one is sequenced to a higher depth. The two datasets can be normalized such that the signal counts are equivalent, but the dataset with higher sequencing depth will have also uncovered additional sites. When plotted in a genome browser, the total signal within a region may be the same, but the more highly sequenced dataset will cover more positions but have lower peaks, while the less sequenced dataset will look sparse and spikey in comparison.</p>
+<p>Below, we compare PRO-seq data derived from the same dataset over the same gene. In one case, we randomly sample half of the reads over that gene, while in another, we divide all the readcounts by 2.</p>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb150-1" data-line-number="1"><span class="co"># choose a single gene</span></a>
+<a class="sourceLine" id="cb150-2" data-line-number="2">gene_i &lt;-<span class="st"> </span>txs_dm6_chr4[<span class="dv">185</span>]</a>
+<a class="sourceLine" id="cb150-3" data-line-number="3">reads.gene_i &lt;-<span class="st"> </span><span class="kw">subsetByOverlaps</span>(PROseq, gene_i)</a>
+<a class="sourceLine" id="cb150-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb150-5" data-line-number="5"><span class="co"># sample half the raw reads</span></a>
+<a class="sourceLine" id="cb150-6" data-line-number="6"><span class="kw"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="dv">11</span>)</a>
+<a class="sourceLine" id="cb150-7" data-line-number="7">sreads.gene_i &lt;-<span class="st"> </span><span class="kw"><a href="../reference/subsampleGRanges.html">subsampleGRanges</a></span>(reads.gene_i, <span class="dt">prop =</span> <span class="fl">0.5</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb150-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb150-9" data-line-number="9"><span class="co"># downscale raw reads by a factor of 2</span></a>
+<a class="sourceLine" id="cb150-10" data-line-number="10"><span class="kw">score</span>(reads.gene_i) &lt;-<span class="st"> </span><span class="fl">0.5</span> <span class="op">*</span><span class="st"> </span><span class="kw">score</span>(reads.gene_i)</a></code></pre></div>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb151-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="kw">score</span>(reads.gene_i))</a>
+<a class="sourceLine" id="cb151-2" data-line-number="2"><span class="co">## [1] 738.5</span></a>
+<a class="sourceLine" id="cb151-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="kw">score</span>(sreads.gene_i))</a>
+<a class="sourceLine" id="cb151-4" data-line-number="4"><span class="co">## [1] 738</span></a></code></pre></div>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb152-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">width</span>(gene_i), </a>
+<a class="sourceLine" id="cb152-2" data-line-number="2">     <span class="dt">y =</span> <span class="kw"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span>(sreads.gene_i, gene_i),</a>
+<a class="sourceLine" id="cb152-3" data-line-number="3">     <span class="dt">type =</span> <span class="st">"h"</span>, <span class="dt">ylim =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>, <span class="dv">20</span>),</a>
+<a class="sourceLine" id="cb152-4" data-line-number="4">     <span class="dt">main =</span> <span class="st">"PRO-seq (downsampled)"</span>,</a>
+<a class="sourceLine" id="cb152-5" data-line-number="5">     <span class="dt">xlab =</span> <span class="st">"Distance from TSS"</span>, <span class="dt">ylab =</span> <span class="st">"Downsampled PRO-seq Reads"</span>)</a></code></pre></div>
+<p><img src="BRGenomicsOverview_files/figure-html/unnamed-chunk-83-1.png" width="700"></p>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb153-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">width</span>(gene_i), </a>
+<a class="sourceLine" id="cb153-2" data-line-number="2">     <span class="dt">y =</span> <span class="kw"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span>(reads.gene_i, gene_i),</a>
+<a class="sourceLine" id="cb153-3" data-line-number="3">     <span class="dt">type =</span> <span class="st">"h"</span>,  <span class="dt">ylim =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>, <span class="dv">20</span>),</a>
+<a class="sourceLine" id="cb153-4" data-line-number="4">     <span class="dt">main =</span> <span class="st">"PRO-seq (downscaled)"</span>, </a>
+<a class="sourceLine" id="cb153-5" data-line-number="5">     <span class="dt">xlab =</span> <span class="st">"Distance from TSS"</span>,  <span class="dt">ylab =</span> <span class="st">"Downscaled PRO-seq Reads"</span>)</a></code></pre></div>
+<p><img src="BRGenomicsOverview_files/figure-html/unnamed-chunk-83-2.png" width="700"></p>
+<p>The two plots above come from the same data, and contain the same quantity of signal, but their profiles are notably distinct. Particularly when plotting many samples over large regions within a genome browser, differences caused by sequencing depth can be misleading. It can be challenging to estimate differences if some datasets are “tall and spikey” while others are “short and smooth”.</p>
+<p>Absent global changes in signal, the above scenario can be resolved beforehand by equal sequencing depths, or by down-sampling to match readcounts.</p>
+<p>However, matching raw readcounts is not a solution when significant biological changes in total signal should be accounted for.</p>
+<p>For instance, consider an example in which there is a true, two-fold biological difference in transcription between two samples. If we could avoid all technical artifacts and measure the transcription directly in each individual cell, we would expect to uncover half the number of transcribing complexes in the lower condition. Having equivalent sequencing depth across those two conditions is effectively a technical artifact, and down-scaling the signal by multiplication can cause the visual challenges observed above.</p>
+</div>
+<div id="subsampling-for-normalization" class="section level2">
+<h2 class="hasAnchor">
+<a href="#subsampling-for-normalization" class="anchor"></a>Subsampling for Normalization</h2>
+<p>To address the above concerns, we’ve included a function <code>subsampleBySpikeIn</code> to randomly sample reads to match the normalized signal proportions between datasets.</p>
+<p>Internally, the function uses the <code>getSpikInNFs</code> function, but instead of SRPMC normalization, using the option <code>method = "SNR"</code>, which calculates normalization factors that downscale each dataset to match the dataset with the least spike-in reads. From this, the number of “desired reads” is established for each dataset, and subsequently that number of reads is randomly sampled.</p>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb154-1" data-line-number="1"><span class="kw"><a href="../reference/getSpikeInCounts.html">removeSpikeInReads</a></span>(grl, <span class="dt">si_pattern =</span> <span class="st">"spike"</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
+<pre><code>## $gr1_rep1
+## GRanges object with 2 ranges and 1 metadata column:
+##       seqnames    ranges strand |     score
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
+##   [1]     chr1         1      + |         1
+##   [2]     chr2         2      + |         1
+##   -------
+##   seqinfo: 2 sequences from an unspecified genome; no seqlengths
+## 
+## $gr2_rep1
+## GRanges object with 2 ranges and 1 metadata column:
+##       seqnames    ranges strand |     score
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
+##   [1]     chr1         1      + |         2
+##   [2]     chr2         2      + |         2
+##   -------
+##   seqinfo: 2 sequences from an unspecified genome; no seqlengths
+## 
+## $gr1_rep2
+## GRanges object with 2 ranges and 1 metadata column:
+##       seqnames    ranges strand |     score
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
+##   [1]     chr1         1      + |         1
+##   [2]     chr2         2      + |         1
+##   -------
+##   seqinfo: 2 sequences from an unspecified genome; no seqlengths
+## 
+## $gr2_rep2
+## GRanges object with 2 ranges and 1 metadata column:
+##       seqnames    ranges strand |     score
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
+##   [1]     chr1         1      + |         4
+##   [2]     chr2         2      + |         4
+##   -------
+##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb156-1" data-line-number="1"><span class="kw"><a href="../reference/getSpikeInNFs.html">getSpikeInNFs</a></span>(grl, <span class="dt">si_pattern =</span> <span class="st">"spike"</span>, <span class="dt">method =</span> <span class="st">"SNR"</span>, <span class="dt">batch_norm =</span> <span class="ot">FALSE</span>,</a>
+<a class="sourceLine" id="cb156-2" data-line-number="2">              <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
+<pre><code>## [1] 1.0000000 1.0000000 0.6666667 0.5000000</code></pre>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb158-1" data-line-number="1"><span class="kw"><a href="../reference/subsampleBySpikeIn.html">subsampleBySpikeIn</a></span>(grl, <span class="dt">si_pattern =</span> <span class="st">"spike"</span>, <span class="dt">batch_norm =</span> <span class="ot">FALSE</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
+<pre><code>## $gr1_rep1
+## GRanges object with 2 ranges and 1 metadata column:
+##       seqnames    ranges strand |     score
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
+##   [1]     chr1         1      + |         1
+##   [2]     chr2         2      + |         1
+##   -------
+##   seqinfo: 2 sequences from an unspecified genome; no seqlengths
+## 
+## $gr2_rep1
+## GRanges object with 2 ranges and 1 metadata column:
+##       seqnames    ranges strand |     score
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
+##   [1]     chr1         1      + |         2
+##   [2]     chr2         2      + |         2
+##   -------
+##   seqinfo: 2 sequences from an unspecified genome; no seqlengths
+## 
+## $gr1_rep2
+## GRanges object with 1 range and 1 metadata column:
+##       seqnames    ranges strand |     score
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
+##   [1]     chr1         1      + |         1
+##   -------
+##   seqinfo: 2 sequences from an unspecified genome; no seqlengths
+## 
+## $gr2_rep2
+## GRanges object with 2 ranges and 1 metadata column:
+##       seqnames    ranges strand |     score
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
+##   [1]     chr1         1      + |         3
+##   [2]     chr2         2      + |         1
+##   -------
+##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
+<p>Normalization by subsampling sacrifices information to reduce biases across datasets.</p>
+</div>
+</div>
+<div id="example-comprehensive-bam-to-bigwig-pipeline" class="section level1">
+<h1 class="hasAnchor">
+<a href="#example-comprehensive-bam-to-bigwig-pipeline" class="anchor"></a>Example: Comprehensive BAM to bigWig Pipeline</h1>
+<p>Below, we use many of the functions described above to generate several sets of bigWig files for a number of datasets.</p>
+<p><em><a href="#coming-soon">Coming soon</a></em></p>
+</div>
+<div id="interfacing-with-deseq2" class="section level1">
+<h1 class="hasAnchor">
+<a href="#interfacing-with-deseq2" class="anchor"></a>Interfacing with DESeq2</h1>
+<div id="rationale-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#rationale-1" class="anchor"></a>Rationale</h2>
+<p>DESeq2’s default treatment of data relies on the assumption that genewise estimates of dispersion are largely unchanged across samples. While this assumption holds for a typical RNA-seq data, it can be violated if there exist <em>any</em> conditions represented in the <code>DESeqDataSet</code> object that caused meaningful signal changes across a majority of regions of interest.</p>
+<p>The BRGenomics functions <code>getDESeqDataSet</code> and <code>getDESeqResults</code> are simple and flexible wrappers for making pairwise comparisons between individual samples, without relying on the assumption of globally-similar dispersion estimates. In particular, <code>getDESeqResults</code> follows the logic that the presence of a dataset <span class="math inline">\(X\)</span> within the <code>DESeqDataSet</code> object will not affect the comparison of datasets <span class="math inline">\(Y\)</span> and <span class="math inline">\(Z\)</span>.</p>
+<p>While the intuition above is appealing, users should note that if the globally-similar dispersions assumption <em>does</em> hold, then DESeq2’s default behavior should be more sensitive in its estimates of genewise dispersion. In this case, users can still take advantage of the convenience of the BRGenomics function <code>getDESeqDataSet</code>, but they should subsequently call <code><a href="https://rdrr.io/pkg/DESeq2/man/DESeq.html">DESeq2::DESeq</a></code> and <code><a href="https://rdrr.io/pkg/DESeq2/man/results.html">DESeq2::results</a></code> directly.</p>
+<p>If the globally-similar dispersions assumption is violated, but something beyond simple pairwise comparisons is desired (e.g. group comparisons or additional model terms), we note that, with some prying, DESeq2 can be used without “blind dispersion estimation” (see the DESeq2 manual).</p>
+</div>
+<div id="getting-deseq-results" class="section level2">
+<h2 class="hasAnchor">
+<a href="#getting-deseq-results" class="anchor"></a>Getting DESeq Results</h2>
+<p>Just like the functions that generate batch-normalized spike-in normalization factors, the DESeq-oriented functions require that the names of the input datasets end in <code>"rep1"</code>, <code>"rep2"</code>, etc.</p>
+<p>We’ll use another list of GRanges here, in order to have multiple comparisons to make:</p>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb160-1" data-line-number="1">ps_list2[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]</a></code></pre></div>
+<pre><code>## $A_rep1
+## GRanges object with 7897 ranges and 1 metadata column:
+##          seqnames    ranges strand |     score
+##             &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
+##      [1]     chr4      1296      + |         1
+##      [2]     chr4     42596      + |         1
+##      [3]     chr4     42623      + |         2
+##      [4]     chr4     42719      + |         1
+##      [5]     chr4     42790      + |         1
+##      ...      ...       ...    ... .       ...
+##   [7893]     chr4   1295276      - |         1
+##   [7894]     chr4   1306499      - |         1
+##   [7895]     chr4   1306888      - |         1
+##   [7896]     chr4   1307121      - |         1
+##   [7897]     chr4   1316536      - |         1
+##   -------
+##   seqinfo: 1870 sequences from an unspecified genome
+## 
+## $A_rep2
+## GRanges object with 7897 ranges and 1 metadata column:
+##          seqnames    ranges strand |     score
+##             &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
+##      [1]     chr4     42591      + |         2
+##      [2]     chr4     42619      + |         1
+##      [3]     chr4     42661      + |         1
+##      [4]     chr4     42750      + |         1
+##      [5]     chr4     42797      + |         1
+##      ...      ...       ...    ... .       ...
+##   [7893]     chr4   1306022      - |         1
+##   [7894]     chr4   1306639      - |         1
+##   [7895]     chr4   1307113      - |         1
+##   [7896]     chr4   1307299      - |         1
+##   [7897]     chr4   1319368      - |         1
+##   -------
+##   seqinfo: 1870 sequences from an unspecified genome</code></pre>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb162-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(ps_list2)</a></code></pre></div>
+<pre><code>## [1] "A_rep1" "A_rep2" "B_rep1" "B_rep2" "C_rep1" "C_rep2"</code></pre>
+<p>As you can see, the names all end in “repX”, where X indicates the replicate. Replicates will be grouped by anything that follows “rep”. If the sample names do not conform to this standard, the <code>sample_names</code> argument can be used to rename the samples within the call to <code>getDESeqDataSet</code>.</p>
+<p>However, since our sample names conform, we won’t use that argument:</p>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb164-1" data-line-number="1">dds &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getDESeqDataSet.html">getDESeqDataSet</a></span>(ps_list2, txs_dm6_chr4,</a>
+<a class="sourceLine" id="cb164-2" data-line-number="2">                       <span class="dt">gene_names =</span> txs_dm6_chr4<span class="op">$</span>gene_id,</a>
+<a class="sourceLine" id="cb164-3" data-line-number="3">                       <span class="dt">ncores =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb164-4" data-line-number="4">dds</a></code></pre></div>
+<pre><code>## class: DESeqDataSet 
+## dim: 111 6 
+## metadata(1): version
+## assays(1): counts
+## rownames(111): FBgn0267363 FBgn0266617 ... FBgn0039924 FBgn0027101
+## rowData names(2): tx_name gene_id
+## colnames(6): A_rep1 A_rep2 ... C_rep1 C_rep2
+## colData names(2): condition replicate</code></pre>
+<p>Notice that the <code>dim</code> attribute of the <code>DESeqDataSet</code> object is <code><a href="https://rdrr.io/r/base/c.html">c(111, 6)</a></code>. There are 6 samples, but <code><a href="https://rdrr.io/r/base/length.html">length(txs_dm6_chr4)</a></code> is not 111. This is because we provided gene names to <code>getDESeqDataSet</code>, which were non-unique. The feature being exploited here is for use with <strong>discontinuous gene regions</strong>, <em>not for multiple overlapping transcript isoforms</em>. Options addressing this may be added in the future, but for the time being, users should be careful when double-counting reads.</p>
+<p>We could have added normalization factors, which DESeq2 calls “size factors”, in the call to <code>getDESeqDataSet</code>, or we can supply them to <code>getDESeqResults</code> below. (Supplying them twice will overwrite the previous size factors).</p>
+<hr>
+<p><strong>Note:</strong> DESeq2 size factors are the <em>inverse</em> of BRGenomics normalization factors. So if you calculate normalization factors with <code>NF &lt;- getSpikeInNFs(...)</code>, set <code>sizeFactors &lt;- 1/NF</code>.</p>
+<hr>
+<p>Generating DESeq2 results is simple:</p>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb166-1" data-line-number="1"><span class="kw"><a href="../reference/getDESeqResults.html">getDESeqResults</a></span>(dds, <span class="dt">contrast.numer =</span> <span class="st">"B"</span>, <span class="dt">contrast.denom =</span> <span class="st">"A"</span>,</a>
+<a class="sourceLine" id="cb166-2" data-line-number="2">                <span class="dt">quiet =</span> <span class="ot">TRUE</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
+<pre><code>## log2 fold change (MLE): condition B vs A 
+## Wald test p-value: condition B vs A 
+## DataFrame with 111 rows and 6 columns
+##                baseMean log2FoldChange     lfcSE       stat    pvalue      padj
+##               &lt;numeric&gt;      &lt;numeric&gt; &lt;numeric&gt;  &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;
+## FBgn0267363    0.254341     -1.4231496  4.997097 -0.2847953  0.775801   0.99742
+## FBgn0266617   10.542899      0.0889218  1.049437  0.0847329  0.932474   0.99742
+## FBgn0265633    2.057889      0.0172672  2.125741  0.0081229  0.993519   0.99742
+## FBgn0264617   65.878586      0.2205247  0.468152  0.4710540  0.637602   0.99742
+## FBgn0085432 4679.071664     -0.2337582  0.236722 -0.9874818  0.323407   0.99742
+## ...                 ...            ...       ...        ...       ...       ...
+## FBgn0039928     685.708       0.126602  0.258145   0.490428  0.623831   0.99742
+## FBgn0052017     130.994       0.238844  0.418898   0.570173  0.568561   0.99742
+## FBgn0002521     174.390      -0.110923  0.342767  -0.323611  0.746232   0.99742
+## FBgn0039924     161.144       0.322238  0.456505   0.705881  0.480262   0.99742
+## FBgn0027101     362.015       0.233610  0.294520   0.793190  0.427667   0.99742</code></pre>
+<p>We can also make multiple pairwise-comparisons by ignoring the <code>contrast.numer</code> and <code>contrast.denom</code> arguments, and instead using the <code>comparisons</code> argument. The resulting list of results is named according to the comparisons:</p>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb168-1" data-line-number="1">dsres &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getDESeqResults.html">getDESeqResults</a></span>(dds, <span class="dt">comparisons =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"B"</span>, <span class="st">"A"</span>), </a>
+<a class="sourceLine" id="cb168-2" data-line-number="2">                                                 <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"C"</span>, <span class="st">"A"</span>),</a>
+<a class="sourceLine" id="cb168-3" data-line-number="3">                                                 <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"C"</span>, <span class="st">"B"</span>)),</a>
+<a class="sourceLine" id="cb168-4" data-line-number="4">                         <span class="dt">quiet =</span> <span class="ot">TRUE</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb168-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(dsres)</a></code></pre></div>
+<pre><code>## [1] "B_vs_A" "C_vs_A" "C_vs_B"</code></pre>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb170-1" data-line-number="1">dsres<span class="op">$</span>C_vs_B</a></code></pre></div>
+<pre><code>## log2 fold change (MLE): condition C vs B 
+## Wald test p-value: condition C vs B 
+## DataFrame with 111 rows and 6 columns
+##               baseMean log2FoldChange     lfcSE      stat    pvalue      padj
+##              &lt;numeric&gt;      &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;
+## FBgn0267363    0.00000             NA        NA        NA        NA        NA
+## FBgn0266617    9.65222     -0.2402994  1.047563 -0.229389  0.818566  0.994248
+## FBgn0265633    2.29360      0.3849099  1.966021  0.195781  0.844781  0.994248
+## FBgn0264617   68.38183      0.0103648  0.461868  0.022441  0.982096  0.994248
+## FBgn0085432 4174.91122      0.0283180  0.245940  0.115142  0.908332  0.994248
+## ...                ...            ...       ...       ...       ...       ...
+## FBgn0039928    702.594      0.0594218  0.282889  0.210053  0.833626  0.994248
+## FBgn0052017    132.026     -0.0967508  0.438665 -0.220557  0.825437  0.994248
+## FBgn0002521    164.945      0.0657986  0.351733  0.187070  0.851606  0.994248
+## FBgn0039924    159.198     -0.2296715  0.481566 -0.476926  0.633415  0.994248
+## FBgn0027101    367.396     -0.0683530  0.290912 -0.234961  0.814239  0.994248</code></pre>
+</div>
+</div>
+<div id="blacklisting" class="section level1">
+<h1 class="hasAnchor">
+<a href="#blacklisting" class="anchor"></a>Blacklisting</h1>
+<p>Many functions in BRGenomics support blacklisting, or the exclusion of certain sites from analysis. To use this feature, import your blacklist as a GRanges object, and use the blacklist option.</p>
+<p>For instance, <code><a href="../reference/getCountsByPositions.html">getCountsByPositions()</a></code> supports blacklisting, and there is an additional option of whether to set all blacklisted sites to 0 counts, or to set those sites equal to NA. Setting them to NA is useful, as many functions have arguments to ignore NA values in calculations, i.e. <code><a href="https://rdrr.io/r/base/mean.html">mean(x, na.rm = TRUE)</a></code>.</p>
+<p>Supplying a blacklist to <code><a href="../reference/bootstrap-signal-by-position.html">metaSubsample()</a></code> will result in blacklisted positions being ignored in the calculations. Regions for which some section overlaps the blacklist are not ignored entirely, but the blacklisted positions themselves won’t contribute to the calculations.</p>
+</div>
+<div id="merging-granges-data" class="section level1">
+<h1 class="hasAnchor">
+<a href="#merging-granges-data" class="anchor"></a>Merging GRanges Data</h1>
+<p>Biological replicates are best used to independently reproduce and measure effects, and therefore we often want to handle them separately. However, there are times when combining replicates can allow for more sensitive measurements, assuming that the replicates are highly concordant.</p>
+<p>The <code>mergeGRangesData</code> function can be used to combine basepair-resolution GRanges objects:</p>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb172-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(ps1)</a>
+<a class="sourceLine" id="cb172-2" data-line-number="2"><span class="co">## [1] 15794</span></a>
+<a class="sourceLine" id="cb172-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(ps2)</a>
+<a class="sourceLine" id="cb172-4" data-line-number="4"><span class="co">## [1] 15793</span></a>
+<a class="sourceLine" id="cb172-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(ps3)</a>
+<a class="sourceLine" id="cb172-6" data-line-number="6"><span class="co">## [1] 15793</span></a></code></pre></div>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb173-1" data-line-number="1">merge_ps &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mergeGRangesData.html">mergeGRangesData</a></span>(ps1, ps2, ps3, <span class="dt">ncores =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb173-2" data-line-number="2">merge_ps</a></code></pre></div>
+<pre><code>## GRanges object with 47380 ranges and 1 metadata column:
+##           seqnames    ranges strand |     score
+##              &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
+##       [1]     chr4      1296      + |         1
+##       [2]     chr4     41429      + |         1
+##       [3]     chr4     42589      + |         1
+##       [4]     chr4     42591      + |         2
+##       [5]     chr4     42594      + |         5
+##       ...      ...       ...    ... .       ...
+##   [47376]     chr4   1307741      - |         1
+##   [47377]     chr4   1316536      - |         1
+##   [47378]     chr4   1318959      - |         1
+##   [47379]     chr4   1319003      - |         1
+##   [47380]     chr4   1319368      - |         1
+##   -------
+##   seqinfo: 1870 sequences from an unspecified genome</code></pre>
+<p>Note that the output is also a basepair-resolution GRanges object.</p>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb175-1" data-line-number="1"><span class="kw"><a href="../reference/makeGRangesBRG.html">isBRG</a></span>(merge_ps)</a>
+<a class="sourceLine" id="cb175-2" data-line-number="2"><span class="co">## [1] TRUE</span></a></code></pre></div>
+<p>We could have also passed a list of GRanges objects directly as an argument:</p>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb176-1" data-line-number="1"><span class="kw"><a href="../reference/mergeGRangesData.html">mergeGRangesData</a></span>(ps_list, <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
+<pre><code>## GRanges object with 47380 ranges and 1 metadata column:
+##           seqnames    ranges strand |     score
+##              &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
+##       [1]     chr4      1296      + |         1
+##       [2]     chr4     41429      + |         1
+##       [3]     chr4     42589      + |         1
+##       [4]     chr4     42591      + |         2
+##       [5]     chr4     42594      + |         5
+##       ...      ...       ...    ... .       ...
+##   [47376]     chr4   1307741      - |         1
+##   [47377]     chr4   1316536      - |         1
+##   [47378]     chr4   1318959      - |         1
+##   [47379]     chr4   1319003      - |         1
+##   [47380]     chr4   1319368      - |         1
+##   -------
+##   seqinfo: 1870 sequences from an unspecified genome</code></pre>
 </div>
 <div id="sequence-extraction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#sequence-extraction" class="anchor"></a>Sequence Extraction</h1>
+<p>In this section, we’ll give one more example showing the benefit of Bioconductor integration by using the <code>Biostrings</code> package to extract sequences given by GRanges objects.</p>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb178-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(Biostrings)</a></code></pre></div>
+<p>We’ve included a twobit file of sequences, although users can use fasta files, as well.</p>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb179-1" data-line-number="1"><span class="co"># get path to included 2bit file</span></a>
+<a class="sourceLine" id="cb179-2" data-line-number="2">sfile &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"dm6_chr4chrM.2bit"</span>,</a>
+<a class="sourceLine" id="cb179-3" data-line-number="3">                     <span class="dt">package =</span> <span class="st">"BRGenomics"</span>)</a></code></pre></div>
+<p>We could import the entire sequence using the rtracklayer <code>import()</code> function, which will figure out the file format and import a suitable object. In this case, a <code>DNAStringSet</code>:</p>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb180-1" data-line-number="1">seq_chr4 &lt;-<span class="st"> </span><span class="kw">import</span>(sfile)</a>
+<a class="sourceLine" id="cb180-2" data-line-number="2">seq_chr4</a></code></pre></div>
+<pre><code>## DNAStringSet object of length 2:
+##       width seq                                             names               
+## [1] 1348131 TTATTATATTATTATATTATTAT…GCCGTCGATTTGAGATATATGAA chr4
+## [2]   19524 AATGAATTGCCTGATAAAAAGGA…AAAAAAATGAAAATTATATTATT chrM</code></pre>
+<p><em>We included mitochondrial DNA to demonstrate how the DNAStringSet treats multiple chromosomes.</em></p>
+<p>However, we don’t need to import all the sequences. Instead, we can make a <code>TwoBitFile</code> object that points to the file, and extract desired sequences from it directly using the <code>getSeq</code> function:</p>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb182-1" data-line-number="1">seq_txs_pr &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/Biostrings/man/getSeq.html">getSeq</a></span>(<span class="kw">TwoBitFile</span>(sfile), txs_pr)</a>
+<a class="sourceLine" id="cb182-2" data-line-number="2">seq_txs_pr</a></code></pre></div>
+<pre><code>## DNAStringSet object of length 339:
+##       width seq
+##   [1]   100 ATCAATATAGCATAGCTCTTTTAATCAAATAAA…AAAATAAGGAACACAAAATTAATGGAAAAGAAA
+##   [2]   100 TGCGACATTGTTCTACGATGACTACAAAAAATG…GGAGTTTCGGTCCCATACGAAGTCGCCGACTTA
+##   [3]   100 CCTATAAAAATGCTTCATCAATCCATTTGTGTA…TATATTTCAAAGCGATAGTTAATGAAACTTATG
+##   [4]   100 GAACAGTCGGCGAAGGCGGGCAGATCGAAGATG…ATACTTTTCGATGCCAGTGCTGTTAATATAGAT
+##   [5]   100 GAACAGTCGGCGAAGGCGGGCAGATCGAAGATG…ATACTTTTCGATGCCAGTGCTGTTAATATAGAT
+##   ...   ... ...
+## [335]   100 GGTATTTCATATTATAAATTTATGTAAACTACA…AAATACAATAATCATATCTGCAAAGTAAACTAA
+## [336]   100 GGTATTTCATATTATAAATTTATGTAAACTACA…AAATACAATAATCATATCTGCAAAGTAAACTAA
+## [337]   100 AACACGGTCACACTGTTCTTCTCTTTGTTCGGG…ACGATAAACAAATATCTGGTTTTACCTATTTGT
+## [338]   100 AACACGGTCACACTGTTCTTCTCTTTGTTCGGG…ACGATAAACAAATATCTGGTTTTACCTATTTGT
+## [339]   100 AACACGGTCACACTGTTCTTCTCTTTGTTCGGG…ACGATAAACAAATATCTGGTTTTACCTATTTGT</code></pre>
+<p>The sequences are stranded as well, such that if a plus and minus strand gene overlapped perfectly, the minus strand sequence would be the reverse complement of the plus strand sequence.</p>
+<p>The Biostrings package itself is richly featured, and we’ll demonstrate only a couple functions below. This functionality is extended by packages like <code>ggseqlogo</code>, for example, which plots sequence logos directly from DNAStringSets.</p>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb184-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/pkg/Biostrings/man/XStringSet-class.html">RNAStringSet</a></span>(seq_txs_pr)</a></code></pre></div>
+<pre><code>## RNAStringSet object of length 339:
+##       width seq
+##   [1]   100 AUCAAUAUAGCAUAGCUCUUUUAAUCAAAUAAA…AAAAUAAGGAACACAAAAUUAAUGGAAAAGAAA
+##   [2]   100 UGCGACAUUGUUCUACGAUGACUACAAAAAAUG…GGAGUUUCGGUCCCAUACGAAGUCGCCGACUUA
+##   [3]   100 CCUAUAAAAAUGCUUCAUCAAUCCAUUUGUGUA…UAUAUUUCAAAGCGAUAGUUAAUGAAACUUAUG
+##   [4]   100 GAACAGUCGGCGAAGGCGGGCAGAUCGAAGAUG…AUACUUUUCGAUGCCAGUGCUGUUAAUAUAGAU
+##   [5]   100 GAACAGUCGGCGAAGGCGGGCAGAUCGAAGAUG…AUACUUUUCGAUGCCAGUGCUGUUAAUAUAGAU
+##   ...   ... ...
+## [335]   100 GGUAUUUCAUAUUAUAAAUUUAUGUAAACUACA…AAAUACAAUAAUCAUAUCUGCAAAGUAAACUAA
+## [336]   100 GGUAUUUCAUAUUAUAAAUUUAUGUAAACUACA…AAAUACAAUAAUCAUAUCUGCAAAGUAAACUAA
+## [337]   100 AACACGGUCACACUGUUCUUCUCUUUGUUCGGG…ACGAUAAACAAAUAUCUGGUUUUACCUAUUUGU
+## [338]   100 AACACGGUCACACUGUUCUUCUCUUUGUUCGGG…ACGAUAAACAAAUAUCUGGUUUUACCUAUUUGU
+## [339]   100 AACACGGUCACACUGUUCUUCUCUUUGUUCGGG…ACGAUAAACAAAUAUCUGGUUUUACCUAUUUGU</code></pre>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb186-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/warning.html">suppressWarnings</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/Biostrings/man/translate.html">translate</a></span>(seq_txs_pr))</a></code></pre></div>
+<pre><code>## AAStringSet object of length 339:
+##       width seq
+##   [1]    33 INIA*LF*SNKTRNSKRMPPKKKNKEHKINGKE
+##   [2]    33 CDIVLR*LQKMTNNFYKPIRYVRSFGPIRSRRL
+##   [3]    33 PIKMLHQSICVVTLQGCTSVNRLYFKAIVNETY
+##   [4]    33 EQSAKAGRSKMATQYIYSYVS*DTFRCQCC*YR
+##   [5]    33 EQSAKAGRSKMATQYIYSYVS*DTFRCQCC*YR
+##   ...   ... ...
+## [335]    33 GISYYKFM*TTNLSVQKPASHCKIQ*SYLQSKL
+## [336]    33 GISYYKFM*TTNLSVQKPASHCKIQ*SYLQSKL
+## [337]    33 NTVTLFFSLFGSL*KLCIQMKLYDKQISGFTYL
+## [338]    33 NTVTLFFSLFGSL*KLCIQMKLYDKQISGFTYL
+## [339]    33 NTVTLFFSLFGSL*KLCIQMKLYDKQISGFTYL</code></pre>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb188-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/pkg/Biostrings/man/nucleotideFrequency.html">oligonucleotideFrequency</a></span>(seq_txs_pr[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>], <span class="dt">width =</span> <span class="dv">1</span>)</a></code></pre></div>
+<pre><code>##       A  C  G  T
+## [1,] 57 13 12 18
+## [2,] 34 23 17 26
+## [3,] 31 18 17 34
+## [4,] 31 19 26 24
+## [5,] 31 19 26 24</code></pre>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb190-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/pkg/Biostrings/man/nucleotideFrequency.html">oligonucleotideFrequency</a></span>(seq_txs_pr[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>], <span class="dt">width =</span> <span class="dv">2</span>)</a></code></pre></div>
+<pre><code>##      AA AC AG AT CA CC CG CT GA GC GG GT TA TC TG TT
+## [1,] 34  5  7 10  8  2  0  3  5  3  3  1  9  3  2  4
+## [2,] 11 10  3  9  6  5  7  5  8  2  2  5  9  6  5  6
+## [3,] 12  5  4 10  6  3  3  6  3  3  3  7 10  6  7 11
+## [4,]  6  7  8 10  7  2  7  3  9  6  5  6  9  4  5  5
+## [5,]  6  7  8 10  7  2  7  3  9  6  5  6  9  4  5  5</code></pre>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb192-1" data-line-number="1">tss_seq &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/Biostrings/man/getSeq.html">getSeq</a></span>(<span class="kw">TwoBitFile</span>(sfile), <span class="kw">promoters</span>(txs_pr, <span class="dv">4</span>, <span class="dv">4</span>))</a>
+<a class="sourceLine" id="cb192-2" data-line-number="2">tsspwm &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/Biostrings/man/matchPWM.html">PWM</a></span>(tss_seq)</a>
+<a class="sourceLine" id="cb192-3" data-line-number="3">tsspwm</a></code></pre></div>
+<pre><code>##          [,1]         [,2]          [,3]          [,4]         [,5]       [,6]
+## A  0.11786207  0.121558228  0.0728689800 -0.0009513673  0.133239908 0.08113711
+## C -0.00672592  0.040604643  0.0340837029  0.0795207580  0.027255784 0.03184325
+## G  0.03184325 -0.009701748 -0.0009513673  0.0151092375 -0.003809913 0.06942510
+## T  0.11017463  0.102056901  0.1430050774  0.1471427266  0.093457851 0.09924681
+##          [,7]       [,8]
+## A  0.09924681 0.09345785
+## C  0.04684502 0.05086096
+## G -0.02225587 0.01255293
+## T  0.12516255 0.11278263</code></pre>
 </div>
 <div id="session-info" class="section level1 unnumbered">
 <h1 class="hasAnchor">
@@ -407,7 +1679,7 @@ This can be accomplished by passing an entire list of GRanges objects)
 ##  collate  en_US.UTF-8                                       
 ##  ctype    en_US.UTF-8                                       
 ##  tz       America/New_York                                  
-##  date     2020-02-19                                        
+##  date     2020-02-24                                        
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────
 ##  package              * version   date       lib source        
@@ -423,13 +1695,13 @@ This can be accomplished by passing an entire list of GRanges objects)
 ##  BiocParallel           1.21.2    2019-12-21 [3] Bioconductor  
 ##  BiocStyle            * 2.15.6    2020-02-01 [3] Bioconductor  
 ##  biomaRt                2.43.3    2020-02-08 [3] Bioconductor  
-##  Biostrings             2.55.4    2019-12-14 [3] Bioconductor  
+##  Biostrings           * 2.55.4    2019-12-14 [3] Bioconductor  
 ##  bit                    1.1-14    2018-05-29 [3] CRAN (R 4.0.0)
 ##  bit64                  0.9-7     2017-05-08 [3] CRAN (R 4.0.0)
 ##  bitops                 1.0-6     2013-08-17 [3] CRAN (R 4.0.0)
 ##  blob                   1.2.0     2019-07-09 [3] CRAN (R 4.0.0)
 ##  bookdown               0.17      2020-01-11 [3] CRAN (R 4.0.0)
-##  BRGenomics           * 0.7.7     2020-02-19 [1] Bioconductor  
+##  BRGenomics           * 0.7.8     2020-02-24 [1] Bioconductor  
 ##  BSgenome               1.55.3    2020-01-29 [3] Bioconductor  
 ##  callr                  3.4.0     2019-12-09 [3] CRAN (R 4.0.0)
 ##  cli                    2.0.1     2020-01-08 [3] CRAN (R 4.0.0)
@@ -447,6 +1719,7 @@ This can be accomplished by passing an entire list of GRanges objects)
 ##  ellipsis               0.3.0     2019-09-20 [3] CRAN (R 4.0.0)
 ##  evaluate               0.14      2019-05-28 [3] CRAN (R 4.0.0)
 ##  fansi                  0.4.1     2020-01-08 [3] CRAN (R 4.0.0)
+##  farver                 2.0.1     2019-11-13 [3] CRAN (R 4.0.0)
 ##  fs                     1.3.1     2019-05-06 [3] CRAN (R 4.0.0)
 ##  genefilter             1.69.0    2019-11-06 [3] Bioconductor  
 ##  geneplotter            1.65.0    2019-11-06 [3] Bioconductor  
@@ -456,7 +1729,7 @@ This can be accomplished by passing an entire list of GRanges objects)
 ##  GenomicFeatures        1.39.5    2020-02-15 [3] Bioconductor  
 ##  GenomicFiles           1.23.0    2019-11-06 [3] Bioconductor  
 ##  GenomicRanges        * 1.39.2    2020-02-04 [3] Bioconductor  
-##  ggplot2                3.2.1     2019-08-10 [3] CRAN (R 4.0.0)
+##  ggplot2              * 3.2.1     2019-08-10 [3] CRAN (R 4.0.0)
 ##  glue                   1.3.1     2019-03-12 [3] CRAN (R 4.0.0)
 ##  gtable                 0.3.0     2019-03-25 [3] CRAN (R 4.0.0)
 ##  hms                    0.5.3     2020-01-08 [3] CRAN (R 4.0.0)
@@ -464,6 +1737,7 @@ This can be accomplished by passing an entire list of GRanges objects)
 ##  httr                   1.4.1     2019-08-05 [3] CRAN (R 4.0.0)
 ##  IRanges              * 2.21.3    2020-01-13 [3] Bioconductor  
 ##  knitr                  1.26      2019-11-12 [3] CRAN (R 4.0.0)
+##  labeling               0.3       2014-08-23 [3] CRAN (R 4.0.0)
 ##  lattice                0.20-38   2018-11-04 [3] CRAN (R 4.0.0)
 ##  lazyeval               0.2.2     2019-03-15 [3] CRAN (R 4.0.0)
 ##  lifecycle              0.1.0     2019-08-01 [3] CRAN (R 4.0.0)
@@ -497,7 +1771,7 @@ This can be accomplished by passing an entire list of GRanges objects)
 ##  Rsamtools              2.3.4     2020-02-11 [3] Bioconductor  
 ##  RSQLite                2.2.0     2020-01-07 [3] CRAN (R 4.0.0)
 ##  rstudioapi             0.10      2019-03-19 [3] CRAN (R 4.0.0)
-##  rtracklayer            1.47.0    2019-11-06 [3] Bioconductor  
+##  rtracklayer          * 1.47.0    2019-11-06 [3] Bioconductor  
 ##  S4Vectors            * 0.25.12   2020-02-01 [3] Bioconductor  
 ##  scales                 1.1.0     2019-11-18 [3] CRAN (R 4.0.0)
 ##  sessioninfo            1.1.1     2018-11-05 [3] CRAN (R 4.0.0)
@@ -515,13 +1789,13 @@ This can be accomplished by passing an entire list of GRanges objects)
 ##  xfun                   0.11      2019-11-12 [3] CRAN (R 4.0.0)
 ##  XML                    3.98-1.20 2019-06-06 [3] CRAN (R 4.0.0)
 ##  xtable                 1.8-4     2019-04-21 [3] CRAN (R 4.0.0)
-##  XVector                0.27.0    2019-11-06 [3] Bioconductor  
+##  XVector              * 0.27.0    2019-11-06 [3] Bioconductor  
 ##  yaml                   2.2.0     2018-07-25 [3] CRAN (R 4.0.0)
 ##  zeallot                0.1.0     2018-01-28 [3] CRAN (R 4.0.0)
 ##  zlibbioc               1.33.1    2020-01-24 [3] Bioconductor  
 ## 
-## [1] /private/var/folders/zt/m504_3g569g6gqzjbqg34qn40000gn/T/RtmpxjLCNK/temp_libpath186a25cc629e
-## [2] /private/var/folders/zt/m504_3g569g6gqzjbqg34qn40000gn/T/RtmpxjLCNK/temp_libpath186a585299c6
+## [1] /private/var/folders/zt/m504_3g569g6gqzjbqg34qn40000gn/T/RtmpEZ8rUr/temp_libpath971d49a557b9
+## [2] /private/var/folders/zt/m504_3g569g6gqzjbqg34qn40000gn/T/RtmpEZ8rUr/temp_libpath971d4efecbf3
 ## [3] /Library/Frameworks/R.framework/Versions/4.0/Resources/library</code></pre>
 <!-- SCRAP -->
 <!-- The `import_bam` function provides several options for processing aligned reads, and in conjunction with functions from the *[rtracklayer](https://bioconductor.org/packages/3.11/rtracklayer)* package, we can easily write a post-alignment pipeline for generating bigWig files for viewing in a genome browser. -->
@@ -534,8 +1808,10 @@ This can be accomplished by passing an entire list of GRanges objects)
 <li id="fn2"><p>Hojoong Kwak, Nicholas J. Fuda, Leighton J. Core, John T. Lis (2013). Precise Maps of RNA Polymerase Reveal How Promoters Direct Initiation and Pausing. <em>Science</em> <strong>339</strong>(6122): 950–953. <a href="https://doi.org/10.1126/science.1229386" class="uri">https://doi.org/10.1126/science.1229386</a><a href="#fnref2" class="footnote-back">↩</a></p></li>
 <li id="fn3"><p>Chromosome 4 in Drosophila, often referred to as the “dot” chromosome, is very small and contains very few genes<a href="#fnref3" class="footnote-back">↩</a></p></li>
 <li id="fn4"><p>The <code>GPos</code> class is designed for a similar purpose, but we currently do not use it. There is a note on this in the documentation for <code>makeGRangesBRG</code><a href="#fnref4" class="footnote-back">↩</a></p></li>
-<li id="fn5"><p>The <code>GRangesList</code> and <code>CompressedGRangesList</code> classes, particularly the latter, often cause performance penalties. But more importantly, these classes are often used to store fundamentally “single” objects that have constituent subgroups, like exons organized by transcript. Especially given their wide support by Bioconductor packages, using them as a simple container for multiple GRanges objects creates the potential for undesired method dispatch, and moreover reduces their compatability with non-Bioconductor list-focused methods, like <code>mclapply</code>.<a href="#fnref5" class="footnote-back">↩</a></p></li>
-<li id="fn6"><p>Note that this is the same way that RStudio saves your current working environment to disk, i.e. it saves the entire environment into an RData file.<a href="#fnref6" class="footnote-back">↩</a></p></li>
+<li id="fn5"><p>Jason D. Buenrostro, Paul G. Giresi, Lisa C. Zaba, Howard Y. Chang, William J. Greenleaf (2013). Transposition of native chromatin for fast and sensitive epigenomic profiling of open chromatin, dna-binding proteins and nucleosome position.  10: 1213–1218. <a href="#fnref5" class="footnote-back">↩</a></p></li>
+<li id="fn6"><p>The <code>GRangesList</code> and <code>CompressedGRangesList</code> classes, particularly the latter, often cause performance penalties. Support may be added in the future.<a href="#fnref6" class="footnote-back">↩</a></p></li>
+<li id="fn7"><p>The dataframe, by default, is not a base R <code>data.frame</code>, but rather an S4 <code>DataFrame</code>. The distinction isn’t important for end users, and it’s unlikely users will encounter any reason to coerce the class using <code>as.data.frame</code>.<a href="#fnref7" class="footnote-back">↩</a></p></li>
+<li id="fn8"><p>Unlike the <code>saveRDS</code>/<code>readRDS</code> commands, the <code>read</code>/<code>load</code> commands maintain the original name of the objects. For instance, if you <code><a href="https://rdrr.io/r/base/save.html">save(PROseq, file = "~/ps.RData")</a></code>, and in a new R session run <code>read("~/ps.RData")</code>, a new object called <code>PROseq</code> will be created in your new environment. (Note that this is the same way that RStudio saves your current working environment to disk, i.e. it saves the entire environment into an RData file, which can then be reloaded, remaking every data object).<a href="#fnref8" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
   </div>
@@ -546,22 +1822,21 @@ This can be accomplished by passing an entire list of GRanges objects)
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#motivation">Motivation</a></li>
-      <li><a href="#features">Features</a></li>
-      <li><a href="#installation">Installation</a></li>
+<li><a href="#overview">Overview</a></li>
       <li><a href="#getting-started">Getting started</a></li>
-      <li><a href="#working-with-bam-files">Working With Bam Files</a></li>
+      <li><a href="#importing-modifying-genelists">Importing &amp; Modifying Genelists</a></li>
       <li><a href="#basepair-resolution-granges-objects">Basepair-Resolution GRanges Objects</a></li>
-      <li><a href="#example-bam-to-bigwig-conversion">Example: BAM to bigWig Conversion</a></li>
-      <li><a href="#spike-in-normalizing-data">Spike-in Normalizing Data</a></li>
-      <li><a href="#working-with-annotations">Working With Annotations</a></li>
-      <li><a href="#heatmaps">Heatmaps</a></li>
-      <li><a href="#metaplots">Metaplots</a></li>
+      <li><a href="#importing-and-processing-data">Importing and Processing Data</a></li>
+      <li><a href="#signal-counting">Signal Counting</a></li>
       <li><a href="#efficient-analysis-of-multiple-datasets">Efficient Analysis of Multiple Datasets</a></li>
       <li><a href="#saving-binary-r-files">Saving Binary R Files</a></li>
-      <li><a href="#deseq">DESeq</a></li>
-      <li><a href="#combining-replicates">Combining Replicates</a></li>
-      <li><a href="#browser-shots">“Browser Shots”</a></li>
+      <li><a href="#profile-plots-bootstrapping">Profile Plots &amp; Bootstrapping</a></li>
+      <li><a href="#spike-in-normalization">Spike-in Normalization</a></li>
+      <li><a href="#normalization-by-subsampling">Normalization by Subsampling</a></li>
+      <li><a href="#example-comprehensive-bam-to-bigwig-pipeline">Example: Comprehensive BAM to bigWig Pipeline</a></li>
+      <li><a href="#interfacing-with-deseq2">Interfacing with DESeq2</a></li>
+      <li><a href="#blacklisting">Blacklisting</a></li>
+      <li><a href="#merging-granges-data">Merging GRanges Data</a></li>
       <li><a href="#sequence-extraction">Sequence Extraction</a></li>
       <li><a href="#session-info">Session info</a></li>
       </ul>

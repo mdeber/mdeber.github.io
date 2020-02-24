@@ -71,7 +71,7 @@ readcounts spike-in normalized." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.8</span>
       </span>
     </div>
 
@@ -380,48 +380,40 @@ conform to the required naming scheme.</p></td>
 <span class='co'>#--------------------------------------------------#</span>
 
 <span class='fu'>spikeInNormGRanges</span>(<span class='no'>grl</span>, <span class='kw'>si_pattern</span> <span class='kw'>=</span> <span class='st'>"spike"</span>, <span class='kw'>ctrl_pattern</span> <span class='kw'>=</span> <span class='st'>"gr1"</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; $gr1_rep1
-#&gt; GRanges object with 4 ranges and 1 metadata column:
-#&gt;        seqnames    ranges strand |     score
-#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
-#&gt;   [1]      chr1         1      + |     5e+05
-#&gt;   [2]      chr2         2      + |     5e+05
-#&gt;   [3] spikechr1         3      + |     5e+05
-#&gt;   [4] spikechr2         4      + |     5e+05
+#&gt; GRanges object with 2 ranges and 1 metadata column:
+#&gt;       seqnames    ranges strand |     score
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
+#&gt;   [1]     chr1         1      + |     5e+05
+#&gt;   [2]     chr2         2      + |     5e+05
 #&gt;   -------
-#&gt;   seqinfo: 4 sequences from an unspecified genome; no seqlengths
+#&gt;   seqinfo: 2 sequences from an unspecified genome; no seqlengths
 #&gt; 
 #&gt; $gr2_rep1
-#&gt; GRanges object with 4 ranges and 1 metadata column:
-#&gt;        seqnames    ranges strand |     score
-#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
-#&gt;   [1]      chr1         1      + |     1e+06
-#&gt;   [2]      chr2         2      + |     1e+06
-#&gt;   [3] spikechr1         3      + |     5e+05
-#&gt;   [4] spikechr2         4      + |     5e+05
+#&gt; GRanges object with 2 ranges and 1 metadata column:
+#&gt;       seqnames    ranges strand |     score
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
+#&gt;   [1]     chr1         1      + |     1e+06
+#&gt;   [2]     chr2         2      + |     1e+06
 #&gt;   -------
-#&gt;   seqinfo: 4 sequences from an unspecified genome; no seqlengths
+#&gt;   seqinfo: 2 sequences from an unspecified genome; no seqlengths
 #&gt; 
 #&gt; $gr1_rep2
-#&gt; GRanges object with 4 ranges and 1 metadata column:
-#&gt;        seqnames    ranges strand |     score
-#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
-#&gt;   [1]      chr1         1      + |     5e+05
-#&gt;   [2]      chr2         2      + |     5e+05
-#&gt;   [3] spikechr1         3      + |     1e+06
-#&gt;   [4] spikechr2         4      + |     5e+05
+#&gt; GRanges object with 2 ranges and 1 metadata column:
+#&gt;       seqnames    ranges strand |     score
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
+#&gt;   [1]     chr1         1      + |     5e+05
+#&gt;   [2]     chr2         2      + |     5e+05
 #&gt;   -------
-#&gt;   seqinfo: 4 sequences from an unspecified genome; no seqlengths
+#&gt;   seqinfo: 2 sequences from an unspecified genome; no seqlengths
 #&gt; 
 #&gt; $gr2_rep2
-#&gt; GRanges object with 4 ranges and 1 metadata column:
-#&gt;        seqnames    ranges strand |     score
-#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
-#&gt;   [1]      chr1         1      + |   1500000
-#&gt;   [2]      chr2         2      + |   1500000
-#&gt;   [3] spikechr1         3      + |    750000
-#&gt;   [4] spikechr2         4      + |    750000
+#&gt; GRanges object with 2 ranges and 1 metadata column:
+#&gt;       seqnames    ranges strand |     score
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
+#&gt;   [1]     chr1         1      + |   1500000
+#&gt;   [2]     chr2         2      + |   1500000
 #&gt;   -------
-#&gt;   seqinfo: 4 sequences from an unspecified genome; no seqlengths
+#&gt;   seqinfo: 2 sequences from an unspecified genome; no seqlengths
 #&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

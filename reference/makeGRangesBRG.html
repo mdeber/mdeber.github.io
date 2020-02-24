@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Make base-pair resolution GRanges object — makeGRangesBRG • BRGenomics</title>
+<title>Constructing and checking for base-pair resolution GRanges objects — makeGRangesBRG • BRGenomics</title>
 
 
 <!-- jquery -->
@@ -35,11 +35,12 @@
 
 
 
-<meta property="og:title" content="Make base-pair resolution GRanges object — makeGRangesBRG" />
-<meta property="og:description" content="Splits up all ranges in dataset.gr to be each 1 basepair wide. For any
-range that is split up, all metadata information belonging to that range is
-inherited by its daughter ranges, and therefore the transformation is
-non-destructive." />
+<meta property="og:title" content="Constructing and checking for base-pair resolution GRanges objects — makeGRangesBRG" />
+<meta property="og:description" content="makeGRangesBRG splits up all ranges in dataset.gr to be each 1
+basepair wide. For any range that is split up, all metadata information
+belonging to that range is inherited by its daughter ranges, and therefore
+the transformation is non-destructive. isBRG checks whether an object
+is a basepair resolution GRanges object." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -72,7 +73,7 @@ non-destructive." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.8</span>
       </span>
     </div>
 
@@ -118,19 +119,22 @@ non-destructive." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Make base-pair resolution GRanges object</h1>
+    <h1>Constructing and checking for base-pair resolution GRanges objects</h1>
     
     <div class="hidden name"><code>makeGRangesBRG.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Splits up all ranges in <code>dataset.gr</code> to be each 1 basepair wide. For any
-range that is split up, all metadata information belonging to that range is
-inherited by its daughter ranges, and therefore the transformation is
-non-destructive.</p>
+    <p><code>makeGRangesBRG</code> splits up all ranges in <code>dataset.gr</code> to be each 1
+basepair wide. For any range that is split up, all metadata information
+belonging to that range is inherited by its daughter ranges, and therefore
+the transformation is non-destructive. <code>isBRG</code> checks whether an object
+is a basepair resolution GRanges object.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>makeGRangesBRG</span>(<span class='no'>dataset.gr</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fu'>detectCores</span>())</pre>
+    <pre class="usage"><span class='fu'>makeGRangesBRG</span>(<span class='no'>dataset.gr</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fu'>detectCores</span>())
+
+<span class='fu'>isBRG</span>(<span class='no'>x</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -144,19 +148,27 @@ non-destructive.</p>
       <td><p>If <code>dataset.gr</code> is a list, the number of cores to use for
 computations.</p></td>
     </tr>
+    <tr>
+      <th>x</th>
+      <td><p>Object to be tested.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A GRanges object for which <code>length(output) ==
-  sum(width(dataset.gr))</code>, and for which <code><a href='https://rdrr.io/r/base/all.html'>all(width(output) == 1)</a></code>.</p>
+    <p><code>makeGRangesBRG</code> returns a GRanges object for which
+  <code>length(output) == sum(width(dataset.gr))</code>, and for which
+  <code><a href='https://rdrr.io/r/base/all.html'>all(width(output) == 1)</a></code>.</p>
+<p><code>isBRG(x)</code> returns <code>TRUE</code> if <code>x</code> is a GRanges object with
+   the above characteristics.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Note that this function doesn't perform any transformation on the
-  metadata in the input. This function assumes that for an input GRanges
-  object, any metadata for each range is equally correct when inherited by
-  each individual base in that range. In other words, the dataset's "signal"
-  (usually readcounts) fundamentally belongs to a single basepair position.</p>
+    <p>Note that <code>makeGRangesBRG</code> doesn't perform any transformation
+  on the metadata in the input. This function assumes that for an input
+  GRanges object, any metadata for each range is equally correct when
+  inherited by each individual base in that range. In other words, the
+  dataset's "signal" (usually readcounts) fundamentally belongs to a single
+  basepair position.</p>
     <h2 class="hasAnchor" id="motivation"><a class="anchor" href="#motivation"></a>Motivation</h2>
 
     <p>The motivating case for this function is a bigWig file
@@ -210,7 +222,7 @@ computations.</p></td>
 <span class='co'># make basepair-resolution (single-width)</span>
 <span class='no'>gr</span> <span class='kw'>&lt;-</span> <span class='fu'>makeGRangesBRG</span>(<span class='no'>bw</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/base/range.html'>range</a></span>(<span class='fu'>width</span>(<span class='no'>gr</span>))</div><div class='output co'>#&gt; [1] 1 1</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>gr</span>)</div><div class='output co'>#&gt; [1] 17971</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>gr</span>) <span class='kw'>==</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='fu'>width</span>(<span class='no'>bw</span>))</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='fu'>score</span>(<span class='no'>gr</span>)) <span class='kw'>==</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='fu'>score</span>(<span class='no'>bw</span>) * <span class='fu'>width</span>(<span class='no'>bw</span>))</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='fu'>isBRG</span>(<span class='no'>gr</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/range.html'>range</a></span>(<span class='fu'>width</span>(<span class='no'>gr</span>))</div><div class='output co'>#&gt; [1] 1 1</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>gr</span>)</div><div class='output co'>#&gt; [1] 17971</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>gr</span>) <span class='kw'>==</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='fu'>width</span>(<span class='no'>bw</span>))</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='fu'>score</span>(<span class='no'>gr</span>)) <span class='kw'>==</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='fu'>score</span>(<span class='no'>bw</span>) * <span class='fu'>width</span>(<span class='no'>bw</span>))</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'>#--------------------------------------------------#</span>
 <span class='co'># Reverse using getStrandedCoverage</span>
 <span class='co'>#--------------------------------------------------#</span>
@@ -218,7 +230,7 @@ computations.</p></td>
 
 <span class='no'>undo</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='getStrandedCoverage.html'>getStrandedCoverage</a></span>(<span class='no'>gr</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/base/range.html'>range</a></span>(<span class='fu'>width</span>(<span class='no'>undo</span>))</div><div class='output co'>#&gt; [1] 1 6</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>undo</span>) <span class='kw'>==</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>bw</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/all.html'>all</a></span>(<span class='fu'>score</span>(<span class='no'>undo</span>) <span class='kw'>==</span> <span class='fu'>score</span>(<span class='no'>bw</span>))</div><div class='output co'>#&gt; [1] TRUE</div></pre>
+<span class='fu'>isBRG</span>(<span class='no'>undo</span>)</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/range.html'>range</a></span>(<span class='fu'>width</span>(<span class='no'>undo</span>))</div><div class='output co'>#&gt; [1] 1 6</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>undo</span>) <span class='kw'>==</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>bw</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/all.html'>all</a></span>(<span class='fu'>score</span>(<span class='no'>undo</span>) <span class='kw'>==</span> <span class='fu'>score</span>(<span class='no'>bw</span>))</div><div class='output co'>#&gt; [1] TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
