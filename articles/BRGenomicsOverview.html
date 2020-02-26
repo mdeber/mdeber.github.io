@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.10</span>
       </span>
     </div>
 
@@ -158,6 +158,12 @@
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install.packages("devtools")</span></a>
 <a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"mdeber/BRGenomics"</span>)</a></code></pre></div>
 <p>If you’re using Windows, <a href="https://cran.rstudio.com/bin/windows/Rtools/">Rtools for Windows</a> is required.</p>
+</div>
+<div id="parallel-processing" class="section level2">
+<h2 class="hasAnchor">
+<a href="#parallel-processing" class="anchor"></a>Parallel Processing</h2>
+<p>By default, many BRGenomics functions will use multicore processing, as implemented in the <code>parallel</code> package, and the default is to use all available cores, as found using <code>detectCores()</code>. To meet the hosting requirements for Bioconductor, all code in the vignette and documentation is set to use no more than 2 cores, i.e. <code>ncores = 2</code>.</p>
+<p>There is no support for parallel processing on Windows.</p>
 </div>
 <div id="included-datasets" class="section level2">
 <h2 class="hasAnchor">
@@ -719,45 +725,44 @@
 <div id="signal-counting" class="section level1">
 <h1 class="hasAnchor">
 <a href="#signal-counting" class="anchor"></a>Signal Counting</h1>
-<div id="signal-by-region-gene" class="section level2">
+<div id="signal-by-region" class="section level2">
 <h2 class="hasAnchor">
-<a href="#signal-by-region-gene" class="anchor"></a>Signal by Region (Gene)</h2>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb91-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(PROseq) <span class="co"># load included PRO-seq data</span></a></code></pre></div>
+<a href="#signal-by-region" class="anchor"></a>Signal by Region</h2>
 <p>The <code>getCountsByRegion</code> function counts signal within regions of interest, and returns a simple vector. For instance, we can count PROseq signal within our transcripts:</p>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" data-line-number="1">counts_txs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getCountsByRegions.html">getCountsByRegions</a></span>(PROseq, txs_dm6_chr4)</a>
-<a class="sourceLine" id="cb92-2" data-line-number="2">counts_txs[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</a>
-<a class="sourceLine" id="cb92-3" data-line-number="3"><span class="co">## [1]   1  58  13 125 263</span></a>
-<a class="sourceLine" id="cb92-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(txs_dm6_chr4) <span class="op">==</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(counts_txs)</a>
-<a class="sourceLine" id="cb92-5" data-line-number="5"><span class="co">## [1] TRUE</span></a></code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb91-1" data-line-number="1">counts_txs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getCountsByRegions.html">getCountsByRegions</a></span>(PROseq, txs_dm6_chr4)</a>
+<a class="sourceLine" id="cb91-2" data-line-number="2">counts_txs[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</a>
+<a class="sourceLine" id="cb91-3" data-line-number="3"><span class="co">## [1]   1  58  13 125 263</span></a>
+<a class="sourceLine" id="cb91-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(txs_dm6_chr4) <span class="op">==</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(counts_txs)</a>
+<a class="sourceLine" id="cb91-5" data-line-number="5"><span class="co">## [1] TRUE</span></a></code></pre></div>
 </div>
 <div id="signal-by-position-and-region" class="section level2">
 <h2 class="hasAnchor">
 <a href="#signal-by-position-and-region" class="anchor"></a>Signal by Position and Region</h2>
 <p>The <code>getCountsByPositions</code> function will count signal at each position within each region of interest. By default, a matrix is returned, with a row for each region, and a column for each position.</p>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb93-1" data-line-number="1"><span class="co"># get first 100 bases of each transcript</span></a>
-<a class="sourceLine" id="cb93-2" data-line-number="2">txs_pr &lt;-<span class="st"> </span><span class="kw">promoters</span>(txs_dm6_chr4, <span class="dv">0</span>, <span class="dv">100</span>)</a>
-<a class="sourceLine" id="cb93-3" data-line-number="3"><span class="co"># get signal at each base within each promoter region</span></a>
-<a class="sourceLine" id="cb93-4" data-line-number="4">countmatrix_pr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span>(PROseq, txs_pr)</a></code></pre></div>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/class.html">class</a></span>(countmatrix_pr)</a>
-<a class="sourceLine" id="cb94-2" data-line-number="2"><span class="co">## [1] "matrix"</span></a>
-<a class="sourceLine" id="cb94-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(countmatrix_pr) <span class="op">==</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(txs_pr)</a>
-<a class="sourceLine" id="cb94-4" data-line-number="4"><span class="co">## [1] TRUE</span></a>
-<a class="sourceLine" id="cb94-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(countmatrix_pr) <span class="op">==</span><span class="st"> </span><span class="kw">width</span>(txs_pr[<span class="dv">1</span>])</a>
-<a class="sourceLine" id="cb94-6" data-line-number="6"><span class="co">## [1] TRUE</span></a></code></pre></div>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" data-line-number="1"><span class="co"># get first 100 bases of each transcript</span></a>
+<a class="sourceLine" id="cb92-2" data-line-number="2">txs_pr &lt;-<span class="st"> </span><span class="kw">promoters</span>(txs_dm6_chr4, <span class="dv">0</span>, <span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb92-3" data-line-number="3"><span class="co"># get signal at each base within each promoter region</span></a>
+<a class="sourceLine" id="cb92-4" data-line-number="4">countmatrix_pr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span>(PROseq, txs_pr)</a></code></pre></div>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb93-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/class.html">class</a></span>(countmatrix_pr)</a>
+<a class="sourceLine" id="cb93-2" data-line-number="2"><span class="co">## [1] "matrix"</span></a>
+<a class="sourceLine" id="cb93-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(countmatrix_pr) <span class="op">==</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(txs_pr)</a>
+<a class="sourceLine" id="cb93-4" data-line-number="4"><span class="co">## [1] TRUE</span></a>
+<a class="sourceLine" id="cb93-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(countmatrix_pr) <span class="op">==</span><span class="st"> </span><span class="kw">width</span>(txs_pr[<span class="dv">1</span>])</a>
+<a class="sourceLine" id="cb93-6" data-line-number="6"><span class="co">## [1] TRUE</span></a></code></pre></div>
 <p>By default, each “position” (each column) is a single base, but counting can be done in bins as well:</p>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb95-1" data-line-number="1"><span class="co"># get signal in 10 bp bins within each promoter region</span></a>
-<a class="sourceLine" id="cb95-2" data-line-number="2">countmatrix_pr_bin &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span>(PROseq, txs_pr, <span class="dt">binsize =</span> <span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb95-3" data-line-number="3">countmatrix_pr_bin[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ]</a></code></pre></div>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" data-line-number="1"><span class="co"># get signal in 10 bp bins within each promoter region</span></a>
+<a class="sourceLine" id="cb94-2" data-line-number="2">countmatrix_pr_bin &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span>(PROseq, txs_pr, <span class="dt">binsize =</span> <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb94-3" data-line-number="3">countmatrix_pr_bin[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ]</a></code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
 ## [1,]    0    0    0    0    0    0    0    0    0     0
 ## [2,]    2    1    7    1    0    0    0    1    4     0
 ## [3,]    0    0    1    0    0    0    0    1    0     0
 ## [4,]    0    0    0    0    0    0    0    0    0     0
 ## [5,]    0    0    0    0    0    0    0    0    0     0</code></pre>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb97-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/all.html">all</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span>(countmatrix_pr_bin) <span class="op">==</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span>(countmatrix_pr))</a>
-<a class="sourceLine" id="cb97-2" data-line-number="2"><span class="co">## [1] TRUE</span></a></code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb96-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/all.html">all</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span>(countmatrix_pr_bin) <span class="op">==</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span>(countmatrix_pr))</a>
+<a class="sourceLine" id="cb96-2" data-line-number="2"><span class="co">## [1] TRUE</span></a></code></pre></div>
 <p>By default, an error is returned if input regions aren’t all the same size:</p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb98-1" data-line-number="1"><span class="kw"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span>(PROseq, txs_dm6_chr4)</a></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb97-1" data-line-number="1"><span class="kw"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span>(PROseq, txs_dm6_chr4)</a></code></pre></div>
 <pre><code>## Error in .check_mw_arg(smw, melt, mw = TRUE): regions.gr contains ranges with multiple widths, but simplify.multi.widths is set to 'error'. Did you mean to call getCountsByRegions instead?</code></pre>
 <p>An error is returned by default to avoid accidental use of <code>getCountsByPositions</code> in lieu of <code>getCountsByRegions</code>. However, for the rare case when users do intend to use multi-width regions, there is support for this using the <code>simplify.multi.widths</code> argument, which contains several useful options for how to do this (see the documentation for more details).</p>
 </div>
@@ -765,26 +770,26 @@
 <h2 class="hasAnchor">
 <a href="#example-plot-signal-over-a-gene" class="anchor"></a>Example: Plot Signal Over a Gene</h2>
 <p>We can use <code>getCountsByPositions</code> to get the signal profile over a single gene. Let’s have a look at the gene with the highest signal near the TSS:</p>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" data-line-number="1">idx &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/which.min.html">which.max</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span>(countmatrix_pr))</a>
-<a class="sourceLine" id="cb100-2" data-line-number="2">idx</a>
-<a class="sourceLine" id="cb100-3" data-line-number="3"><span class="co">## [1] 135</span></a>
-<a class="sourceLine" id="cb100-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb100-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(countmatrix_pr), </a>
-<a class="sourceLine" id="cb100-6" data-line-number="6">     <span class="dt">y =</span> countmatrix_pr[idx, ], </a>
-<a class="sourceLine" id="cb100-7" data-line-number="7">     <span class="dt">type =</span> <span class="st">"h"</span>, </a>
-<a class="sourceLine" id="cb100-8" data-line-number="8">     <span class="dt">main =</span> txs_pr<span class="op">$</span>tx_name[idx],</a>
-<a class="sourceLine" id="cb100-9" data-line-number="9">     <span class="dt">xlab =</span> <span class="st">"Distance to TSS"</span>,</a>
-<a class="sourceLine" id="cb100-10" data-line-number="10">     <span class="dt">ylab =</span> <span class="st">"PRO-seq Signal"</span>)</a></code></pre></div>
-<p><img src="BRGenomicsOverview_files/figure-html/unnamed-chunk-52-1.png" width="700"></p>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb99-1" data-line-number="1">idx &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/which.min.html">which.max</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span>(countmatrix_pr))</a>
+<a class="sourceLine" id="cb99-2" data-line-number="2">idx</a>
+<a class="sourceLine" id="cb99-3" data-line-number="3"><span class="co">## [1] 135</span></a>
+<a class="sourceLine" id="cb99-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb99-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(countmatrix_pr), </a>
+<a class="sourceLine" id="cb99-6" data-line-number="6">     <span class="dt">y =</span> countmatrix_pr[idx, ], </a>
+<a class="sourceLine" id="cb99-7" data-line-number="7">     <span class="dt">type =</span> <span class="st">"h"</span>, </a>
+<a class="sourceLine" id="cb99-8" data-line-number="8">     <span class="dt">main =</span> txs_pr<span class="op">$</span>tx_name[idx],</a>
+<a class="sourceLine" id="cb99-9" data-line-number="9">     <span class="dt">xlab =</span> <span class="st">"Distance to TSS"</span>,</a>
+<a class="sourceLine" id="cb99-10" data-line-number="10">     <span class="dt">ylab =</span> <span class="st">"PRO-seq Signal"</span>)</a></code></pre></div>
+<p><img src="BRGenomicsOverview_files/figure-html/unnamed-chunk-50-1.png" width="700"></p>
 </div>
 <div id="example-plot-signal-heatmap" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example-plot-signal-heatmap" class="anchor"></a>Example: Plot Signal Heatmap</h2>
 <p>A typical use of <code>getCountsByPositions</code> is to generate a heatmap of signal by position within a list of genes. The <code>ComplexHeatmap</code> package is well documented and offers a high level of functionality, but we can also use <code>ggplot2</code> to generate customizable heatmaps.</p>
 <p>To format our matrix for ggplot, we want to “melt” it. The package <code>reshape2</code> can melt matrices into dataframes, but BRGenomics also provides a <code>melt</code> argument for several functions, including <code>getCountsByPositions</code>:</p>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb101-1" data-line-number="1">cbp.df &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span>(PROseq, txs_pr, <span class="dt">binsize =</span> <span class="dv">10</span>, <span class="dt">melt =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb101-2" data-line-number="2">                               <span class="dt">ncores =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb101-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(cbp.df)</a></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" data-line-number="1">cbp.df &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span>(PROseq, txs_pr, <span class="dt">binsize =</span> <span class="dv">10</span>, <span class="dt">melt =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb100-2" data-line-number="2">                               <span class="dt">ncores =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb100-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(cbp.df)</a></code></pre></div>
 <pre><code>##   region position signal
 ## 1      1        1      0
 ## 2      1        2      0
@@ -793,30 +798,30 @@
 ## 5      1        5      0
 ## 6      1        6      0</code></pre>
 <p>As you can see, the rows and columns of the matrix are now described in columns of this dataframe, and the signal held at each position is in the third column. Now we can plot:</p>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb103-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</a></code></pre></div>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" data-line-number="1"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(cbp.df, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> <span class="dv">10</span><span class="op">*</span>position <span class="op">-</span><span class="st"> </span><span class="dv">5</span>, <span class="dt">y =</span> region, <span class="dt">fill =</span> signal)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb104-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html">geom_raster</a></span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb104-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html">coord_cartesian</a></span>(<span class="dt">expand =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb104-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="dt">x =</span> <span class="st">"Distance from TSS"</span>, <span class="dt">y =</span> <span class="st">"Transcript"</span>, </a>
-<a class="sourceLine" id="cb104-5" data-line-number="5">       <span class="dt">title =</span> <span class="st">"PRO-seq"</span>, <span class="dt">fill =</span> <span class="st">"Reads"</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb104-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>()</a></code></pre></div>
-<p><img src="BRGenomicsOverview_files/figure-html/unnamed-chunk-55-1.png" width="700"></p>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb102-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</a></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb103-1" data-line-number="1"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(cbp.df, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> <span class="dv">10</span><span class="op">*</span>position <span class="op">-</span><span class="st"> </span><span class="dv">5</span>, <span class="dt">y =</span> region, <span class="dt">fill =</span> signal)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb103-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html">geom_raster</a></span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb103-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html">coord_cartesian</a></span>(<span class="dt">expand =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb103-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="dt">x =</span> <span class="st">"Distance from TSS"</span>, <span class="dt">y =</span> <span class="st">"Transcript"</span>, </a>
+<a class="sourceLine" id="cb103-5" data-line-number="5">       <span class="dt">title =</span> <span class="st">"PRO-seq"</span>, <span class="dt">fill =</span> <span class="st">"Reads"</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb103-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>()</a></code></pre></div>
+<p><img src="BRGenomicsOverview_files/figure-html/unnamed-chunk-53-1.png" width="700"></p>
 </div>
 </div>
 <div id="efficient-analysis-of-multiple-datasets" class="section level1">
 <h1 class="hasAnchor">
 <a href="#efficient-analysis-of-multiple-datasets" class="anchor"></a>Efficient Analysis of Multiple Datasets</h1>
 <p>To efficiently work with several datasets, we recommend storing the GRanges objects within a standard, named list, e.g. <code>grl &lt;- list(a_rep1 = gr1, b_rep1 = gr2, ...)</code>.</p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb105-1" data-line-number="1"><span class="co"># make 3 datasets</span></a>
-<a class="sourceLine" id="cb105-2" data-line-number="2">ps1 &lt;-<span class="st"> </span>PROseq[<span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="dv">1</span>, <span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(PROseq), <span class="dv">3</span>)]</a>
-<a class="sourceLine" id="cb105-3" data-line-number="3">ps2 &lt;-<span class="st"> </span>PROseq[<span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="dv">2</span>, <span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(PROseq), <span class="dv">3</span>)]</a>
-<a class="sourceLine" id="cb105-4" data-line-number="4">ps3 &lt;-<span class="st"> </span>PROseq[<span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="dv">3</span>, <span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(PROseq), <span class="dv">3</span>)]</a>
-<a class="sourceLine" id="cb105-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb105-6" data-line-number="6"><span class="co"># use the "=" assignment in list() to give names to the list elements</span></a>
-<a class="sourceLine" id="cb105-7" data-line-number="7">ps_list &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">ps1 =</span> ps1, <span class="dt">ps2 =</span> ps2, <span class="dt">ps3 =</span> ps3)</a>
-<a class="sourceLine" id="cb105-8" data-line-number="8"><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(ps_list)</a></code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" data-line-number="1"><span class="co"># make 3 datasets</span></a>
+<a class="sourceLine" id="cb104-2" data-line-number="2">ps1 &lt;-<span class="st"> </span>PROseq[<span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="dv">1</span>, <span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(PROseq), <span class="dv">3</span>)]</a>
+<a class="sourceLine" id="cb104-3" data-line-number="3">ps2 &lt;-<span class="st"> </span>PROseq[<span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="dv">2</span>, <span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(PROseq), <span class="dv">3</span>)]</a>
+<a class="sourceLine" id="cb104-4" data-line-number="4">ps3 &lt;-<span class="st"> </span>PROseq[<span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="dv">3</span>, <span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(PROseq), <span class="dv">3</span>)]</a>
+<a class="sourceLine" id="cb104-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb104-6" data-line-number="6"><span class="co"># use the "=" assignment in list() to give names to the list elements</span></a>
+<a class="sourceLine" id="cb104-7" data-line-number="7">ps_list &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">ps1 =</span> ps1, <span class="dt">ps2 =</span> ps2, <span class="dt">ps3 =</span> ps3)</a>
+<a class="sourceLine" id="cb104-8" data-line-number="8"><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(ps_list)</a></code></pre></div>
 <pre><code>## [1] "ps1" "ps2" "ps3"</code></pre>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb107-1" data-line-number="1">ps_list</a></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb106-1" data-line-number="1">ps_list</a></code></pre></div>
 <pre><code>## $ps1
 ## GRanges object with 15794 ranges and 1 metadata column:
 ##           seqnames    ranges strand |     score
@@ -876,18 +881,18 @@
 <h2 class="hasAnchor">
 <a href="#example-summarizing-signal-from-multiple-samples" class="anchor"></a>Example: Summarizing Signal from Multiple Samples</h2>
 <p>We can pass our list of GRanges directly to <code>getCountsByRegions</code> to simultaneously count reads for each dataset, and melt the result for plotting with <code>ggplot</code>:</p>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb109-1" data-line-number="1"><span class="kw"><a href="../reference/getCountsByRegions.html">getCountsByRegions</a></span>(ps_list, txs_dm6_chr4[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>], <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb108-1" data-line-number="1"><span class="kw"><a href="../reference/getCountsByRegions.html">getCountsByRegions</a></span>(ps_list, txs_dm6_chr4[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>], <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
 <pre><code>##   ps1 ps2 ps3
 ## 1   1   0   0
 ## 2  20  21  17
 ## 3   4   4   5
 ## 4  35  47  43
 ## 5  84  90  89</code></pre>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb111-1" data-line-number="1"><span class="co"># melt, and use the optional region_names argument</span></a>
-<a class="sourceLine" id="cb111-2" data-line-number="2">txs_counts &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getCountsByRegions.html">getCountsByRegions</a></span>(ps_list, txs_dm6_chr4, <span class="dt">melt =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb111-3" data-line-number="3">                                 <span class="dt">region_names =</span> txs_dm6_chr4<span class="op">$</span>tx_name,</a>
-<a class="sourceLine" id="cb111-4" data-line-number="4">                                 <span class="dt">ncores =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb111-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(txs_counts)</a></code></pre></div>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb110-1" data-line-number="1"><span class="co"># melt, and use the optional region_names argument</span></a>
+<a class="sourceLine" id="cb110-2" data-line-number="2">txs_counts &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getCountsByRegions.html">getCountsByRegions</a></span>(ps_list, txs_dm6_chr4, <span class="dt">melt =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb110-3" data-line-number="3">                                 <span class="dt">region_names =</span> txs_dm6_chr4<span class="op">$</span>tx_name,</a>
+<a class="sourceLine" id="cb110-4" data-line-number="4">                                 <span class="dt">ncores =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb110-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(txs_counts)</a></code></pre></div>
 <pre><code>##        region signal sample
 ## 1 FBtr0346692      1    ps1
 ## 2 FBtr0344900     20    ps1
@@ -895,19 +900,19 @@
 ## 4 FBtr0333704     35    ps1
 ## 5 FBtr0333705     84    ps1
 ## 6 FBtr0100246   1017    ps1</code></pre>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb113-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</a>
-<a class="sourceLine" id="cb113-2" data-line-number="2"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(txs_counts, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> sample, <span class="dt">y =</span> signal, <span class="dt">fill =</span> sample)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb113-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin</a></span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb113-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>()</a></code></pre></div>
-<p><img src="BRGenomicsOverview_files/figure-html/unnamed-chunk-59-1.png" width="700"></p>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb112-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</a>
+<a class="sourceLine" id="cb112-2" data-line-number="2"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(txs_counts, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> sample, <span class="dt">y =</span> signal, <span class="dt">fill =</span> sample)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb112-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin</a></span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb112-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>()</a></code></pre></div>
+<p><img src="BRGenomicsOverview_files/figure-html/unnamed-chunk-57-1.png" width="700"></p>
 </div>
 <div id="example-making-browser-shots-in-r" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example-making-browser-shots-in-r" class="anchor"></a>Example: Making Browser Shots in R</h2>
 <p>Plotting signal over a single locus for several datasets, we can use <code>getCountsByPositions</code> to bake our own genome browser shots within R. Using the same region we plotted earlier:</p>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb114-1" data-line-number="1">cbp_maxtx &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span>(ps_list, txs_dm6_chr4[idx], </a>
-<a class="sourceLine" id="cb114-2" data-line-number="2">                                  <span class="dt">melt =</span> <span class="ot">TRUE</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb114-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(cbp_maxtx)</a></code></pre></div>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb113-1" data-line-number="1">cbp_maxtx &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span>(ps_list, txs_dm6_chr4[idx], </a>
+<a class="sourceLine" id="cb113-2" data-line-number="2">                                  <span class="dt">melt =</span> <span class="ot">TRUE</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb113-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(cbp_maxtx)</a></code></pre></div>
 <pre><code>##   region position signal sample
 ## 1      1        1      0    ps1
 ## 2      1        2      0    ps1
@@ -915,13 +920,13 @@
 ## 4      1        4      0    ps1
 ## 5      1        5      0    ps1
 ## 6      1        6      0    ps1</code></pre>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb116-1" data-line-number="1"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(cbp_maxtx, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> position, <span class="dt">y =</span> signal)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb116-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="op">~</span>sample, <span class="dt">ncol =</span> <span class="dv">1</span>, <span class="dt">strip.position =</span> <span class="st">"left"</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb116-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span>(<span class="dt">size =</span> <span class="fl">0.5</span>, <span class="dt">color =</span> <span class="st">"darkgray"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb116-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="dt">title =</span> txs_dm6_chr4<span class="op">$</span>tx_name[idx],</a>
-<a class="sourceLine" id="cb116-5" data-line-number="5">       <span class="dt">x =</span> <span class="st">"Distance from TSS"</span>, <span class="dt">y =</span> <span class="st">"PRO-seq Signal"</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb116-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>()</a></code></pre></div>
-<p><img src="BRGenomicsOverview_files/figure-html/unnamed-chunk-61-1.png" width="576"></p>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb115-1" data-line-number="1"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(cbp_maxtx, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> position, <span class="dt">y =</span> signal)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb115-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="op">~</span>sample, <span class="dt">ncol =</span> <span class="dv">1</span>, <span class="dt">strip.position =</span> <span class="st">"left"</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb115-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span>(<span class="dt">size =</span> <span class="fl">0.5</span>, <span class="dt">color =</span> <span class="st">"darkgray"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb115-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="dt">title =</span> txs_dm6_chr4<span class="op">$</span>tx_name[idx],</a>
+<a class="sourceLine" id="cb115-5" data-line-number="5">       <span class="dt">x =</span> <span class="st">"Distance from TSS"</span>, <span class="dt">y =</span> <span class="st">"PRO-seq Signal"</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb115-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>()</a></code></pre></div>
+<p><img src="BRGenomicsOverview_files/figure-html/unnamed-chunk-59-1.png" width="576"></p>
 <p>The <code>Gviz</code> package contains a good deal browser-oriented plotting functionality, like plotting gene models.</p>
 </div>
 <div id="multiplexed-granges" class="section level2">
@@ -929,8 +934,8 @@
 <a href="#multiplexed-granges" class="anchor"></a>Multiplexed GRanges</h2>
 <p>There is another data structure that is widely supported with BRGenomics, called a <strong>multiplexed GRanges</strong>. A multiplexed GRanges is a single GRanges object that contains multiple metadata fields containing basepair-resolution coverage data for different datasets. We currently recommend users use lists of GRanges objects, but you might find that multiplexed GRanges objects have performance benefits for your data (notes on this below).</p>
 <p>A multiplexed GRanges object can be made using the <code>mergeGRangesData</code> with option <code>multiplex = TRUE</code>.</p>
-<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb117-1" data-line-number="1">ps_multi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mergeGRangesData.html">mergeGRangesData</a></span>(ps1, ps2, ps3, <span class="dt">multiplex =</span> <span class="ot">TRUE</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb117-2" data-line-number="2">ps_multi</a></code></pre></div>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb116-1" data-line-number="1">ps_multi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mergeGRangesData.html">mergeGRangesData</a></span>(ps1, ps2, ps3, <span class="dt">multiplex =</span> <span class="ot">TRUE</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb116-2" data-line-number="2">ps_multi</a></code></pre></div>
 <pre><code>## GRanges object with 47380 ranges and 3 metadata columns:
 ##           seqnames    ranges strand |       ps1       ps2       ps3
 ##              &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
@@ -948,7 +953,7 @@
 ##   -------
 ##   seqinfo: 1870 sequences from an unspecified genome</code></pre>
 <p>As in any GRanges object, the metadata fields are accessible as a dataframe with the <code>mcols()</code> function, and individual columns are accessible with the <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code> operator.<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a></p>
-<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb119-1" data-line-number="1"><span class="kw">mcols</span>(ps_multi)</a></code></pre></div>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb118-1" data-line-number="1"><span class="kw">mcols</span>(ps_multi)</a></code></pre></div>
 <pre><code>## DataFrame with 47380 rows and 3 columns
 ##             ps1       ps2       ps3
 ##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
@@ -963,23 +968,23 @@
 ## 47378         0         1         0
 ## 47379         0         0         1
 ## 47380         1         0         0</code></pre>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb121-1" data-line-number="1">ps_multi<span class="op">$</span>ps1[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</a>
-<a class="sourceLine" id="cb121-2" data-line-number="2"><span class="co">## [1] 1 0 0 2 0</span></a></code></pre></div>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb120-1" data-line-number="1">ps_multi<span class="op">$</span>ps1[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</a>
+<a class="sourceLine" id="cb120-2" data-line-number="2"><span class="co">## [1] 1 0 0 2 0</span></a></code></pre></div>
 <p>This data structure can be passed to most functions in BRGenomics. To be explicit, users should set the <code>field</code> argument, when it exists, to set the datasets for which calculations should be performed:</p>
-<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb122-1" data-line-number="1"><span class="co"># for all datasets (all fields), get counts in the first 5 transcripts</span></a>
-<a class="sourceLine" id="cb122-2" data-line-number="2"><span class="kw"><a href="../reference/getCountsByRegions.html">getCountsByRegions</a></span>(ps_multi, txs_dm6_chr4[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>], <span class="dt">field =</span> <span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="kw">mcols</span>(ps_multi)),</a>
-<a class="sourceLine" id="cb122-3" data-line-number="3">                   <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb121-1" data-line-number="1"><span class="co"># for all datasets (all fields), get counts in the first 5 transcripts</span></a>
+<a class="sourceLine" id="cb121-2" data-line-number="2"><span class="kw"><a href="../reference/getCountsByRegions.html">getCountsByRegions</a></span>(ps_multi, txs_dm6_chr4[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>], <span class="dt">field =</span> <span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="kw">mcols</span>(ps_multi)),</a>
+<a class="sourceLine" id="cb121-3" data-line-number="3">                   <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
 <pre><code>##   ps1 ps2 ps3
 ## 1   1   0   0
 ## 2  20  21  17
 ## 3   4   4   5
 ## 4  35  47  43
 ## 5  84  90  89</code></pre>
-<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb124-1" data-line-number="1"><span class="co"># get counts for ps2 dataset only</span></a>
-<a class="sourceLine" id="cb124-2" data-line-number="2"><span class="kw"><a href="../reference/getCountsByRegions.html">getCountsByRegions</a></span>(ps_multi, txs_dm6_chr4[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>], <span class="dt">field =</span> <span class="st">"ps2"</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb123-1" data-line-number="1"><span class="co"># get counts for ps2 dataset only</span></a>
+<a class="sourceLine" id="cb123-2" data-line-number="2"><span class="kw"><a href="../reference/getCountsByRegions.html">getCountsByRegions</a></span>(ps_multi, txs_dm6_chr4[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>], <span class="dt">field =</span> <span class="st">"ps2"</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
 <pre><code>## [1]  0 21  4 47 90</code></pre>
-<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb126-1" data-line-number="1"><span class="co"># if no field is given, most functions will default to using all fields</span></a>
-<a class="sourceLine" id="cb126-2" data-line-number="2"><span class="kw"><a href="../reference/getCountsByRegions.html">getCountsByRegions</a></span>(ps_multi, txs_dm6_chr4[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>], <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb125-1" data-line-number="1"><span class="co"># if no field is given, most functions will default to using all fields</span></a>
+<a class="sourceLine" id="cb125-2" data-line-number="2"><span class="kw"><a href="../reference/getCountsByRegions.html">getCountsByRegions</a></span>(ps_multi, txs_dm6_chr4[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>], <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
 <pre><code>## field not found in dataset.gr; will default to using all fields in dataset.gr</code></pre>
 <pre><code>##   ps1 ps2 ps3
 ## 1   1   0   0
@@ -999,14 +1004,14 @@
 <p>While the handling of GRanges data in BRGenomics is relatively fast, the initial importation of bigWig or bedGraph files as GRanges objects remains a noticeable bottleneck. This may be tolerable for interactive workflows, in which data is imported once before undergoing lengthy analysis, but the bottleneck is a significant detriment for users who regularly import data.</p>
 <p>To avoid this bottleneck, users can save reusable data structures as binary R files, which effectively save the memory state of R objects. Not only are these objects rapidly reloaded into memory upon importation, but they have the added benefit of saving the user from repeating data formatting.</p>
 <p>Any R object can be saved to storage using the <code>saveRDS</code> function, and re-imported using <code>readRDS</code>.</p>
-<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb129-1" data-line-number="1"><span class="co"># save the PRO-seq GRanges for later import</span></a>
-<a class="sourceLine" id="cb129-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/readRDS.html">saveRDS</a></span>(PROseq, <span class="dt">file =</span> <span class="st">"~/PROseq.RData"</span>) </a>
-<a class="sourceLine" id="cb129-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb129-4" data-line-number="4"><span class="co"># save a list of GRanges</span></a>
-<a class="sourceLine" id="cb129-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/readRDS.html">saveRDS</a></span>(ps_list, <span class="dt">file =</span> <span class="st">"~/ps_list.RData"</span>)</a>
-<a class="sourceLine" id="cb129-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb129-7" data-line-number="7"><span class="co"># re-import</span></a>
-<a class="sourceLine" id="cb129-8" data-line-number="8">ps_list &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span>(<span class="st">"~/ps_list.RData"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb128-1" data-line-number="1"><span class="co"># save the PRO-seq GRanges for later import</span></a>
+<a class="sourceLine" id="cb128-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/readRDS.html">saveRDS</a></span>(PROseq, <span class="dt">file =</span> <span class="st">"~/PROseq.RData"</span>) </a>
+<a class="sourceLine" id="cb128-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb128-4" data-line-number="4"><span class="co"># save a list of GRanges</span></a>
+<a class="sourceLine" id="cb128-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/readRDS.html">saveRDS</a></span>(ps_list, <span class="dt">file =</span> <span class="st">"~/ps_list.RData"</span>)</a>
+<a class="sourceLine" id="cb128-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb128-7" data-line-number="7"><span class="co"># re-import</span></a>
+<a class="sourceLine" id="cb128-8" data-line-number="8">ps_list &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span>(<span class="st">"~/ps_list.RData"</span>)</a></code></pre></div>
 <p>The <code>save</code> and <code>load</code> commands can also be used to accomplish the same thing, although they work slightly differently.<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a></p>
 </div>
 <div id="profile-plots-bootstrapping" class="section level1">
@@ -1017,36 +1022,36 @@
 <a href="#conventional-profiles" class="anchor"></a>Conventional Profiles</h2>
 <p>As an example, we’ll plot PRO-seq signal in promoter-proximal regions by calculating the mean signal intensity at each base in the first 100 bases of a transcript.</p>
 <p>First, calculate signal at each base for all promoter-proximal regions:</p>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb130-1" data-line-number="1">countmatrix_pr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span>(PROseq, txs_pr, <span class="dt">ncores =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb130-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/dim.html">dim</a></span>(countmatrix_pr)</a>
-<a class="sourceLine" id="cb130-3" data-line-number="3"><span class="co">## [1] 339 100</span></a>
-<a class="sourceLine" id="cb130-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/base/dim.html">dim</a></span>(countmatrix_pr) <span class="op">==</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(txs_pr), <span class="kw"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="kw">width</span>(txs_pr)))</a>
-<a class="sourceLine" id="cb130-5" data-line-number="5"><span class="co">## [1] TRUE TRUE</span></a></code></pre></div>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb129-1" data-line-number="1">countmatrix_pr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span>(PROseq, txs_pr, <span class="dt">ncores =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb129-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/dim.html">dim</a></span>(countmatrix_pr)</a>
+<a class="sourceLine" id="cb129-3" data-line-number="3"><span class="co">## [1] 339 100</span></a>
+<a class="sourceLine" id="cb129-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/base/dim.html">dim</a></span>(countmatrix_pr) <span class="op">==</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(txs_pr), <span class="kw"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="kw">width</span>(txs_pr)))</a>
+<a class="sourceLine" id="cb129-5" data-line-number="5"><span class="co">## [1] TRUE TRUE</span></a></code></pre></div>
 <p>For each position (each column of the matrix), calculate the mean, and plot:</p>
-<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb131-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(countmatrix_pr),</a>
-<a class="sourceLine" id="cb131-2" data-line-number="2">     <span class="dt">y =</span> <span class="kw"><a href="https://rdrr.io/r/base/colSums.html">colMeans</a></span>(countmatrix_pr),</a>
-<a class="sourceLine" id="cb131-3" data-line-number="3">     <span class="dt">type =</span> <span class="st">"l"</span>, </a>
-<a class="sourceLine" id="cb131-4" data-line-number="4">     <span class="dt">xlab =</span> <span class="st">"Distance to TSS (bp)"</span>,</a>
-<a class="sourceLine" id="cb131-5" data-line-number="5">     <span class="dt">ylab =</span> <span class="st">"Mean PRO-seq Reads"</span>)</a></code></pre></div>
-<p><img src="BRGenomicsOverview_files/figure-html/unnamed-chunk-68-1.png" width="700"></p>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb130-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(countmatrix_pr),</a>
+<a class="sourceLine" id="cb130-2" data-line-number="2">     <span class="dt">y =</span> <span class="kw"><a href="https://rdrr.io/r/base/colSums.html">colMeans</a></span>(countmatrix_pr),</a>
+<a class="sourceLine" id="cb130-3" data-line-number="3">     <span class="dt">type =</span> <span class="st">"l"</span>, </a>
+<a class="sourceLine" id="cb130-4" data-line-number="4">     <span class="dt">xlab =</span> <span class="st">"Distance to TSS (bp)"</span>,</a>
+<a class="sourceLine" id="cb130-5" data-line-number="5">     <span class="dt">ylab =</span> <span class="st">"Mean PRO-seq Reads"</span>)</a></code></pre></div>
+<p><img src="BRGenomicsOverview_files/figure-html/unnamed-chunk-66-1.png" width="700"></p>
 <p>One drawback of using the arithmatic mean is that means are not robust to outliers. In other words, the mean signal at any position is liable to be determined by a small number of highly influential points. This is especially problematic for high dynamic range data like PRO-seq.</p>
 <p>It’s common to see this issue addressed through the use medians/quantiles in place of arithmatic means. However, observe what happens as we plot the median signal across our gene list using several different gene-filtering thresholds:</p>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb132-1" data-line-number="1">plot_meds &lt;-<span class="st"> </span><span class="cf">function</span>(sig_thresh) {</a>
-<a class="sourceLine" id="cb132-2" data-line-number="2">  idx &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span>(countmatrix_pr) <span class="op">&gt;</span><span class="st"> </span>sig_thresh)</a>
-<a class="sourceLine" id="cb132-3" data-line-number="3">  <span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(countmatrix_pr),</a>
-<a class="sourceLine" id="cb132-4" data-line-number="4">       <span class="dt">y =</span> <span class="kw"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(countmatrix_pr[idx, ], <span class="dv">2</span>, median),</a>
-<a class="sourceLine" id="cb132-5" data-line-number="5">       <span class="dt">type =</span> <span class="st">"l"</span>, </a>
-<a class="sourceLine" id="cb132-6" data-line-number="6">       <span class="dt">main =</span> <span class="kw"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span>(<span class="st">"Regions with &gt;%s reads"</span>, sig_thresh),</a>
-<a class="sourceLine" id="cb132-7" data-line-number="7">       <span class="dt">xlab =</span> <span class="st">"Distance to TSS (bp)"</span>,</a>
-<a class="sourceLine" id="cb132-8" data-line-number="8">       <span class="dt">ylab =</span> <span class="st">"Median PRO-seq Reads"</span>)</a>
-<a class="sourceLine" id="cb132-9" data-line-number="9">}</a>
-<a class="sourceLine" id="cb132-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb132-11" data-line-number="11"><span class="kw"><a href="https://rdrr.io/r/graphics/par.html">par</a></span>(<span class="dt">mfrow =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">3</span>, <span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb132-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb132-13" data-line-number="13"><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>, <span class="dv">30</span><span class="op">*</span><span class="dv">2</span><span class="op">^</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">4</span>))) {</a>
-<a class="sourceLine" id="cb132-14" data-line-number="14">  <span class="kw">plot_meds</span>(i)</a>
-<a class="sourceLine" id="cb132-15" data-line-number="15">}</a></code></pre></div>
-<p><img src="BRGenomicsOverview_files/figure-html/unnamed-chunk-69-1.png" width="576"></p>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb131-1" data-line-number="1">plot_meds &lt;-<span class="st"> </span><span class="cf">function</span>(sig_thresh) {</a>
+<a class="sourceLine" id="cb131-2" data-line-number="2">  idx &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span>(countmatrix_pr) <span class="op">&gt;</span><span class="st"> </span>sig_thresh)</a>
+<a class="sourceLine" id="cb131-3" data-line-number="3">  <span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(countmatrix_pr),</a>
+<a class="sourceLine" id="cb131-4" data-line-number="4">       <span class="dt">y =</span> <span class="kw"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(countmatrix_pr[idx, ], <span class="dv">2</span>, median),</a>
+<a class="sourceLine" id="cb131-5" data-line-number="5">       <span class="dt">type =</span> <span class="st">"l"</span>, </a>
+<a class="sourceLine" id="cb131-6" data-line-number="6">       <span class="dt">main =</span> <span class="kw"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span>(<span class="st">"Regions with &gt;%s reads"</span>, sig_thresh),</a>
+<a class="sourceLine" id="cb131-7" data-line-number="7">       <span class="dt">xlab =</span> <span class="st">"Distance to TSS (bp)"</span>,</a>
+<a class="sourceLine" id="cb131-8" data-line-number="8">       <span class="dt">ylab =</span> <span class="st">"Median PRO-seq Reads"</span>)</a>
+<a class="sourceLine" id="cb131-9" data-line-number="9">}</a>
+<a class="sourceLine" id="cb131-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb131-11" data-line-number="11"><span class="kw"><a href="https://rdrr.io/r/graphics/par.html">par</a></span>(<span class="dt">mfrow =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">3</span>, <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb131-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb131-13" data-line-number="13"><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>, <span class="dv">30</span><span class="op">*</span><span class="dv">2</span><span class="op">^</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">4</span>))) {</a>
+<a class="sourceLine" id="cb131-14" data-line-number="14">  <span class="kw">plot_meds</span>(i)</a>
+<a class="sourceLine" id="cb131-15" data-line-number="15">}</a></code></pre></div>
+<p><img src="BRGenomicsOverview_files/figure-html/unnamed-chunk-67-1.png" width="576"></p>
 <p>The paucity of transcription on Drosophila chromosome 4 makes this a somewhat extreme example, but the above plots demonstrate the potential fragility of medians. A common rule of thumb is that a given cell is only apt to express around half of its genes; if that holds true, the median of an unfiltered genelist will be close to zero, and likely insensitive to any changes occuring at expressed genes.</p>
 </div>
 <div id="the-rationale-for-bootstrapping" class="section level2">
@@ -1063,66 +1068,66 @@
 <p>We can use the <code>metaSubsample</code> function to bootstrap mean values by position for a genelist. The function accepts the same arguments as <code>getCountsByPositions</code>, in addition to other arguments related to the bootstrapping.</p>
 <p>By default, 10% of the genelist is randomly sampled 1000 times, and confidence bands are returned for the 12.5th and 87.5th percentiles (i.e. a 75% confidence interval).</p>
 <p>Given the small size our dataset, we’ll reduce this to a 30% confidence interval, and we’ll additionally use 5 bp bins:</p>
-<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb133-1" data-line-number="1">bootmeans.df &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bootstrap-signal-by-position.html">metaSubsample</a></span>(PROseq, txs_pr, <span class="dt">binsize =</span> <span class="dv">5</span>, </a>
-<a class="sourceLine" id="cb133-2" data-line-number="2">                              <span class="dt">lower =</span> <span class="fl">0.35</span>, <span class="dt">upper =</span> <span class="fl">0.65</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb133-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(bootmeans.df)</a></code></pre></div>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb132-1" data-line-number="1">bootmeans.df &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bootstrap-signal-by-position.html">metaSubsample</a></span>(PROseq, txs_pr, <span class="dt">binsize =</span> <span class="dv">5</span>, </a>
+<a class="sourceLine" id="cb132-2" data-line-number="2">                              <span class="dt">lower =</span> <span class="fl">0.35</span>, <span class="dt">upper =</span> <span class="fl">0.65</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb132-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(bootmeans.df)</a></code></pre></div>
 <pre><code>##    x       mean      lower      upper sample.name
 ## 1  3 0.04117647 0.02941176 0.05882353      PROseq
-## 2  8 0.05294118 0.04117647 0.06470588      PROseq
-## 3 13 0.06470588 0.04705882 0.08823529      PROseq
-## 4 18 0.06470588 0.04500000 0.08823529      PROseq
-## 5 23 0.11764706 0.10000000 0.15500000      PROseq
-## 6 28 0.10588235 0.08823529 0.11764706      PROseq</code></pre>
+## 2  8 0.05294118 0.04117647 0.07058824      PROseq
+## 3 13 0.07058824 0.04705882 0.09411765      PROseq
+## 4 18 0.05882353 0.04117647 0.08235294      PROseq
+## 5 23 0.12352941 0.10000000 0.15294118      PROseq
+## 6 28 0.10588235 0.08823529 0.12352941      PROseq</code></pre>
 <p>A dataframe is returned for plotting, and notice how the x-values have been automatically adjusted to be the center of the bins.</p>
 <p>Below, we show how to plot the confidence bands using base R plotting, as well as <code>ggplot2</code>.</p>
-<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb135-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(mean <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> bootmeans.df, <span class="dt">type =</span> <span class="st">"l"</span>, </a>
-<a class="sourceLine" id="cb135-2" data-line-number="2">     <span class="dt">main =</span> <span class="st">"PRO-seq Signal"</span>, <span class="dt">ylim =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>, <span class="fl">1.4</span>),</a>
-<a class="sourceLine" id="cb135-3" data-line-number="3">     <span class="dt">xlab =</span> <span class="st">"Distance from TSS"</span>,</a>
-<a class="sourceLine" id="cb135-4" data-line-number="4">     <span class="dt">ylab =</span> <span class="st">"Mean Signal + 30% CI"</span>)</a>
-<a class="sourceLine" id="cb135-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb135-6" data-line-number="6"><span class="co"># draw a polygon to add confidence bands,</span></a>
-<a class="sourceLine" id="cb135-7" data-line-number="7"><span class="co"># and use adjustcolor() to add transparency</span></a>
-<a class="sourceLine" id="cb135-8" data-line-number="8"><span class="kw"><a href="https://rdrr.io/r/graphics/polygon.html">polygon</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(bootmeans.df<span class="op">$</span>x, <span class="kw"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(bootmeans.df<span class="op">$</span>x)), </a>
-<a class="sourceLine" id="cb135-9" data-line-number="9">        <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(bootmeans.df<span class="op">$</span>lower, <span class="kw"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(bootmeans.df<span class="op">$</span>upper)),</a>
-<a class="sourceLine" id="cb135-10" data-line-number="10">        <span class="dt">col =</span> <span class="kw"><a href="https://rdrr.io/r/grDevices/adjustcolor.html">adjustcolor</a></span>(<span class="st">"black"</span>, <span class="fl">0.1</span>), <span class="dt">border =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
-<p><img src="BRGenomicsOverview_files/figure-html/unnamed-chunk-71-1.png" width="700"></p>
-<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb136-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span>(ggplot2)</a>
-<a class="sourceLine" id="cb136-2" data-line-number="2"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(bootmeans.df, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x, mean)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb136-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb136-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html">geom_ribbon</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x, <span class="dt">ymin =</span> lower, <span class="dt">ymax =</span> upper),</a>
-<a class="sourceLine" id="cb136-5" data-line-number="5">              <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb136-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="dt">title =</span> <span class="st">"PRO-seq Signal"</span>, </a>
-<a class="sourceLine" id="cb136-7" data-line-number="7">       <span class="dt">x =</span> <span class="st">"Distance from TSS"</span>, </a>
-<a class="sourceLine" id="cb136-8" data-line-number="8">       <span class="dt">y =</span> <span class="st">"Mean Signal + 30% CI"</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb136-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>()</a></code></pre></div>
-<p><img src="BRGenomicsOverview_files/figure-html/unnamed-chunk-72-1.png" width="700"></p>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb134-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(mean <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> bootmeans.df, <span class="dt">type =</span> <span class="st">"l"</span>, </a>
+<a class="sourceLine" id="cb134-2" data-line-number="2">     <span class="dt">main =</span> <span class="st">"PRO-seq Signal"</span>, <span class="dt">ylim =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>, <span class="fl">1.4</span>),</a>
+<a class="sourceLine" id="cb134-3" data-line-number="3">     <span class="dt">xlab =</span> <span class="st">"Distance from TSS"</span>,</a>
+<a class="sourceLine" id="cb134-4" data-line-number="4">     <span class="dt">ylab =</span> <span class="st">"Mean Signal + 30% CI"</span>)</a>
+<a class="sourceLine" id="cb134-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb134-6" data-line-number="6"><span class="co"># draw a polygon to add confidence bands,</span></a>
+<a class="sourceLine" id="cb134-7" data-line-number="7"><span class="co"># and use adjustcolor() to add transparency</span></a>
+<a class="sourceLine" id="cb134-8" data-line-number="8"><span class="kw"><a href="https://rdrr.io/r/graphics/polygon.html">polygon</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(bootmeans.df<span class="op">$</span>x, <span class="kw"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(bootmeans.df<span class="op">$</span>x)), </a>
+<a class="sourceLine" id="cb134-9" data-line-number="9">        <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(bootmeans.df<span class="op">$</span>lower, <span class="kw"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(bootmeans.df<span class="op">$</span>upper)),</a>
+<a class="sourceLine" id="cb134-10" data-line-number="10">        <span class="dt">col =</span> <span class="kw"><a href="https://rdrr.io/r/grDevices/adjustcolor.html">adjustcolor</a></span>(<span class="st">"black"</span>, <span class="fl">0.1</span>), <span class="dt">border =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<p><img src="BRGenomicsOverview_files/figure-html/unnamed-chunk-69-1.png" width="700"></p>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb135-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span>(ggplot2)</a>
+<a class="sourceLine" id="cb135-2" data-line-number="2"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(bootmeans.df, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x, mean)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb135-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb135-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html">geom_ribbon</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x, <span class="dt">ymin =</span> lower, <span class="dt">ymax =</span> upper),</a>
+<a class="sourceLine" id="cb135-5" data-line-number="5">              <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb135-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="dt">title =</span> <span class="st">"PRO-seq Signal"</span>, </a>
+<a class="sourceLine" id="cb135-7" data-line-number="7">       <span class="dt">x =</span> <span class="st">"Distance from TSS"</span>, </a>
+<a class="sourceLine" id="cb135-8" data-line-number="8">       <span class="dt">y =</span> <span class="st">"Mean Signal + 30% CI"</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb135-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>()</a></code></pre></div>
+<p><img src="BRGenomicsOverview_files/figure-html/unnamed-chunk-70-1.png" width="700"></p>
 </div>
 <div id="example-comparative-metaplots" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example-comparative-metaplots" class="anchor"></a>Example: Comparative Metaplots</h2>
 <p>Like other functions in BRGenomics, we can pass a list of GRanges to <code>metaSubsample</code>, and the output is conveniently combined for plotting.</p>
-<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb137-1" data-line-number="1">bm_list.df &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bootstrap-signal-by-position.html">metaSubsample</a></span>(ps_list, txs_pr, <span class="dt">binsize =</span> <span class="dv">5</span>, </a>
-<a class="sourceLine" id="cb137-2" data-line-number="2">                            <span class="dt">lower =</span> <span class="fl">0.35</span>, <span class="dt">upper =</span> <span class="fl">0.65</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb137-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(bm_list.df)</a></code></pre></div>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb136-1" data-line-number="1">bm_list.df &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bootstrap-signal-by-position.html">metaSubsample</a></span>(ps_list, txs_pr, <span class="dt">binsize =</span> <span class="dv">5</span>, </a>
+<a class="sourceLine" id="cb136-2" data-line-number="2">                            <span class="dt">lower =</span> <span class="fl">0.35</span>, <span class="dt">upper =</span> <span class="fl">0.65</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb136-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(bm_list.df)</a></code></pre></div>
 <pre><code>##    x        mean       lower      upper sample.name
 ## 1  3 0.005882353 0.005882353 0.01176471         ps1
 ## 2  8 0.023529412 0.017647059 0.02352941         ps1
 ## 3 13 0.011764706 0.011764706 0.01764706         ps1
-## 4 18 0.029411765 0.017647059 0.04117647         ps1
+## 4 18 0.035294118 0.017647059 0.04705882         ps1
 ## 5 23 0.047058824 0.035294118 0.06470588         ps1
 ## 6 28 0.029411765 0.023529412 0.03529412         ps1</code></pre>
-<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb139-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span>(ggplot2)</a>
-<a class="sourceLine" id="cb139-2" data-line-number="2"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(bm_list.df, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x, mean, <span class="dt">color =</span> sample.name)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb139-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb139-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html">geom_ribbon</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x, <span class="dt">ymin =</span> lower, <span class="dt">ymax =</span> upper,</a>
-<a class="sourceLine" id="cb139-5" data-line-number="5">                  <span class="dt">color =</span> <span class="ot">NULL</span>, <span class="dt">fill =</span> sample.name),</a>
-<a class="sourceLine" id="cb139-6" data-line-number="6">              <span class="dt">alpha =</span> <span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb139-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="dt">title =</span> <span class="st">"PRO-seq Signal"</span>, </a>
-<a class="sourceLine" id="cb139-8" data-line-number="8">       <span class="dt">x =</span> <span class="st">"Distance from TSS"</span>, </a>
-<a class="sourceLine" id="cb139-9" data-line-number="9">       <span class="dt">y =</span> <span class="st">"Mean Signal + 30% CI"</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb139-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>()</a></code></pre></div>
-<p><img src="BRGenomicsOverview_files/figure-html/unnamed-chunk-74-1.png" width="700"></p>
-<p><em>Bear in mind that the above confidence intervals are ignoring 70% of the data, which is very atypical. More reasonable parameters would reveal how lacking this data is.</em></p>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb138-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span>(ggplot2)</a>
+<a class="sourceLine" id="cb138-2" data-line-number="2"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(bm_list.df, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x, mean, <span class="dt">color =</span> sample.name)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb138-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb138-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html">geom_ribbon</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x, <span class="dt">ymin =</span> lower, <span class="dt">ymax =</span> upper,</a>
+<a class="sourceLine" id="cb138-5" data-line-number="5">                  <span class="dt">color =</span> <span class="ot">NULL</span>, <span class="dt">fill =</span> sample.name),</a>
+<a class="sourceLine" id="cb138-6" data-line-number="6">              <span class="dt">alpha =</span> <span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb138-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="dt">title =</span> <span class="st">"PRO-seq Signal"</span>, </a>
+<a class="sourceLine" id="cb138-8" data-line-number="8">       <span class="dt">x =</span> <span class="st">"Distance from TSS"</span>, </a>
+<a class="sourceLine" id="cb138-9" data-line-number="9">       <span class="dt">y =</span> <span class="st">"Mean Signal + 30% CI"</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb138-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>()</a></code></pre></div>
+<p><img src="BRGenomicsOverview_files/figure-html/unnamed-chunk-72-1.png" width="700"></p>
+<p><em>Bear in mind that the above confidence intervals are ignoring 70% of the subsampling experiments, which is excessive. More reasonable parameters would reveal how lacking this data is, i.e. how un-confident we are that there is a robust difference in the mean signal at various positions.</em></p>
 </div>
 </div>
 <div id="spike-in-normalization" class="section level1">
@@ -1135,7 +1140,7 @@
 <h2 class="hasAnchor">
 <a href="#counting-spike-in-reads" class="anchor"></a>Counting Spike-in Reads</h2>
 <p>For this section, we’ll use a list of 4 dummy datasets containing normal, as well as spike-in chromosomes. Consider the first 2 datasets:</p>
-<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb140-1" data-line-number="1">grl[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb139-1" data-line-number="1">grl[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]</a></code></pre></div>
 <pre><code>## $gr1_rep1
 ## GRanges object with 4 ranges and 1 metadata column:
 ##        seqnames    ranges strand |     score
@@ -1159,7 +1164,7 @@
 ##   seqinfo: 4 sequences from an unspecified genome; no seqlengths</code></pre>
 <p>We can identify the spike-in chromosomes either by full names, or by a regular expression that matches the spike-in chromosomes. In this case, we named our spike-in chromosomes to contain the string “spike” which makes them easy to identify.</p>
 <p>To count the reads for each dataset:</p>
-<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb142-1" data-line-number="1"><span class="kw"><a href="../reference/getSpikeInCounts.html">getSpikeInCounts</a></span>(grl, <span class="dt">si_pattern =</span> <span class="st">"spike"</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb141-1" data-line-number="1"><span class="kw"><a href="../reference/getSpikeInCounts.html">getSpikeInCounts</a></span>(grl, <span class="dt">si_pattern =</span> <span class="st">"spike"</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
 <pre><code>##     sample total_reads exp_reads spike_reads
 ## 1 gr1_rep1           4         2           2
 ## 2 gr2_rep1           6         4           2
@@ -1170,7 +1175,7 @@
 <h2 class="hasAnchor">
 <a href="#filtering-spike-in-reads" class="anchor"></a>Filtering Spike-in Reads</h2>
 <p>We can also remove the spike-in reads from our data:</p>
-<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb144-1" data-line-number="1"><span class="kw"><a href="../reference/getSpikeInCounts.html">removeSpikeInReads</a></span>(grl[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>], <span class="dt">si_pattern =</span> <span class="st">"spike"</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb143-1" data-line-number="1"><span class="kw"><a href="../reference/getSpikeInCounts.html">removeSpikeInReads</a></span>(grl[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>], <span class="dt">si_pattern =</span> <span class="st">"spike"</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
 <pre><code>## $gr1_rep1
 ## GRanges object with 2 ranges and 1 metadata column:
 ##       seqnames    ranges strand |     score
@@ -1223,7 +1228,7 @@
 <p>We can calculate SRPMC normalization factors for each sample using the <code>getSpikeInNFs</code> function, using the same syntax we used to count the spike-in reads.</p>
 <p>However, we have to also identify the negative control, which is the sample that will have the “reference” (RPM) normalization. We do this either using a regular expression (<code>ctrl_pattern</code> argument) or by supplying the name(s) of the negative controls (the <code>ctrl_names</code> argument).</p>
 <p>The default method is “SRPMC”, but there are other options, as well.</p>
-<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb146-1" data-line-number="1"><span class="kw"><a href="../reference/getSpikeInNFs.html">getSpikeInNFs</a></span>(grl, <span class="dt">si_pattern =</span> <span class="st">"spike"</span>, <span class="dt">ctrl_pattern =</span> <span class="st">"gr1"</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb145-1" data-line-number="1"><span class="kw"><a href="../reference/getSpikeInNFs.html">getSpikeInNFs</a></span>(grl, <span class="dt">si_pattern =</span> <span class="st">"spike"</span>, <span class="dt">ctrl_pattern =</span> <span class="st">"gr1"</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
 <pre><code>## [1] 500000 500000 500000 375000</code></pre>
 <p>(The NFs are high because our dummy data contain only a few reads).</p>
 <p>By default, normalization factors utilize <strong>batch normalization</strong>, such that in any replicate (identified by the characters following “rep” in the sample names), the negative control is RPM normalized, and the other conditions are normlized to the within-replicate negative control (see the documentation for further details).</p>
@@ -1233,7 +1238,7 @@
 <h2 class="hasAnchor">
 <a href="#normalizing-data" class="anchor"></a>Normalizing Data</h2>
 <p>We can also use the <code>spikeInNormGRanges</code> function to simultaneously find the spike-in reads, calculate the spike-in normalization factors, filter out spike-in reads, and normalize the readcounts:</p>
-<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb148-1" data-line-number="1"><span class="kw"><a href="../reference/getSpikeInNFs.html">spikeInNormGRanges</a></span>(grl, <span class="dt">si_pattern =</span> <span class="st">"spike"</span>, <span class="dt">ctrl_pattern =</span> <span class="st">"gr1"</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb147-1" data-line-number="1"><span class="kw"><a href="../reference/getSpikeInNFs.html">spikeInNormGRanges</a></span>(grl, <span class="dt">si_pattern =</span> <span class="st">"spike"</span>, <span class="dt">ctrl_pattern =</span> <span class="st">"gr1"</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
 <pre><code>## $gr1_rep1
 ## GRanges object with 2 ranges and 1 metadata column:
 ##       seqnames    ranges strand |     score
@@ -1280,32 +1285,32 @@
 <p>When viewing genomics data in a genome browser (or otherwise plotting signal for a single gene), the sparsity of basepair resolution data can challenge our visual perception.</p>
 <p>Consider two datasets from identical samples, but where one is sequenced to a higher depth. The two datasets can be normalized such that the signal counts are equivalent, but the dataset with higher sequencing depth will have also uncovered additional sites. When plotted in a genome browser, the total signal within a region may be the same, but the more highly sequenced dataset will cover more positions but have lower peaks, while the less sequenced dataset will look sparse and spikey in comparison.</p>
 <p>Below, we compare PRO-seq data derived from the same dataset over the same gene. In one case, we randomly sample half of the reads over that gene, while in another, we divide all the readcounts by 2.</p>
-<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb150-1" data-line-number="1"><span class="co"># choose a single gene</span></a>
-<a class="sourceLine" id="cb150-2" data-line-number="2">gene_i &lt;-<span class="st"> </span>txs_dm6_chr4[<span class="dv">185</span>]</a>
-<a class="sourceLine" id="cb150-3" data-line-number="3">reads.gene_i &lt;-<span class="st"> </span><span class="kw">subsetByOverlaps</span>(PROseq, gene_i)</a>
-<a class="sourceLine" id="cb150-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb150-5" data-line-number="5"><span class="co"># sample half the raw reads</span></a>
-<a class="sourceLine" id="cb150-6" data-line-number="6"><span class="kw"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="dv">11</span>)</a>
-<a class="sourceLine" id="cb150-7" data-line-number="7">sreads.gene_i &lt;-<span class="st"> </span><span class="kw"><a href="../reference/subsampleGRanges.html">subsampleGRanges</a></span>(reads.gene_i, <span class="dt">prop =</span> <span class="fl">0.5</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb150-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb150-9" data-line-number="9"><span class="co"># downscale raw reads by a factor of 2</span></a>
-<a class="sourceLine" id="cb150-10" data-line-number="10"><span class="kw">score</span>(reads.gene_i) &lt;-<span class="st"> </span><span class="fl">0.5</span> <span class="op">*</span><span class="st"> </span><span class="kw">score</span>(reads.gene_i)</a></code></pre></div>
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb151-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="kw">score</span>(reads.gene_i))</a>
-<a class="sourceLine" id="cb151-2" data-line-number="2"><span class="co">## [1] 738.5</span></a>
-<a class="sourceLine" id="cb151-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="kw">score</span>(sreads.gene_i))</a>
-<a class="sourceLine" id="cb151-4" data-line-number="4"><span class="co">## [1] 738</span></a></code></pre></div>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb149-1" data-line-number="1"><span class="co"># choose a single gene</span></a>
+<a class="sourceLine" id="cb149-2" data-line-number="2">gene_i &lt;-<span class="st"> </span>txs_dm6_chr4[<span class="dv">185</span>]</a>
+<a class="sourceLine" id="cb149-3" data-line-number="3">reads.gene_i &lt;-<span class="st"> </span><span class="kw">subsetByOverlaps</span>(PROseq, gene_i)</a>
+<a class="sourceLine" id="cb149-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb149-5" data-line-number="5"><span class="co"># sample half the raw reads</span></a>
+<a class="sourceLine" id="cb149-6" data-line-number="6"><span class="kw"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="dv">11</span>)</a>
+<a class="sourceLine" id="cb149-7" data-line-number="7">sreads.gene_i &lt;-<span class="st"> </span><span class="kw"><a href="../reference/subsampleGRanges.html">subsampleGRanges</a></span>(reads.gene_i, <span class="dt">prop =</span> <span class="fl">0.5</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb149-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb149-9" data-line-number="9"><span class="co"># downscale raw reads by a factor of 2</span></a>
+<a class="sourceLine" id="cb149-10" data-line-number="10"><span class="kw">score</span>(reads.gene_i) &lt;-<span class="st"> </span><span class="fl">0.5</span> <span class="op">*</span><span class="st"> </span><span class="kw">score</span>(reads.gene_i)</a></code></pre></div>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb150-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="kw">score</span>(reads.gene_i))</a>
+<a class="sourceLine" id="cb150-2" data-line-number="2"><span class="co">## [1] 738.5</span></a>
+<a class="sourceLine" id="cb150-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="kw">score</span>(sreads.gene_i))</a>
+<a class="sourceLine" id="cb150-4" data-line-number="4"><span class="co">## [1] 738</span></a></code></pre></div>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb151-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">width</span>(gene_i), </a>
+<a class="sourceLine" id="cb151-2" data-line-number="2">     <span class="dt">y =</span> <span class="kw"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span>(sreads.gene_i, gene_i),</a>
+<a class="sourceLine" id="cb151-3" data-line-number="3">     <span class="dt">type =</span> <span class="st">"h"</span>, <span class="dt">ylim =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>, <span class="dv">20</span>),</a>
+<a class="sourceLine" id="cb151-4" data-line-number="4">     <span class="dt">main =</span> <span class="st">"PRO-seq (downsampled)"</span>,</a>
+<a class="sourceLine" id="cb151-5" data-line-number="5">     <span class="dt">xlab =</span> <span class="st">"Distance from TSS"</span>, <span class="dt">ylab =</span> <span class="st">"Downsampled PRO-seq Reads"</span>)</a></code></pre></div>
+<p><img src="BRGenomicsOverview_files/figure-html/unnamed-chunk-81-1.png" width="700"></p>
 <div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb152-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">width</span>(gene_i), </a>
-<a class="sourceLine" id="cb152-2" data-line-number="2">     <span class="dt">y =</span> <span class="kw"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span>(sreads.gene_i, gene_i),</a>
-<a class="sourceLine" id="cb152-3" data-line-number="3">     <span class="dt">type =</span> <span class="st">"h"</span>, <span class="dt">ylim =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>, <span class="dv">20</span>),</a>
-<a class="sourceLine" id="cb152-4" data-line-number="4">     <span class="dt">main =</span> <span class="st">"PRO-seq (downsampled)"</span>,</a>
-<a class="sourceLine" id="cb152-5" data-line-number="5">     <span class="dt">xlab =</span> <span class="st">"Distance from TSS"</span>, <span class="dt">ylab =</span> <span class="st">"Downsampled PRO-seq Reads"</span>)</a></code></pre></div>
-<p><img src="BRGenomicsOverview_files/figure-html/unnamed-chunk-83-1.png" width="700"></p>
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb153-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">width</span>(gene_i), </a>
-<a class="sourceLine" id="cb153-2" data-line-number="2">     <span class="dt">y =</span> <span class="kw"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span>(reads.gene_i, gene_i),</a>
-<a class="sourceLine" id="cb153-3" data-line-number="3">     <span class="dt">type =</span> <span class="st">"h"</span>,  <span class="dt">ylim =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>, <span class="dv">20</span>),</a>
-<a class="sourceLine" id="cb153-4" data-line-number="4">     <span class="dt">main =</span> <span class="st">"PRO-seq (downscaled)"</span>, </a>
-<a class="sourceLine" id="cb153-5" data-line-number="5">     <span class="dt">xlab =</span> <span class="st">"Distance from TSS"</span>,  <span class="dt">ylab =</span> <span class="st">"Downscaled PRO-seq Reads"</span>)</a></code></pre></div>
-<p><img src="BRGenomicsOverview_files/figure-html/unnamed-chunk-83-2.png" width="700"></p>
+<a class="sourceLine" id="cb152-2" data-line-number="2">     <span class="dt">y =</span> <span class="kw"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span>(reads.gene_i, gene_i),</a>
+<a class="sourceLine" id="cb152-3" data-line-number="3">     <span class="dt">type =</span> <span class="st">"h"</span>,  <span class="dt">ylim =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>, <span class="dv">20</span>),</a>
+<a class="sourceLine" id="cb152-4" data-line-number="4">     <span class="dt">main =</span> <span class="st">"PRO-seq (downscaled)"</span>, </a>
+<a class="sourceLine" id="cb152-5" data-line-number="5">     <span class="dt">xlab =</span> <span class="st">"Distance from TSS"</span>,  <span class="dt">ylab =</span> <span class="st">"Downscaled PRO-seq Reads"</span>)</a></code></pre></div>
+<p><img src="BRGenomicsOverview_files/figure-html/unnamed-chunk-81-2.png" width="700"></p>
 <p>The two plots above come from the same data, and contain the same quantity of signal, but their profiles are notably distinct. Particularly when plotting many samples over large regions within a genome browser, differences caused by sequencing depth can be misleading. It can be challenging to estimate differences if some datasets are “tall and spikey” while others are “short and smooth”.</p>
 <p>Absent global changes in signal, the above scenario can be resolved beforehand by equal sequencing depths, or by down-sampling to match readcounts.</p>
 <p>However, matching raw readcounts is not a solution when significant biological changes in total signal should be accounted for.</p>
@@ -1316,7 +1321,7 @@
 <a href="#subsampling-for-normalization" class="anchor"></a>Subsampling for Normalization</h2>
 <p>To address the above concerns, we’ve included a function <code>subsampleBySpikeIn</code> to randomly sample reads to match the normalized signal proportions between datasets.</p>
 <p>Internally, the function uses the <code>getSpikInNFs</code> function, but instead of SRPMC normalization, using the option <code>method = "SNR"</code>, which calculates normalization factors that downscale each dataset to match the dataset with the least spike-in reads. From this, the number of “desired reads” is established for each dataset, and subsequently that number of reads is randomly sampled.</p>
-<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb154-1" data-line-number="1"><span class="kw"><a href="../reference/getSpikeInCounts.html">removeSpikeInReads</a></span>(grl, <span class="dt">si_pattern =</span> <span class="st">"spike"</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb153-1" data-line-number="1"><span class="kw"><a href="../reference/getSpikeInCounts.html">removeSpikeInReads</a></span>(grl, <span class="dt">si_pattern =</span> <span class="st">"spike"</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
 <pre><code>## $gr1_rep1
 ## GRanges object with 2 ranges and 1 metadata column:
 ##       seqnames    ranges strand |     score
@@ -1352,10 +1357,10 @@
 ##   [2]     chr2         2      + |         4
 ##   -------
 ##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
-<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb156-1" data-line-number="1"><span class="kw"><a href="../reference/getSpikeInNFs.html">getSpikeInNFs</a></span>(grl, <span class="dt">si_pattern =</span> <span class="st">"spike"</span>, <span class="dt">method =</span> <span class="st">"SNR"</span>, <span class="dt">batch_norm =</span> <span class="ot">FALSE</span>,</a>
-<a class="sourceLine" id="cb156-2" data-line-number="2">              <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb155-1" data-line-number="1"><span class="kw"><a href="../reference/getSpikeInNFs.html">getSpikeInNFs</a></span>(grl, <span class="dt">si_pattern =</span> <span class="st">"spike"</span>, <span class="dt">method =</span> <span class="st">"SNR"</span>, <span class="dt">batch_norm =</span> <span class="ot">FALSE</span>,</a>
+<a class="sourceLine" id="cb155-2" data-line-number="2">              <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
 <pre><code>## [1] 1.0000000 1.0000000 0.6666667 0.5000000</code></pre>
-<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb158-1" data-line-number="1"><span class="kw"><a href="../reference/subsampleBySpikeIn.html">subsampleBySpikeIn</a></span>(grl, <span class="dt">si_pattern =</span> <span class="st">"spike"</span>, <span class="dt">batch_norm =</span> <span class="ot">FALSE</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb157-1" data-line-number="1"><span class="kw"><a href="../reference/subsampleBySpikeIn.html">subsampleBySpikeIn</a></span>(grl, <span class="dt">si_pattern =</span> <span class="st">"spike"</span>, <span class="dt">batch_norm =</span> <span class="ot">FALSE</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
 <pre><code>## $gr1_rep1
 ## GRanges object with 2 ranges and 1 metadata column:
 ##       seqnames    ranges strand |     score
@@ -1399,13 +1404,13 @@
 <p>Below, we use many of the functions described above to generate several sets of bigWig files for a number of datasets.</p>
 <p><em><a href="#coming-soon">Coming soon</a></em></p>
 </div>
-<div id="interfacing-with-deseq2" class="section level1">
+<div id="using-deseq2-for-pairwise-differential-expression" class="section level1">
 <h1 class="hasAnchor">
-<a href="#interfacing-with-deseq2" class="anchor"></a>Interfacing with DESeq2</h1>
+<a href="#using-deseq2-for-pairwise-differential-expression" class="anchor"></a>Using DESeq2 for Pairwise Differential Expression</h1>
 <div id="rationale-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#rationale-1" class="anchor"></a>Rationale</h2>
-<p>DESeq2’s default treatment of data relies on the assumption that genewise estimates of dispersion are largely unchanged across samples. While this assumption holds for a typical RNA-seq data, it can be violated if there exist <em>any</em> conditions represented in the <code>DESeqDataSet</code> object that caused meaningful signal changes across a majority of regions of interest.</p>
+<p>DESeq2’s default treatment of data relies on the assumption that genewise estimates of dispersion are largely unchanged across samples. While this assumption holds for a typical RNA-seq data, it can be violated if there are samples within the <code>DESeqDataSet</code> object for which there are meaningful signal changes across a majority of regions of interest.</p>
 <p>The BRGenomics functions <code>getDESeqDataSet</code> and <code>getDESeqResults</code> are simple and flexible wrappers for making pairwise comparisons between individual samples, without relying on the assumption of globally-similar dispersion estimates. In particular, <code>getDESeqResults</code> follows the logic that the presence of a dataset <span class="math inline">\(X\)</span> within the <code>DESeqDataSet</code> object will not affect the comparison of datasets <span class="math inline">\(Y\)</span> and <span class="math inline">\(Z\)</span>.</p>
 <p>While the intuition above is appealing, users should note that if the globally-similar dispersions assumption <em>does</em> hold, then DESeq2’s default behavior should be more sensitive in its estimates of genewise dispersion. In this case, users can still take advantage of the convenience of the BRGenomics function <code>getDESeqDataSet</code>, but they should subsequently call <code><a href="https://rdrr.io/pkg/DESeq2/man/DESeq.html">DESeq2::DESeq</a></code> and <code><a href="https://rdrr.io/pkg/DESeq2/man/results.html">DESeq2::results</a></code> directly.</p>
 <p>If the globally-similar dispersions assumption is violated, but something beyond simple pairwise comparisons is desired (e.g. group comparisons or additional model terms), we note that, with some prying, DESeq2 can be used without “blind dispersion estimation” (see the DESeq2 manual).</p>
@@ -1415,7 +1420,7 @@
 <a href="#getting-deseq-results" class="anchor"></a>Getting DESeq Results</h2>
 <p>Just like the functions that generate batch-normalized spike-in normalization factors, the DESeq-oriented functions require that the names of the input datasets end in <code>"rep1"</code>, <code>"rep2"</code>, etc.</p>
 <p>We’ll use another list of GRanges here, in order to have multiple comparisons to make:</p>
-<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb160-1" data-line-number="1">ps_list2[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb159-1" data-line-number="1">ps_list2[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]</a></code></pre></div>
 <pre><code>## $A_rep1
 ## GRanges object with 7897 ranges and 1 metadata column:
 ##          seqnames    ranges strand |     score
@@ -1451,14 +1456,14 @@
 ##   [7897]     chr4   1319368      - |         1
 ##   -------
 ##   seqinfo: 1870 sequences from an unspecified genome</code></pre>
-<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb162-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(ps_list2)</a></code></pre></div>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb161-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(ps_list2)</a></code></pre></div>
 <pre><code>## [1] "A_rep1" "A_rep2" "B_rep1" "B_rep2" "C_rep1" "C_rep2"</code></pre>
 <p>As you can see, the names all end in “repX”, where X indicates the replicate. Replicates will be grouped by anything that follows “rep”. If the sample names do not conform to this standard, the <code>sample_names</code> argument can be used to rename the samples within the call to <code>getDESeqDataSet</code>.</p>
 <p>However, since our sample names conform, we won’t use that argument:</p>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb164-1" data-line-number="1">dds &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getDESeqDataSet.html">getDESeqDataSet</a></span>(ps_list2, txs_dm6_chr4,</a>
-<a class="sourceLine" id="cb164-2" data-line-number="2">                       <span class="dt">gene_names =</span> txs_dm6_chr4<span class="op">$</span>gene_id,</a>
-<a class="sourceLine" id="cb164-3" data-line-number="3">                       <span class="dt">ncores =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb164-4" data-line-number="4">dds</a></code></pre></div>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb163-1" data-line-number="1">dds &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getDESeqDataSet.html">getDESeqDataSet</a></span>(ps_list2, txs_dm6_chr4,</a>
+<a class="sourceLine" id="cb163-2" data-line-number="2">                       <span class="dt">gene_names =</span> txs_dm6_chr4<span class="op">$</span>gene_id,</a>
+<a class="sourceLine" id="cb163-3" data-line-number="3">                       <span class="dt">ncores =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb163-4" data-line-number="4">dds</a></code></pre></div>
 <pre><code>## class: DESeqDataSet 
 ## dim: 111 6 
 ## metadata(1): version
@@ -1473,8 +1478,8 @@
 <p><strong>Note:</strong> DESeq2 size factors are the <em>inverse</em> of BRGenomics normalization factors. So if you calculate normalization factors with <code>NF &lt;- getSpikeInNFs(...)</code>, set <code>sizeFactors &lt;- 1/NF</code>.</p>
 <hr>
 <p>Generating DESeq2 results is simple:</p>
-<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb166-1" data-line-number="1"><span class="kw"><a href="../reference/getDESeqResults.html">getDESeqResults</a></span>(dds, <span class="dt">contrast.numer =</span> <span class="st">"B"</span>, <span class="dt">contrast.denom =</span> <span class="st">"A"</span>,</a>
-<a class="sourceLine" id="cb166-2" data-line-number="2">                <span class="dt">quiet =</span> <span class="ot">TRUE</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb165-1" data-line-number="1"><span class="kw"><a href="../reference/getDESeqResults.html">getDESeqResults</a></span>(dds, <span class="dt">contrast.numer =</span> <span class="st">"B"</span>, <span class="dt">contrast.denom =</span> <span class="st">"A"</span>,</a>
+<a class="sourceLine" id="cb165-2" data-line-number="2">                <span class="dt">quiet =</span> <span class="ot">TRUE</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
 <pre><code>## log2 fold change (MLE): condition B vs A 
 ## Wald test p-value: condition B vs A 
 ## DataFrame with 111 rows and 6 columns
@@ -1492,13 +1497,13 @@
 ## FBgn0039924     161.144       0.322238  0.456505   0.705881  0.480262   0.99742
 ## FBgn0027101     362.015       0.233610  0.294520   0.793190  0.427667   0.99742</code></pre>
 <p>We can also make multiple pairwise-comparisons by ignoring the <code>contrast.numer</code> and <code>contrast.denom</code> arguments, and instead using the <code>comparisons</code> argument. The resulting list of results is named according to the comparisons:</p>
-<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb168-1" data-line-number="1">dsres &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getDESeqResults.html">getDESeqResults</a></span>(dds, <span class="dt">comparisons =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"B"</span>, <span class="st">"A"</span>), </a>
-<a class="sourceLine" id="cb168-2" data-line-number="2">                                                 <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"C"</span>, <span class="st">"A"</span>),</a>
-<a class="sourceLine" id="cb168-3" data-line-number="3">                                                 <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"C"</span>, <span class="st">"B"</span>)),</a>
-<a class="sourceLine" id="cb168-4" data-line-number="4">                         <span class="dt">quiet =</span> <span class="ot">TRUE</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb168-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(dsres)</a></code></pre></div>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb167-1" data-line-number="1">dsres &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getDESeqResults.html">getDESeqResults</a></span>(dds, <span class="dt">comparisons =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"B"</span>, <span class="st">"A"</span>), </a>
+<a class="sourceLine" id="cb167-2" data-line-number="2">                                                 <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"C"</span>, <span class="st">"A"</span>),</a>
+<a class="sourceLine" id="cb167-3" data-line-number="3">                                                 <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"C"</span>, <span class="st">"B"</span>)),</a>
+<a class="sourceLine" id="cb167-4" data-line-number="4">                         <span class="dt">quiet =</span> <span class="ot">TRUE</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb167-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(dsres)</a></code></pre></div>
 <pre><code>## [1] "B_vs_A" "C_vs_A" "C_vs_B"</code></pre>
-<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb170-1" data-line-number="1">dsres<span class="op">$</span>C_vs_B</a></code></pre></div>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb169-1" data-line-number="1">dsres<span class="op">$</span>C_vs_B</a></code></pre></div>
 <pre><code>## log2 fold change (MLE): condition C vs B 
 ## Wald test p-value: condition C vs B 
 ## DataFrame with 111 rows and 6 columns
@@ -1529,14 +1534,14 @@
 <a href="#merging-granges-data" class="anchor"></a>Merging GRanges Data</h1>
 <p>Biological replicates are best used to independently reproduce and measure effects, and therefore we often want to handle them separately. However, there are times when combining replicates can allow for more sensitive measurements, assuming that the replicates are highly concordant.</p>
 <p>The <code>mergeGRangesData</code> function can be used to combine basepair-resolution GRanges objects:</p>
-<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb172-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(ps1)</a>
-<a class="sourceLine" id="cb172-2" data-line-number="2"><span class="co">## [1] 15794</span></a>
-<a class="sourceLine" id="cb172-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(ps2)</a>
-<a class="sourceLine" id="cb172-4" data-line-number="4"><span class="co">## [1] 15793</span></a>
-<a class="sourceLine" id="cb172-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(ps3)</a>
-<a class="sourceLine" id="cb172-6" data-line-number="6"><span class="co">## [1] 15793</span></a></code></pre></div>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb173-1" data-line-number="1">merge_ps &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mergeGRangesData.html">mergeGRangesData</a></span>(ps1, ps2, ps3, <span class="dt">ncores =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb173-2" data-line-number="2">merge_ps</a></code></pre></div>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb171-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(ps1)</a>
+<a class="sourceLine" id="cb171-2" data-line-number="2"><span class="co">## [1] 15794</span></a>
+<a class="sourceLine" id="cb171-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(ps2)</a>
+<a class="sourceLine" id="cb171-4" data-line-number="4"><span class="co">## [1] 15793</span></a>
+<a class="sourceLine" id="cb171-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(ps3)</a>
+<a class="sourceLine" id="cb171-6" data-line-number="6"><span class="co">## [1] 15793</span></a></code></pre></div>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb172-1" data-line-number="1">merge_ps &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mergeGRangesData.html">mergeGRangesData</a></span>(ps1, ps2, ps3, <span class="dt">ncores =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb172-2" data-line-number="2">merge_ps</a></code></pre></div>
 <pre><code>## GRanges object with 47380 ranges and 1 metadata column:
 ##           seqnames    ranges strand |     score
 ##              &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
@@ -1554,10 +1559,10 @@
 ##   -------
 ##   seqinfo: 1870 sequences from an unspecified genome</code></pre>
 <p>Note that the output is also a basepair-resolution GRanges object.</p>
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb175-1" data-line-number="1"><span class="kw"><a href="../reference/makeGRangesBRG.html">isBRG</a></span>(merge_ps)</a>
-<a class="sourceLine" id="cb175-2" data-line-number="2"><span class="co">## [1] TRUE</span></a></code></pre></div>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb174-1" data-line-number="1"><span class="kw"><a href="../reference/makeGRangesBRG.html">isBRG</a></span>(merge_ps)</a>
+<a class="sourceLine" id="cb174-2" data-line-number="2"><span class="co">## [1] TRUE</span></a></code></pre></div>
 <p>We could have also passed a list of GRanges objects directly as an argument:</p>
-<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb176-1" data-line-number="1"><span class="kw"><a href="../reference/mergeGRangesData.html">mergeGRangesData</a></span>(ps_list, <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb175-1" data-line-number="1"><span class="kw"><a href="../reference/mergeGRangesData.html">mergeGRangesData</a></span>(ps_list, <span class="dt">ncores =</span> <span class="dv">2</span>)</a></code></pre></div>
 <pre><code>## GRanges object with 47380 ranges and 1 metadata column:
 ##           seqnames    ranges strand |     score
 ##              &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
@@ -1579,22 +1584,22 @@
 <h1 class="hasAnchor">
 <a href="#sequence-extraction" class="anchor"></a>Sequence Extraction</h1>
 <p>In this section, we’ll give one more example showing the benefit of Bioconductor integration by using the <code>Biostrings</code> package to extract sequences given by GRanges objects.</p>
-<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb178-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(Biostrings)</a></code></pre></div>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb177-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(Biostrings)</a></code></pre></div>
 <p>We’ve included a twobit file of sequences, although users can use fasta files, as well.</p>
-<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb179-1" data-line-number="1"><span class="co"># get path to included 2bit file</span></a>
-<a class="sourceLine" id="cb179-2" data-line-number="2">sfile &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"dm6_chr4chrM.2bit"</span>,</a>
-<a class="sourceLine" id="cb179-3" data-line-number="3">                     <span class="dt">package =</span> <span class="st">"BRGenomics"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb178-1" data-line-number="1"><span class="co"># get path to included 2bit file</span></a>
+<a class="sourceLine" id="cb178-2" data-line-number="2">sfile &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"dm6_chr4chrM.2bit"</span>,</a>
+<a class="sourceLine" id="cb178-3" data-line-number="3">                     <span class="dt">package =</span> <span class="st">"BRGenomics"</span>)</a></code></pre></div>
 <p>We could import the entire sequence using the rtracklayer <code>import()</code> function, which will figure out the file format and import a suitable object. In this case, a <code>DNAStringSet</code>:</p>
-<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb180-1" data-line-number="1">seq_chr4 &lt;-<span class="st"> </span><span class="kw">import</span>(sfile)</a>
-<a class="sourceLine" id="cb180-2" data-line-number="2">seq_chr4</a></code></pre></div>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb179-1" data-line-number="1">seq_chr4 &lt;-<span class="st"> </span><span class="kw">import</span>(sfile)</a>
+<a class="sourceLine" id="cb179-2" data-line-number="2">seq_chr4</a></code></pre></div>
 <pre><code>## DNAStringSet object of length 2:
 ##       width seq                                             names               
 ## [1] 1348131 TTATTATATTATTATATTATTAT…GCCGTCGATTTGAGATATATGAA chr4
 ## [2]   19524 AATGAATTGCCTGATAAAAAGGA…AAAAAAATGAAAATTATATTATT chrM</code></pre>
 <p><em>We included mitochondrial DNA to demonstrate how the DNAStringSet treats multiple chromosomes.</em></p>
 <p>However, we don’t need to import all the sequences. Instead, we can make a <code>TwoBitFile</code> object that points to the file, and extract desired sequences from it directly using the <code>getSeq</code> function:</p>
-<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb182-1" data-line-number="1">seq_txs_pr &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/Biostrings/man/getSeq.html">getSeq</a></span>(<span class="kw">TwoBitFile</span>(sfile), txs_pr)</a>
-<a class="sourceLine" id="cb182-2" data-line-number="2">seq_txs_pr</a></code></pre></div>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb181-1" data-line-number="1">seq_txs_pr &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/Biostrings/man/getSeq.html">getSeq</a></span>(<span class="kw">TwoBitFile</span>(sfile), txs_pr)</a>
+<a class="sourceLine" id="cb181-2" data-line-number="2">seq_txs_pr</a></code></pre></div>
 <pre><code>## DNAStringSet object of length 339:
 ##       width seq
 ##   [1]   100 ATCAATATAGCATAGCTCTTTTAATCAAATAAA…AAAATAAGGAACACAAAATTAATGGAAAAGAAA
@@ -1610,7 +1615,7 @@
 ## [339]   100 AACACGGTCACACTGTTCTTCTCTTTGTTCGGG…ACGATAAACAAATATCTGGTTTTACCTATTTGT</code></pre>
 <p>The sequences are stranded as well, such that if a plus and minus strand gene overlapped perfectly, the minus strand sequence would be the reverse complement of the plus strand sequence.</p>
 <p>The Biostrings package itself is richly featured, and we’ll demonstrate only a couple functions below. This functionality is extended by packages like <code>ggseqlogo</code>, for example, which plots sequence logos directly from DNAStringSets.</p>
-<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb184-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/pkg/Biostrings/man/XStringSet-class.html">RNAStringSet</a></span>(seq_txs_pr)</a></code></pre></div>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb183-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/pkg/Biostrings/man/XStringSet-class.html">RNAStringSet</a></span>(seq_txs_pr)</a></code></pre></div>
 <pre><code>## RNAStringSet object of length 339:
 ##       width seq
 ##   [1]   100 AUCAAUAUAGCAUAGCUCUUUUAAUCAAAUAAA…AAAAUAAGGAACACAAAAUUAAUGGAAAAGAAA
@@ -1624,7 +1629,7 @@
 ## [337]   100 AACACGGUCACACUGUUCUUCUCUUUGUUCGGG…ACGAUAAACAAAUAUCUGGUUUUACCUAUUUGU
 ## [338]   100 AACACGGUCACACUGUUCUUCUCUUUGUUCGGG…ACGAUAAACAAAUAUCUGGUUUUACCUAUUUGU
 ## [339]   100 AACACGGUCACACUGUUCUUCUCUUUGUUCGGG…ACGAUAAACAAAUAUCUGGUUUUACCUAUUUGU</code></pre>
-<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb186-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/warning.html">suppressWarnings</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/Biostrings/man/translate.html">translate</a></span>(seq_txs_pr))</a></code></pre></div>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb185-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/warning.html">suppressWarnings</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/Biostrings/man/translate.html">translate</a></span>(seq_txs_pr))</a></code></pre></div>
 <pre><code>## AAStringSet object of length 339:
 ##       width seq
 ##   [1]    33 INIA*LF*SNKTRNSKRMPPKKKNKEHKINGKE
@@ -1638,23 +1643,23 @@
 ## [337]    33 NTVTLFFSLFGSL*KLCIQMKLYDKQISGFTYL
 ## [338]    33 NTVTLFFSLFGSL*KLCIQMKLYDKQISGFTYL
 ## [339]    33 NTVTLFFSLFGSL*KLCIQMKLYDKQISGFTYL</code></pre>
-<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb188-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/pkg/Biostrings/man/nucleotideFrequency.html">oligonucleotideFrequency</a></span>(seq_txs_pr[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>], <span class="dt">width =</span> <span class="dv">1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb187-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/pkg/Biostrings/man/nucleotideFrequency.html">oligonucleotideFrequency</a></span>(seq_txs_pr[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>], <span class="dt">width =</span> <span class="dv">1</span>)</a></code></pre></div>
 <pre><code>##       A  C  G  T
 ## [1,] 57 13 12 18
 ## [2,] 34 23 17 26
 ## [3,] 31 18 17 34
 ## [4,] 31 19 26 24
 ## [5,] 31 19 26 24</code></pre>
-<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb190-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/pkg/Biostrings/man/nucleotideFrequency.html">oligonucleotideFrequency</a></span>(seq_txs_pr[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>], <span class="dt">width =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb189-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/pkg/Biostrings/man/nucleotideFrequency.html">oligonucleotideFrequency</a></span>(seq_txs_pr[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>], <span class="dt">width =</span> <span class="dv">2</span>)</a></code></pre></div>
 <pre><code>##      AA AC AG AT CA CC CG CT GA GC GG GT TA TC TG TT
 ## [1,] 34  5  7 10  8  2  0  3  5  3  3  1  9  3  2  4
 ## [2,] 11 10  3  9  6  5  7  5  8  2  2  5  9  6  5  6
 ## [3,] 12  5  4 10  6  3  3  6  3  3  3  7 10  6  7 11
 ## [4,]  6  7  8 10  7  2  7  3  9  6  5  6  9  4  5  5
 ## [5,]  6  7  8 10  7  2  7  3  9  6  5  6  9  4  5  5</code></pre>
-<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb192-1" data-line-number="1">tss_seq &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/Biostrings/man/getSeq.html">getSeq</a></span>(<span class="kw">TwoBitFile</span>(sfile), <span class="kw">promoters</span>(txs_pr, <span class="dv">4</span>, <span class="dv">4</span>))</a>
-<a class="sourceLine" id="cb192-2" data-line-number="2">tsspwm &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/Biostrings/man/matchPWM.html">PWM</a></span>(tss_seq)</a>
-<a class="sourceLine" id="cb192-3" data-line-number="3">tsspwm</a></code></pre></div>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb191-1" data-line-number="1">tss_seq &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/Biostrings/man/getSeq.html">getSeq</a></span>(<span class="kw">TwoBitFile</span>(sfile), <span class="kw">promoters</span>(txs_pr, <span class="dv">4</span>, <span class="dv">4</span>))</a>
+<a class="sourceLine" id="cb191-2" data-line-number="2">tsspwm &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/Biostrings/man/matchPWM.html">PWM</a></span>(tss_seq)</a>
+<a class="sourceLine" id="cb191-3" data-line-number="3">tsspwm</a></code></pre></div>
 <pre><code>##          [,1]         [,2]          [,3]          [,4]         [,5]       [,6]
 ## A  0.11786207  0.121558228  0.0728689800 -0.0009513673  0.133239908 0.08113711
 ## C -0.00672592  0.040604643  0.0340837029  0.0795207580  0.027255784 0.03184325
@@ -1679,7 +1684,7 @@
 ##  collate  en_US.UTF-8                                       
 ##  ctype    en_US.UTF-8                                       
 ##  tz       America/New_York                                  
-##  date     2020-02-24                                        
+##  date     2020-02-26                                        
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────
 ##  package              * version   date       lib source        
@@ -1701,7 +1706,7 @@
 ##  bitops                 1.0-6     2013-08-17 [3] CRAN (R 4.0.0)
 ##  blob                   1.2.0     2019-07-09 [3] CRAN (R 4.0.0)
 ##  bookdown               0.17      2020-01-11 [3] CRAN (R 4.0.0)
-##  BRGenomics           * 0.7.8     2020-02-24 [1] Bioconductor  
+##  BRGenomics           * 0.7.10    2020-02-26 [1] Bioconductor  
 ##  BSgenome               1.55.3    2020-01-29 [3] Bioconductor  
 ##  callr                  3.4.0     2019-12-09 [3] CRAN (R 4.0.0)
 ##  cli                    2.0.1     2020-01-08 [3] CRAN (R 4.0.0)
@@ -1794,8 +1799,8 @@
 ##  zeallot                0.1.0     2018-01-28 [3] CRAN (R 4.0.0)
 ##  zlibbioc               1.33.1    2020-01-24 [3] Bioconductor  
 ## 
-## [1] /private/var/folders/zt/m504_3g569g6gqzjbqg34qn40000gn/T/RtmpEZ8rUr/temp_libpath971d49a557b9
-## [2] /private/var/folders/zt/m504_3g569g6gqzjbqg34qn40000gn/T/RtmpEZ8rUr/temp_libpath971d4efecbf3
+## [1] /private/var/folders/zt/m504_3g569g6gqzjbqg34qn40000gn/T/RtmpdvacaQ/temp_libpathe7ce78deb0ad
+## [2] /private/var/folders/zt/m504_3g569g6gqzjbqg34qn40000gn/T/RtmpdvacaQ/temp_libpathe7ce2fec863b
 ## [3] /Library/Frameworks/R.framework/Versions/4.0/Resources/library</code></pre>
 <!-- SCRAP -->
 <!-- The `import_bam` function provides several options for processing aligned reads, and in conjunction with functions from the *[rtracklayer](https://bioconductor.org/packages/3.11/rtracklayer)* package, we can easily write a post-alignment pipeline for generating bigWig files for viewing in a genome browser. -->
@@ -1834,7 +1839,7 @@
       <li><a href="#spike-in-normalization">Spike-in Normalization</a></li>
       <li><a href="#normalization-by-subsampling">Normalization by Subsampling</a></li>
       <li><a href="#example-comprehensive-bam-to-bigwig-pipeline">Example: Comprehensive BAM to bigWig Pipeline</a></li>
-      <li><a href="#interfacing-with-deseq2">Interfacing with DESeq2</a></li>
+      <li><a href="#using-deseq2-for-pairwise-differential-expression">Using DESeq2 for Pairwise Differential Expression</a></li>
       <li><a href="#blacklisting">Blacklisting</a></li>
       <li><a href="#merging-granges-data">Merging GRanges Data</a></li>
       <li><a href="#sequence-extraction">Sequence Extraction</a></li>
