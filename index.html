@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>Install development version from <a href="https://github.com/mdeber/BRGenomics">GitHub</a>:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install.packages("devtools")</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"mdeber/BRGenomics"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"mdeber/BRGenomics"</span>)</a></code></pre></div>
 <p>If you’re using Windows, <a href="https://cran.rstudio.com/bin/windows/Rtools/">Rtools for Windows</a> is required.</p>
 </div>
 <div id="features" class="section level2">
@@ -100,9 +100,6 @@
 <h2 class="hasAnchor">
 <a href="#known-issues-and-limitations" class="anchor"></a>Known issues and limitations</h2>
 <ul>
-<li>
-<code>import_bam</code> can sometimes return an error when <code>paired_end = NULL</code>. If this occurs, make <code>paired_end</code> argument explicit by setting to <code>TRUE</code> or <code>FALSE</code>
-</li>
 <li>Currently no support for multicore processing on Windows</li>
 <li>No support for importing bigWig files on Windows</li>
 <li>Certain gene names can cause <code>getDESeqDataSet</code> to return an error

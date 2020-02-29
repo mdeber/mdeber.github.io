@@ -74,7 +74,7 @@ input ranges." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
       </span>
     </div>
 
@@ -181,7 +181,7 @@ disjoint, and each output range will match a single gene name. If
   selected.</p>
 <p><strong>reduceByGene</strong></p>
 <p><em>For each unique gene</em>, the associated ranges are
-  <code><a href='https://rdrr.io/pkg/GenomicRanges/man/intra-range-methods.html'>reduced</a></code> to produce one or
+  <code><a href='https://rdrr.io/pkg/IRanges/man/inter-range-methods.html'>reduced</a></code> to produce one or
   more non-overlapping ranges. The output range(s) are effectively a
   <code>union</code> of the input ranges, and cover every input base.</p>
 <p>With <code>disjoin = FALSE</code>, no genomic segment is overlapped by more than

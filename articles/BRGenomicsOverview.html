@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
       </span>
     </div>
 
@@ -156,7 +156,7 @@
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>Install development version from <a href="https://github.com/mdeber/BRGenomics">GitHub</a>:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install.packages("devtools")</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"mdeber/BRGenomics"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"mdeber/BRGenomics"</span>)</a></code></pre></div>
 <p>If you’re using Windows, <a href="https://cran.rstudio.com/bin/windows/Rtools/">Rtools for Windows</a> is required.</p>
 </div>
 <div id="parallel-processing" class="section level2">
@@ -1052,7 +1052,7 @@
 <a class="sourceLine" id="cb131-14" data-line-number="14">  <span class="kw">plot_meds</span>(i)</a>
 <a class="sourceLine" id="cb131-15" data-line-number="15">}</a></code></pre></div>
 <p><img src="BRGenomicsOverview_files/figure-html/unnamed-chunk-67-1.png" width="576"></p>
-<p>The paucity of transcription on Drosophila chromosome 4 makes this a somewhat extreme example, but the above plots demonstrate the potential fragility of medians. A common rule of thumb is that a given cell is only apt to express around half of its genes; if that holds true, the median of an unfiltered genelist will be close to zero, and likely insensitive to any changes occuring at expressed genes.</p>
+<p>The paucity of transcription on Drosophila chromosome 4 makes this a somewhat extreme example, and you might find that the above situation is a non-issue for your data. However, it’s important to keep in mind how unexpressed genes can affect the median. A common rule of thumb is that a given cell is only apt to express around half of its genes; if that holds true, the median of an unfiltered genelist will be close to zero, and could be insensitive to changes occuring at expressed genes.</p>
 </div>
 <div id="the-rationale-for-bootstrapping" class="section level2">
 <h2 class="hasAnchor">
@@ -1072,12 +1072,12 @@
 <a class="sourceLine" id="cb132-2" data-line-number="2">                              <span class="dt">lower =</span> <span class="fl">0.35</span>, <span class="dt">upper =</span> <span class="fl">0.65</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb132-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(bootmeans.df)</a></code></pre></div>
 <pre><code>##    x       mean      lower      upper sample.name
-## 1  3 0.04117647 0.02941176 0.05882353      PROseq
-## 2  8 0.05294118 0.04117647 0.07058824      PROseq
-## 3 13 0.07058824 0.04705882 0.09411765      PROseq
+## 1  3 0.04705882 0.02941176 0.05882353      PROseq
+## 2  8 0.05882353 0.04117647 0.06470588      PROseq
+## 3 13 0.07058824 0.05294118 0.09411765      PROseq
 ## 4 18 0.05882353 0.04117647 0.08235294      PROseq
 ## 5 23 0.12352941 0.10000000 0.15294118      PROseq
-## 6 28 0.10588235 0.08823529 0.12352941      PROseq</code></pre>
+## 6 28 0.10000000 0.08823529 0.11764706      PROseq</code></pre>
 <p>A dataframe is returned for plotting, and notice how the x-values have been automatically adjusted to be the center of the bins.</p>
 <p>Below, we show how to plot the confidence bands using base R plotting, as well as <code>ggplot2</code>.</p>
 <div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb134-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(mean <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> bootmeans.df, <span class="dt">type =</span> <span class="st">"l"</span>, </a>
@@ -1109,13 +1109,13 @@
 <div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb136-1" data-line-number="1">bm_list.df &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bootstrap-signal-by-position.html">metaSubsample</a></span>(ps_list, txs_pr, <span class="dt">binsize =</span> <span class="dv">5</span>, </a>
 <a class="sourceLine" id="cb136-2" data-line-number="2">                            <span class="dt">lower =</span> <span class="fl">0.35</span>, <span class="dt">upper =</span> <span class="fl">0.65</span>, <span class="dt">ncores =</span> <span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb136-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(bm_list.df)</a></code></pre></div>
-<pre><code>##    x        mean       lower      upper sample.name
-## 1  3 0.005882353 0.005882353 0.01176471         ps1
-## 2  8 0.023529412 0.017647059 0.02352941         ps1
-## 3 13 0.011764706 0.011764706 0.01764706         ps1
-## 4 18 0.035294118 0.017647059 0.04705882         ps1
-## 5 23 0.047058824 0.035294118 0.06470588         ps1
-## 6 28 0.029411765 0.023529412 0.03529412         ps1</code></pre>
+<pre><code>##    x        mean      lower      upper sample.name
+## 1  3 0.005882353 0.00000000 0.01176471         ps1
+## 2  8 0.023529412 0.01764706 0.02352941         ps1
+## 3 13 0.011764706 0.01176471 0.01764706         ps1
+## 4 18 0.029411765 0.01764706 0.04705882         ps1
+## 5 23 0.047058824 0.03529412 0.06470588         ps1
+## 6 28 0.023529412 0.02147059 0.03529412         ps1</code></pre>
 <div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb138-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span>(ggplot2)</a>
 <a class="sourceLine" id="cb138-2" data-line-number="2"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(bm_list.df, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x, mean, <span class="dt">color =</span> sample.name)) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb138-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() <span class="op">+</span><span class="st"> </span></a>
@@ -1391,8 +1391,8 @@
 ## GRanges object with 2 ranges and 1 metadata column:
 ##       seqnames    ranges strand |     score
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
-##   [1]     chr1         1      + |         3
-##   [2]     chr2         2      + |         1
+##   [1]     chr1         1      + |         1
+##   [2]     chr2         2      + |         3
 ##   -------
 ##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
 <p>Normalization by subsampling sacrifices information to reduce biases across datasets.</p>
@@ -1677,130 +1677,115 @@
 <pre><code>## ─ Session info ───────────────────────────────────────────────────────────────
 ##  setting  value                                             
 ##  version  R Under development (unstable) (2020-01-10 r77651)
-##  os       macOS Catalina 10.15.2                            
+##  os       macOS Catalina 10.15.3                            
 ##  system   x86_64, darwin15.6.0                              
 ##  ui       X11                                               
 ##  language (EN)                                              
 ##  collate  en_US.UTF-8                                       
 ##  ctype    en_US.UTF-8                                       
 ##  tz       America/New_York                                  
-##  date     2020-02-26                                        
+##  date     2020-02-29                                        
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────
-##  package              * version   date       lib source        
-##  annotate               1.65.1    2020-01-27 [3] Bioconductor  
-##  AnnotationDbi          1.49.1    2020-01-25 [3] Bioconductor  
-##  askpass                1.1       2019-01-13 [3] CRAN (R 4.0.0)
-##  assertthat             0.2.1     2019-03-21 [3] CRAN (R 4.0.0)
-##  backports              1.1.5     2019-10-02 [3] CRAN (R 4.0.0)
-##  Biobase                2.47.2    2019-12-19 [3] Bioconductor  
-##  BiocFileCache          1.11.4    2019-12-02 [3] Bioconductor  
-##  BiocGenerics         * 0.33.0    2019-11-06 [3] Bioconductor  
-##  BiocManager            1.30.10   2019-11-16 [3] CRAN (R 4.0.0)
-##  BiocParallel           1.21.2    2019-12-21 [3] Bioconductor  
-##  BiocStyle            * 2.15.6    2020-02-01 [3] Bioconductor  
-##  biomaRt                2.43.3    2020-02-08 [3] Bioconductor  
-##  Biostrings           * 2.55.4    2019-12-14 [3] Bioconductor  
-##  bit                    1.1-14    2018-05-29 [3] CRAN (R 4.0.0)
-##  bit64                  0.9-7     2017-05-08 [3] CRAN (R 4.0.0)
-##  bitops                 1.0-6     2013-08-17 [3] CRAN (R 4.0.0)
-##  blob                   1.2.0     2019-07-09 [3] CRAN (R 4.0.0)
-##  bookdown               0.17      2020-01-11 [3] CRAN (R 4.0.0)
-##  BRGenomics           * 0.7.10    2020-02-26 [1] Bioconductor  
-##  BSgenome               1.55.3    2020-01-29 [3] Bioconductor  
-##  callr                  3.4.0     2019-12-09 [3] CRAN (R 4.0.0)
-##  cli                    2.0.1     2020-01-08 [3] CRAN (R 4.0.0)
-##  colorspace             1.4-1     2019-03-18 [3] CRAN (R 4.0.0)
-##  crayon                 1.3.4     2017-09-16 [3] CRAN (R 4.0.0)
-##  curl                   4.3       2019-12-02 [3] CRAN (R 4.0.0)
-##  DBI                    1.1.0     2019-12-15 [3] CRAN (R 4.0.0)
-##  dbplyr                 1.4.2     2019-06-17 [3] CRAN (R 4.0.0)
-##  DelayedArray           0.13.4    2020-02-13 [3] Bioconductor  
-##  desc                   1.2.0     2018-05-01 [3] CRAN (R 4.0.0)
-##  DESeq2                 1.27.24   2020-02-09 [3] Bioconductor  
-##  devtools               2.2.1     2019-09-24 [3] CRAN (R 4.0.0)
-##  digest                 0.6.23    2019-11-23 [3] CRAN (R 4.0.0)
-##  dplyr                  0.8.3     2019-07-04 [3] CRAN (R 4.0.0)
-##  ellipsis               0.3.0     2019-09-20 [3] CRAN (R 4.0.0)
-##  evaluate               0.14      2019-05-28 [3] CRAN (R 4.0.0)
-##  fansi                  0.4.1     2020-01-08 [3] CRAN (R 4.0.0)
-##  farver                 2.0.1     2019-11-13 [3] CRAN (R 4.0.0)
-##  fs                     1.3.1     2019-05-06 [3] CRAN (R 4.0.0)
-##  genefilter             1.69.0    2019-11-06 [3] Bioconductor  
-##  geneplotter            1.65.0    2019-11-06 [3] Bioconductor  
-##  GenomeInfoDb         * 1.23.13   2020-02-12 [3] Bioconductor  
-##  GenomeInfoDbData       1.2.2     2020-01-12 [3] Bioconductor  
-##  GenomicAlignments      1.23.1    2019-11-12 [3] Bioconductor  
-##  GenomicFeatures        1.39.5    2020-02-15 [3] Bioconductor  
-##  GenomicFiles           1.23.0    2019-11-06 [3] Bioconductor  
-##  GenomicRanges        * 1.39.2    2020-02-04 [3] Bioconductor  
-##  ggplot2              * 3.2.1     2019-08-10 [3] CRAN (R 4.0.0)
-##  glue                   1.3.1     2019-03-12 [3] CRAN (R 4.0.0)
-##  gtable                 0.3.0     2019-03-25 [3] CRAN (R 4.0.0)
-##  hms                    0.5.3     2020-01-08 [3] CRAN (R 4.0.0)
-##  htmltools              0.4.0     2019-10-04 [3] CRAN (R 4.0.0)
-##  httr                   1.4.1     2019-08-05 [3] CRAN (R 4.0.0)
-##  IRanges              * 2.21.3    2020-01-13 [3] Bioconductor  
-##  knitr                  1.26      2019-11-12 [3] CRAN (R 4.0.0)
-##  labeling               0.3       2014-08-23 [3] CRAN (R 4.0.0)
-##  lattice                0.20-38   2018-11-04 [3] CRAN (R 4.0.0)
-##  lazyeval               0.2.2     2019-03-15 [3] CRAN (R 4.0.0)
-##  lifecycle              0.1.0     2019-08-01 [3] CRAN (R 4.0.0)
-##  locfit                 1.5-9.1   2013-04-20 [3] CRAN (R 4.0.0)
-##  magrittr               1.5       2014-11-22 [3] CRAN (R 4.0.0)
-##  MASS                   7.3-51.5  2019-12-20 [3] CRAN (R 4.0.0)
-##  Matrix                 1.2-18    2019-11-27 [3] CRAN (R 4.0.0)
-##  matrixStats            0.55.0    2019-09-07 [3] CRAN (R 4.0.0)
-##  memoise                1.1.0     2017-04-21 [3] CRAN (R 4.0.0)
-##  munsell                0.5.0     2018-06-12 [3] CRAN (R 4.0.0)
-##  openssl                1.4.1     2019-07-18 [3] CRAN (R 4.0.0)
-##  pillar                 1.4.3     2019-12-20 [3] CRAN (R 4.0.0)
-##  pkgbuild               1.0.6     2019-10-09 [3] CRAN (R 4.0.0)
-##  pkgconfig              2.0.3     2019-09-22 [3] CRAN (R 4.0.0)
-##  pkgdown                1.4.1     2019-09-15 [3] CRAN (R 4.0.0)
-##  pkgload                1.0.2     2018-10-29 [3] CRAN (R 4.0.0)
-##  prettyunits            1.1.0     2020-01-09 [3] CRAN (R 4.0.0)
-##  processx               3.4.1     2019-07-18 [3] CRAN (R 4.0.0)
-##  progress               1.2.2     2019-05-16 [3] CRAN (R 4.0.0)
-##  ps                     1.3.0     2018-12-21 [3] CRAN (R 4.0.0)
-##  purrr                  0.3.3     2019-10-18 [3] CRAN (R 4.0.0)
-##  R6                     2.4.1     2019-11-12 [3] CRAN (R 4.0.0)
-##  rappdirs               0.3.1     2016-03-28 [3] CRAN (R 4.0.0)
-##  RColorBrewer           1.1-2     2014-12-07 [3] CRAN (R 4.0.0)
-##  Rcpp                   1.0.3     2019-11-08 [3] CRAN (R 4.0.0)
-##  RCurl                  1.95-4.12 2019-03-04 [3] CRAN (R 4.0.0)
-##  remotes                2.1.0     2019-06-24 [3] CRAN (R 4.0.0)
-##  rlang                  0.4.2     2019-11-23 [3] CRAN (R 4.0.0)
-##  rmarkdown              2.0       2019-12-12 [3] CRAN (R 4.0.0)
-##  rprojroot              1.3-2     2018-01-03 [3] CRAN (R 4.0.0)
-##  Rsamtools              2.3.4     2020-02-11 [3] Bioconductor  
-##  RSQLite                2.2.0     2020-01-07 [3] CRAN (R 4.0.0)
-##  rstudioapi             0.10      2019-03-19 [3] CRAN (R 4.0.0)
-##  rtracklayer          * 1.47.0    2019-11-06 [3] Bioconductor  
-##  S4Vectors            * 0.25.12   2020-02-01 [3] Bioconductor  
-##  scales                 1.1.0     2019-11-18 [3] CRAN (R 4.0.0)
-##  sessioninfo            1.1.1     2018-11-05 [3] CRAN (R 4.0.0)
-##  stringi                1.4.5     2020-01-11 [3] CRAN (R 4.0.0)
-##  stringr                1.4.0     2019-02-10 [3] CRAN (R 4.0.0)
-##  SummarizedExperiment   1.16.1    2019-12-19 [3] local         
-##  survival               3.1-8     2019-12-03 [3] CRAN (R 4.0.0)
-##  testthat               2.3.1     2019-12-01 [3] CRAN (R 4.0.0)
-##  tibble                 2.1.3     2019-06-06 [3] CRAN (R 4.0.0)
-##  tidyselect             0.2.5     2018-10-11 [3] CRAN (R 4.0.0)
-##  usethis                1.5.1     2019-07-04 [3] CRAN (R 4.0.0)
-##  VariantAnnotation      1.33.0    2019-11-06 [3] Bioconductor  
-##  vctrs                  0.2.1     2019-12-17 [3] CRAN (R 4.0.0)
-##  withr                  2.1.2     2018-03-15 [3] CRAN (R 4.0.0)
-##  xfun                   0.11      2019-11-12 [3] CRAN (R 4.0.0)
-##  XML                    3.98-1.20 2019-06-06 [3] CRAN (R 4.0.0)
-##  xtable                 1.8-4     2019-04-21 [3] CRAN (R 4.0.0)
-##  XVector              * 0.27.0    2019-11-06 [3] Bioconductor  
-##  yaml                   2.2.0     2018-07-25 [3] CRAN (R 4.0.0)
-##  zeallot                0.1.0     2018-01-28 [3] CRAN (R 4.0.0)
-##  zlibbioc               1.33.1    2020-01-24 [3] Bioconductor  
+##  package              * version  date       lib source        
+##  annotate               1.65.1   2020-01-27 [3] Bioconductor  
+##  AnnotationDbi          1.49.1   2020-01-25 [3] Bioconductor  
+##  assertthat             0.2.1    2019-03-21 [3] CRAN (R 4.0.0)
+##  backports              1.1.5    2019-10-02 [3] CRAN (R 4.0.0)
+##  Biobase                2.47.2   2019-12-19 [3] Bioconductor  
+##  BiocGenerics         * 0.33.0   2019-11-06 [3] Bioconductor  
+##  BiocManager            1.30.10  2019-11-16 [3] CRAN (R 4.0.0)
+##  BiocParallel           1.21.2   2019-12-21 [3] Bioconductor  
+##  BiocStyle            * 2.15.6   2020-02-01 [3] Bioconductor  
+##  Biostrings           * 2.55.4   2019-12-14 [3] Bioconductor  
+##  bit                    1.1-15.2 2020-02-10 [3] CRAN (R 4.0.0)
+##  bit64                  0.9-7    2017-05-08 [3] CRAN (R 4.0.0)
+##  bitops                 1.0-6    2013-08-17 [3] CRAN (R 4.0.0)
+##  blob                   1.2.1    2020-01-20 [3] CRAN (R 4.0.0)
+##  bookdown               0.17     2020-01-11 [3] CRAN (R 4.0.0)
+##  BRGenomics           * 0.8.0    2020-02-29 [1] Bioconductor  
+##  callr                  3.4.2    2020-02-12 [3] CRAN (R 4.0.0)
+##  cli                    2.0.2    2020-02-28 [3] CRAN (R 4.0.0)
+##  colorspace             1.4-1    2019-03-18 [3] CRAN (R 4.0.0)
+##  crayon                 1.3.4    2017-09-16 [3] CRAN (R 4.0.0)
+##  DBI                    1.1.0    2019-12-15 [3] CRAN (R 4.0.0)
+##  DelayedArray           0.13.4   2020-02-13 [3] Bioconductor  
+##  desc                   1.2.0    2018-05-01 [3] CRAN (R 4.0.0)
+##  DESeq2                 1.27.27  2020-02-21 [3] Bioconductor  
+##  devtools               2.2.2    2020-02-17 [3] CRAN (R 4.0.0)
+##  digest                 0.6.25   2020-02-23 [3] CRAN (R 4.0.0)
+##  dplyr                  0.8.4    2020-01-31 [3] CRAN (R 4.0.0)
+##  ellipsis               0.3.0    2019-09-20 [3] CRAN (R 4.0.0)
+##  evaluate               0.14     2019-05-28 [3] CRAN (R 4.0.0)
+##  fansi                  0.4.1    2020-01-08 [3] CRAN (R 4.0.0)
+##  farver                 2.0.3    2020-01-16 [3] CRAN (R 4.0.0)
+##  fs                     1.3.1    2019-05-06 [3] CRAN (R 4.0.0)
+##  genefilter             1.69.0   2019-11-06 [3] Bioconductor  
+##  geneplotter            1.65.0   2019-11-06 [3] Bioconductor  
+##  GenomeInfoDb         * 1.23.13  2020-02-12 [3] Bioconductor  
+##  GenomeInfoDbData       1.2.2    2020-01-12 [3] Bioconductor  
+##  GenomicAlignments      1.23.1   2019-11-12 [3] Bioconductor  
+##  GenomicRanges        * 1.39.2   2020-02-04 [3] Bioconductor  
+##  ggplot2              * 3.2.1    2019-08-10 [3] CRAN (R 4.0.0)
+##  glue                   1.3.1    2019-03-12 [3] CRAN (R 4.0.0)
+##  gtable                 0.3.0    2019-03-25 [3] CRAN (R 4.0.0)
+##  htmltools              0.4.0    2019-10-04 [3] CRAN (R 4.0.0)
+##  IRanges              * 2.21.3   2020-01-13 [3] Bioconductor  
+##  knitr                  1.28     2020-02-06 [3] CRAN (R 4.0.0)
+##  labeling               0.3      2014-08-23 [3] CRAN (R 4.0.0)
+##  lattice                0.20-40  2020-02-19 [3] CRAN (R 4.0.0)
+##  lazyeval               0.2.2    2019-03-15 [3] CRAN (R 4.0.0)
+##  lifecycle              0.1.0    2019-08-01 [3] CRAN (R 4.0.0)
+##  locfit                 1.5-9.1  2013-04-20 [3] CRAN (R 4.0.0)
+##  magrittr               1.5      2014-11-22 [3] CRAN (R 4.0.0)
+##  MASS                   7.3-51.5 2019-12-20 [3] CRAN (R 4.0.0)
+##  Matrix                 1.2-18   2019-11-27 [3] CRAN (R 4.0.0)
+##  matrixStats            0.55.0   2019-09-07 [3] CRAN (R 4.0.0)
+##  memoise                1.1.0    2017-04-21 [3] CRAN (R 4.0.0)
+##  munsell                0.5.0    2018-06-12 [3] CRAN (R 4.0.0)
+##  pillar                 1.4.3    2019-12-20 [3] CRAN (R 4.0.0)
+##  pkgbuild               1.0.6    2019-10-09 [3] CRAN (R 4.0.0)
+##  pkgconfig              2.0.3    2019-09-22 [3] CRAN (R 4.0.0)
+##  pkgdown                1.4.1    2019-09-15 [3] CRAN (R 4.0.0)
+##  pkgload                1.0.2    2018-10-29 [3] CRAN (R 4.0.0)
+##  prettyunits            1.1.1    2020-01-24 [3] CRAN (R 4.0.0)
+##  processx               3.4.2    2020-02-09 [3] CRAN (R 4.0.0)
+##  ps                     1.3.2    2020-02-13 [3] CRAN (R 4.0.0)
+##  purrr                  0.3.3    2019-10-18 [3] CRAN (R 4.0.0)
+##  R6                     2.4.1    2019-11-12 [3] CRAN (R 4.0.0)
+##  RColorBrewer           1.1-2    2014-12-07 [3] CRAN (R 4.0.0)
+##  Rcpp                   1.0.3    2019-11-08 [3] CRAN (R 4.0.0)
+##  RCurl                  1.98-1.1 2020-01-19 [3] CRAN (R 4.0.0)
+##  remotes                2.1.1    2020-02-15 [3] CRAN (R 4.0.0)
+##  rlang                  0.4.4    2020-01-28 [3] CRAN (R 4.0.0)
+##  rmarkdown              2.1      2020-01-20 [3] CRAN (R 4.0.0)
+##  rprojroot              1.3-2    2018-01-03 [3] CRAN (R 4.0.0)
+##  Rsamtools              2.3.5    2020-02-23 [3] Bioconductor  
+##  RSQLite                2.2.0    2020-01-07 [3] CRAN (R 4.0.0)
+##  rstudioapi             0.11     2020-02-07 [3] CRAN (R 4.0.0)
+##  rtracklayer          * 1.47.0   2019-11-06 [3] Bioconductor  
+##  S4Vectors            * 0.25.12  2020-02-01 [3] Bioconductor  
+##  scales                 1.1.0    2019-11-18 [3] CRAN (R 4.0.0)
+##  sessioninfo            1.1.1    2018-11-05 [3] CRAN (R 4.0.0)
+##  stringi                1.4.6    2020-02-17 [3] CRAN (R 4.0.0)
+##  stringr                1.4.0    2019-02-10 [3] CRAN (R 4.0.0)
+##  SummarizedExperiment   1.17.3   2020-02-24 [3] Bioconductor  
+##  survival               3.1-8    2019-12-03 [3] CRAN (R 4.0.0)
+##  testthat               2.3.1    2019-12-01 [3] CRAN (R 4.0.0)
+##  tibble                 2.1.3    2019-06-06 [3] CRAN (R 4.0.0)
+##  tidyselect             1.0.0    2020-01-27 [3] CRAN (R 4.0.0)
+##  usethis                1.5.1    2019-07-04 [3] CRAN (R 4.0.0)
+##  vctrs                  0.2.3    2020-02-20 [3] CRAN (R 4.0.0)
+##  withr                  2.1.2    2018-03-15 [3] CRAN (R 4.0.0)
+##  xfun                   0.12     2020-01-13 [3] CRAN (R 4.0.0)
+##  XML                    3.99-0.3 2020-01-20 [3] CRAN (R 4.0.0)
+##  xtable                 1.8-4    2019-04-21 [3] CRAN (R 4.0.0)
+##  XVector              * 0.27.0   2019-11-06 [3] Bioconductor  
+##  yaml                   2.2.1    2020-02-01 [3] CRAN (R 4.0.0)
+##  zlibbioc               1.33.1   2020-01-24 [3] Bioconductor  
 ## 
-## [1] /private/var/folders/zt/m504_3g569g6gqzjbqg34qn40000gn/T/RtmpdvacaQ/temp_libpathe7ce78deb0ad
-## [2] /private/var/folders/zt/m504_3g569g6gqzjbqg34qn40000gn/T/RtmpdvacaQ/temp_libpathe7ce2fec863b
+## [1] /private/var/folders/zt/m504_3g569g6gqzjbqg34qn40000gn/T/RtmpCaYPVZ/temp_libpathcbce6c165976
+## [2] /private/var/folders/zt/m504_3g569g6gqzjbqg34qn40000gn/T/RtmpCaYPVZ/temp_libpathcbce2e5e3e03
 ## [3] /Library/Frameworks/R.framework/Versions/4.0/Resources/library</code></pre>
 <!-- SCRAP -->
 <!-- The `import_bam` function provides several options for processing aligned reads, and in conjunction with functions from the *[rtracklayer](https://bioconductor.org/packages/3.11/rtracklayer)* package, we can easily write a post-alignment pipeline for generating bigWig files for viewing in a genome browser. -->

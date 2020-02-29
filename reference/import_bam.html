@@ -37,7 +37,7 @@
 
 <meta property="og:title" content="Import bam files — import_bam" />
 <meta property="og:description" content="Import single-end or paired-end bam files as GRanges objects, with various
-processing options." />
+processing options. It is highly recommend to index the BAM file first." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -70,7 +70,7 @@ processing options." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
       </span>
     </div>
 
@@ -123,7 +123,7 @@ processing options." />
 
     <div class="ref-description">
     <p>Import single-end or paired-end bam files as GRanges objects, with various
-processing options.</p>
+processing options. It is highly recommend to index the BAM file first.</p>
     </div>
 
     <pre class="usage"><span class='fu'>import_bam</span>(
@@ -135,7 +135,8 @@ processing options.</p>
   <span class='kw'>ignore.strand</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"score"</span>,
   <span class='kw'>paired_end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>yieldSize</span> <span class='kw'>=</span> <span class='fl'>250000</span>
+  <span class='kw'>yieldSize</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>
 )
 
 <span class='fu'>import_bam_PROseq</span>(
@@ -147,7 +148,8 @@ processing options.</p>
   <span class='kw'>ignore.strand</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"score"</span>,
   <span class='kw'>paired_end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>yieldSize</span> <span class='kw'>=</span> <span class='fl'>250000</span>
+  <span class='kw'>yieldSize</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>
 )
 
 <span class='fu'>import_bam_PROcap</span>(
@@ -159,7 +161,8 @@ processing options.</p>
   <span class='kw'>ignore.strand</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"score"</span>,
   <span class='kw'>paired_end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>yieldSize</span> <span class='kw'>=</span> <span class='fl'>250000</span>
+  <span class='kw'>yieldSize</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>
 )
 
 <span class='fu'>import_bam_ATACseq</span>(
@@ -171,7 +174,8 @@ processing options.</p>
   <span class='kw'>ignore.strand</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"score"</span>,
   <span class='kw'>paired_end</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>yieldSize</span> <span class='kw'>=</span> <span class='fl'>250000</span>
+  <span class='kw'>yieldSize</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -179,7 +183,7 @@ processing options.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>file</th>
-      <td><p>Path of a bam file.</p></td>
+      <td><p>Path of a bam file, or a vector of paths.</p></td>
     </tr>
     <tr>
       <th>mapq</th>
@@ -224,8 +228,8 @@ output GRanges will be equal to the number of input reads.</p></td>
     <tr>
       <th>paired_end</th>
       <td><p>Logical indicating if reads should be treated as paired end
-reads. When set to <code>NULL</code> (the default), a test is performed to
-determine if the bam file contains any paired-end reads.</p></td>
+reads. When set to <code>NULL</code> (the default), the first 100k reads are
+checked.</p></td>
     </tr>
     <tr>
       <th>yieldSize</th>
@@ -234,15 +238,19 @@ e.g. the "chunk size". Setting a higher chunk size will use more memory,
 which can increase speed if there is enough memory available. If chunking
 is not necessary, set to <code>NA</code>.</p></td>
     </tr>
+    <tr>
+      <th>ncores</th>
+      <td><p>Number of cores to use for importing bam files. Currently,
+multicore is only implemented for simultaneously importing multiple bam
+files. For smaller datasets or machines with higher memory, this can
+increase performance, but can otherwise lead to substantial performance
+penalties.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A GRanges object.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>If function produces an error, make the <code>paired_end</code> parameter
-  explicit, i.e. <code>TRUE</code> or <code>FALSE</code>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Hojoong Kwak, Nicholas J. Fuda, Leighton J. Core, John T. Lis
@@ -375,13 +383,12 @@ is not necessary, set to <code>NA</code>.</p></td>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#details">Details</a></li>
       <li><a href="#references">References</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 
     <h2>Author</h2>
-    <p>Mike DeBerardine &amp; Nate Tippens</p>
+    <p>Mike DeBerardine</p>
   </div>
 </div>
 

@@ -70,7 +70,7 @@ files." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
       </span>
     </div>
 
@@ -127,23 +127,25 @@ files.</p>
     </div>
 
     <pre class="usage"><span class='fu'>import_bigWig</span>(
-  <span class='no'>plus_file</span>,
-  <span class='no'>minus_file</span>,
+  <span class='kw'>plus_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>minus_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>genome</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>keep.X</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>keep.Y</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>keep.M</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>keep.nonstandard</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+  <span class='kw'>keep.nonstandard</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fu'>detectCores</span>()
 )
 
 <span class='fu'>import_bedGraph</span>(
-  <span class='no'>plus_file</span>,
-  <span class='no'>minus_file</span>,
+  <span class='kw'>plus_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>minus_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>genome</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>keep.X</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>keep.Y</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>keep.M</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>keep.nonstandard</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+  <span class='kw'>keep.nonstandard</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fu'>detectCores</span>()
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -151,7 +153,9 @@ files.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>plus_file, minus_file</th>
-      <td><p>Paths for strand-specific input files.</p></td>
+      <td><p>Paths for strand-specific input files, or a
+vector of such paths. If vectors are given, the user should take care that
+the orders match!</p></td>
     </tr>
     <tr>
       <th>genome</th>
@@ -164,6 +168,11 @@ mitochondrial chromosomes are applied.</p></td>
       <td><p>Logicals indicating which
 non-autosomes should be kept. By default, sex chromosomes are kept, but
 mitochondrial and non-standard chromosomes are removed.</p></td>
+    </tr>
+    <tr>
+      <th>ncores</th>
+      <td><p>Number of cores to use, if importing multiple objects
+simultaneously.</p></td>
     </tr>
     </table>
 
