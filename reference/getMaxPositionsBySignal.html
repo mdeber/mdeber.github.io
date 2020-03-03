@@ -71,7 +71,7 @@ larger bins." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.0</span>
       </span>
     </div>
 
@@ -212,8 +212,8 @@ should be reported. If set to <code>TRUE</code>, the values are kept as a new
 <span class='fu'>getMaxPositionsBySignal</span>(<span class='no'>PROseq</span>, <span class='no'>pr</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='kw'>keep.signal</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; GRanges object with 2 ranges and 3 metadata columns:
 #&gt;       seqnames    ranges strand |     tx_name     gene_id MaxSiteSignal
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;character&gt;     &lt;integer&gt;
-#&gt;   [1]     chr4     42799      + | FBtr0344900 FBgn0266617             3
-#&gt;   [2]     chr4     44801      + | FBtr0340499 FBgn0265633             1
+#&gt;   [1]     chr4     42798      + | FBtr0344900 FBgn0266617             3
+#&gt;   [2]     chr4     44800      + | FBtr0340499 FBgn0265633             1
 #&gt;   -------
 #&gt;   seqinfo: 7 sequences from dm6 genome</div><div class='input'>
 <span class='co'>#--------------------------------------------------#</span>
@@ -223,7 +223,7 @@ should be reported. If set to <code>TRUE</code>, the values are kept as a new
 <span class='fu'>getMaxPositionsBySignal</span>(<span class='no'>PROseq</span>, <span class='no'>pr</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='kw'>binsize</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>keep.signal</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; GRanges object with 2 ranges and 3 metadata columns:
 #&gt;       seqnames      ranges strand |     tx_name     gene_id MaxSiteSignal
 #&gt;          &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;character&gt;     &lt;integer&gt;
-#&gt;   [1]     chr4 42794-42798      + | FBtr0344900 FBgn0266617             4
+#&gt;   [1]     chr4 42794-42798      + | FBtr0344900 FBgn0266617             7
 #&gt;   [2]     chr4 44799-44803      + | FBtr0340499 FBgn0265633             1
 #&gt;   -------
 #&gt;   seqinfo: 7 sequences from dm6 genome</div></pre>

@@ -74,7 +74,7 @@ input ranges." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.0</span>
       </span>
     </div>
 
@@ -294,7 +294,7 @@ disjoint, and each output range will match a single gene name. If
 #&gt;   B     chr1      7-11      *
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'>
-<span class='co'># With disjoin = TRUE, segments overlapping multiple genes are removed as well</span>
+<span class='co'># With disjoin = TRUE, segments overlapping &gt;1 gene are removed as well</span>
 <span class='fu'>reduceByGene</span>(<span class='no'>gr</span>, <span class='no'>gnames</span>, <span class='kw'>disjoin</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; GRanges object with 3 ranges and 0 metadata columns:
 #&gt;     seqnames    ranges strand
 #&gt;        &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;

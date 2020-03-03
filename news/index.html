@@ -67,7 +67,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.0</span>
       </span>
     </div>
 
@@ -117,6 +117,35 @@
       
     </div>
 
+    <div id="brgenomics-0-99-0-bioconductor-submission" class="section level2">
+<h2 class="hasAnchor">
+<a href="#brgenomics-0-99-0-bioconductor-submission" class="anchor"></a>BRGenomics 0.99.0 (Bioconductor submission)</h2>
+<ul>
+<li>Update version for Bioconductor submission</li>
+<li>Various minor formatting changes to codebase</li>
+</ul>
+</div>
+    <div id="brgenomics-0-8-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#brgenomics-0-8-1" class="anchor"></a>BRGenomics 0.8.1</h2>
+<ul>
+<li>Fixed bug in <code><a href="../reference/import_bam.html">import_bam()</a></code> that produced warnings when <code>shift</code> argument used to shift both 5’ and 3’ ends of reads (i.e. when <code>length(shift) == 2</code>)</li>
+<li>Updated included external datasets to be much smaller
+<ul>
+<li>Included bam file now &lt;200 reads</li>
+<li>Included bigWig and bedGraph files derived from the bam file</li>
+</ul>
+</li>
+<li>Minor update to vignette to reflect the change in the bam file</li>
+<li>Updated the included <code><a href="https://rdrr.io/r/utils/data.html">data()</a></code> objects (<code>PROseq</code> and <code>PROseq_paired</code>)
+<ul>
+<li>Shifted PRO-seq 3’ bases to remove the run-on base, and updated associated package tests</li>
+<li>Added xz compression to the files</li>
+</ul>
+</li>
+<li>Streamlined some method dispatch in <code><a href="../reference/genebodies.html">genebodies()</a></code> and <code><a href="../reference/getDESeqDataSet.html">getDESeqDataSet()</a></code> functions</li>
+</ul>
+</div>
     <div id="brgenomics-0-8-0" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brgenomics-0-8-0" class="anchor"></a>BRGenomics 0.8.0</h2>
@@ -138,7 +167,7 @@
 <h2 class="hasAnchor">
 <a href="#brgenomics-0-7-10" class="anchor"></a>BRGenomics 0.7.10</h2>
 <ul>
-<li>Add <code>intersectByGene</code> and <code>reduceByGene</code> functions</li>
+<li>Add <code><a href="../reference/intersectByGene.html">intersectByGene()</a></code> and <code><a href="../reference/intersectByGene.html">reduceByGene()</a></code> functions</li>
 <li>Minor vignette updates</li>
 </ul>
 </div>
@@ -148,17 +177,17 @@
 <ul>
 <li>Substantially updated vignette</li>
 <li>Fully load <code>rtracklayer</code> (so completely exported to users)</li>
-<li>Add <code>isBRG</code> function</li>
-<li>Fixed bug in <code>spikeInNormGRanges</code> that failed to remove spike-in reads (aside from maintaining those reads, normalization was otherwise correct)</li>
-<li>Fixed minor bug in which <code>metaSubsample</code> automatically added rownames with list input</li>
+<li>Add <code><a href="../reference/makeGRangesBRG.html">isBRG()</a></code> function</li>
+<li>Fixed bug in <code><a href="../reference/getSpikeInNFs.html">spikeInNormGRanges()</a></code> that failed to remove spike-in reads (aside from maintaining those reads, normalization was otherwise correct)</li>
+<li>Fixed minor bug in which <code><a href="../reference/bootstrap-signal-by-position.html">metaSubsample()</a></code> automatically added rownames with list input</li>
 </ul>
 </div>
     <div id="brgenomics-0-7-7" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brgenomics-0-7-7" class="anchor"></a>BRGenomics 0.7.7</h2>
 <ul>
-<li>Bug fix in <code>aggregateByNdimensionalBins</code> affecting simultaneous aggregation of multiple data</li>
-<li>Minor updates to documentation, including an error in <code>getDESeqResults</code>
+<li>Bug fix in <code><a href="../reference/binNdimensions.html">aggregateByNdimensionalBins()</a></code> affecting simultaneous aggregation of multiple data</li>
+<li>Minor updates to documentation, including an error in <code><a href="../reference/getDESeqResults.html">getDESeqResults()</a></code>
 </li>
 <li>Slightly expanded vignette</li>
 </ul>
@@ -169,21 +198,21 @@
 <ul>
 <li>Update bootstrapping functions
 <ul>
-<li>Add blacklisting support for <code>metaSubsample</code>
+<li>Add blacklisting support for <code><a href="../reference/bootstrap-signal-by-position.html">metaSubsample()</a></code>
 </li>
 <li>Related to blacklisting, NA values now ignored in bootstrapping</li>
 </ul>
 </li>
 <li>Add additional <code>melt</code> options for signal counting functions</li>
-<li>Further expanded support for list inputs (lists of GRanges datasets), including in <code>getStrandedCoverage</code>
+<li>Further expanded support for list inputs (lists of GRanges datasets), including in <code><a href="../reference/getStrandedCoverage.html">getStrandedCoverage()</a></code>
 </li>
-<li>Add explicit support for blacklisting in <code>getDESeqDataSet</code>
+<li>Add explicit support for blacklisting in <code><a href="../reference/getDESeqDataSet.html">getDESeqDataSet()</a></code>
 </li>
 <li>Rewrite n-dimensional binning functions, and add function for aggregating data within n-dimensional bins
 <ul>
-<li>Changed arguments in <code>binNdimensions</code> to only accept dataframe inputs</li>
-<li>Add <code>densityInNdimensionalBins</code> function to count points in each bin</li>
-<li>Add <code>aggregateByNdimensionalBins</code> function to aggregate data within bins using arbitrary functions</li>
+<li>Changed arguments in <code><a href="../reference/binNdimensions.html">binNdimensions()</a></code> to only accept dataframe inputs</li>
+<li>Add <code><a href="../reference/binNdimensions.html">densityInNdimensionalBins()</a></code> function to count points in each bin</li>
+<li>Add <code><a href="../reference/binNdimensions.html">aggregateByNdimensionalBins()</a></code> function to aggregate data within bins using arbitrary functions</li>
 </ul>
 </li>
 <li>Added arguments for setting sample names in spike-in/normalization functions</li>
@@ -198,14 +227,14 @@
 <li>Added functions for generating spike-in normalization factors</li>
 <li>Added support for lists of GRanges datasets throughout, including all signal counting functions</li>
 <li>Updating signal counting functions with a <code>blacklist</code> argument, for ignoring reads from user-supplied regions</li>
-<li>Added wrappers for <code>import_bam</code> for several common use cases</li>
-<li>Update <code>getCountsByPositions</code>:
+<li>Added wrappers for <code><a href="../reference/import_bam.html">import_bam()</a></code> for several common use cases</li>
+<li>Update <code><a href="../reference/getCountsByPositions.html">getCountsByPositions()</a></code>:
 <ul>
 <li>Added a <code>melt</code> option for returning melted dataframes</li>
 <li>Now returns an error by default if multi-width regions are given (must be explicit)</li>
 </ul>
 </li>
-<li>Changed argument order in <code>getMaxPositionsBySignal</code>
+<li>Changed argument order in <code><a href="../reference/getMaxPositionsBySignal.html">getMaxPositionsBySignal()</a></code>
 </li>
 </ul>
 </div>
@@ -213,15 +242,15 @@
 <h2 class="hasAnchor">
 <a href="#brgenomics-0-5-6" class="anchor"></a>BRGenomics 0.5.6</h2>
 <ul>
-<li>Update <code>import_bam</code> function
+<li>Update <code><a href="../reference/import_bam.html">import_bam()</a></code> function
 <ul>
 <li>Added support for paired-end bam files</li>
 <li>Added the <code>shift</code> argument</li>
 </ul>
 </li>
-<li>Made <code>metaSubsample</code> functions robust to unevaluated inputs</li>
-<li>Small performance improvement to <code>genebodies</code> function</li>
-<li>Multicore usage is again the default for <code>getDESeqResults</code>
+<li>Made <code><a href="../reference/bootstrap-signal-by-position.html">metaSubsample()</a></code> functions robust to unevaluated inputs</li>
+<li>Small performance improvement to <code><a href="../reference/genebodies.html">genebodies()</a></code> function</li>
+<li>Multicore usage is again the default for <code><a href="../reference/getDESeqResults.html">getDESeqResults()</a></code>
 </li>
 </ul>
 </div>
@@ -229,11 +258,11 @@
 <h2 class="hasAnchor">
 <a href="#brgenomics-0-5-3" class="anchor"></a>BRGenomics 0.5.3</h2>
 <ul>
-<li>Substantial performance improvement for <code>mergeGRangesData</code>
+<li>Substantial performance improvement for <code><a href="../reference/mergeGRangesData.html">mergeGRangesData()</a></code>
 </li>
-<li>Make single-core the default for <code>getDESeqResults</code>
+<li>Make single-core the default for <code><a href="../reference/getDESeqResults.html">getDESeqResults()</a></code>
 </li>
-<li>Fixed errant warning message in <code>binNdimensions</code> for integer inputs</li>
+<li>Fixed errant warning message in <code><a href="../reference/binNdimensions.html">binNdimensions()</a></code> for integer inputs</li>
 <li>Update namespace to fully import GenomicRanges and S4Vectors</li>
 <li>Changed R dependency, evidently required by the updated data objects</li>
 <li>Various documentation updates</li>
@@ -254,8 +283,8 @@
 <h2 class="hasAnchor">
 <a href="#brgenomics-0-4-7" class="anchor"></a>BRGenomics 0.4.7</h2>
 <ul>
-<li>Rewrote <code>mergeGRangesData</code> to support the creation of multiplexed GRanges objects</li>
-<li>Made <code>getCountsByRegions</code> and <code>getCountsByPositions</code> to return integers if input signal is integer</li>
+<li>Rewrote <code><a href="../reference/mergeGRangesData.html">mergeGRangesData()</a></code> to support the creation of multiplexed GRanges objects</li>
+<li>Made <code><a href="../reference/getCountsByRegions.html">getCountsByRegions()</a></code> and <code><a href="../reference/getCountsByPositions.html">getCountsByPositions()</a></code> to return integers if input signal is integer</li>
 </ul>
 </div>
     <div id="brgenomics-0-4-5" class="section level2">
@@ -288,6 +317,8 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#brgenomics-0-99-0-bioconductor-submission">0.99.0</a></li>
+        <li><a href="#brgenomics-0-8-1">0.8.1</a></li>
         <li><a href="#brgenomics-0-8-0">0.8.0</a></li>
         <li><a href="#brgenomics-0-7-10">0.7.10</a></li>
         <li><a href="#brgenomics-0-7-8">0.7.8</a></li>

@@ -75,7 +75,7 @@ being compared, and not for all samples present." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.0</span>
       </span>
     </div>
 
@@ -284,38 +284,64 @@ in <code>args.DESeq</code> will supersede this option for the call to
 <span class='no'>res</span></div><div class='output co'>#&gt; log2 fold change (MLE): condition B vs A 
 #&gt; Wald test p-value: condition B vs A 
 #&gt; DataFrame with 111 rows and 6 columns
-#&gt;                baseMean log2FoldChange     lfcSE       stat    pvalue      padj
-#&gt;               &lt;numeric&gt;      &lt;numeric&gt; &lt;numeric&gt;  &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;
-#&gt; FBgn0267363    0.254341     -1.4231496  4.997097 -0.2847953  0.775801   0.99742
-#&gt; FBgn0266617   10.542899      0.0889218  1.049437  0.0847329  0.932474   0.99742
-#&gt; FBgn0265633    2.057889      0.0172672  2.125741  0.0081229  0.993519   0.99742
-#&gt; FBgn0264617   65.878586      0.2205247  0.468152  0.4710540  0.637602   0.99742
-#&gt; FBgn0085432 4679.071664     -0.2337582  0.236722 -0.9874818  0.323407   0.99742
-#&gt; ...                 ...            ...       ...        ...       ...       ...
-#&gt; FBgn0039928     685.708       0.126602  0.258145   0.490428  0.623831   0.99742
-#&gt; FBgn0052017     130.994       0.238844  0.418898   0.570173  0.568561   0.99742
-#&gt; FBgn0002521     174.390      -0.110923  0.342767  -0.323611  0.746232   0.99742
-#&gt; FBgn0039924     161.144       0.322238  0.456505   0.705881  0.480262   0.99742
-#&gt; FBgn0027101     362.015       0.233610  0.294520   0.793190  0.427667   0.99742</div><div class='input'>
+#&gt;                baseMean log2FoldChange     lfcSE        stat    pvalue
+#&gt;               &lt;numeric&gt;      &lt;numeric&gt; &lt;numeric&gt;   &lt;numeric&gt; &lt;numeric&gt;
+#&gt; FBgn0267363    0.254249     -1.4228145  4.997084 -0.28472898  0.775852
+#&gt; FBgn0266617   10.800541      0.1563201  1.033936  0.15118944  0.879826
+#&gt; FBgn0265633    2.057706      0.0175256  2.125748  0.00824443  0.993422
+#&gt; FBgn0264617   66.127353      0.2087670  0.467572  0.44649198  0.655242
+#&gt; FBgn0085432 4678.846158     -0.2333084  0.236723 -0.98557490  0.324342
+#&gt; ...                 ...            ...       ...         ...       ...
+#&gt; FBgn0039928     685.650       0.126857  0.258212    0.491292  0.623220
+#&gt; FBgn0052017     130.983       0.239103  0.418935    0.570741  0.568175
+#&gt; FBgn0002521     174.375      -0.110680  0.342843   -0.322829  0.746825
+#&gt; FBgn0039924     161.131       0.322486  0.456555    0.706346  0.479973
+#&gt; FBgn0027101     361.983       0.233889  0.294518    0.794142  0.427113
+#&gt;                  padj
+#&gt;             &lt;numeric&gt;
+#&gt; FBgn0267363  0.997413
+#&gt; FBgn0266617  0.997413
+#&gt; FBgn0265633  0.997413
+#&gt; FBgn0264617  0.997413
+#&gt; FBgn0085432  0.997413
+#&gt; ...               ...
+#&gt; FBgn0039928  0.997413
+#&gt; FBgn0052017  0.997413
+#&gt; FBgn0002521  0.997413
+#&gt; FBgn0039924  0.997413
+#&gt; FBgn0027101  0.997413</div><div class='input'>
 <span class='no'>reslist</span> <span class='kw'>&lt;-</span> <span class='fu'>getDESeqResults</span>(<span class='no'>dds</span>, <span class='kw'>comparisons</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"B"</span>, <span class='st'>"A"</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"C"</span>, <span class='st'>"A"</span>)),
                            <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>reslist</span>)</div><div class='output co'>#&gt; [1] "B_vs_A" "C_vs_A"</div><div class='input'>
 <span class='no'>reslist</span>$<span class='no'>B_vs_A</span></div><div class='output co'>#&gt; log2 fold change (MLE): condition B vs A 
 #&gt; Wald test p-value: condition B vs A 
 #&gt; DataFrame with 111 rows and 6 columns
-#&gt;                baseMean log2FoldChange     lfcSE       stat    pvalue      padj
-#&gt;               &lt;numeric&gt;      &lt;numeric&gt; &lt;numeric&gt;  &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;
-#&gt; FBgn0267363    0.254341     -1.4231496  4.997097 -0.2847953  0.775801   0.99742
-#&gt; FBgn0266617   10.542899      0.0889218  1.049437  0.0847329  0.932474   0.99742
-#&gt; FBgn0265633    2.057889      0.0172672  2.125741  0.0081229  0.993519   0.99742
-#&gt; FBgn0264617   65.878586      0.2205247  0.468152  0.4710540  0.637602   0.99742
-#&gt; FBgn0085432 4679.071664     -0.2337582  0.236722 -0.9874818  0.323407   0.99742
-#&gt; ...                 ...            ...       ...        ...       ...       ...
-#&gt; FBgn0039928     685.708       0.126602  0.258145   0.490428  0.623831   0.99742
-#&gt; FBgn0052017     130.994       0.238844  0.418898   0.570173  0.568561   0.99742
-#&gt; FBgn0002521     174.390      -0.110923  0.342767  -0.323611  0.746232   0.99742
-#&gt; FBgn0039924     161.144       0.322238  0.456505   0.705881  0.480262   0.99742
-#&gt; FBgn0027101     362.015       0.233610  0.294520   0.793190  0.427667   0.99742</div><div class='input'>
+#&gt;                baseMean log2FoldChange     lfcSE        stat    pvalue
+#&gt;               &lt;numeric&gt;      &lt;numeric&gt; &lt;numeric&gt;   &lt;numeric&gt; &lt;numeric&gt;
+#&gt; FBgn0267363    0.254249     -1.4228145  4.997084 -0.28472898  0.775852
+#&gt; FBgn0266617   10.800541      0.1563201  1.033936  0.15118944  0.879826
+#&gt; FBgn0265633    2.057706      0.0175256  2.125748  0.00824443  0.993422
+#&gt; FBgn0264617   66.127353      0.2087670  0.467572  0.44649198  0.655242
+#&gt; FBgn0085432 4678.846158     -0.2333084  0.236723 -0.98557490  0.324342
+#&gt; ...                 ...            ...       ...         ...       ...
+#&gt; FBgn0039928     685.650       0.126857  0.258212    0.491292  0.623220
+#&gt; FBgn0052017     130.983       0.239103  0.418935    0.570741  0.568175
+#&gt; FBgn0002521     174.375      -0.110680  0.342843   -0.322829  0.746825
+#&gt; FBgn0039924     161.131       0.322486  0.456555    0.706346  0.479973
+#&gt; FBgn0027101     361.983       0.233889  0.294518    0.794142  0.427113
+#&gt;                  padj
+#&gt;             &lt;numeric&gt;
+#&gt; FBgn0267363  0.997413
+#&gt; FBgn0266617  0.997413
+#&gt; FBgn0265633  0.997413
+#&gt; FBgn0264617  0.997413
+#&gt; FBgn0085432  0.997413
+#&gt; ...               ...
+#&gt; FBgn0039928  0.997413
+#&gt; FBgn0052017  0.997413
+#&gt; FBgn0002521  0.997413
+#&gt; FBgn0039924  0.997413
+#&gt; FBgn0027101  0.997413</div><div class='input'>
 <span class='co'># or using a dataframe</span>
 <span class='no'>reslist</span> <span class='kw'>&lt;-</span> <span class='fu'>getDESeqResults</span>(<span class='no'>dds</span>, <span class='kw'>comparisons</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>num</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"B"</span>, <span class='st'>"C"</span>),
                                                          <span class='kw'>den</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"A"</span>, <span class='st'>"A"</span>)),
@@ -323,19 +349,32 @@ in <code>args.DESeq</code> will supersede this option for the call to
 <span class='no'>reslist</span>$<span class='no'>B_vs_A</span></div><div class='output co'>#&gt; log2 fold change (MLE): condition B vs A 
 #&gt; Wald test p-value: condition B vs A 
 #&gt; DataFrame with 111 rows and 6 columns
-#&gt;                baseMean log2FoldChange     lfcSE       stat    pvalue      padj
-#&gt;               &lt;numeric&gt;      &lt;numeric&gt; &lt;numeric&gt;  &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;
-#&gt; FBgn0267363    0.254341     -1.4231496  4.997097 -0.2847953  0.775801   0.99742
-#&gt; FBgn0266617   10.542899      0.0889218  1.049437  0.0847329  0.932474   0.99742
-#&gt; FBgn0265633    2.057889      0.0172672  2.125741  0.0081229  0.993519   0.99742
-#&gt; FBgn0264617   65.878586      0.2205247  0.468152  0.4710540  0.637602   0.99742
-#&gt; FBgn0085432 4679.071664     -0.2337582  0.236722 -0.9874818  0.323407   0.99742
-#&gt; ...                 ...            ...       ...        ...       ...       ...
-#&gt; FBgn0039928     685.708       0.126602  0.258145   0.490428  0.623831   0.99742
-#&gt; FBgn0052017     130.994       0.238844  0.418898   0.570173  0.568561   0.99742
-#&gt; FBgn0002521     174.390      -0.110923  0.342767  -0.323611  0.746232   0.99742
-#&gt; FBgn0039924     161.144       0.322238  0.456505   0.705881  0.480262   0.99742
-#&gt; FBgn0027101     362.015       0.233610  0.294520   0.793190  0.427667   0.99742</div></pre>
+#&gt;                baseMean log2FoldChange     lfcSE        stat    pvalue
+#&gt;               &lt;numeric&gt;      &lt;numeric&gt; &lt;numeric&gt;   &lt;numeric&gt; &lt;numeric&gt;
+#&gt; FBgn0267363    0.254249     -1.4228145  4.997084 -0.28472898  0.775852
+#&gt; FBgn0266617   10.800541      0.1563201  1.033936  0.15118944  0.879826
+#&gt; FBgn0265633    2.057706      0.0175256  2.125748  0.00824443  0.993422
+#&gt; FBgn0264617   66.127353      0.2087670  0.467572  0.44649198  0.655242
+#&gt; FBgn0085432 4678.846158     -0.2333084  0.236723 -0.98557490  0.324342
+#&gt; ...                 ...            ...       ...         ...       ...
+#&gt; FBgn0039928     685.650       0.126857  0.258212    0.491292  0.623220
+#&gt; FBgn0052017     130.983       0.239103  0.418935    0.570741  0.568175
+#&gt; FBgn0002521     174.375      -0.110680  0.342843   -0.322829  0.746825
+#&gt; FBgn0039924     161.131       0.322486  0.456555    0.706346  0.479973
+#&gt; FBgn0027101     361.983       0.233889  0.294518    0.794142  0.427113
+#&gt;                  padj
+#&gt;             &lt;numeric&gt;
+#&gt; FBgn0267363  0.997413
+#&gt; FBgn0266617  0.997413
+#&gt; FBgn0265633  0.997413
+#&gt; FBgn0264617  0.997413
+#&gt; FBgn0085432  0.997413
+#&gt; ...               ...
+#&gt; FBgn0039928  0.997413
+#&gt; FBgn0052017  0.997413
+#&gt; FBgn0002521  0.997413
+#&gt; FBgn0039924  0.997413
+#&gt; FBgn0027101  0.997413</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

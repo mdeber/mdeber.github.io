@@ -13,7 +13,15 @@
 <script src="pkgdown.js"></script><meta property="og:title" content="Tools for the Efficient Analysis of High-Resolution Genomics Data">
 <meta property="og:description" content="This package provides useful and efficient utilites for the 
     analysis of high-resolution genomic data using standard Bioconductor 
-    methods and classes.">
+    methods and classes. BRGenomics is feature-rich and simplifies a number of
+    post-alignment processing steps and data handling. Emphasis is on efficient
+    analysis of multiple datasets, with support for normalization and 
+    blacklisting. Included are functions for: spike-in normalizing data;
+    generating basepair-resolution readcounts and coverage data (e.g. for 
+    heatmaps); importing and processing bam files (e.g. for conversion to 
+    bigWig files); generating metaplots/metaprofiles (bootstrapped mean 
+    profiles) with confidence intervals; conveniently calling DESeq2 without 
+    using sample-blind estimates of genewise dispersion; among other features.">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -33,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.0</span>
       </span>
     </div>
 

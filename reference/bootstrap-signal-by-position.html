@@ -73,7 +73,7 @@ base-pair resolution, or over larger bins." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.0</span>
       </span>
     </div>
 
@@ -285,16 +285,16 @@ and columns for positions within those genes.</p></td>
                     <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>0.35</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>0.65</span>,
                     <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 <span class='no'>df</span>[<span class='fl'>1</span>:<span class='fl'>10</span>, ]</div><div class='output co'>#&gt;     x       mean      lower      upper sample.name
-#&gt; 1   3 0.04117647 0.02941176 0.05882353      PROseq
-#&gt; 2   8 0.05294118 0.04117647 0.07058824      PROseq
-#&gt; 3  13 0.07058824 0.04705882 0.09411765      PROseq
-#&gt; 4  18 0.05882353 0.04117647 0.08235294      PROseq
-#&gt; 5  23 0.11764706 0.10000000 0.14705882      PROseq
-#&gt; 6  28 0.10000000 0.08823529 0.11176471      PROseq
-#&gt; 7  33 0.11764706 0.09411765 0.15294118      PROseq
-#&gt; 8  38 0.57058824 0.43529412 0.82941176      PROseq
-#&gt; 9  43 0.47058824 0.38235294 0.60205882      PROseq
-#&gt; 10 48 0.61470588 0.48823529 0.99617647      PROseq</div><div class='input'>
+#&gt; 1   3 0.03529412 0.02941176 0.04705882      PROseq
+#&gt; 2   8 0.05882353 0.04117647 0.07058824      PROseq
+#&gt; 3  13 0.07647059 0.05294118 0.10000000      PROseq
+#&gt; 4  18 0.07058824 0.05294118 0.09029412      PROseq
+#&gt; 5  23 0.11764706 0.09411765 0.15294118      PROseq
+#&gt; 6  28 0.09411765 0.08235294 0.10588235      PROseq
+#&gt; 7  33 0.17058824 0.14117647 0.21764706      PROseq
+#&gt; 8  38 0.63529412 0.46470588 0.92176471      PROseq
+#&gt; 9  43 0.48235294 0.37058824 0.61176471      PROseq
+#&gt; 10 48 0.83529412 0.66470588 1.11382353      PROseq</div><div class='input'>
 <span class='co'>#--------------------------------------------------#</span>
 <span class='co'># Plot bootstrapped means with confidence intervals</span>
 <span class='co'>#--------------------------------------------------#</span>
@@ -318,17 +318,17 @@ and columns for positions within those genes.</p></td>
  <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>metaSubsampleMatrix</span>(<span class='no'>countsmat</span>, <span class='kw'>binsize</span> <span class='kw'>=</span> <span class='fl'>10</span>,
                            <span class='kw'>sample.name</span> <span class='kw'>=</span> <span class='st'>"PROseq"</span>,
                            <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>2</span>)
-<span class='no'>df</span>[<span class='fl'>1</span>:<span class='fl'>10</span>, ]</div><div class='output co'>#&gt;       x       mean     lower     upper sample.name
-#&gt; 1   5.5  0.4705882 0.2352941  1.147059      PROseq
-#&gt; 2  15.5  0.7058824 0.3529412  1.735294      PROseq
-#&gt; 3  25.5  1.1470588 0.6764706  2.117647      PROseq
-#&gt; 4  35.5  3.6470588 1.7647059 11.419118      PROseq
-#&gt; 5  45.5  5.6470588 2.9705882 11.705882      PROseq
-#&gt; 6  55.5 10.2794118 5.9705882 15.591912      PROseq
-#&gt; 7  65.5  5.1764706 3.2352941  7.352941      PROseq
-#&gt; 8  75.5  5.4411765 2.1176471 10.000000      PROseq
-#&gt; 9  85.5  3.0588235 2.0588235  4.441176      PROseq
-#&gt; 10 95.5  2.8676471 1.6470588  4.558824      PROseq</div><div class='input'>
+<span class='no'>df</span>[<span class='fl'>1</span>:<span class='fl'>10</span>, ]</div><div class='output co'>#&gt;       x      mean     lower     upper sample.name
+#&gt; 1   5.5 0.4411765 0.2352941  1.117647      PROseq
+#&gt; 2  15.5 0.7941176 0.3823529  1.882353      PROseq
+#&gt; 3  25.5 1.1176471 0.6764706  2.088235      PROseq
+#&gt; 4  35.5 4.2205882 1.9411765 12.091912      PROseq
+#&gt; 5  45.5 6.8529412 3.2352941 12.882353      PROseq
+#&gt; 6  55.5 9.5588235 5.7022059 14.617647      PROseq
+#&gt; 7  65.5 4.9411765 3.2058824  7.000000      PROseq
+#&gt; 8  75.5 5.4558824 2.0294118  9.827206      PROseq
+#&gt; 9  85.5 3.0882353 2.0882353  4.827206      PROseq
+#&gt; 10 95.5 2.5882353 1.5294118  4.003676      PROseq</div><div class='input'>
 <span class='co'>#--------------------------------------------------#</span>
 <span class='co'># the same, using a normalization factor, and changing the x-values</span>
 <span class='co'>#--------------------------------------------------#</span>
@@ -338,16 +338,16 @@ and columns for positions within those genes.</p></td>
                           <span class='kw'>first.output.xval</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>NF</span> <span class='kw'>=</span> <span class='fl'>0.75</span>,
                           <span class='kw'>sample.name</span> <span class='kw'>=</span> <span class='st'>"PROseq"</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 <span class='no'>df</span>[<span class='fl'>1</span>:<span class='fl'>10</span>, ]</div><div class='output co'>#&gt;       x      mean     lower      upper sample.name
-#&gt; 1   4.5 0.3529412 0.1764706  0.8602941      PROseq
-#&gt; 2  14.5 0.5294118 0.2647059  1.3014706      PROseq
-#&gt; 3  24.5 0.8602941 0.5073529  1.5882353      PROseq
-#&gt; 4  34.5 2.7352941 1.3235294  8.5643382      PROseq
-#&gt; 5  44.5 4.2352941 2.2279412  8.7794118      PROseq
-#&gt; 6  54.5 7.7095588 4.4779412 11.6939338      PROseq
-#&gt; 7  64.5 3.8823529 2.4264706  5.5147059      PROseq
-#&gt; 8  74.5 4.0808824 1.5882353  7.5000000      PROseq
-#&gt; 9  84.5 2.2941176 1.5441176  3.3308824      PROseq
-#&gt; 10 94.5 2.1507353 1.2352941  3.4191176      PROseq</div></pre>
+#&gt; 1   4.5 0.3308824 0.1764706  0.8382353      PROseq
+#&gt; 2  14.5 0.5955882 0.2867647  1.4117647      PROseq
+#&gt; 3  24.5 0.8382353 0.5073529  1.5661765      PROseq
+#&gt; 4  34.5 3.1654412 1.4558824  9.0689338      PROseq
+#&gt; 5  44.5 5.1397059 2.4264706  9.6617647      PROseq
+#&gt; 6  54.5 7.1691176 4.2766544 10.9632353      PROseq
+#&gt; 7  64.5 3.7058824 2.4044118  5.2500000      PROseq
+#&gt; 8  74.5 4.0919118 1.5220588  7.3704044      PROseq
+#&gt; 9  84.5 2.3161765 1.5661765  3.6204044      PROseq
+#&gt; 10 94.5 1.9411765 1.1470588  3.0027574      PROseq</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

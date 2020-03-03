@@ -70,7 +70,7 @@ summarize the datapoints that fall into any of these n-dimensional bins." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.0</span>
       </span>
     </div>
 
@@ -285,9 +285,9 @@ if <code>FUN = sum</code>), the empty value should be <code>0</code>.</p></td>
 <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='no'>bin2d_cps</span>, <span class='fu'><a href='https://rdrr.io/r/base/is.finite.html'>is.finite</a></span>(<span class='no'>value</span>))[<span class='fl'>1</span>:<span class='fl'>6</span>, ]</div><div class='output co'>#&gt;    bin.counts_pr bin.counts_gb    value
 #&gt; 1              1             1 27.72258
 #&gt; 2              2             1  0.00000
-#&gt; 9              1             2 68.91304
-#&gt; 10             2             2 91.57143
-#&gt; 11             3             2 39.00000
+#&gt; 9              1             2 68.82609
+#&gt; 10             2             2 89.85714
+#&gt; 11             3             2 38.50000
 #&gt; 14             9             2 79.00000</div><div class='input'>
 <span class='co'>#--------------------------------------------------#</span>
 <span class='co'># get median cps reads for those bins</span>
@@ -304,12 +304,12 @@ if <code>FUN = sum</code>), the empty value should be <code>0</code>.</p></td>
 #&gt; 5             5             1    NA
 #&gt; 6             9             1    NA</div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='no'>bin2d_cps_med</span>, <span class='fu'><a href='https://rdrr.io/r/base/is.finite.html'>is.finite</a></span>(<span class='no'>value</span>))[<span class='fl'>1</span>:<span class='fl'>6</span>, ]</div><div class='output co'>#&gt;    bin.counts_pr bin.counts_gb value
-#&gt; 1              1             1     3
-#&gt; 2              2             1     0
-#&gt; 9              1             2    69
-#&gt; 10             2             2    60
-#&gt; 11             3             2    39
-#&gt; 14             9             2    79</div></pre>
+#&gt; 1              1             1   3.0
+#&gt; 2              2             1   0.0
+#&gt; 9              1             2  69.0
+#&gt; 10             2             2  60.0
+#&gt; 11             3             2  38.5
+#&gt; 14             9             2  79.0</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

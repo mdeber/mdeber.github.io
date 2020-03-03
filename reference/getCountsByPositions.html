@@ -72,7 +72,7 @@ overlapping each bin." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.0</span>
       </span>
     </div>
 
@@ -250,12 +250,12 @@ of multiple datasets, or if <code>length(field) &gt; 1</code>.</p></td>
 <span class='no'>txs_pr</span> <span class='kw'>&lt;-</span> <span class='fu'>promoters</span>(<span class='no'>txs_dm6_chr4</span>, <span class='fl'>0</span>, <span class='fl'>50</span>) <span class='co'># first 50 bases</span>
 <span class='no'>countsmat</span> <span class='kw'>&lt;-</span> <span class='fu'>getCountsByPositions</span>(<span class='no'>PROseq</span>, <span class='no'>txs_pr</span>)
 <span class='no'>countsmat</span>[<span class='fl'>10</span>:<span class='fl'>15</span>, <span class='fl'>41</span>:<span class='fl'>50</span>] <span class='co'># show only 41-50 bp after TSS</span></div><div class='output co'>#&gt;      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
-#&gt; [1,]    0    0    1    0    0    0    0    0    0     0
-#&gt; [2,]   17    1    0    0    4    0    2    2    0     1
-#&gt; [3,]   17    1    0    0    4    0    2    2    0     1
+#&gt; [1,]    0    1    0    0    0    0    0    0    0     0
+#&gt; [2,]    1    0    0    4    0    2    2    0    1     3
+#&gt; [3,]    1    0    0    4    0    2    2    0    1     3
 #&gt; [4,]    0    0    0    0    0    0    0    0    0     0
 #&gt; [5,]    0    0    0    0    0    0    0    0    0     0
-#&gt; [6,]    0    0    0    0    5    2    1    6    2     0</div><div class='input'>
+#&gt; [6,]    0    0    0    5    2    1    6    2    0     5</div><div class='input'>
 <span class='co'>#--------------------------------------------------#</span>
 <span class='co'># redo with 10 bp bins from 0 to 100</span>
 <span class='co'>#--------------------------------------------------#</span>
@@ -265,36 +265,36 @@ of multiple datasets, or if <code>length(field) &gt; 1</code>.</p></td>
 <span class='no'>txs_pr</span> <span class='kw'>&lt;-</span> <span class='fu'>promoters</span>(<span class='no'>txs_dm6_chr4</span>, <span class='fl'>0</span>, <span class='fl'>100</span>)
 <span class='no'>countsmat</span> <span class='kw'>&lt;-</span> <span class='fu'>getCountsByPositions</span>(<span class='no'>PROseq</span>, <span class='no'>txs_pr</span>, <span class='kw'>binsize</span> <span class='kw'>=</span> <span class='fl'>10</span>)
 <span class='no'>countsmat</span>[<span class='fl'>10</span>:<span class='fl'>15</span>, ]</div><div class='output co'>#&gt;      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
-#&gt; [1,]    0    0    0    0    1   12   19  160    4    12
-#&gt; [2,]    2    0    0    4   27   10    8    8    7     0
-#&gt; [3,]    2    0    0    4   27   10    8    8    7     0
+#&gt; [1,]    0    0    0    0    1   12   19  160    6    12
+#&gt; [2,]    2    0    0   21   13    9    6    8    7     0
+#&gt; [3,]    2    0    0   21   13    9    6    8    7     0
 #&gt; [4,]    4    3    3    0    0    0    2    0    1     0
-#&gt; [5,]    2    0    5    2    0    1    0    0    3     1
-#&gt; [6,]    0    0    0    3   16   26    7    0    1     0</div><div class='input'>
+#&gt; [5,]    2    1    5    1    0    1    0    1    3     0
+#&gt; [6,]    0    0    0    3   21   23    5    0    1     0</div><div class='input'>
 <span class='co'>#--------------------------------------------------#</span>
 <span class='co'># same as the above, but with the average signal in each bin</span>
 <span class='co'>#--------------------------------------------------#</span>
 
 <span class='no'>countsmat</span> <span class='kw'>&lt;-</span> <span class='fu'>getCountsByPositions</span>(<span class='no'>PROseq</span>, <span class='no'>txs_pr</span>, <span class='kw'>binsize</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>FUN</span> <span class='kw'>=</span> <span class='no'>mean</span>)
 <span class='no'>countsmat</span>[<span class='fl'>10</span>:<span class='fl'>15</span>, ]</div><div class='output co'>#&gt;      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
-#&gt; [1,]  0.0  0.0  0.0  0.0  0.1  1.2  1.9 16.0  0.4   1.2
-#&gt; [2,]  0.2  0.0  0.0  0.4  2.7  1.0  0.8  0.8  0.7   0.0
-#&gt; [3,]  0.2  0.0  0.0  0.4  2.7  1.0  0.8  0.8  0.7   0.0
+#&gt; [1,]  0.0  0.0  0.0  0.0  0.1  1.2  1.9 16.0  0.6   1.2
+#&gt; [2,]  0.2  0.0  0.0  2.1  1.3  0.9  0.6  0.8  0.7   0.0
+#&gt; [3,]  0.2  0.0  0.0  2.1  1.3  0.9  0.6  0.8  0.7   0.0
 #&gt; [4,]  0.4  0.3  0.3  0.0  0.0  0.0  0.2  0.0  0.1   0.0
-#&gt; [5,]  0.2  0.0  0.5  0.2  0.0  0.1  0.0  0.0  0.3   0.1
-#&gt; [6,]  0.0  0.0  0.0  0.3  1.6  2.6  0.7  0.0  0.1   0.0</div><div class='input'>
+#&gt; [5,]  0.2  0.1  0.5  0.1  0.0  0.1  0.0  0.1  0.3   0.0
+#&gt; [6,]  0.0  0.0  0.0  0.3  2.1  2.3  0.5  0.0  0.1   0.0</div><div class='input'>
 <span class='co'>#--------------------------------------------------#</span>
 <span class='co'># standard deviation of signal in each bin</span>
 <span class='co'>#--------------------------------------------------#</span>
 
 <span class='no'>countsmat</span> <span class='kw'>&lt;-</span> <span class='fu'>getCountsByPositions</span>(<span class='no'>PROseq</span>, <span class='no'>txs_pr</span>, <span class='kw'>binsize</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>FUN</span> <span class='kw'>=</span> <span class='no'>sd</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='no'>countsmat</span>[<span class='fl'>10</span>:<span class='fl'>15</span>, ], <span class='fl'>1</span>)</div><div class='output co'>#&gt;      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
-#&gt; [1,]  0.0  0.0  0.0  0.0  0.3  3.8  3.8 38.0  0.7   0.8
-#&gt; [2,]  0.4  0.0  0.0  0.7  5.2  1.1  1.0  1.6  1.1   0.0
-#&gt; [3,]  0.4  0.0  0.0  0.7  5.2  1.1  1.0  1.6  1.1   0.0
+#&gt; [1,]  0.0  0.0  0.0  0.0  0.3  3.8  3.8 38.0  0.8   0.8
+#&gt; [2,]  0.4  0.0  0.0  5.3  1.4  0.9  1.0  1.6  1.1   0.0
+#&gt; [3,]  0.4  0.0  0.0  5.3  1.4  0.9  1.0  1.6  1.1   0.0
 #&gt; [4,]  0.5  0.7  0.7  0.0  0.0  0.0  0.6  0.0  0.3   0.0
-#&gt; [5,]  0.4  0.0  0.7  0.4  0.0  0.3  0.0  0.0  0.5   0.3
-#&gt; [6,]  0.0  0.0  0.0  0.5  2.2  2.5  1.2  0.0  0.3   0.0</div></pre>
+#&gt; [5,]  0.4  0.3  0.7  0.3  0.0  0.3  0.0  0.3  0.5   0.0
+#&gt; [6,]  0.0  0.0  0.0  0.5  2.4  2.4  1.1  0.0  0.3   0.0</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

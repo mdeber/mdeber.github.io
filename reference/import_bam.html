@@ -70,7 +70,7 @@ processing options. It is highly recommend to index the BAM file first." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.0</span>
       </span>
     </div>
 
@@ -273,20 +273,20 @@ penalties.</p></td>
 <span class='co'>#--------------------------------------------------#</span>
 
 <span class='co'># Note that PRO-seq reads are sequenced as reverse complement</span>
-<span class='fu'>import_bam</span>(<span class='no'>ps.bam</span>, <span class='kw'>revcomp</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>paired_end</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; GRanges object with 53179 ranges and 1 metadata column:
-#&gt;           seqnames          ranges strand |     score
-#&gt;              &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
-#&gt;       [1]     chr4       1270-1296      + |         1
-#&gt;       [2]     chr4     41411-41429      + |         1
-#&gt;       [3]     chr4     42556-42591      + |         1
-#&gt;       [4]     chr4     42559-42589      + |         1
-#&gt;       [5]     chr4     42559-42594      + |         3
-#&gt;       ...      ...             ...    ... .       ...
-#&gt;   [53175]     chr4 1307741-1307776      - |         1
-#&gt;   [53176]     chr4 1316536-1316563      - |         1
-#&gt;   [53177]     chr4 1318959-1318994      - |         1
-#&gt;   [53178]     chr4 1319003-1319038      - |         1
-#&gt;   [53179]     chr4 1319368-1319403      - |         1
+<span class='fu'>import_bam</span>(<span class='no'>ps.bam</span>, <span class='kw'>revcomp</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>paired_end</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; GRanges object with 164 ranges and 1 metadata column:
+#&gt;         seqnames          ranges strand |     score
+#&gt;            &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
+#&gt;     [1]     chr4       1270-1296      + |         1
+#&gt;     [2]     chr4     41411-41429      + |         1
+#&gt;     [3]     chr4     42556-42591      + |         1
+#&gt;     [4]     chr4     42559-42589      + |         1
+#&gt;     [5]     chr4     42559-42594      + |         3
+#&gt;     ...      ...             ...    ... .       ...
+#&gt;   [160]     chr4 1307741-1307776      - |         1
+#&gt;   [161]     chr4 1316536-1316563      - |         1
+#&gt;   [162]     chr4 1318959-1318994      - |         1
+#&gt;   [163]     chr4 1319003-1319038      - |         1
+#&gt;   [164]     chr4 1319368-1319403      - |         1
 #&gt;   -------
 #&gt;   seqinfo: 1870 sequences from an unspecified genome</div><div class='input'>
 <span class='co'>#--------------------------------------------------#</span>
@@ -294,20 +294,20 @@ penalties.</p></td>
 <span class='co'>#--------------------------------------------------#</span>
 
 <span class='fu'>import_bam</span>(<span class='no'>ps.bam</span>, <span class='kw'>revcomp</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>field</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-           <span class='kw'>paired_end</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; GRanges object with 73887 ranges and 0 metadata columns:
-#&gt;           seqnames          ranges strand
-#&gt;              &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt;
-#&gt;       [1]     chr4       1270-1296      +
-#&gt;       [2]     chr4     41411-41429      +
-#&gt;       [3]     chr4     42556-42591      +
-#&gt;       [4]     chr4     42559-42589      +
-#&gt;       [5]     chr4     42559-42594      +
-#&gt;       ...      ...             ...    ...
-#&gt;   [73883]     chr4 1307741-1307776      -
-#&gt;   [73884]     chr4 1316536-1316563      -
-#&gt;   [73885]     chr4 1318959-1318994      -
-#&gt;   [73886]     chr4 1319003-1319038      -
-#&gt;   [73887]     chr4 1319368-1319403      -
+           <span class='kw'>paired_end</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; GRanges object with 190 ranges and 0 metadata columns:
+#&gt;         seqnames          ranges strand
+#&gt;            &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt;
+#&gt;     [1]     chr4       1270-1296      +
+#&gt;     [2]     chr4     41411-41429      +
+#&gt;     [3]     chr4     42556-42591      +
+#&gt;     [4]     chr4     42559-42589      +
+#&gt;     [5]     chr4     42559-42594      +
+#&gt;     ...      ...             ...    ...
+#&gt;   [186]     chr4 1307741-1307776      -
+#&gt;   [187]     chr4 1316536-1316563      -
+#&gt;   [188]     chr4 1318959-1318994      -
+#&gt;   [189]     chr4 1319003-1319038      -
+#&gt;   [190]     chr4 1319368-1319403      -
 #&gt;   -------
 #&gt;   seqinfo: 1870 sequences from an unspecified genome</div><div class='input'>
 <span class='co'>#--------------------------------------------------#</span>
@@ -316,20 +316,20 @@ penalties.</p></td>
 
 <span class='co'># the typical manner to import PRO-seq data:</span>
 <span class='fu'>import_bam</span>(<span class='no'>ps.bam</span>, <span class='kw'>revcomp</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>trim.to</span> <span class='kw'>=</span> <span class='st'>"3p"</span>,
-           <span class='kw'>paired_end</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; GRanges object with 47380 ranges and 1 metadata column:
-#&gt;           seqnames    ranges strand |     score
-#&gt;              &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
-#&gt;       [1]     chr4      1296      + |         1
-#&gt;       [2]     chr4     41429      + |         1
-#&gt;       [3]     chr4     42589      + |         1
-#&gt;       [4]     chr4     42591      + |         2
-#&gt;       [5]     chr4     42594      + |         5
-#&gt;       ...      ...       ...    ... .       ...
-#&gt;   [47376]     chr4   1307741      - |         1
-#&gt;   [47377]     chr4   1316536      - |         1
-#&gt;   [47378]     chr4   1318959      - |         1
-#&gt;   [47379]     chr4   1319003      - |         1
-#&gt;   [47380]     chr4   1319368      - |         1
+           <span class='kw'>paired_end</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; GRanges object with 150 ranges and 1 metadata column:
+#&gt;         seqnames    ranges strand |     score
+#&gt;            &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
+#&gt;     [1]     chr4      1296      + |         1
+#&gt;     [2]     chr4     41429      + |         1
+#&gt;     [3]     chr4     42589      + |         1
+#&gt;     [4]     chr4     42591      + |         2
+#&gt;     [5]     chr4     42594      + |         5
+#&gt;     ...      ...       ...    ... .       ...
+#&gt;   [146]     chr4   1307741      - |         1
+#&gt;   [147]     chr4   1316536      - |         1
+#&gt;   [148]     chr4   1318959      - |         1
+#&gt;   [149]     chr4   1319003      - |         1
+#&gt;   [150]     chr4   1319368      - |         1
 #&gt;   -------
 #&gt;   seqinfo: 1870 sequences from an unspecified genome</div><div class='input'>
 <span class='co'>#--------------------------------------------------#</span>
@@ -339,20 +339,20 @@ penalties.</p></td>
 <span class='co'># the best way to import PRO-seq data; removes the</span>
 <span class='co'># most 3' base, which was added in the run-on</span>
 <span class='fu'>import_bam</span>(<span class='no'>ps.bam</span>, <span class='kw'>revcomp</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>trim.to</span> <span class='kw'>=</span> <span class='st'>"3p"</span>,
-           <span class='kw'>shift</span> <span class='kw'>=</span> -<span class='fl'>1</span>, <span class='kw'>paired_end</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; GRanges object with 47380 ranges and 1 metadata column:
-#&gt;           seqnames    ranges strand |     score
-#&gt;              &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
-#&gt;       [1]     chr4      1295      + |         1
-#&gt;       [2]     chr4     41428      + |         1
-#&gt;       [3]     chr4     42588      + |         1
-#&gt;       [4]     chr4     42590      + |         2
-#&gt;       [5]     chr4     42593      + |         5
-#&gt;       ...      ...       ...    ... .       ...
-#&gt;   [47376]     chr4   1307742      - |         1
-#&gt;   [47377]     chr4   1316537      - |         1
-#&gt;   [47378]     chr4   1318960      - |         1
-#&gt;   [47379]     chr4   1319004      - |         1
-#&gt;   [47380]     chr4   1319369      - |         1
+           <span class='kw'>shift</span> <span class='kw'>=</span> -<span class='fl'>1</span>, <span class='kw'>paired_end</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; GRanges object with 150 ranges and 1 metadata column:
+#&gt;         seqnames    ranges strand |     score
+#&gt;            &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
+#&gt;     [1]     chr4      1295      + |         1
+#&gt;     [2]     chr4     41428      + |         1
+#&gt;     [3]     chr4     42588      + |         1
+#&gt;     [4]     chr4     42590      + |         2
+#&gt;     [5]     chr4     42593      + |         5
+#&gt;     ...      ...       ...    ... .       ...
+#&gt;   [146]     chr4   1307742      - |         1
+#&gt;   [147]     chr4   1316537      - |         1
+#&gt;   [148]     chr4   1318960      - |         1
+#&gt;   [149]     chr4   1319004      - |         1
+#&gt;   [150]     chr4   1319369      - |         1
 #&gt;   -------
 #&gt;   seqinfo: 1870 sequences from an unspecified genome</div><div class='input'>
 <span class='co'>#--------------------------------------------------#</span>
@@ -361,20 +361,20 @@ penalties.</p></td>
 
 <span class='co'># will include bona fide TSSes as well as hydrolysis products</span>
 <span class='fu'>import_bam</span>(<span class='no'>ps.bam</span>, <span class='kw'>revcomp</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>trim.to</span> <span class='kw'>=</span> <span class='st'>"5p"</span>,
-           <span class='kw'>paired_end</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; GRanges object with 48697 ranges and 1 metadata column:
-#&gt;           seqnames    ranges strand |     score
-#&gt;              &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
-#&gt;       [1]     chr4      1270      + |         1
-#&gt;       [2]     chr4     41411      + |         1
-#&gt;       [3]     chr4     42556      + |         1
-#&gt;       [4]     chr4     42559      + |         4
-#&gt;       [5]     chr4     42560      + |         4
-#&gt;       ...      ...       ...    ... .       ...
-#&gt;   [48693]     chr4   1307776      - |         1
-#&gt;   [48694]     chr4   1316563      - |         1
-#&gt;   [48695]     chr4   1318994      - |         1
-#&gt;   [48696]     chr4   1319038      - |         1
-#&gt;   [48697]     chr4   1319403      - |         1
+           <span class='kw'>paired_end</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; GRanges object with 145 ranges and 1 metadata column:
+#&gt;         seqnames    ranges strand |     score
+#&gt;            &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
+#&gt;     [1]     chr4      1270      + |         1
+#&gt;     [2]     chr4     41411      + |         1
+#&gt;     [3]     chr4     42556      + |         1
+#&gt;     [4]     chr4     42559      + |         4
+#&gt;     [5]     chr4     42560      + |         4
+#&gt;     ...      ...       ...    ... .       ...
+#&gt;   [141]     chr4   1307776      - |         1
+#&gt;   [142]     chr4   1316563      - |         1
+#&gt;   [143]     chr4   1318994      - |         1
+#&gt;   [144]     chr4   1319038      - |         1
+#&gt;   [145]     chr4   1319403      - |         1
 #&gt;   -------
 #&gt;   seqinfo: 1870 sequences from an unspecified genome</div></pre>
   </div>
