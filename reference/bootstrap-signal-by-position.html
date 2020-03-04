@@ -73,7 +73,7 @@ base-pair resolution, or over larger bins." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.14</span>
       </span>
     </div>
 
@@ -283,7 +283,7 @@ and columns for positions within those genes.</p></td>
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>11</span>)
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>metaSubsample</span>(<span class='no'>PROseq</span>, <span class='no'>pr</span>, <span class='kw'>binsize</span> <span class='kw'>=</span> <span class='fl'>5</span>,
                     <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>0.35</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>0.65</span>,
-                    <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+                    <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='no'>df</span>[<span class='fl'>1</span>:<span class='fl'>10</span>, ]</div><div class='output co'>#&gt;     x       mean      lower      upper sample.name
 #&gt; 1   3 0.03529412 0.02941176 0.04705882      PROseq
 #&gt; 2   8 0.05882353 0.04117647 0.07058824      PROseq
@@ -317,7 +317,7 @@ and columns for positions within those genes.</p></td>
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>11</span>)
  <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>metaSubsampleMatrix</span>(<span class='no'>countsmat</span>, <span class='kw'>binsize</span> <span class='kw'>=</span> <span class='fl'>10</span>,
                            <span class='kw'>sample.name</span> <span class='kw'>=</span> <span class='st'>"PROseq"</span>,
-                           <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+                           <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='no'>df</span>[<span class='fl'>1</span>:<span class='fl'>10</span>, ]</div><div class='output co'>#&gt;       x      mean     lower     upper sample.name
 #&gt; 1   5.5 0.4411765 0.2352941  1.117647      PROseq
 #&gt; 2  15.5 0.7941176 0.3823529  1.882353      PROseq
@@ -336,7 +336,7 @@ and columns for positions within those genes.</p></td>
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>11</span>)
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>metaSubsampleMatrix</span>(<span class='no'>countsmat</span>, <span class='kw'>binsize</span> <span class='kw'>=</span> <span class='fl'>10</span>,
                           <span class='kw'>first.output.xval</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>NF</span> <span class='kw'>=</span> <span class='fl'>0.75</span>,
-                          <span class='kw'>sample.name</span> <span class='kw'>=</span> <span class='st'>"PROseq"</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+                          <span class='kw'>sample.name</span> <span class='kw'>=</span> <span class='st'>"PROseq"</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='no'>df</span>[<span class='fl'>1</span>:<span class='fl'>10</span>, ]</div><div class='output co'>#&gt;       x      mean     lower      upper sample.name
 #&gt; 1   4.5 0.3308824 0.1764706  0.8382353      PROseq
 #&gt; 2  14.5 0.5955882 0.2867647  1.4117647      PROseq

@@ -70,7 +70,7 @@ start and end sites of regions of interest (usually genes)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.14</span>
       </span>
     </div>
 
@@ -184,15 +184,16 @@ width, and <code>min.window</code> simply size-filters the input ranges.</p></td
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Unlike
-  <code><a href='https://rdrr.io/pkg/GenomicRanges/man/intra-range-methods.html'>GenomicRanges::promoters</a></code>, distances
-  can be defined to be upstream or downstream by changing the sign of the
-  argument, and both the start and end of the returned regions can be defined
-  in terms of the strand-specific start or end site of the input ranges. For
-  example, <code>genebodies(txs, -50, 150, fix.end = "start")</code> is equivalent
-  to <code>promoters(txs, 50, 151)</code> (the downstream edge is off by 1 because
-  <code>promoters</code> keeps the downstream interval closed). The default
-  arguments return ranges that begin 300 bases downstream of the original
-  start positions, and end 300 bases upstream of the original end positions.</p>
+  <code><a href='https://rdrr.io/pkg/GenomicRanges/man/intra-range-methods.html'>GenomicRanges::promoters</a></code>,
+  distances can be defined to be upstream or downstream by changing the sign
+  of the argument, and both the start and end of the returned regions can be
+  defined in terms of the strand-specific start or end site of the input
+  ranges. For example, <code>genebodies(txs, -50, 150, fix.end = "start")</code> is
+  equivalent to <code>promoters(txs, 50, 151)</code> (the downstream edge is off by
+  1 because <code>promoters</code> keeps the downstream interval closed). The
+  default arguments return ranges that begin 300 bases downstream of the
+  original start positions, and end 300 bases upstream of the original end
+  positions.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/GenomicRanges/man/intra-range-methods.html'>intra-range-methods</a></code></p></div>

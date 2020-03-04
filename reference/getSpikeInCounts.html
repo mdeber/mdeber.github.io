@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.14</span>
       </span>
     </div>
 
@@ -259,13 +259,13 @@ in <code>dataset.gr</code></p></td>
 <span class='co'>#--------------------------------------------------#</span>
 
 <span class='co'># by giving names of all spike-in chromosomes</span>
-<span class='fu'>getSpikeInCounts</span>(<span class='no'>grl</span>, <span class='kw'>si_names</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"spikechr1"</span>, <span class='st'>"spikechr2"</span>), <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt;     sample total_reads exp_reads spike_reads
+<span class='fu'>getSpikeInCounts</span>(<span class='no'>grl</span>, <span class='kw'>si_names</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"spikechr1"</span>, <span class='st'>"spikechr2"</span>), <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt;     sample total_reads exp_reads spike_reads
 #&gt; 1 gr1_rep1           4         2           2
 #&gt; 2 gr2_rep1           6         4           2
 #&gt; 3 gr1_rep2           5         2           3
 #&gt; 4 gr2_rep2          12         8           4</div><div class='input'>
 <span class='co'># or by matching the string/regular expression "spike" in chromosome names</span>
-<span class='fu'>getSpikeInCounts</span>(<span class='no'>grl</span>, <span class='kw'>si_pattern</span> <span class='kw'>=</span> <span class='st'>"spike"</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt;     sample total_reads exp_reads spike_reads
+<span class='fu'>getSpikeInCounts</span>(<span class='no'>grl</span>, <span class='kw'>si_pattern</span> <span class='kw'>=</span> <span class='st'>"spike"</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt;     sample total_reads exp_reads spike_reads
 #&gt; 1 gr1_rep1           4         2           2
 #&gt; 2 gr2_rep1           6         4           2
 #&gt; 3 gr1_rep2           5         2           3
@@ -274,7 +274,7 @@ in <code>dataset.gr</code></p></td>
 <span class='co'># Filter out spike-in reads</span>
 <span class='co'>#--------------------------------------------------#</span>
 
-<span class='fu'>removeSpikeInReads</span>(<span class='no'>grl</span>, <span class='kw'>si_pattern</span> <span class='kw'>=</span> <span class='st'>"spike"</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; $gr1_rep1
+<span class='fu'>removeSpikeInReads</span>(<span class='no'>grl</span>, <span class='kw'>si_pattern</span> <span class='kw'>=</span> <span class='st'>"spike"</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; $gr1_rep1
 #&gt; GRanges object with 2 ranges and 1 metadata column:
 #&gt;       seqnames    ranges strand |     score
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
@@ -314,7 +314,7 @@ in <code>dataset.gr</code></p></td>
 <span class='co'># Return spike-in reads</span>
 <span class='co'>#--------------------------------------------------#</span>
 
-<span class='fu'>getSpikeInReads</span>(<span class='no'>grl</span>, <span class='kw'>si_pattern</span> <span class='kw'>=</span> <span class='st'>"spike"</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; $gr1_rep1
+<span class='fu'>getSpikeInReads</span>(<span class='no'>grl</span>, <span class='kw'>si_pattern</span> <span class='kw'>=</span> <span class='st'>"spike"</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; $gr1_rep1
 #&gt; GRanges object with 2 ranges and 1 metadata column:
 #&gt;        seqnames    ranges strand |     score
 #&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;

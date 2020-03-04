@@ -70,7 +70,7 @@ summarize the datapoints that fall into any of these n-dimensional bins." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.14</span>
       </span>
     </div>
 
@@ -245,7 +245,7 @@ if <code>FUN = sum</code>), the empty value should be <code>0</code>.</p></td>
 <span class='co'># divide genes into 20 bins for each measurement</span>
 <span class='co'>#--------------------------------------------------#</span>
 
-<span class='no'>bin3d</span> <span class='kw'>&lt;-</span> <span class='fu'>binNdimensions</span>(<span class='no'>df</span>, <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+<span class='no'>bin3d</span> <span class='kw'>&lt;-</span> <span class='fu'>binNdimensions</span>(<span class='no'>df</span>, <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 
 <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>txs_dm6_chr4</span>)</div><div class='output co'>#&gt; [1] 339</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>bin3d</span>)</div><div class='output co'>#&gt; [1] 339</div><div class='input'><span class='no'>bin3d</span>[<span class='fl'>1</span>:<span class='fl'>6</span>, ]</div><div class='output co'>#&gt;   bin.counts_pr bin.counts_gb bin.counts_cps
 #&gt; 1             1             1              1
@@ -259,7 +259,7 @@ if <code>FUN = sum</code>), the empty value should be <code>0</code>.</p></td>
 <span class='co'>#--------------------------------------------------#</span>
 
 <span class='no'>bin_counts</span> <span class='kw'>&lt;-</span> <span class='fu'>densityInNdimensionalBins</span>(<span class='no'>df</span>, <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>20</span>,
-                                        <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+                                        <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 
 <span class='no'>bin_counts</span>[<span class='fl'>1</span>:<span class='fl'>6</span>, ]</div><div class='output co'>#&gt;   bin.counts_pr bin.counts_gb bin.counts_cps value
 #&gt; 1             1             1              1   131
@@ -273,7 +273,7 @@ if <code>FUN = sum</code>), the empty value should be <code>0</code>.</p></td>
 <span class='co'>#--------------------------------------------------#</span>
 
 <span class='no'>bin2d_cps</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregateByNdimensionalBins</span>(<span class='st'>"counts_cps"</span>, <span class='no'>df</span>,
-                                         <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+                                         <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 
 <span class='no'>bin2d_cps</span>[<span class='fl'>1</span>:<span class='fl'>6</span>, ]</div><div class='output co'>#&gt;   bin.counts_pr bin.counts_gb    value
 #&gt; 1             1             1 27.72258
@@ -294,7 +294,7 @@ if <code>FUN = sum</code>), the empty value should be <code>0</code>.</p></td>
 <span class='co'>#--------------------------------------------------#</span>
 
 <span class='no'>bin2d_cps_med</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregateByNdimensionalBins</span>(<span class='st'>"counts_cps"</span>, <span class='no'>df</span>, <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>20</span>,
-                                             <span class='kw'>FUN</span> <span class='kw'>=</span> <span class='no'>median</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+                                             <span class='kw'>FUN</span> <span class='kw'>=</span> <span class='no'>median</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 
 <span class='no'>bin2d_cps_med</span>[<span class='fl'>1</span>:<span class='fl'>6</span>, ]</div><div class='output co'>#&gt;   bin.counts_pr bin.counts_gb value
 #&gt; 1             1             1     3

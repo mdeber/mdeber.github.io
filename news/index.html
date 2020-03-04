@@ -67,7 +67,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.14</span>
       </span>
     </div>
 
@@ -117,31 +117,33 @@
       
     </div>
 
-    <div id="brgenomics-0-99-4" class="section level2">
+    <div id="brgenomics-0-99-bioconductor-submission" class="section level2">
 <h2 class="hasAnchor">
-<a href="#brgenomics-0-99-4" class="anchor"></a>BRGenomics 0.99.4</h2>
+<a href="#brgenomics-0-99-bioconductor-submission" class="anchor"></a>BRGenomics 0.99 Bioconductor Submission</h2>
+<p>[0.99.14]</p>
 <ul>
-<li>For Bioconductor, made new branch <code>R3</code> to allow users to install under R version &gt;=3.5
+<li>Change tidyChromosomes test</li>
+<li>Remove indirect links in doc pages (use only exact names of man pages)</li>
+</ul>
+<p>[0.99.10]</p>
 <ul>
-<li>Branch <code>master</code> now requires R version 4.0 (development version)</li>
+<li>Code modifications to pass test builds on Windows:
+<ul>
+<li>Make all examples and tests single core</li>
+<li>Internally (not exported) redefine mcMap (current implementation in package parallel needs to be modified)</li>
+<li>In tests and examples, test if on Windows before attempting any bigWig file import</li>
 </ul>
 </li>
-<li>Updated readme to have users install from branch <code>R3</code>
+</ul>
+<p>[0.99.0]</p>
+<ul>
+<li>For Bioconductor version requirements:
+<ul>
+<li>Change package versioning scheme</li>
+<li>Update R requirement to version 4.0</li>
+<li>Add new branch <code>R3</code> to allow users to install under R version &gt;=3.5</li>
+</ul>
 </li>
-</ul>
-</div>
-    <div id="brgenomics-0-99-1" class="section level2">
-<h2 class="hasAnchor">
-<a href="#brgenomics-0-99-1" class="anchor"></a>BRGenomics 0.99.1</h2>
-<ul>
-<li>Remove .Rproj file from git repository</li>
-</ul>
-</div>
-    <div id="brgenomics-0-99-0-bioconductor-submission" class="section level2">
-<h2 class="hasAnchor">
-<a href="#brgenomics-0-99-0-bioconductor-submission" class="anchor"></a>BRGenomics 0.99.0 (Bioconductor submission)</h2>
-<ul>
-<li>Update version for Bioconductor submission</li>
 <li>Various minor formatting changes to codebase</li>
 </ul>
 </div>
@@ -337,9 +339,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#brgenomics-0-99-4">0.99.4</a></li>
-        <li><a href="#brgenomics-0-99-1">0.99.1</a></li>
-        <li><a href="#brgenomics-0-99-0-bioconductor-submission">0.99.0</a></li>
+        <li><a href="#brgenomics-0-99-bioconductor-submission">0.99</a></li>
         <li><a href="#brgenomics-0-8-1">0.8.1</a></li>
         <li><a href="#brgenomics-0-8-0">0.8.0</a></li>
         <li><a href="#brgenomics-0-7-10">0.7.10</a></li>

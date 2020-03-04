@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.14</span>
       </span>
     </div>
 
@@ -236,13 +236,13 @@ column.</p></td>
 
 <span class='co'># see examples for getSpikeInNFs for more</span>
 <span class='fu'><a href='getSpikeInNFs.html'>getSpikeInNFs</a></span>(<span class='no'>grl</span>, <span class='kw'>si_pattern</span> <span class='kw'>=</span> <span class='st'>"spike"</span>, <span class='kw'>ctrl_pattern</span> <span class='kw'>=</span> <span class='st'>"gr1"</span>,
-              <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"SNR"</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; [1] 1.00 1.00 1.00 0.75</div><div class='input'>
+              <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"SNR"</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; [1] 1.00 1.00 1.00 0.75</div><div class='input'>
 <span class='co'>#--------------------------------------------------#</span>
 <span class='co'># Subsample the GRanges according to the spike-in NFs</span>
 <span class='co'>#--------------------------------------------------#</span>
 
 <span class='no'>ss</span> <span class='kw'>&lt;-</span> <span class='fu'>subsampleBySpikeIn</span>(<span class='no'>grl</span>, <span class='kw'>si_pattern</span> <span class='kw'>=</span> <span class='st'>"spike"</span>, <span class='kw'>ctrl_pattern</span> <span class='kw'>=</span> <span class='st'>"gr1"</span>,
-                         <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+                         <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='no'>ss</span></div><div class='output co'>#&gt; $gr1_rep1
 #&gt; GRanges object with 2 ranges and 1 metadata column:
 #&gt;       seqnames    ranges strand |     score
@@ -274,8 +274,8 @@ column.</p></td>
 #&gt; GRanges object with 2 ranges and 1 metadata column:
 #&gt;       seqnames    ranges strand |     score
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
-#&gt;   [1]     chr1         1      + |         4
-#&gt;   [2]     chr2         2      + |         2
+#&gt;   [1]     chr1         1      + |         3
+#&gt;   [2]     chr2         2      + |         3
 #&gt;   -------
 #&gt;   seqinfo: 2 sequences from an unspecified genome; no seqlengths
 #&gt; </div><div class='input'>
@@ -293,7 +293,7 @@ column.</p></td>
 #&gt; </div><div class='input'>
 <span class='co'># Put in units of RPM for the negative control</span>
 <span class='no'>ssr</span> <span class='kw'>&lt;-</span> <span class='fu'>subsampleBySpikeIn</span>(<span class='no'>grl</span>, <span class='kw'>si_pattern</span> <span class='kw'>=</span> <span class='st'>"spike"</span>, <span class='kw'>ctrl_pattern</span> <span class='kw'>=</span> <span class='st'>"gr1"</span>,
-                          <span class='kw'>RPM_units</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+                          <span class='kw'>RPM_units</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 
 <span class='no'>ssr</span></div><div class='output co'>#&gt; $gr1_rep1
 #&gt; GRanges object with 2 ranges and 1 metadata column:

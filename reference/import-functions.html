@@ -70,7 +70,7 @@ files." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.14</span>
       </span>
     </div>
 
@@ -207,9 +207,11 @@ simultaneously.</p></td>
 <span class='no'>m.bw</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"PROseq_dm6_chr4_minus.bw"</span>,
                     <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"BRGenomics"</span>)
 
-<span class='co'># import bigWigs</span>
-<span class='no'>PROseq</span> <span class='kw'>&lt;-</span> <span class='fu'>import_bigWig</span>(<span class='no'>p.bw</span>, <span class='no'>m.bw</span>, <span class='kw'>genome</span> <span class='kw'>=</span> <span class='st'>"dm6"</span>)
-<span class='no'>PROseq</span></div><div class='output co'>#&gt; GRanges object with 150 ranges and 1 metadata column:
+<span class='co'># import bigWigs (not supported on windows)</span>
+<span class='kw'>if</span> (<span class='no'>.Platform</span>$<span class='no'>OS.type</span> <span class='kw'>==</span> <span class='st'>"unix"</span>) {
+    <span class='no'>PROseq</span> <span class='kw'>&lt;-</span> <span class='fu'>import_bigWig</span>(<span class='no'>p.bw</span>, <span class='no'>m.bw</span>, <span class='kw'>genome</span> <span class='kw'>=</span> <span class='st'>"dm6"</span>)
+    <span class='no'>PROseq</span>
+}</div><div class='output co'>#&gt; GRanges object with 150 ranges and 1 metadata column:
 #&gt;         seqnames    ranges strand |     score
 #&gt;            &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
 #&gt;     [1]     chr4      1295      + |         1
@@ -225,6 +227,7 @@ simultaneously.</p></td>
 #&gt;   [150]     chr4   1319369      - |         1
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from dm6 genome</div><div class='input'>
+
 <span class='co'>#--------------------------------------------------#</span>
 <span class='co'># Import PRO-seq bedGraphs -&gt; whole reads (matched 5' and 3' ends)</span>
 <span class='co'>#--------------------------------------------------#</span>
