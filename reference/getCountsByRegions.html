@@ -37,7 +37,9 @@
 
 <meta property="og:title" content="Get signal counts in regions of interest — getCountsByRegions" />
 <meta property="og:description" content="Get the sum of the signal in dataset.gr that overlaps each range in
-regions.gr." />
+regions.gr. This function is written to calculate readcounts
+overlapping each region, and not &quot;coverage signal&quot; (see details
+below)." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -70,7 +72,7 @@ regions.gr." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.15</span>
       </span>
     </div>
 
@@ -123,7 +125,9 @@ regions.gr." />
 
     <div class="ref-description">
     <p>Get the sum of the signal in <code>dataset.gr</code> that overlaps each range in
-<code>regions.gr</code>.</p>
+<code>regions.gr</code>. This function is written to calculate <em>readcounts</em>
+overlapping each region, and <em>not</em> "coverage signal" (see details
+below).</p>
     </div>
 
     <pre class="usage"><span class='fu'>getCountsByRegions</span>(
@@ -201,6 +205,19 @@ of multiple datasets, or if <code>length(field) &gt; 1</code>.</p></td>
   (either by their indices, or by <code>region_names</code>, if given), another
   column to indicate signal, and a third column containing the sample name
   (unless <code>dataset.gr</code> is a single GRanges object).</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>This function is designed to work with data in which each range
+  represents one type of molecule, whether it's a single base (e.g. the 5'
+  ends, 3' ends, or centers of reads) or entire reads (i.e. paired 5' and 3'
+  ends of reads).</p>
+<p>This is in contrast to standard run-length compressed GRanges object, as
+  imported using <code><a href='https://rdrr.io/pkg/rtracklayer/man/BigWigFile.html'>rtracklayer::import.bw</a></code>,
+  in which a single range can represent multiple contiguous positions that
+  share the same signal information. This function does <em>not</em> expand
+  run-length compressed coverage objects. As an example, a range of length 10
+  with a score of 2 is treated as 2 reads (each spanning the same 10 bases),
+  not 20 reads.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='getCountsByPositions.html'>getCountsByPositions</a></code></p></div>
@@ -232,6 +249,7 @@ of multiple datasets, or if <code>length(field) &gt; 1</code>.</p></td>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#details">Details</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>

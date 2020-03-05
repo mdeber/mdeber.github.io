@@ -39,7 +39,9 @@
 <meta property="og:description" content="Get the sum of the signal in dataset.gr that overlaps each position
 within each range in regions.gr. If binning is used (i.e. positions
 are wider than 1 bp), any function can be used to summarize the signal
-overlapping each bin." />
+overlapping each bin. Just as in 
+getCountsByRegions, this function calculates readcounts overlapping
+positions, and not &quot;coverage signal&quot;." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -72,7 +74,7 @@ overlapping each bin." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.15</span>
       </span>
     </div>
 
@@ -127,7 +129,9 @@ overlapping each bin." />
     <p>Get the sum of the signal in <code>dataset.gr</code> that overlaps each position
 within each range in <code>regions.gr</code>. If binning is used (i.e. positions
 are wider than 1 bp), any function can be used to summarize the signal
-overlapping each bin.</p>
+overlapping each bin. Just as in <code><a href='getCountsByRegions.html'>
+getCountsByRegions</a></code>, this function calculates <em>readcounts</em> overlapping
+positions, and not "coverage signal".</p>
     </div>
 
     <pre class="usage"><span class='fu'>getCountsByPositions</span>(
