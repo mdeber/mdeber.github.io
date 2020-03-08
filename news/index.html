@@ -67,7 +67,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.19</span>
       </span>
     </div>
 
@@ -117,20 +117,42 @@
       
     </div>
 
-    <div id="brgenomics-0-99-bioconductor-submission" class="section level2">
+    <div id="brgenomics-0-99-19" class="section level2">
 <h2 class="hasAnchor">
-<a href="#brgenomics-0-99-bioconductor-submission" class="anchor"></a>BRGenomics 0.99 Bioconductor Submission</h2>
-<p>[0.99.15]</p>
+<a href="#brgenomics-0-99-19" class="anchor"></a>BRGenomics 0.99.19</h2>
+<ul>
+<li>Added support for non-basepair-resolution GRanges throughout, via the <code>expand_ranges</code> argument
+<ul>
+<li>Substantial performance benefits for less-sparse datasets (e.g. whole read coverage)</li>
+<li>Supported everywhere, including counting functions, subsampling, merging, normalization, etc.</li>
+</ul>
+</li>
+<li>Rewrite of <code><a href="../reference/mergeGRangesData.html">mergeGRangesData()</a></code>:
+<ul>
+<li>Substantial performance improvements for most datasets</li>
+<li>No longer requires basepair-resolution GRanges objects</li>
+<li>Added options and flexibility for merging reads as well as coverage data</li>
+</ul>
+</li>
+<li>Add a <code><a href="../reference/mergeReplicates.html">mergeReplicates()</a></code> function</li>
+<li>
+<code><a href="../reference/subsampleGRanges.html">subsampleGRanges()</a></code> no longer returns a basepair-resolution GRanges by default</li>
+<li>When <code>field=NULL</code>, <code><a href="../reference/applyNFsGRanges.html">applyNFsGRanges()</a></code> no longer returns a basepair-resolution GRanges by default</li>
+</ul>
+</div>
+    <div id="brgenomics-0-99-15" class="section level2">
+<h2 class="hasAnchor">
+<a href="#brgenomics-0-99-15" class="anchor"></a>BRGenomics 0.99.15</h2>
 <ul>
 <li>Add pre-filtering to counting functions for performance</li>
 <li>Some additional clarification of readcounts vs. coverage signal in counting and import functions</li>
-</ul>
-<p>[0.99.14]</p>
-<ul>
 <li>Change tidyChromosomes test</li>
 <li>Remove indirect links in doc pages (use only exact names of man pages)</li>
 </ul>
-<p>[0.99.10]</p>
+</div>
+    <div id="brgenomics-0-99-10" class="section level2">
+<h2 class="hasAnchor">
+<a href="#brgenomics-0-99-10" class="anchor"></a>BRGenomics 0.99.10</h2>
 <ul>
 <li>Code modifications to pass test builds on Windows:
 <ul>
@@ -140,7 +162,10 @@
 </ul>
 </li>
 </ul>
-<p>[0.99.0]</p>
+</div>
+    <div id="brgenomics-0-99-0-bioconductor-submission" class="section level2">
+<h2 class="hasAnchor">
+<a href="#brgenomics-0-99-0-bioconductor-submission" class="anchor"></a>BRGenomics 0.99.0 (Bioconductor submission)</h2>
 <ul>
 <li>For Bioconductor version requirements:
 <ul>
@@ -344,7 +369,10 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#brgenomics-0-99-bioconductor-submission">0.99</a></li>
+        <li><a href="#brgenomics-0-99-19">0.99.19</a></li>
+        <li><a href="#brgenomics-0-99-15">0.99.15</a></li>
+        <li><a href="#brgenomics-0-99-10">0.99.10</a></li>
+        <li><a href="#brgenomics-0-99-0-bioconductor-submission">0.99.0</a></li>
         <li><a href="#brgenomics-0-8-1">0.8.1</a></li>
         <li><a href="#brgenomics-0-8-0">0.8.0</a></li>
         <li><a href="#brgenomics-0-7-10">0.7.10</a></li>

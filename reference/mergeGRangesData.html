@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Merge basepair-resolution GRanges objects — mergeGRangesData • BRGenomics</title>
+<title>Merge GRanges objects — mergeGRangesData • BRGenomics</title>
 
 
 <!-- jquery -->
@@ -35,11 +35,11 @@
 
 
 
-<meta property="og:title" content="Merge basepair-resolution GRanges objects — mergeGRangesData" />
-<meta property="og:description" content="Merges 2 or more basepair-resolution (single-width) GRanges objects by
-combining all of their ranges and associated signal (e.g. readcounts). If
-multiplex = TRUE, the input datasets are reversibly combined into a
-multiplexed GRanges containing a field for each input dataset." />
+<meta property="og:title" content="Merge GRanges objects — mergeGRangesData" />
+<meta property="og:description" content="Merges 2 or more GRanges objects by combining all of their ranges and
+associated signal (e.g. readcounts). If multiplex = TRUE, the input
+datasets are reversibly combined into a multiplexed GRanges containing a
+field for each input dataset." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -72,7 +72,7 @@ multiplexed GRanges containing a field for each input dataset." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.19</span>
       </span>
     </div>
 
@@ -118,22 +118,24 @@ multiplexed GRanges containing a field for each input dataset." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Merge basepair-resolution GRanges objects</h1>
+    <h1>Merge GRanges objects</h1>
     
     <div class="hidden name"><code>mergeGRangesData.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Merges 2 or more basepair-resolution (single-width) GRanges objects by
-combining all of their ranges and associated signal (e.g. readcounts). If
-<code>multiplex = TRUE</code>, the input datasets are reversibly combined into a
-multiplexed GRanges containing a field for each input dataset.</p>
+    <p>Merges 2 or more GRanges objects by combining all of their ranges and
+associated signal (e.g. readcounts). If <code>multiplex = TRUE</code>, the input
+datasets are reversibly combined into a multiplexed GRanges containing a
+field for each input dataset.</p>
     </div>
 
     <pre class="usage"><span class='fu'>mergeGRangesData</span>(
   <span class='no'>...</span>,
   <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"score"</span>,
   <span class='kw'>multiplex</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>makeBRG</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>exact_overlaps</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fu'>detectCores</span>()
 )</pre>
 
@@ -143,11 +145,9 @@ multiplexed GRanges containing a field for each input dataset.</p>
     <tr>
       <th>...</th>
       <td><p>Any number of GRanges objects in which signal (e.g. readcounts)
-are contained within metadata. GRanges not single-width will be coerced
-using <code><a href='makeGRangesBRG.html'>makeGRangesBRG</a></code>. Lists of
-GRanges can also be passed, but they must be named lists if
-<code>multiplex = TRUE</code>. Multiple lists can be passed, but if any inputs
-are lists, then all inputs must be lists.</p></td>
+are contained within metadata. Lists of GRanges can also be passed, but
+they must be named lists if <code>multiplex = TRUE</code>. Multiple lists can be
+passed, but if any inputs are lists, then all inputs must be lists.</p></td>
     </tr>
     <tr>
       <th>field</th>
@@ -155,7 +155,7 @@ are lists, then all inputs must be lists.</p></td>
 typically the "score" field. Fields typically contain coverage information.
 If only a single field is given (i.e. all input GRanges use the same
 field), that same field will be used for the output. Otherwise, the
-<code>score</code> metadata field will be used by default. The output metadata
+<code>"score"</code> metadata field will be used by default. The output metadata
 fields are different if <code>multiplex</code> is enabled.</p></td>
     </tr>
     <tr>
@@ -166,6 +166,22 @@ reads from different experiments. When <code>multiplex = TRUE</code>, the input
 GRanges data are reversibly combined into a multiplexed GRanges object,
 such that each input GRanges object has its own metadata field in the
 output.</p></td>
+    </tr>
+    <tr>
+      <th>makeBRG</th>
+      <td><p>If <code>TRUE</code> (the default), the output GRanges will be made
+"basepair-resolution" via <code><a href='makeGRangesBRG.html'>
+makeGRangesBRG</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>exact_overlaps</th>
+      <td><p>By default (<code>FALSE</code>), any ranges that cover more
+than a single base are treated as "coverage" signal (see
+<code><a href='getCountsByRegions.html'>getCountsByRegions</a></code>). If
+<code>exact_overlaps = TRUE</code>, all input ranges are conserved exactly as
+they are; ranges are only combined if they overlap exactly, and the signal
+of any combined range is the sum of the input ranges that were merged.
+Using <code>exact_overlaps</code> will automatically set <code>makeBRG = FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>ncores</th>

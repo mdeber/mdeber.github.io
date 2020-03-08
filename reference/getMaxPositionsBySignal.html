@@ -71,7 +71,7 @@ larger bins." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.19</span>
       </span>
     </div>
 
@@ -134,7 +134,8 @@ larger bins.</p>
   <span class='kw'>binsize</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='kw'>bin.centers</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"score"</span>,
-  <span class='kw'>keep.signal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+  <span class='kw'>keep.signal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>expand_ranges</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -167,6 +168,14 @@ opposed to the entire bin. By default, entire bins are returned.</p></td>
       <td><p>Logical indicating if the signal value at the max site
 should be reported. If set to <code>TRUE</code>, the values are kept as a new
 <code>MaxSiteSignal</code> metadata column in the output GRanges.</p></td>
+    </tr>
+    <tr>
+      <th>expand_ranges</th>
+      <td><p>Logical indicating if ranges in <code>dataset.gr</code> should
+be treated as descriptions of single molecules (<code>FALSE</code>), or if ranges
+should be treated as representing multiple adjacent positions with the same
+signal (<code>TRUE</code>). See <code><a href='getCountsByRegions.html'>
+getCountsByRegions</a></code>.</p></td>
     </tr>
     </table>
 

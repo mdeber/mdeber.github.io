@@ -72,7 +72,7 @@ function can be used in this scenario." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.19</span>
       </span>
     </div>
 
@@ -135,6 +135,7 @@ function can be used in this scenario.</p>
   <span class='kw'>n</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>prop</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"score"</span>,
+  <span class='kw'>expand_ranges</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fu'>detectCores</span>()
 )</pre>
 
@@ -164,6 +165,14 @@ for reach position. If each range represents a single read, set <code>field
 then <code>dataset.gr</code> will be treated as a multiplexed GRanges, and each
 field will be treated as an indpendent dataset. See
 <code><a href='mergeGRangesData.html'>mergeGRangesData</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>expand_ranges</th>
+      <td><p>Logical indicating if ranges in <code>dataset.gr</code> should
+be treated as descriptions of single molecules (<code>FALSE</code>), or if ranges
+should be treated as representing multiple adjacent positions with the same
+signal (<code>TRUE</code>). See <code><a href='getCountsByRegions.html'>
+getCountsByRegions</a></code>.</p></td>
     </tr>
     <tr>
       <th>ncores</th>

@@ -39,9 +39,9 @@
 <meta property="og:description" content="Get the sum of the signal in dataset.gr that overlaps each position
 within each range in regions.gr. If binning is used (i.e. positions
 are wider than 1 bp), any function can be used to summarize the signal
-overlapping each bin. Just as in 
-getCountsByRegions, this function calculates readcounts overlapping
-positions, and not &quot;coverage signal&quot;." />
+overlapping each bin. For a description of the critical difference between
+expand_ranges = FALSE and expand_ranges = TRUE, see
+getCountsByRegions." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -74,7 +74,7 @@ positions, and not &quot;coverage signal&quot;." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.19</span>
       </span>
     </div>
 
@@ -129,9 +129,9 @@ positions, and not &quot;coverage signal&quot;." />
     <p>Get the sum of the signal in <code>dataset.gr</code> that overlaps each position
 within each range in <code>regions.gr</code>. If binning is used (i.e. positions
 are wider than 1 bp), any function can be used to summarize the signal
-overlapping each bin. Just as in <code><a href='getCountsByRegions.html'>
-getCountsByRegions</a></code>, this function calculates <em>readcounts</em> overlapping
-positions, and not "coverage signal".</p>
+overlapping each bin. For a description of the critical difference between
+<code>expand_ranges = FALSE</code> and <code>expand_ranges = TRUE</code>, see
+<code><a href='getCountsByRegions.html'>getCountsByRegions</a></code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>getCountsByPositions</span>(
@@ -145,7 +145,22 @@ positions, and not "coverage signal".</p>
   <span class='kw'>blacklist</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>NA_blacklisted</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>melt</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>expand_ranges</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fu'>detectCores</span>()
+)
+
+<span class='fu'>.getCoverageByPositions</span>(
+  <span class='no'>dataset.gr</span>,
+  <span class='no'>regions.gr</span>,
+  <span class='no'>binsize</span>,
+  <span class='no'>FUN</span>,
+  <span class='no'>simplify.multi.widths</span>,
+  <span class='no'>field</span>,
+  <span class='no'>NF</span>,
+  <span class='no'>blacklist</span>,
+  <span class='no'>NA_blacklisted</span>,
+  <span class='no'>melt</span>,
+  <span class='no'>ncores</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -212,6 +227,14 @@ returned, which contains an additional column "sample", which contains
 individual sample names. If used with multi-width <code>regions.gr</code>, the
 resulting dataframe will only contain positions that are found within each
 respective region.</p></td>
+    </tr>
+    <tr>
+      <th>expand_ranges</th>
+      <td><p>Logical indicating if ranges in <code>dataset.gr</code> should
+be treated as descriptions of single molecules (<code>FALSE</code>), or if ranges
+should be treated as representing multiple adjacent positions with the same
+signal (<code>TRUE</code>). See <code><a href='getCountsByRegions.html'>
+getCountsByRegions</a></code>.</p></td>
     </tr>
     <tr>
       <th>ncores</th>

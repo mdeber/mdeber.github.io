@@ -37,9 +37,10 @@
 
 <meta property="og:title" content="Get signal counts in regions of interest — getCountsByRegions" />
 <meta property="og:description" content="Get the sum of the signal in dataset.gr that overlaps each range in
-regions.gr. This function is written to calculate readcounts
-overlapping each region, and not &quot;coverage signal&quot; (see details
-below)." />
+regions.gr. If expand_regions = FALSE,
+getCountsByRegions is written to calculate readcounts
+overlapping each region, while expand_regions = TRUE will calculate
+&quot;coverage signal&quot; (see details below)." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -72,7 +73,7 @@ below)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.19</span>
       </span>
     </div>
 
@@ -125,9 +126,10 @@ below)." />
 
     <div class="ref-description">
     <p>Get the sum of the signal in <code>dataset.gr</code> that overlaps each range in
-<code>regions.gr</code>. This function is written to calculate <em>readcounts</em>
-overlapping each region, and <em>not</em> "coverage signal" (see details
-below).</p>
+<code>regions.gr</code>. If <code>expand_regions = FALSE</code>,
+<code>getCountsByRegions</code> is written to calculate <em>readcounts</em>
+overlapping each region, while <code>expand_regions = TRUE</code> will calculate
+"coverage signal" (see details below).</p>
     </div>
 
     <pre class="usage"><span class='fu'>getCountsByRegions</span>(
@@ -138,7 +140,19 @@ below).</p>
   <span class='kw'>blacklist</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>melt</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>region_names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>expand_ranges</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fu'>detectCores</span>()
+)
+
+<span class='fu'>.getCoverageByRegions</span>(
+  <span class='no'>dataset.gr</span>,
+  <span class='no'>regions.gr</span>,
+  <span class='no'>field</span>,
+  <span class='no'>NF</span>,
+  <span class='no'>blacklist</span>,
+  <span class='no'>melt</span>,
+  <span class='no'>region_names</span>,
+  <span class='no'>ncores</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -188,6 +202,13 @@ the regions in <code>regions.gr</code>. If left as <code>NULL</code>, indices of
 <code>regions.gr</code> are used instead.</p></td>
     </tr>
     <tr>
+      <th>expand_ranges</th>
+      <td><p>Logical indicating if ranges in <code>dataset.gr</code> should
+be treated as descriptions of single molecules (<code>FALSE</code>), or if ranges
+should be treated as representing multiple adjacent positions with the same
+signal (<code>TRUE</code>). See details below.</p></td>
+    </tr>
+    <tr>
       <th>ncores</th>
       <td><p>Multiple cores will only be used if <code>dataset.gr</code> is a list
 of multiple datasets, or if <code>length(field) &gt; 1</code>.</p></td>
@@ -205,19 +226,35 @@ of multiple datasets, or if <code>length(field) &gt; 1</code>.</p></td>
   (either by their indices, or by <code>region_names</code>, if given), another
   column to indicate signal, and a third column containing the sample name
   (unless <code>dataset.gr</code> is a single GRanges object).</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="expand-ranges-false"><a class="anchor" href="#expand-ranges-false"></a><code>expand_ranges = FALSE</code></h2>
 
-    <p>This function is designed to work with data in which each range
+    <p>In this configuration,
+  <code>getCountsByRegions</code> is designed to work with data in which each range
   represents one type of molecule, whether it's a single base (e.g. the 5'
   ends, 3' ends, or centers of reads) or entire reads (i.e. paired 5' and 3'
   ends of reads).</p>
 <p>This is in contrast to standard run-length compressed GRanges object, as
-  imported using <code><a href='https://rdrr.io/pkg/rtracklayer/man/BigWigFile.html'>rtracklayer::import.bw</a></code>,
-  in which a single range can represent multiple contiguous positions that
-  share the same signal information. This function does <em>not</em> expand
-  run-length compressed coverage objects. As an example, a range of length 10
-  with a score of 2 is treated as 2 reads (each spanning the same 10 bases),
-  not 20 reads.</p>
+  imported using <code><a href='https://rdrr.io/pkg/rtracklayer/man/export.html'>rtracklayer::import.bw</a></code>, in
+  which a single range can represent multiple contiguous positions that share
+  the same signal information.</p>
+<p>As an example, a range of covering 10 bp with a score of 2 is treated as 2
+  reads (each spanning the same 10 bases), not 20 reads.</p>
+    <h2 class="hasAnchor" id="expand-ranges-true"><a class="anchor" href="#expand-ranges-true"></a><code>expand_ranges = TRUE</code></h2>
+
+    <p>In this configuration, this function
+  assumes that ranges in <code>dataset.gr</code> that cover multiple bases are
+  compressed representations of multiple adjacent positions that contain the
+  same signal. This type of representation is typical of "coverage" objects,
+  including bedGraphs and bigWigs generated by many command line utilities,
+  but <em>not</em> bigWigs as they are imported by
+  <code><a href='import-functions.html'>BRGenomics::import_bigWig</a></code>.</p>
+<p>As an example, a range covering 10 bp with a score of 2 is treated as
+  representing 20 signal counts, i.e. there are 10 adjacent positions that
+  each contain a signal of 2.</p>
+<p>If the data truly represents basepair-resolution coverage, the "coverage
+  signal" is equivalent to readcounts. However, users should take caution if
+  the data is whole-read coverage, as the "coverage signal" is determined by
+  both the read counts as well as read lengths.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='getCountsByPositions.html'>getCountsByPositions</a></code></p></div>
@@ -249,7 +286,8 @@ of multiple datasets, or if <code>length(field) &gt; 1</code>.</p></td>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#details">Details</a></li>
+      <li><a href="#expand-ranges-false"><code>expand_ranges = FALSE</code></a></li>
+      <li><a href="#expand-ranges-true"><code>expand_ranges = TRUE</code></a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>

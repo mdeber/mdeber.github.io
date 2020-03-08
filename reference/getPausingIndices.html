@@ -75,7 +75,7 @@ calculated." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.19</span>
       </span>
     </div>
 
@@ -146,6 +146,7 @@ calculated.</p>
   <span class='kw'>blacklist</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>melt</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>region_names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>expand_ranges</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fu'>detectCores</span>()
 )</pre>
 
@@ -212,6 +213,14 @@ below).</p></td>
       <td><p>If <code>melt = TRUE</code>, an optional vector of names for
 the regions in <code>regions.gr</code>. If left as <code>NULL</code>, indices of
 <code>regions.gr</code> are used instead.</p></td>
+    </tr>
+    <tr>
+      <th>expand_ranges</th>
+      <td><p>Logical indicating if ranges in <code>dataset.gr</code> should
+be treated as descriptions of single molecules (<code>FALSE</code>), or if ranges
+should be treated as representing multiple adjacent positions with the same
+signal (<code>TRUE</code>). See <code><a href='getCountsByRegions.html'>
+getCountsByRegions</a></code>.</p></td>
     </tr>
     <tr>
       <th>ncores</th>

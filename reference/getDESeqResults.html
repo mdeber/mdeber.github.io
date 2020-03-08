@@ -75,7 +75,7 @@ being compared, and not for all samples present." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.19</span>
       </span>
     </div>
 
@@ -229,11 +229,21 @@ in <code>args.DESeq</code> will supersede this option for the call to
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>For a single comparison, the output is the <code>DESeqResults</code> result
-  table. If a <code>comparisons</code> is used to make multiple comparisons,
-  the output is a named list of <code>DESeqResults</code> objects, with elements
-  named following the pattern <code>"X_vs_Y"</code>, where <code>X</code> is the name of
-  the numerator condition, and <code>Y</code> is the name of the denominator
-  condition.</p>
+  table. If a <code>comparisons</code> is used to make multiple comparisons, the
+  output is a named list of <code>DESeqResults</code> objects, with elements named
+  following the pattern <code>"X_vs_Y"</code>, where <code>X</code> is the name of the
+  numerator condition, and <code>Y</code> is the name of the denominator condition.</p>
+    <h2 class="hasAnchor" id="errors-when-ncores-gt-"><a class="anchor" href="#errors-when-ncores-gt-"></a>Errors when <code>ncores &gt; 1</code></h2>
+
+    <p>If this function returns an error,
+  set <code>ncores = 1</code>. Whether or not this occurs can depend on whether
+  users are using alternative BLAS libraries (e.g. OpenBLAS or Apple's
+  Accelerate framework) and/or how DESeq2 was installed. This is because some
+  DESeq2 functions (e.g. <code><a href='https://rdrr.io/pkg/DESeq2/man/nbinomWaldTest.html'>
+  nbinomWaldTest</a></code>) use C code that can be compiled to use parallelization,
+  and this conflicts with our use of process forking (via the
+  <code><a href='https://rdrr.io/r/parallel/parallel-package.html'>parallel package</a></code>) when
+  <code>ncores &gt; 1</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='getDESeqDataSet.html'>getDESeqDataSet</a></code>,
@@ -381,6 +391,7 @@ in <code>args.DESeq</code> will supersede this option for the call to
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#errors-when-ncores-gt-">Errors when <code>ncores &gt; 1</code></a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
