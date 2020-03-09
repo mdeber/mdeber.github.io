@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.21</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.22</span>
       </span>
     </div>
 
@@ -1072,12 +1072,12 @@
 <a class="sourceLine" id="cb132-2" data-line-number="2">                              <span class="dt">lower =</span> <span class="fl">0.35</span>, <span class="dt">upper =</span> <span class="fl">0.65</span>, <span class="dt">ncores =</span> <span class="dv">1</span>)</a>
 <a class="sourceLine" id="cb132-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(bootmeans.df)</a></code></pre></div>
 <pre><code>##    x       mean      lower      upper sample.name
-## 1  3 0.03529412 0.02941176 0.05294118      PROseq
+## 1  3 0.03529412 0.02941176 0.04705882      PROseq
 ## 2  8 0.05882353 0.04117647 0.07058824      PROseq
-## 3 13 0.07647059 0.05294118 0.09617647      PROseq
-## 4 18 0.07647059 0.05294118 0.10000000      PROseq
-## 5 23 0.12941176 0.10588235 0.15882353      PROseq
-## 6 28 0.09411765 0.08235294 0.11176471      PROseq</code></pre>
+## 3 13 0.07058824 0.05294118 0.10000000      PROseq
+## 4 18 0.07058824 0.04705882 0.10000000      PROseq
+## 5 23 0.12352941 0.09411765 0.15882353      PROseq
+## 6 28 0.09411765 0.08235294 0.10588235      PROseq</code></pre>
 <p>A dataframe is returned for plotting, and notice how the x-values have been automatically adjusted to be the center of the bins.</p>
 <p>Below, we show how to plot the confidence bands using base R plotting, as well as <code>ggplot2</code>.</p>
 <div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb134-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(mean <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> bootmeans.df, <span class="dt">type =</span> <span class="st">"l"</span>, </a>
@@ -1113,9 +1113,9 @@
 ## 1  3 0.01176471 0.005882353 0.01764706         ps1
 ## 2  8 0.01764706 0.011764706 0.02352941         ps1
 ## 3 13 0.01764706 0.011764706 0.02352941         ps1
-## 4 18 0.04117647 0.029411765 0.04705882         ps1
+## 4 18 0.04117647 0.023529412 0.04705882         ps1
 ## 5 23 0.02941176 0.017647059 0.04705882         ps1
-## 6 28 0.02941176 0.023529412 0.04117647         ps1</code></pre>
+## 6 28 0.02941176 0.023529412 0.03529412         ps1</code></pre>
 <div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb138-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span>(ggplot2)</a>
 <a class="sourceLine" id="cb138-2" data-line-number="2"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(bm_list.df, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x, mean, <span class="dt">color =</span> sample.name)) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb138-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() <span class="op">+</span><span class="st"> </span></a>
@@ -1687,213 +1687,65 @@
 <div id="session-info" class="section level1 unnumbered">
 <h1 class="hasAnchor">
 <a href="#session-info" class="anchor"></a>Session info</h1>
-<pre><code>## ─ Session info ───────────────────────────────────────────────────────────────
-##  setting  value                                             
-##  version  R Under development (unstable) (2020-01-10 r77651)
-##  os       macOS Catalina 10.15.3                            
-##  system   x86_64, darwin15.6.0                              
-##  ui       X11                                               
-##  language (EN)                                              
-##  collate  en_US.UTF-8                                       
-##  ctype    en_US.UTF-8                                       
-##  tz       America/New_York                                  
-##  date     2020-03-08                                        
+<pre><code>## R Under development (unstable) (2020-01-10 r77651)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS Catalina 10.15.3
 ## 
-## ─ Packages ───────────────────────────────────────────────────────────────────
-##  package              * version  date       lib
-##  annotate               1.65.1   2020-01-27 [3]
-##  AnnotationDbi          1.49.1   2020-01-25 [3]
-##  assertthat             0.2.1    2019-03-21 [3]
-##  backports              1.1.5    2019-10-02 [3]
-##  Biobase                2.47.2   2019-12-19 [3]
-##  BiocGenerics         * 0.33.0   2019-11-06 [3]
-##  BiocManager            1.30.10  2019-11-16 [3]
-##  BiocParallel           1.21.2   2019-12-21 [3]
-##  BiocStyle            * 2.15.6   2020-02-01 [3]
-##  Biostrings           * 2.55.4   2019-12-14 [3]
-##  bit                    1.1-15.2 2020-02-10 [3]
-##  bit64                  0.9-7    2017-05-08 [3]
-##  bitops                 1.0-6    2013-08-17 [3]
-##  blob                   1.2.1    2020-01-20 [3]
-##  bookdown               0.18     2020-03-05 [3]
-##  BRGenomics           * 0.99.21  2020-03-08 [1]
-##  callr                  3.4.2    2020-02-12 [3]
-##  cli                    2.0.2    2020-02-28 [3]
-##  colorspace             1.4-1    2019-03-18 [3]
-##  crayon                 1.3.4    2017-09-16 [3]
-##  DBI                    1.1.0    2019-12-15 [3]
-##  DelayedArray           0.13.5   2020-03-04 [3]
-##  desc                   1.2.0    2018-05-01 [3]
-##  DESeq2                 1.27.28  2020-03-04 [3]
-##  devtools               2.2.2    2020-02-17 [3]
-##  digest                 0.6.25   2020-02-23 [3]
-##  dplyr                  0.8.5    2020-03-07 [3]
-##  ellipsis               0.3.0    2019-09-20 [3]
-##  evaluate               0.14     2019-05-28 [3]
-##  fansi                  0.4.1    2020-01-08 [3]
-##  farver                 2.0.3    2020-01-16 [3]
-##  fs                     1.3.2    2020-03-05 [3]
-##  genefilter             1.69.0   2019-11-06 [3]
-##  geneplotter            1.65.0   2019-11-06 [3]
-##  GenomeInfoDb         * 1.23.13  2020-02-12 [3]
-##  GenomeInfoDbData       1.2.2    2020-01-12 [3]
-##  GenomicAlignments      1.23.1   2019-11-12 [3]
-##  GenomicRanges        * 1.39.2   2020-02-04 [3]
-##  ggplot2              * 3.3.0    2020-03-05 [3]
-##  glue                   1.3.1    2019-03-12 [3]
-##  gtable                 0.3.0    2019-03-25 [3]
-##  htmltools              0.4.0    2019-10-04 [3]
-##  IRanges              * 2.21.3   2020-01-13 [3]
-##  knitr                  1.28     2020-02-06 [3]
-##  labeling               0.3      2014-08-23 [3]
-##  lattice                0.20-40  2020-02-19 [3]
-##  lifecycle              0.2.0    2020-03-06 [3]
-##  locfit                 1.5-9.1  2013-04-20 [3]
-##  magrittr               1.5      2014-11-22 [3]
-##  MASS                   7.3-51.5 2019-12-20 [3]
-##  Matrix                 1.2-18   2019-11-27 [3]
-##  matrixStats            0.55.0   2019-09-07 [3]
-##  memoise                1.1.0    2017-04-21 [3]
-##  munsell                0.5.0    2018-06-12 [3]
-##  pillar                 1.4.3    2019-12-20 [3]
-##  pkgbuild               1.0.6    2019-10-09 [3]
-##  pkgconfig              2.0.3    2019-09-22 [3]
-##  pkgdown                1.4.1    2019-09-15 [3]
-##  pkgload                1.0.2    2018-10-29 [3]
-##  prettyunits            1.1.1    2020-01-24 [3]
-##  processx               3.4.2    2020-02-09 [3]
-##  ps                     1.3.2    2020-02-13 [3]
-##  purrr                  0.3.3    2019-10-18 [3]
-##  R6                     2.4.1    2019-11-12 [3]
-##  RColorBrewer           1.1-2    2014-12-07 [3]
-##  Rcpp                   1.0.3    2019-11-08 [3]
-##  RCurl                  1.98-1.1 2020-01-19 [3]
-##  remotes                2.1.1    2020-02-15 [3]
-##  rlang                  0.4.5    2020-03-01 [3]
-##  rmarkdown              2.1      2020-01-20 [3]
-##  rprojroot              1.3-2    2018-01-03 [3]
-##  Rsamtools              2.3.5    2020-02-23 [3]
-##  RSQLite                2.2.0    2020-01-07 [3]
-##  rstudioapi             0.11     2020-02-07 [3]
-##  rtracklayer          * 1.47.0   2019-11-06 [3]
-##  S4Vectors            * 0.25.12  2020-02-01 [3]
-##  scales                 1.1.0    2019-11-18 [3]
-##  sessioninfo            1.1.1    2018-11-05 [3]
-##  stringi                1.4.6    2020-02-17 [3]
-##  stringr                1.4.0    2019-02-10 [3]
-##  SummarizedExperiment   1.17.3   2020-02-24 [3]
-##  survival               3.1-11   2020-03-07 [3]
-##  testthat               2.3.2    2020-03-02 [3]
-##  tibble                 2.1.3    2019-06-06 [3]
-##  tidyselect             1.0.0    2020-01-27 [3]
-##  usethis                1.5.1    2019-07-04 [3]
-##  vctrs                  0.2.3    2020-02-20 [3]
-##  withr                  2.1.2    2018-03-15 [3]
-##  xfun                   0.12     2020-01-13 [3]
-##  XML                    3.99-0.3 2020-01-20 [3]
-##  xtable                 1.8-4    2019-04-21 [3]
-##  XVector              * 0.27.0   2019-11-06 [3]
-##  yaml                   2.2.1    2020-02-01 [3]
-##  zlibbioc               1.33.1   2020-01-24 [3]
-##  source                          
-##  Bioconductor                    
-##  Bioconductor                    
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  Bioconductor                    
-##  Bioconductor                    
-##  CRAN (R 4.0.0)                  
-##  Bioconductor                    
-##  Bioconductor                    
-##  Bioconductor                    
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  Bioconductor                    
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  Bioconductor                    
-##  CRAN (R 4.0.0)                  
-##  Github (mikelove/DESeq2@e24f5c5)
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  Bioconductor                    
-##  Bioconductor                    
-##  Bioconductor                    
-##  Bioconductor                    
-##  Bioconductor                    
-##  Bioconductor                    
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  Bioconductor                    
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  Bioconductor                    
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  Bioconductor                    
-##  Bioconductor                    
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  Bioconductor                    
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  CRAN (R 4.0.0)                  
-##  Bioconductor                    
-##  CRAN (R 4.0.0)                  
-##  Bioconductor                    
+## Matrix products: default
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
 ## 
-## [1] /private/var/folders/zt/m504_3g569g6gqzjbqg34qn40000gn/T/RtmpMTi89a/temp_libpath87c5200e694d
-## [2] /private/var/folders/zt/m504_3g569g6gqzjbqg34qn40000gn/T/RtmpMTi89a/temp_libpath87c514665b0a
-## [3] /Library/Frameworks/R.framework/Versions/4.0/Resources/library</code></pre>
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+## [1] parallel  stats4    stats     graphics  grDevices utils     datasets 
+## [8] methods   base     
+## 
+## other attached packages:
+##  [1] Biostrings_2.55.4    XVector_0.27.0       ggplot2_3.3.0       
+##  [4] BRGenomics_0.99.22   rtracklayer_1.47.0   GenomicRanges_1.39.2
+##  [7] GenomeInfoDb_1.23.13 IRanges_2.21.3       S4Vectors_0.25.12   
+## [10] BiocGenerics_0.33.0  BiocStyle_2.15.6    
+## 
+## loaded via a namespace (and not attached):
+##  [1] Biobase_2.47.2              bit64_0.9-7                
+##  [3] splines_4.0.0               assertthat_0.2.1           
+##  [5] BiocManager_1.30.10         blob_1.2.1                 
+##  [7] GenomeInfoDbData_1.2.2      Rsamtools_2.3.5            
+##  [9] yaml_2.2.1                  pillar_1.4.3               
+## [11] RSQLite_2.2.0               backports_1.1.5            
+## [13] lattice_0.20-40             glue_1.3.1                 
+## [15] digest_0.6.25               RColorBrewer_1.1-2         
+## [17] colorspace_1.4-1            htmltools_0.4.0            
+## [19] Matrix_1.2-18               pkgconfig_2.0.3            
+## [21] DESeq2_1.27.28              XML_3.99-0.3               
+## [23] genefilter_1.69.0           bookdown_0.18              
+## [25] zlibbioc_1.33.1             purrr_0.3.3                
+## [27] xtable_1.8-4                scales_1.1.0               
+## [29] BiocParallel_1.21.2         tibble_2.1.3               
+## [31] annotate_1.65.1             farver_2.0.3               
+## [33] withr_2.1.2                 SummarizedExperiment_1.17.3
+## [35] survival_3.1-11             magrittr_1.5               
+## [37] crayon_1.3.4                memoise_1.1.0              
+## [39] evaluate_0.14               fs_1.3.2                   
+## [41] MASS_7.3-51.5               tools_4.0.0                
+## [43] lifecycle_0.2.0             matrixStats_0.55.0         
+## [45] stringr_1.4.0               locfit_1.5-9.1             
+## [47] munsell_0.5.0               DelayedArray_0.13.5        
+## [49] AnnotationDbi_1.49.1        compiler_4.0.0             
+## [51] pkgdown_1.4.1               rlang_0.4.5                
+## [53] grid_4.0.0                  RCurl_1.98-1.1             
+## [55] rstudioapi_0.11             labeling_0.3               
+## [57] bitops_1.0-6                rmarkdown_2.1              
+## [59] gtable_0.3.0                DBI_1.1.0                  
+## [61] R6_2.4.1                    GenomicAlignments_1.23.1   
+## [63] dplyr_0.8.5                 knitr_1.28                 
+## [65] bit_1.1-15.2                rprojroot_1.3-2            
+## [67] desc_1.2.0                  stringi_1.4.6              
+## [69] Rcpp_1.0.3                  vctrs_0.2.3                
+## [71] geneplotter_1.65.0          tidyselect_1.0.0           
+## [73] xfun_0.12</code></pre>
 <!-- SCRAP -->
 <!-- The `import_bam` function provides several options for processing aligned reads, and in conjunction with functions from the *[rtracklayer](https://bioconductor.org/packages/3.11/rtracklayer)* package, we can easily write a post-alignment pipeline for generating bigWig files for viewing in a genome browser. -->
 <!-- As an exmaple, PRO-seq data is sequenced in the antisense orientation to the original RNA molecule, the 3' end of which provides the location of the active site of an engaged RNA polymerase. Therefore, PRO-seq reads need to be reverse-complemented, and the 3' ends need to be extracted. -->

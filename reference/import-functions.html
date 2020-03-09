@@ -70,7 +70,7 @@ files." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.21</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.22</span>
       </span>
     </div>
 
@@ -134,6 +134,7 @@ files.</p>
   <span class='kw'>keep.Y</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>keep.M</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>keep.nonstandard</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>makeBRG</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fu'>detectCores</span>()
 )
 
@@ -168,6 +169,11 @@ mitochondrial chromosomes are applied.</p></td>
       <td><p>Logicals indicating which
 non-autosomes should be kept. By default, sex chromosomes are kept, but
 mitochondrial and non-standard chromosomes are removed.</p></td>
+    </tr>
+    <tr>
+      <th>makeBRG</th>
+      <td><p>If <code>TRUE</code> (the default), the output ranges are made
+single-width using <code><a href='makeGRangesBRG.html'>makeGRangesBRG</a></code></p></td>
     </tr>
     <tr>
       <th>ncores</th>
