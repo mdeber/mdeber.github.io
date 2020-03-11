@@ -72,7 +72,7 @@ objects." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.22</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.23</span>
       </span>
     </div>
 
@@ -163,13 +163,14 @@ naming scheme.</p></td>
       <th>ncores</th>
       <td><p>The number of cores to use. This function will try to maximize
 the use of the <code>ncores</code> given, but care should be taken as
-<code>mergeGRangesData</code> can be memory intensive.</p></td>
+<code>mergeGRangesData</code> can be memory intensive. Excessive memory usage can
+cause dramatic reductions in performance.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list of GRanges objects (one for each replicate).</p>
+    <p>A list of GRanges objects.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"PROseq"</span>)

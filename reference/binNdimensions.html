@@ -70,7 +70,7 @@ summarize the datapoints that fall into any of these n-dimensional bins." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.22</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.23</span>
       </span>
     </div>
 
@@ -126,7 +126,12 @@ summarize the datapoints that fall into any of these n-dimensional bins." />
 summarize the datapoints that fall into any of these n-dimensional bins.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>binNdimensions</span>(<span class='no'>dims.df</span>, <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fu'>detectCores</span>())
+    <pre class="usage"><span class='fu'>binNdimensions</span>(
+  <span class='no'>dims.df</span>,
+  <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>10</span>,
+  <span class='kw'>use_bin_numbers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fu'>detectCores</span>()
+)
 
 <span class='fu'>aggregateByNdimensionalBins</span>(
   <span class='no'>x</span>,
@@ -137,10 +142,16 @@ summarize the datapoints that fall into any of these n-dimensional bins.</p>
   <span class='kw'>ignore.na</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>drop</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>empty</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>use_bin_numbers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fu'>detectCores</span>()
 )
 
-<span class='fu'>densityInNdimensionalBins</span>(<span class='no'>dims.df</span>, <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fu'>detectCores</span>())</pre>
+<span class='fu'>densityInNdimensionalBins</span>(
+  <span class='no'>dims.df</span>,
+  <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>10</span>,
+  <span class='kw'>use_bin_numbers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fu'>detectCores</span>()
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -155,6 +166,14 @@ for which bins will be generated.</p></td>
       <td><p>Either a number giving the number of bins to use for all
 dimensions (default = 10), or a vector containing the number of bins to use
 for each dimension of input data given.</p></td>
+    </tr>
+    <tr>
+      <th>use_bin_numbers</th>
+      <td><p>A logical indicating if ordinal bin numbers should be
+returned (<code>TRUE</code>), or if in place of the bin number, the center value
+of that bin should be returned. For instance, if the first bin encompasses
+data from 0 to 4, with <code>use_bin_numbers = TRUE</code>, a 1 is returned, but
+when <code>FALSE</code>, 2 is returned.</p></td>
     </tr>
     <tr>
       <th>ncores</th>
@@ -253,7 +272,7 @@ if <code>FUN = sum</code>), the empty value should be <code>0</code>.</p></td>
 #&gt; 3             1             1              1
 #&gt; 4             1             1              3
 #&gt; 5             1             1              1
-#&gt; 6             5             3              3</div><div class='input'>
+#&gt; 6             5             4              3</div><div class='input'>
 <span class='co'>#--------------------------------------------------#</span>
 <span class='co'># get number of genes in each bin</span>
 <span class='co'>#--------------------------------------------------#</span>
@@ -262,7 +281,7 @@ if <code>FUN = sum</code>), the empty value should be <code>0</code>.</p></td>
                                         <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 
 <span class='no'>bin_counts</span>[<span class='fl'>1</span>:<span class='fl'>6</span>, ]</div><div class='output co'>#&gt;   bin.counts_pr bin.counts_gb bin.counts_cps value
-#&gt; 1             1             1              1   131
+#&gt; 1             1             1              1   128
 #&gt; 2             2             1              1     2
 #&gt; 3             3             1              1     0
 #&gt; 4             4             1              1     0
@@ -276,16 +295,16 @@ if <code>FUN = sum</code>), the empty value should be <code>0</code>.</p></td>
                                          <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 
 <span class='no'>bin2d_cps</span>[<span class='fl'>1</span>:<span class='fl'>6</span>, ]</div><div class='output co'>#&gt;   bin.counts_pr bin.counts_gb    value
-#&gt; 1             1             1 27.72258
+#&gt; 1             1             1 27.70395
 #&gt; 2             2             1  0.00000
 #&gt; 3             3             1       NA
 #&gt; 4             4             1       NA
 #&gt; 5             5             1       NA
 #&gt; 6             9             1       NA</div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='no'>bin2d_cps</span>, <span class='fu'><a href='https://rdrr.io/r/base/is.finite.html'>is.finite</a></span>(<span class='no'>value</span>))[<span class='fl'>1</span>:<span class='fl'>6</span>, ]</div><div class='output co'>#&gt;    bin.counts_pr bin.counts_gb    value
-#&gt; 1              1             1 27.72258
+#&gt; 1              1             1 27.70395
 #&gt; 2              2             1  0.00000
-#&gt; 9              1             2 68.82609
+#&gt; 9              1             2 64.19231
 #&gt; 10             2             2 89.85714
 #&gt; 11             3             2 38.50000
 #&gt; 14             9             2 79.00000</div><div class='input'>
@@ -306,7 +325,7 @@ if <code>FUN = sum</code>), the empty value should be <code>0</code>.</p></td>
 <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='no'>bin2d_cps_med</span>, <span class='fu'><a href='https://rdrr.io/r/base/is.finite.html'>is.finite</a></span>(<span class='no'>value</span>))[<span class='fl'>1</span>:<span class='fl'>6</span>, ]</div><div class='output co'>#&gt;    bin.counts_pr bin.counts_gb value
 #&gt; 1              1             1   3.0
 #&gt; 2              2             1   0.0
-#&gt; 9              1             2  69.0
+#&gt; 9              1             2  67.5
 #&gt; 10             2             2  60.0
 #&gt; 11             3             2  38.5
 #&gt; 14             9             2  79.0</div></pre>

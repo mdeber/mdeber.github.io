@@ -70,7 +70,7 @@ chromosomes from any GRanges object." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.22</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.23</span>
       </span>
     </div>
 
@@ -131,7 +131,8 @@ chromosomes from any GRanges object.</p>
   <span class='kw'>keep.X</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>keep.Y</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>keep.M</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>keep.nonstandard</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+  <span class='kw'>keep.nonstandard</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>genome</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -149,6 +150,11 @@ typically have a standard genome associated with it, e.g. <code>genome(gr)
       <td><p>Logicals indicating which
 non-autosomes should be kept. By default, sex chromosomes are kept, but
 mitochondrial and non-standard chromosomes are removed.</p></td>
+    </tr>
+    <tr>
+      <th>genome</th>
+      <td><p>An optional string that, if supplied, will be used to set the
+genome of <code>gr</code>.</p></td>
     </tr>
     </table>
 
