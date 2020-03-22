@@ -12,8 +12,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -72,7 +72,7 @@ field for each input dataset." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.23</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.25</span>
       </span>
     </div>
 
@@ -171,7 +171,8 @@ output.</p></td>
       <th>makeBRG</th>
       <td><p>If <code>TRUE</code> (the default), the output GRanges will be made
 "basepair-resolution" via <code><a href='makeGRangesBRG.html'>
-makeGRangesBRG</a></code>.</p></td>
+makeGRangesBRG</a></code>. This is always set to codeFALSE if
+<code>exact_overlaps = TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>exact_overlaps</th>
@@ -180,8 +181,7 @@ than a single base are treated as "coverage" signal (see
 <code><a href='getCountsByRegions.html'>getCountsByRegions</a></code>). If
 <code>exact_overlaps = TRUE</code>, all input ranges are conserved exactly as
 they are; ranges are only combined if they overlap exactly, and the signal
-of any combined range is the sum of the input ranges that were merged.
-Using <code>exact_overlaps</code> will automatically set <code>makeBRG = FALSE</code>.</p></td>
+of any combined range is the sum of the input ranges that were merged.</p></td>
     </tr>
     <tr>
       <th>ncores</th>

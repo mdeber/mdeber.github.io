@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Basepair-Resolution Analysis with BRGenomics • BRGenomics</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.23</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.25</span>
       </span>
     </div>
 
@@ -1073,11 +1073,11 @@
 <a class="sourceLine" id="cb132-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(bootmeans.df)</a></code></pre></div>
 <pre><code>##    x       mean      lower      upper sample.name
 ## 1  3 0.03529412 0.02941176 0.04705882      PROseq
-## 2  8 0.05882353 0.04705882 0.07058824      PROseq
-## 3 13 0.07647059 0.05294118 0.09411765      PROseq
-## 4 18 0.07058824 0.05088235 0.09411765      PROseq
-## 5 23 0.12352941 0.09411765 0.15882353      PROseq
-## 6 28 0.09411765 0.08235294 0.11176471      PROseq</code></pre>
+## 2  8 0.05294118 0.04117647 0.06470588      PROseq
+## 3 13 0.07058824 0.05294118 0.09411765      PROseq
+## 4 18 0.06470588 0.04705882 0.09411765      PROseq
+## 5 23 0.12352941 0.09794118 0.15882353      PROseq
+## 6 28 0.09411765 0.08235294 0.10588235      PROseq</code></pre>
 <p>A dataframe is returned for plotting, and notice how the x-values have been automatically adjusted to be the center of the bins.</p>
 <p>Below, we show how to plot the confidence bands using base R plotting, as well as <code>ggplot2</code>.</p>
 <div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb134-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(mean <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> bootmeans.df, <span class="dt">type =</span> <span class="st">"l"</span>, </a>
@@ -1607,41 +1607,41 @@
 <a class="sourceLine" id="cb179-2" data-line-number="2">seq_chr4</a></code></pre></div>
 <pre><code>## DNAStringSet object of length 2:
 ##       width seq                                             names               
-## [1] 1348131 TTATTATATTATTATATTATTAT…GCCGTCGATTTGAGATATATGAA chr4
-## [2]   19524 AATGAATTGCCTGATAAAAAGGA…AAAAAAATGAAAATTATATTATT chrM</code></pre>
+## [1] 1348131 TTATTATATTATTATATTATTA...CCGTCGATTTGAGATATATGAA chr4
+## [2]   19524 AATGAATTGCCTGATAAAAAGG...AAAAAATGAAAATTATATTATT chrM</code></pre>
 <p><em>We included mitochondrial DNA to demonstrate how the DNAStringSet treats multiple chromosomes.</em></p>
 <p>However, we don’t need to import all the sequences. Instead, we can make a <code>TwoBitFile</code> object that points to the file, and extract desired sequences from it directly using the <code>getSeq</code> function:</p>
 <div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb181-1" data-line-number="1">seq_txs_pr &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/Biostrings/man/getSeq.html">getSeq</a></span>(<span class="kw">TwoBitFile</span>(sfile), txs_pr)</a>
 <a class="sourceLine" id="cb181-2" data-line-number="2">seq_txs_pr</a></code></pre></div>
 <pre><code>## DNAStringSet object of length 339:
 ##       width seq
-##   [1]   100 ATCAATATAGCATAGCTCTTTTAATCAAATAAA…AAAATAAGGAACACAAAATTAATGGAAAAGAAA
-##   [2]   100 TGCGACATTGTTCTACGATGACTACAAAAAATG…GGAGTTTCGGTCCCATACGAAGTCGCCGACTTA
-##   [3]   100 CCTATAAAAATGCTTCATCAATCCATTTGTGTA…TATATTTCAAAGCGATAGTTAATGAAACTTATG
-##   [4]   100 GAACAGTCGGCGAAGGCGGGCAGATCGAAGATG…ATACTTTTCGATGCCAGTGCTGTTAATATAGAT
-##   [5]   100 GAACAGTCGGCGAAGGCGGGCAGATCGAAGATG…ATACTTTTCGATGCCAGTGCTGTTAATATAGAT
+##   [1]   100 ATCAATATAGCATAGCTCTTTTAATCAAATAAA...AAATAAGGAACACAAAATTAATGGAAAAGAAA
+##   [2]   100 TGCGACATTGTTCTACGATGACTACAAAAAATG...GAGTTTCGGTCCCATACGAAGTCGCCGACTTA
+##   [3]   100 CCTATAAAAATGCTTCATCAATCCATTTGTGTA...ATATTTCAAAGCGATAGTTAATGAAACTTATG
+##   [4]   100 GAACAGTCGGCGAAGGCGGGCAGATCGAAGATG...TACTTTTCGATGCCAGTGCTGTTAATATAGAT
+##   [5]   100 GAACAGTCGGCGAAGGCGGGCAGATCGAAGATG...TACTTTTCGATGCCAGTGCTGTTAATATAGAT
 ##   ...   ... ...
-## [335]   100 GGTATTTCATATTATAAATTTATGTAAACTACA…AAATACAATAATCATATCTGCAAAGTAAACTAA
-## [336]   100 GGTATTTCATATTATAAATTTATGTAAACTACA…AAATACAATAATCATATCTGCAAAGTAAACTAA
-## [337]   100 AACACGGTCACACTGTTCTTCTCTTTGTTCGGG…ACGATAAACAAATATCTGGTTTTACCTATTTGT
-## [338]   100 AACACGGTCACACTGTTCTTCTCTTTGTTCGGG…ACGATAAACAAATATCTGGTTTTACCTATTTGT
-## [339]   100 AACACGGTCACACTGTTCTTCTCTTTGTTCGGG…ACGATAAACAAATATCTGGTTTTACCTATTTGT</code></pre>
+## [335]   100 GGTATTTCATATTATAAATTTATGTAAACTACA...AATACAATAATCATATCTGCAAAGTAAACTAA
+## [336]   100 GGTATTTCATATTATAAATTTATGTAAACTACA...AATACAATAATCATATCTGCAAAGTAAACTAA
+## [337]   100 AACACGGTCACACTGTTCTTCTCTTTGTTCGGG...CGATAAACAAATATCTGGTTTTACCTATTTGT
+## [338]   100 AACACGGTCACACTGTTCTTCTCTTTGTTCGGG...CGATAAACAAATATCTGGTTTTACCTATTTGT
+## [339]   100 AACACGGTCACACTGTTCTTCTCTTTGTTCGGG...CGATAAACAAATATCTGGTTTTACCTATTTGT</code></pre>
 <p>The sequences are stranded as well, such that if a plus and minus strand gene overlapped perfectly, the minus strand sequence would be the reverse complement of the plus strand sequence.</p>
 <p>The Biostrings package itself is richly featured, and we’ll demonstrate only a couple functions below. This functionality is extended by packages like <code>ggseqlogo</code>, for example, which plots sequence logos directly from DNAStringSets.</p>
 <div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb183-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/pkg/Biostrings/man/XStringSet-class.html">RNAStringSet</a></span>(seq_txs_pr)</a></code></pre></div>
 <pre><code>## RNAStringSet object of length 339:
 ##       width seq
-##   [1]   100 AUCAAUAUAGCAUAGCUCUUUUAAUCAAAUAAA…AAAAUAAGGAACACAAAAUUAAUGGAAAAGAAA
-##   [2]   100 UGCGACAUUGUUCUACGAUGACUACAAAAAAUG…GGAGUUUCGGUCCCAUACGAAGUCGCCGACUUA
-##   [3]   100 CCUAUAAAAAUGCUUCAUCAAUCCAUUUGUGUA…UAUAUUUCAAAGCGAUAGUUAAUGAAACUUAUG
-##   [4]   100 GAACAGUCGGCGAAGGCGGGCAGAUCGAAGAUG…AUACUUUUCGAUGCCAGUGCUGUUAAUAUAGAU
-##   [5]   100 GAACAGUCGGCGAAGGCGGGCAGAUCGAAGAUG…AUACUUUUCGAUGCCAGUGCUGUUAAUAUAGAU
+##   [1]   100 AUCAAUAUAGCAUAGCUCUUUUAAUCAAAUAAA...AAAUAAGGAACACAAAAUUAAUGGAAAAGAAA
+##   [2]   100 UGCGACAUUGUUCUACGAUGACUACAAAAAAUG...GAGUUUCGGUCCCAUACGAAGUCGCCGACUUA
+##   [3]   100 CCUAUAAAAAUGCUUCAUCAAUCCAUUUGUGUA...AUAUUUCAAAGCGAUAGUUAAUGAAACUUAUG
+##   [4]   100 GAACAGUCGGCGAAGGCGGGCAGAUCGAAGAUG...UACUUUUCGAUGCCAGUGCUGUUAAUAUAGAU
+##   [5]   100 GAACAGUCGGCGAAGGCGGGCAGAUCGAAGAUG...UACUUUUCGAUGCCAGUGCUGUUAAUAUAGAU
 ##   ...   ... ...
-## [335]   100 GGUAUUUCAUAUUAUAAAUUUAUGUAAACUACA…AAAUACAAUAAUCAUAUCUGCAAAGUAAACUAA
-## [336]   100 GGUAUUUCAUAUUAUAAAUUUAUGUAAACUACA…AAAUACAAUAAUCAUAUCUGCAAAGUAAACUAA
-## [337]   100 AACACGGUCACACUGUUCUUCUCUUUGUUCGGG…ACGAUAAACAAAUAUCUGGUUUUACCUAUUUGU
-## [338]   100 AACACGGUCACACUGUUCUUCUCUUUGUUCGGG…ACGAUAAACAAAUAUCUGGUUUUACCUAUUUGU
-## [339]   100 AACACGGUCACACUGUUCUUCUCUUUGUUCGGG…ACGAUAAACAAAUAUCUGGUUUUACCUAUUUGU</code></pre>
+## [335]   100 GGUAUUUCAUAUUAUAAAUUUAUGUAAACUACA...AAUACAAUAAUCAUAUCUGCAAAGUAAACUAA
+## [336]   100 GGUAUUUCAUAUUAUAAAUUUAUGUAAACUACA...AAUACAAUAAUCAUAUCUGCAAAGUAAACUAA
+## [337]   100 AACACGGUCACACUGUUCUUCUCUUUGUUCGGG...CGAUAAACAAAUAUCUGGUUUUACCUAUUUGU
+## [338]   100 AACACGGUCACACUGUUCUUCUCUUUGUUCGGG...CGAUAAACAAAUAUCUGGUUUUACCUAUUUGU
+## [339]   100 AACACGGUCACACUGUUCUUCUCUUUGUUCGGG...CGAUAAACAAAUAUCUGGUUUUACCUAUUUGU</code></pre>
 <div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb185-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/warning.html">suppressWarnings</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/Biostrings/man/translate.html">translate</a></span>(seq_txs_pr))</a></code></pre></div>
 <pre><code>## AAStringSet object of length 339:
 ##       width seq
@@ -1703,8 +1703,8 @@
 ## [8] methods   base     
 ## 
 ## other attached packages:
-##  [1] Biostrings_2.55.4    XVector_0.27.0       ggplot2_3.3.0       
-##  [4] BRGenomics_0.99.23   rtracklayer_1.47.0   GenomicRanges_1.39.2
+##  [1] Biostrings_2.55.5    XVector_0.27.0       ggplot2_3.3.0       
+##  [4] BRGenomics_0.99.25   rtracklayer_1.47.0   GenomicRanges_1.39.2
 ##  [7] GenomeInfoDb_1.23.13 IRanges_2.21.3       S4Vectors_0.25.12   
 ## [10] BiocGenerics_0.33.0  BiocStyle_2.15.6    
 ## 
@@ -1743,7 +1743,7 @@
 ## [63] dplyr_0.8.5                 knitr_1.28                 
 ## [65] bit_1.1-15.2                rprojroot_1.3-2            
 ## [67] desc_1.2.0                  stringi_1.4.6              
-## [69] Rcpp_1.0.3                  vctrs_0.2.3                
+## [69] Rcpp_1.0.3                  vctrs_0.2.4                
 ## [71] geneplotter_1.65.0          tidyselect_1.0.0           
 ## [73] xfun_0.12</code></pre>
 <!-- SCRAP -->
