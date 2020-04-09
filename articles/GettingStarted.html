@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.30</span>
       </span>
     </div>
 
@@ -136,8 +136,8 @@
 <a href="#parallel-processing" class="anchor"></a>Parallel Processing</h1>
 <p>By default, many BRGenomics functions use multicore processing as implemented in the <code>parallel</code> package. BRGenomics functions that can be parallelized always contain the argument <code>ncores</code>. If not specified, the default is to use the global option “mc.cores” (the same option used by the <code>parallel</code> package), or 2 if that option is not set.</p>
 <p>If you wanted to change the global default to 4 cores, for example, you would run <code><a href="https://rdrr.io/r/base/options.html">options(mc.cores = 4)</a></code> at the start of your R session. If you’re unsure how many cores your processor has, run <code><a href="https://rdrr.io/r/parallel/detectCores.html">parallel::detectCores()</a></code>.</p>
-<p>While performance can be memory constrained in some cases (and thus actually hampered by excessive parallelization), substantial performance benefits can be acheived by maximizing parallelization.</p>
-<p>However, parallel processing is not available on Windows. To maintain compatability, all code in this vignette as well as the example code in the documentation is to use a single core, i.e. <code>ncores = 1</code>.</p>
+<p>While performance can be memory constrained in some cases (and thus actually hampered by excessive parallelization), substantial performance benefits can be achieved by maximizing parallelization.</p>
+<p>However, parallel processing is not available on Windows. To maintain compatibility, all code in this vignette as well as the example code in the documentation is to use a single core, i.e. <code>ncores = 1</code>.</p>
 </div>
 <div id="included-datasets" class="section level1">
 <h1 class="hasAnchor">
@@ -191,8 +191,8 @@
 <h1 class="hasAnchor">
 <a href="#basic-operations-on-granges" class="anchor"></a>Basic Operations on GRanges</h1>
 <p>For users who are unfamiliar with GRanges objects, this section demonstrates a number of basic operations.</p>
-<p>A quick summary of the general strcture: Each element of a GRanges object is called a “range”. As you can see above, each range consists of several components: <code>seqnames</code>, <code>ranges</code>, and <code>strand</code>. These essential attributes are all found to the left of the vertical divider above; everything to the right of that divider is an optional, metadata attribute.</p>
-<p>The core attributes can be accessed using the functions <code>seqnames()</code>, <code>ranges()</code>, and <code>strand()</code>. All metadata can be accessed using <code>mcols()</code>, and individual columns are accessable with the <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code> operator. The only reserved metadata column is the <code>score</code> column, which is just like any other metadata column, except that users can use the <code>score()</code> function to assess it.</p>
+<p>A quick summary of the general structure: Each element of a GRanges object is called a “range”. As you can see above, each range consists of several components: <code>seqnames</code>, <code>ranges</code>, and <code>strand</code>. These essential attributes are all found to the left of the vertical divider above; everything to the right of that divider is an optional, metadata attribute.</p>
+<p>The core attributes can be accessed using the functions <code>seqnames()</code>, <code>ranges()</code>, and <code>strand()</code>. All metadata can be accessed using <code>mcols()</code>, and individual columns are accessible with the <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code> operator. The only reserved metadata column is the <code>score</code> column, which is just like any other metadata column, except that users can use the <code>score()</code> function to assess it.</p>
 <p>All of the above functions are both “getters” and “setters”, e.g. <code>strand(x)</code> returns the strand information, and <code>strand(x) &lt;- "+"</code> assigns it.</p>
 <p>These and other operations are demonstrated below.</p>
 <hr>
@@ -212,7 +212,7 @@
 ##   -------
 ##   seqinfo: 7 sequences from dm6 genome</code></pre>
 <p> </p>
-<p>Select 4 transcipts:</p>
+<p>Select 4 transcripts:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">tx4 &lt;-<span class="st"> </span>txs_dm6_chr4[<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">200</span>, <span class="dv">300</span>)]</a>
 <a class="sourceLine" id="cb12-2" data-line-number="2">tx4</a></code></pre></div>
 <pre><code>## GRanges object with 4 ranges and 2 metadata columns:

@@ -12,7 +12,4 @@ articles:
   SequenceExtraction: SequenceExtraction.html
   SignalCounting: SignalCounting.html
   SpikeInNormalization: SpikeInNormalization.html
-urls:
-  reference: https://mdeber.github.io/reference
-  article: https://mdeber.github.io/articles
 

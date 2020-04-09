@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.30</span>
       </span>
     </div>
 
@@ -146,7 +146,7 @@
 ##   [164]     chr4 1319368-1319403      - |         1
 ##   -------
 ##   seqinfo: 1870 sequences from an unspecified genome</code></pre>
-<p>By default, <code><a href="../reference/import_bam.html">import_bam()</a></code> combines identical reads into the same range, and the <code>score</code> metadata column indicatea the number of perfectly-overlapping alignments. This means that the total number of alignments (reads) is equal to the sum of the score:</p>
+<p>By default, <code><a href="../reference/import_bam.html">import_bam()</a></code> combines identical reads into the same range, and the <code>score</code> metadata column indicates the number of perfectly-overlapping alignments. This means that the total number of alignments (reads) is equal to the sum of the score:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="kw">score</span>(ps_reads))</a></code></pre></div>
 <pre><code>## [1] 190</code></pre>
 <p>Alternatively, you can import each read as its own range by setting <code>field =  NULL</code>:</p>

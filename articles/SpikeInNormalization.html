@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.30</span>
       </span>
     </div>
 
@@ -180,7 +180,7 @@
 ##   [2]     chr2         2      + |         2
 ##   -------
 ##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
-<p>And if we wanted to isolate the spike-in reads, there is an analagous <code><a href="../reference/getSpikeInCounts.html">getSpikeInReads()</a></code> function.</p>
+<p>And if we wanted to isolate the spike-in reads, there is an analogous <code><a href="../reference/getSpikeInCounts.html">getSpikeInReads()</a></code> function.</p>
 </div>
 <div id="the-spike-in-normalization-factor" class="section level1">
 <h1 class="hasAnchor">
@@ -218,7 +218,7 @@
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="../reference/getSpikeInNFs.html">getSpikeInNFs</a></span>(grl, <span class="dt">si_pattern =</span> <span class="st">"spike"</span>, <span class="dt">ctrl_pattern =</span> <span class="st">"gr1"</span>, <span class="dt">ncores =</span> <span class="dv">1</span>)</a></code></pre></div>
 <pre><code>## [1] 500000 500000 500000 375000</code></pre>
 <p>(The NFs are high because our dummy data contain only a few reads).</p>
-<p>By default, normalization factors utilize <strong>batch normalization</strong>, such that in any replicate (identified by the characters following “rep” in the sample names), the negative control is RPM normalized, and the other conditions are normlized to the within-replicate negative control (see the documentation for further details).</p>
+<p>By default, normalization factors utilize <strong>batch normalization</strong>, such that in any replicate (identified by the characters following “rep” in the sample names), the negative control is RPM normalized, and the other conditions are normalized to the within-replicate negative control (see the documentation for further details).</p>
 <p>Currently, batch normalization requires the sample names end with strings matching the format <code>"_rep1"</code>, <code>"_rep2"</code>, etc. If sample names do not conform to this pattern, you can rename them by using the <code>sample_names</code> argument.</p>
 </div>
 <div id="normalizing-data" class="section level1">
@@ -262,9 +262,9 @@
 ##   -------
 ##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
 </div>
-<div id="normalization-by-subsampling" class="section level1">
+<div id="normalization-by-sub-sampling" class="section level1">
 <h1 class="hasAnchor">
-<a href="#normalization-by-subsampling" class="anchor"></a>Normalization by Subsampling</h1>
+<a href="#normalization-by-sub-sampling" class="anchor"></a>Normalization by Sub-sampling</h1>
 <div id="rationale" class="section level2">
 <h2 class="hasAnchor">
 <a href="#rationale" class="anchor"></a>Rationale</h2>
@@ -290,23 +290,23 @@
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">width</span>(gene_i), </a>
 <a class="sourceLine" id="cb15-2" data-line-number="2">     <span class="dt">y =</span> <span class="kw"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span>(sreads.gene_i, gene_i),</a>
 <a class="sourceLine" id="cb15-3" data-line-number="3">     <span class="dt">type =</span> <span class="st">"h"</span>, <span class="dt">ylim =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>, <span class="dv">20</span>),</a>
-<a class="sourceLine" id="cb15-4" data-line-number="4">     <span class="dt">main =</span> <span class="st">"PRO-seq (downsampled)"</span>,</a>
-<a class="sourceLine" id="cb15-5" data-line-number="5">     <span class="dt">xlab =</span> <span class="st">"Distance from TSS"</span>, <span class="dt">ylab =</span> <span class="st">"Downsampled PRO-seq Reads"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb15-4" data-line-number="4">     <span class="dt">main =</span> <span class="st">"PRO-seq (down-sampled)"</span>,</a>
+<a class="sourceLine" id="cb15-5" data-line-number="5">     <span class="dt">xlab =</span> <span class="st">"Distance from TSS"</span>, <span class="dt">ylab =</span> <span class="st">"Down-sampled PRO-seq Reads"</span>)</a></code></pre></div>
 <p><img src="SpikeInNormalization_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">width</span>(gene_i), </a>
 <a class="sourceLine" id="cb16-2" data-line-number="2">     <span class="dt">y =</span> <span class="kw"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span>(reads.gene_i, gene_i),</a>
 <a class="sourceLine" id="cb16-3" data-line-number="3">     <span class="dt">type =</span> <span class="st">"h"</span>,  <span class="dt">ylim =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>, <span class="dv">20</span>),</a>
-<a class="sourceLine" id="cb16-4" data-line-number="4">     <span class="dt">main =</span> <span class="st">"PRO-seq (downscaled)"</span>, </a>
-<a class="sourceLine" id="cb16-5" data-line-number="5">     <span class="dt">xlab =</span> <span class="st">"Distance from TSS"</span>,  <span class="dt">ylab =</span> <span class="st">"Downscaled PRO-seq Reads"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb16-4" data-line-number="4">     <span class="dt">main =</span> <span class="st">"PRO-seq (down-scaled)"</span>, </a>
+<a class="sourceLine" id="cb16-5" data-line-number="5">     <span class="dt">xlab =</span> <span class="st">"Distance from TSS"</span>,  <span class="dt">ylab =</span> <span class="st">"Down-scaled PRO-seq Reads"</span>)</a></code></pre></div>
 <p><img src="SpikeInNormalization_files/figure-html/unnamed-chunk-11-2.png" width="700"></p>
 <p>The two plots above come from the same data, and contain the same quantity of signal, but their profiles are notably distinct. Particularly when plotting many samples over large regions within a genome browser, differences caused by sequencing depth can be misleading. It can be challenging to estimate differences if some datasets are “tall and spikey” while others are “short and smooth”.</p>
 <p>Absent global changes in signal, the above scenario can be resolved beforehand by equal sequencing depths, or by down-sampling to match readcounts.</p>
 <p>However, matching raw readcounts is not a solution when significant biological changes in total signal should be accounted for.</p>
 <p>For instance, consider an example in which there is a true, two-fold biological difference in transcription between two samples. If we could avoid all technical artifacts and measure the transcription directly in each individual cell, we would expect to uncover half the number of transcribing complexes in the lower condition. Having equivalent sequencing depth across those two conditions is effectively a technical artifact, and down-scaling the signal by multiplication can cause the visual challenges observed above.</p>
 </div>
-<div id="subsampling-for-normalization" class="section level2">
+<div id="sub-sampling-for-normalization" class="section level2">
 <h2 class="hasAnchor">
-<a href="#subsampling-for-normalization" class="anchor"></a>Subsampling for Normalization</h2>
+<a href="#sub-sampling-for-normalization" class="anchor"></a>Sub-sampling for Normalization</h2>
 <p>To address the above concerns, we’ve included a function <code><a href="../reference/subsampleBySpikeIn.html">subsampleBySpikeIn()</a></code> to randomly sample reads to match the normalized signal proportions between datasets.</p>
 <p>Internally, the function uses the <code><a href="../reference/getSpikeInNFs.html">getSpikeInNFs()</a></code> function, but instead of SRPMC normalization, using the option <code>method = "SNR"</code>, which calculates normalization factors that downscale each dataset to match the dataset with the least spike-in reads. From this, the number of “desired reads” is established for each dataset, and subsequently that number of reads is randomly sampled.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw"><a href="../reference/getSpikeInCounts.html">removeSpikeInReads</a></span>(grl, <span class="dt">si_pattern =</span> <span class="st">"spike"</span>, <span class="dt">ncores =</span> <span class="dv">1</span>)</a></code></pre></div>
@@ -383,7 +383,7 @@
 ##   [2]     chr2         2      + |         3
 ##   -------
 ##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
-<p>Normalization by subsampling sacrifices information to reduce biases across datasets.</p>
+<p>Normalization by sub-sampling sacrifices information to reduce biases across datasets.</p>
 </div>
 </div>
   </div>
@@ -404,9 +404,9 @@
       <li><a href="#calculating-normalization-factors">Calculating Normalization Factors</a></li>
       <li><a href="#normalizing-data">Normalizing Data</a></li>
       <li>
-<a href="#normalization-by-subsampling">Normalization by Subsampling</a><ul class="nav nav-pills nav-stacked">
+<a href="#normalization-by-sub-sampling">Normalization by Sub-sampling</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#rationale">Rationale</a></li>
-      <li><a href="#subsampling-for-normalization">Subsampling for Normalization</a></li>
+      <li><a href="#sub-sampling-for-normalization">Sub-sampling for Normalization</a></li>
       </ul>
 </li>
       </ul>

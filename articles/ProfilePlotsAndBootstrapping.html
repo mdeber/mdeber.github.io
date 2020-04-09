@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.30</span>
       </span>
     </div>
 
@@ -144,8 +144,8 @@
 <div id="drawbacks" class="section level2">
 <h2 class="hasAnchor">
 <a href="#drawbacks" class="anchor"></a>Drawbacks</h2>
-<p>One drawback of using the arithmatic mean is that means are not robust to outliers. In other words, the mean signal at any position is liable to be determined by a small number of highly influential points. This is especially problematic for high dynamic range data like PRO-seq.</p>
-<p>It’s common to see this issue addressed through the use medians/quantiles in place of arithmatic means. However, observe what happens as we plot the median signal across our gene list using several different gene-filtering thresholds:</p>
+<p>One drawback of using the arithmetic mean is that means are not robust to outliers. In other words, the mean signal at any position is liable to be determined by a small number of highly influential points. This is especially problematic for high dynamic range data like PRO-seq.</p>
+<p>It’s common to see this issue addressed through the use medians/quantiles in place of arithmetic means. However, observe what happens as we plot the median signal across our gene list using several different gene-filtering thresholds:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">plot_meds &lt;-<span class="st"> </span><span class="cf">function</span>(sig_thresh) {</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">  idx &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span>(countmatrix_pr) <span class="op">&gt;</span><span class="st"> </span>sig_thresh)</a>
 <a class="sourceLine" id="cb4-3" data-line-number="3">  <span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(countmatrix_pr),</a>
@@ -162,7 +162,7 @@
 <a class="sourceLine" id="cb4-14" data-line-number="14">  <span class="kw">plot_meds</span>(i)</a>
 <a class="sourceLine" id="cb4-15" data-line-number="15">}</a></code></pre></div>
 <p><img src="ProfilePlotsAndBootstrapping_files/figure-html/unnamed-chunk-4-1.png" width="576"></p>
-<p>The paucity of transcription on Drosophila chromosome 4 makes this a somewhat extreme example, and you might find that the above situation is a non-issue for your data. However, it’s important to keep in mind how unexpressed genes can affect the median. A common rule of thumb is that a given cell is only apt to express around half of its genes; if that holds true, the median of an unfiltered genelist will be close to zero, and could be insensitive to changes occuring at expressed genes.</p>
+<p>The paucity of transcription on Drosophila chromosome 4 makes this a somewhat extreme example, and you might find that the above situation is a non-issue for your data. However, it’s important to keep in mind how unexpressed genes can affect the median. A common rule of thumb is that a given cell is only apt to express around half of its genes; if that holds true, the median of an unfiltered genelist will be close to zero, and could be insensitive to changes occurring at expressed genes.</p>
 </div>
 </div>
 <div id="the-rationale-for-bootstrapping" class="section level1">
@@ -170,8 +170,8 @@
 <a href="#the-rationale-for-bootstrapping" class="anchor"></a>The Rationale for Bootstrapping</h1>
 <p>A robust alternative to plotting mean or median signal profiles is to plot <strong>bootstrapped</strong> mean signal profiles, known as metaprofile plots or metaplots.</p>
 <p>To bootstrap the mean signal by position, a small number of genes are randomly sampled from a genelist, and the mean signal at each position is calculated for that group of genes. This process of randomly sampling genes and calculating mean signals is repeated over many iterations, and the final bootstrapped mean for each position is the median of the sampled means.</p>
-<p>One feature of bootstrapping is that it is robust to outliers. But more than that, the a bootstrapped mean provides an <em>expectation</em> for what the mean signal would be for any arbitrary group of genes, and associated with that expectation is a measure of uncertainty. By taking quantiles of the subsampled means <em>other than</em> the median (the expected value), we can estimate the extent to which the mean varies across arbitrary groups of genes.</p>
-<p>For example, the 75th percentile of the subsampled means is a number for which, 25% of the time, we calculated a higher mean. Similarly, a 90% confidence interval about the bootstrapped mean encompasses all values between the 5th and 95th percentiles of the subsampled means.</p>
+<p>One feature of bootstrapping is that it is robust to outliers. But more than that, the a bootstrapped mean provides an <em>expectation</em> for what the mean signal would be for any arbitrary group of genes, and associated with that expectation is a measure of uncertainty. By taking quantiles of the sub-sampled means <em>other than</em> the median (the expected value), we can estimate the extent to which the mean varies across arbitrary groups of genes.</p>
+<p>For example, the 75th percentile of the sub-sampled means is a number for which, 25% of the time, we calculated a higher mean. Similarly, a 90% confidence interval about the bootstrapped mean encompasses all values between the 5th and 95th percentiles of the sub-sampled means.</p>
 </div>
 <div id="generating-and-plotting-metaprofiles" class="section level1">
 <h1 class="hasAnchor">
@@ -185,10 +185,10 @@
 <pre><code>##    x       mean      lower      upper sample.name
 ## 1  3 0.03529412 0.02941176 0.04705882      PROseq
 ## 2  8 0.05294118 0.04117647 0.07058824      PROseq
-## 3 13 0.07058824 0.05294118 0.09411765      PROseq
-## 4 18 0.07058824 0.04705882 0.08823529      PROseq
+## 3 13 0.07647059 0.05294118 0.10000000      PROseq
+## 4 18 0.06470588 0.04705882 0.08823529      PROseq
 ## 5 23 0.12352941 0.09411765 0.15294118      PROseq
-## 6 28 0.09411765 0.08235294 0.10588235      PROseq</code></pre>
+## 6 28 0.09117647 0.07647059 0.10588235      PROseq</code></pre>
 <p>A dataframe is returned for plotting, and notice how the x-values have been automatically adjusted to be the center of the bins.</p>
 <p>Below, we show how to plot the confidence bands using base R plotting, as well as <code>ggplot2</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(mean <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> bootmeans.df, <span class="dt">type =</span> <span class="st">"l"</span>, </a>
@@ -228,8 +228,8 @@
 ## 1  3 0.01176471 0.005882353 0.01764706         ps1
 ## 2  8 0.01764706 0.011764706 0.02352941         ps1
 ## 3 13 0.01764706 0.011764706 0.02352941         ps1
-## 4 18 0.03529412 0.023529412 0.04705882         ps1
-## 5 23 0.02941176 0.017647059 0.04705882         ps1
+## 4 18 0.04117647 0.023529412 0.04705882         ps1
+## 5 23 0.02941176 0.017647059 0.04117647         ps1
 ## 6 28 0.02941176 0.023529412 0.03529412         ps1</code></pre>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span>(ggplot2)</a>
 <a class="sourceLine" id="cb14-2" data-line-number="2"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(bm_list.df, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x, mean, <span class="dt">color =</span> sample.name)) <span class="op">+</span><span class="st"> </span></a>
@@ -242,7 +242,7 @@
 <a class="sourceLine" id="cb14-9" data-line-number="9">       <span class="dt">y =</span> <span class="st">"Mean Signal + 30% CI"</span>) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb14-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>()</a></code></pre></div>
 <p><img src="ProfilePlotsAndBootstrapping_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
-<p><em>Bear in mind that the above confidence intervals are ignoring 70% of the subsampling experiments, which is excessive. More reasonable parameters would reveal how lacking this data is, i.e. how un-confident we are that there is a robust difference in the mean signal at various positions.</em></p>
+<p><em>Bear in mind that the above confidence intervals are ignoring 70% of the sub-sampling experiments, which is excessive. More reasonable parameters would reveal how lacking this data is, i.e. how un-confident we are that there is a robust difference in the mean signal at various positions.</em></p>
 </div>
 </div>
   </div>
