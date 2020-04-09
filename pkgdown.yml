@@ -2,5 +2,17 @@ pandoc: 2.3.1
 pkgdown: 1.4.1
 pkgdown_sha: ~
 articles:
-  BRGenomicsOverview: BRGenomicsOverview.html
+  AnalyzingMultipleDatasets: AnalyzingMultipleDatasets.html
+  DESeq2WithGlobalPerturbations: DESeq2WithGlobalPerturbations.html
+  GettingStarted: GettingStarted.html
+  ImportingModifyingAnnotations: ImportingModifyingAnnotations.html
+  ImportingProcessingData: ImportingProcessingData.html
+  Overview: Overview.html
+  ProfilePlotsAndBootstrapping: ProfilePlotsAndBootstrapping.html
+  SequenceExtraction: SequenceExtraction.html
+  SignalCounting: SignalCounting.html
+  SpikeInNormalization: SpikeInNormalization.html
+urls:
+  reference: https://mdeber.github.io/reference
+  article: https://mdeber.github.io/articles
 

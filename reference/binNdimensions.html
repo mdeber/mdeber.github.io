@@ -70,7 +70,7 @@ summarize the datapoints that fall into any of these n-dimensional bins." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.26</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.3</span>
       </span>
     </div>
 
@@ -78,31 +78,63 @@ summarize the datapoints that fall into any of these n-dimensional bins." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../articles/Overview.html">Overview</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
+    Guides
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/BRGenomicsOverview.html">Basepair-Resolution Analysis with BRGenomics</a>
+      <a href="../articles/GettingStarted.html">Getting Started</a>
+    </li>
+    <li>
+      <a href="../articles/ImportingModifyingAnnotations.html">Importing &amp; Modifying Annotations</a>
+    </li>
+    <li>
+      <a href="../articles/ImportingProcessingData.html">Importing &amp; Processing Data</a>
+    </li>
+    <li>
+      <a href="../articles/SignalCounting.html">Signal Counting</a>
+    </li>
+    <li>
+      <a href="../articles/AnalyzingMultipleDatasets.html">Analyzing Multiple Datasets</a>
+    </li>
+    <li>
+      <a href="../articles/ProfilePlotsAndBootstrapping.html">Profile Plots &amp; Bootstrapping</a>
+    </li>
+    <li>
+      <a href="../articles/SpikeInNormalization.html">Spike-in Normalization</a>
+    </li>
+    <li>
+      <a href="../articles/DESeq2WithGlobalPerturbations.html">DESeq2 with Global Perturbations</a>
+    </li>
+    <li>
+      <a href="../articles/SequenceExtraction.html">Sequence Extraction</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../reference/index.html">Documentation</a>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/mdeber/BRGenomics">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -130,10 +162,10 @@ summarize the datapoints that fall into any of these n-dimensional bins.</p>
   <span class='no'>dims.df</span>,
   <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>10</span>,
   <span class='kw'>use_bin_numbers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fu'>detectCores</span>()
+  <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"mc.cores"</span>, <span class='fl'>2L</span>)
 )
 
-<span class='fu'>aggregateByNdimensionalBins</span>(
+<span class='fu'>aggregateByNdimBins</span>(
   <span class='no'>x</span>,
   <span class='no'>dims.df</span>,
   <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>10</span>,
@@ -143,14 +175,14 @@ summarize the datapoints that fall into any of these n-dimensional bins.</p>
   <span class='kw'>drop</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>empty</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
   <span class='kw'>use_bin_numbers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fu'>detectCores</span>()
+  <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"mc.cores"</span>, <span class='fl'>2L</span>)
 )
 
-<span class='fu'>densityInNdimensionalBins</span>(
+<span class='fu'>densityInNdimBins</span>(
   <span class='no'>dims.df</span>,
   <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>10</span>,
   <span class='kw'>use_bin_numbers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fu'>detectCores</span>()
+  <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"mc.cores"</span>, <span class='fl'>2L</span>)
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -234,17 +266,17 @@ if <code>FUN = sum</code>), the empty value should be <code>0</code>.</p></td>
   input data has been replaced by its bin number (an integer). If
   codeuse_bin_numbers = FALSE, the center points of the bins are returned
   instead of the bin numbers.</p>
-<p><code>aggregateByNdimensionalBins</code> summarizes some input data <code>x</code> in
-  each combination of bins, i.e. in each n-dimensional bin. Each row of the
-  output dataframe is a unique combination of the input bins (i.e. each
+<p><code>aggregateByNdimBins</code> summarizes some input data <code>x</code> in each
+  combination of bins, i.e. in each n-dimensional bin. Each row of the output
+  dataframe is a unique combination of the input bins (i.e. each
   n-dimensional bin), and the output columns are identical to those in
   <code>dims.df</code>, with the addition of one or more columns containing the
   aggregated data in each n-dimensional bin. If the input <code>x</code> was a
   vector, the column is named "value"; if the input <code>x</code> was a dataframe,
   the column names from <code>x</code> are maintained.</p>
-<p><code>densityInNdimensionalBins</code> returns a dataframe just like
-  <code>aggregateByNdimensionalBins</code>, except the "value" column contains the
-  number of observations that fall into each n-dimensional bin.</p>
+<p><code>densityInNdimBins</code> returns a dataframe just like
+  <code>aggregateByNdimBins</code>, except the "value" column contains the number
+  of observations that fall into each n-dimensional bin.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"PROseq"</span>) <span class='co'># import included PROseq data</span>
@@ -279,8 +311,7 @@ if <code>FUN = sum</code>), the empty value should be <code>0</code>.</p></td>
 <span class='co'># get number of genes in each bin</span>
 <span class='co'>#--------------------------------------------------#</span>
 
-<span class='no'>bin_counts</span> <span class='kw'>&lt;-</span> <span class='fu'>densityInNdimensionalBins</span>(<span class='no'>df</span>, <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>20</span>,
-                                        <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='no'>bin_counts</span> <span class='kw'>&lt;-</span> <span class='fu'>densityInNdimBins</span>(<span class='no'>df</span>, <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 
 <span class='no'>bin_counts</span>[<span class='fl'>1</span>:<span class='fl'>6</span>, ]</div><div class='output co'>#&gt;   bin.counts_pr bin.counts_gb bin.counts_cps value
 #&gt; 1             1             1              1   128
@@ -293,8 +324,8 @@ if <code>FUN = sum</code>), the empty value should be <code>0</code>.</p></td>
 <span class='co'># get mean cps reads in bins of promoter and genebody reads</span>
 <span class='co'>#--------------------------------------------------#</span>
 
-<span class='no'>bin2d_cps</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregateByNdimensionalBins</span>(<span class='st'>"counts_cps"</span>, <span class='no'>df</span>,
-                                         <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='no'>bin2d_cps</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregateByNdimBins</span>(<span class='st'>"counts_cps"</span>, <span class='no'>df</span>, <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>20</span>,
+                                 <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 
 <span class='no'>bin2d_cps</span>[<span class='fl'>1</span>:<span class='fl'>6</span>, ]</div><div class='output co'>#&gt;   bin.counts_pr bin.counts_gb counts_cps
 #&gt; 1             1             1   27.70395
@@ -314,8 +345,8 @@ if <code>FUN = sum</code>), the empty value should be <code>0</code>.</p></td>
 <span class='co'># get median cps reads for those bins</span>
 <span class='co'>#--------------------------------------------------#</span>
 
-<span class='no'>bin2d_cps_med</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregateByNdimensionalBins</span>(<span class='st'>"counts_cps"</span>, <span class='no'>df</span>, <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>20</span>,
-                                             <span class='kw'>FUN</span> <span class='kw'>=</span> <span class='no'>median</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='no'>bin2d_cps_med</span> <span class='kw'>&lt;-</span> <span class='fu'>aggregateByNdimBins</span>(<span class='st'>"counts_cps"</span>, <span class='no'>df</span>, <span class='kw'>nbins</span> <span class='kw'>=</span> <span class='fl'>20</span>,
+                                     <span class='kw'>FUN</span> <span class='kw'>=</span> <span class='no'>median</span>, <span class='kw'>ncores</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 
 <span class='no'>bin2d_cps_med</span>[<span class='fl'>1</span>:<span class='fl'>6</span>, ]</div><div class='output co'>#&gt;   bin.counts_pr bin.counts_gb counts_cps
 #&gt; 1             1             1          3

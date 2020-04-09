@@ -67,7 +67,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.26</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.3</span>
       </span>
     </div>
 
@@ -75,31 +75,63 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../articles/Overview.html">Overview</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
+    Guides
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/BRGenomicsOverview.html">Basepair-Resolution Analysis with BRGenomics</a>
+      <a href="../articles/GettingStarted.html">Getting Started</a>
+    </li>
+    <li>
+      <a href="../articles/ImportingModifyingAnnotations.html">Importing &amp; Modifying Annotations</a>
+    </li>
+    <li>
+      <a href="../articles/ImportingProcessingData.html">Importing &amp; Processing Data</a>
+    </li>
+    <li>
+      <a href="../articles/SignalCounting.html">Signal Counting</a>
+    </li>
+    <li>
+      <a href="../articles/AnalyzingMultipleDatasets.html">Analyzing Multiple Datasets</a>
+    </li>
+    <li>
+      <a href="../articles/ProfilePlotsAndBootstrapping.html">Profile Plots &amp; Bootstrapping</a>
+    </li>
+    <li>
+      <a href="../articles/SpikeInNormalization.html">Spike-in Normalization</a>
+    </li>
+    <li>
+      <a href="../articles/DESeq2WithGlobalPerturbations.html">DESeq2 with Global Perturbations</a>
+    </li>
+    <li>
+      <a href="../articles/SequenceExtraction.html">Sequence Extraction</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../reference/index.html">Documentation</a>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/mdeber/BRGenomics">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -117,6 +149,19 @@
       
     </div>
 
+    <div id="brgenomics-0-99-3" class="section level2">
+<h2 class="hasAnchor">
+<a href="#brgenomics-0-99-3" class="anchor"></a>BRGenomics 0.99.3</h2>
+<ul>
+<li>Change all <code>ncores</code> options to default to <code><a href="https://rdrr.io/r/base/options.html">getOption("mc.cores", 2L)</a></code>
+</li>
+<li>Rename n-dimensional binning functions <code><a href="../reference/binNdimensions.html">aggregateByNdimBins()</a></code> and <code><a href="../reference/binNdimensions.html">densityInNdimBins()</a></code>
+</li>
+<li>Redone documentation website, splitting up the vignette</li>
+<li>Updated package vignettes/guide pages in several places</li>
+<li>Other minor internal changes</li>
+</ul>
+</div>
     <div id="brgenomics-0-99-25" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brgenomics-0-99-25" class="anchor"></a>BRGenomics 0.99.25</h2>
@@ -254,7 +299,7 @@
 <h2 class="hasAnchor">
 <a href="#brgenomics-0-7-7" class="anchor"></a>BRGenomics 0.7.7</h2>
 <ul>
-<li>Bug fix in <code><a href="../reference/binNdimensions.html">aggregateByNdimensionalBins()</a></code> affecting simultaneous aggregation of multiple data</li>
+<li>Bug fix in <code>aggregateByNdimensionalBins()</code> affecting simultaneous aggregation of multiple data</li>
 <li>Minor updates to documentation, including an error in <code><a href="../reference/getDESeqResults.html">getDESeqResults()</a></code>
 </li>
 <li>Slightly expanded vignette</li>
@@ -279,8 +324,8 @@
 <li>Rewrite n-dimensional binning functions, and add function for aggregating data within n-dimensional bins
 <ul>
 <li>Changed arguments in <code><a href="../reference/binNdimensions.html">binNdimensions()</a></code> to only accept dataframe inputs</li>
-<li>Add <code><a href="../reference/binNdimensions.html">densityInNdimensionalBins()</a></code> function to count points in each bin</li>
-<li>Add <code><a href="../reference/binNdimensions.html">aggregateByNdimensionalBins()</a></code> function to aggregate data within bins using arbitrary functions</li>
+<li>Add <code>densityInNdimensionalBins()</code> function to count points in each bin</li>
+<li>Add <code>aggregateByNdimensionalBins()</code> function to aggregate data within bins using arbitrary functions</li>
 </ul>
 </li>
 <li>Added arguments for setting sample names in spike-in/normalization functions</li>
@@ -385,6 +430,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#brgenomics-0-99-3">0.99.3</a></li>
         <li><a href="#brgenomics-0-99-25">0.99.25</a></li>
         <li><a href="#brgenomics-0-99-23">0.99.23</a></li>
         <li><a href="#brgenomics-0-99-15">0.99.15</a></li>
