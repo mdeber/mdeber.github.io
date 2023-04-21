@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
       </span>
     </div>
 
@@ -47,7 +49,7 @@
   <a href="../articles/Overview.html">Overview</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Guides
      
     <span class="caret"></span>
@@ -91,7 +93,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/mdeber/BRGenomics">
+  <a href="https://github.com/mdeber/BRGenomics" class="external-link">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -112,236 +114,253 @@
       <h1 data-toc-skip>Analyzing Multiple Datasets</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/mdeber/BRGenomics/blob/master/vignettes/AnalyzingMultipleDatasets.Rmd"><code>vignettes/AnalyzingMultipleDatasets.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/mdeber/BRGenomics/blob/HEAD/vignettes/AnalyzingMultipleDatasets.Rmd" class="external-link"><code>vignettes/AnalyzingMultipleDatasets.Rmd</code></a></small>
       <div class="hidden name"><code>AnalyzingMultipleDatasets.Rmd</code></div>
 
     </div>
 
     
     
-<div id="lists" class="section level1">
-<h1 class="hasAnchor">
-<a href="#lists" class="anchor"></a>Lists</h1>
-<p>To efficiently work with several datasets, we recommend storing the GRanges objects within a standard, named list, e.g. <code>grl &lt;- list(a_rep1 = gr1, b_rep1 =  gr2, ...)</code>.</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">BRGenomics</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"PROseq"</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"txs_dm6_chr4"</span>)</pre></body></html></div>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="co"># make 3 datasets</span>
-<span class="no">ps1</span> <span class="kw">&lt;-</span> <span class="no">PROseq</span>[<span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="no">PROseq</span>), <span class="fl">3</span>)]
-<span class="no">ps2</span> <span class="kw">&lt;-</span> <span class="no">PROseq</span>[<span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="no">PROseq</span>), <span class="fl">3</span>)]
-<span class="no">ps3</span> <span class="kw">&lt;-</span> <span class="no">PROseq</span>[<span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">3</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="no">PROseq</span>), <span class="fl">3</span>)]
-
-<span class="co"># use the "=" assignment in list() to give names to the list elements</span>
-<span class="no">ps_list</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">ps1</span> <span class="kw">=</span> <span class="no">ps1</span>, <span class="kw">ps2</span> <span class="kw">=</span> <span class="no">ps2</span>, <span class="kw">ps3</span> <span class="kw">=</span> <span class="no">ps3</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="no">ps_list</span>)</pre></body></html></div>
-<pre><code>## [1] "ps1" "ps2" "ps3"</code></pre>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">ps_list</span></pre></body></html></div>
-<pre><code>## $ps1
-## GRanges object with 15794 ranges and 1 metadata column:
-##           seqnames    ranges strand |     score
-##              &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
-##       [1]     chr4      1295      + |         1
-##       [2]     chr4     42590      + |         2
-##       [3]     chr4     42595      + |         1
-##       [4]     chr4     42618      + |         1
-##       [5]     chr4     42622      + |         2
-##       ...      ...       ...    ... .       ...
-##   [15790]     chr4   1307114      - |         1
-##   [15791]     chr4   1307122      - |         1
-##   [15792]     chr4   1307300      - |         1
-##   [15793]     chr4   1316537      - |         1
-##   [15794]     chr4   1319369      - |         1
-##   -------
-##   seqinfo: 7 sequences from an unspecified genome
-## 
-## $ps2
-## GRanges object with 15793 ranges and 1 metadata column:
-##           seqnames    ranges strand |     score
-##              &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
-##       [1]     chr4     41428      + |         1
-##       [2]     chr4     42593      + |         5
-##       [3]     chr4     42596      + |         1
-##       [4]     chr4     42619      + |         2
-##       [5]     chr4     42652      + |         3
-##       ...      ...       ...    ... .       ...
-##   [15789]     chr4   1307032      - |         1
-##   [15790]     chr4   1307115      - |         2
-##   [15791]     chr4   1307126      - |         1
-##   [15792]     chr4   1307301      - |         1
-##   [15793]     chr4   1318960      - |         1
-##   -------
-##   seqinfo: 7 sequences from an unspecified genome
-## 
-## $ps3
-## GRanges object with 15793 ranges and 1 metadata column:
-##           seqnames    ranges strand |     score
-##              &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
-##       [1]     chr4     42588      + |         1
-##       [2]     chr4     42594      + |         2
-##       [3]     chr4     42601      + |         1
-##       [4]     chr4     42621      + |         1
-##       [5]     chr4     42657      + |         1
-##       ...      ...       ...    ... .       ...
-##   [15789]     chr4   1307075      - |         1
-##   [15790]     chr4   1307120      - |         1
-##   [15791]     chr4   1307283      - |         1
-##   [15792]     chr4   1307742      - |         1
-##   [15793]     chr4   1319004      - |         1
-##   -------
-##   seqinfo: 7 sequences from an unspecified genome</code></pre>
+<div class="section level2">
+<h2 id="lists">Lists<a class="anchor" aria-label="anchor" href="#lists"></a>
+</h2>
+<p>To efficiently work with several datasets, we recommend storing the GRanges objects within a standard, named list, e.g. <code>grl &lt;- list(a_rep1 = gr1, b_rep1 =  gr2, ...)</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mdeber.github.io" class="external-link">BRGenomics</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"PROseq"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"txs_dm6_chr4"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># make 3 datasets</span></span>
+<span><span class="va">ps1</span> <span class="op">&lt;-</span> <span class="va">PROseq</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">PROseq</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">ps2</span> <span class="op">&lt;-</span> <span class="va">PROseq</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">PROseq</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">ps3</span> <span class="op">&lt;-</span> <span class="va">PROseq</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">PROseq</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># use the "=" assignment in list() to give names to the list elements</span></span>
+<span><span class="va">ps_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>ps1 <span class="op">=</span> <span class="va">ps1</span>, ps2 <span class="op">=</span> <span class="va">ps2</span>, ps3 <span class="op">=</span> <span class="va">ps3</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">ps_list</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "ps1" "ps2" "ps3"</span></span></code></pre>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ps_list</span></span></code></pre></div>
+<pre><code><span><span class="co">## $ps1</span></span>
+<span><span class="co">## GRanges object with 15794 ranges and 1 metadata column:</span></span>
+<span><span class="co">##           seqnames    ranges strand |     score</span></span>
+<span><span class="co">##              &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;</span></span>
+<span><span class="co">##       [1]     chr4      1295      + |         1</span></span>
+<span><span class="co">##       [2]     chr4     42590      + |         2</span></span>
+<span><span class="co">##       [3]     chr4     42595      + |         1</span></span>
+<span><span class="co">##       [4]     chr4     42618      + |         1</span></span>
+<span><span class="co">##       [5]     chr4     42622      + |         2</span></span>
+<span><span class="co">##       ...      ...       ...    ... .       ...</span></span>
+<span><span class="co">##   [15790]     chr4   1307114      - |         1</span></span>
+<span><span class="co">##   [15791]     chr4   1307122      - |         1</span></span>
+<span><span class="co">##   [15792]     chr4   1307300      - |         1</span></span>
+<span><span class="co">##   [15793]     chr4   1316537      - |         1</span></span>
+<span><span class="co">##   [15794]     chr4   1319369      - |         1</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 7 sequences from an unspecified genome</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $ps2</span></span>
+<span><span class="co">## GRanges object with 15793 ranges and 1 metadata column:</span></span>
+<span><span class="co">##           seqnames    ranges strand |     score</span></span>
+<span><span class="co">##              &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;</span></span>
+<span><span class="co">##       [1]     chr4     41428      + |         1</span></span>
+<span><span class="co">##       [2]     chr4     42593      + |         5</span></span>
+<span><span class="co">##       [3]     chr4     42596      + |         1</span></span>
+<span><span class="co">##       [4]     chr4     42619      + |         2</span></span>
+<span><span class="co">##       [5]     chr4     42652      + |         3</span></span>
+<span><span class="co">##       ...      ...       ...    ... .       ...</span></span>
+<span><span class="co">##   [15789]     chr4   1307032      - |         1</span></span>
+<span><span class="co">##   [15790]     chr4   1307115      - |         2</span></span>
+<span><span class="co">##   [15791]     chr4   1307126      - |         1</span></span>
+<span><span class="co">##   [15792]     chr4   1307301      - |         1</span></span>
+<span><span class="co">##   [15793]     chr4   1318960      - |         1</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 7 sequences from an unspecified genome</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $ps3</span></span>
+<span><span class="co">## GRanges object with 15793 ranges and 1 metadata column:</span></span>
+<span><span class="co">##           seqnames    ranges strand |     score</span></span>
+<span><span class="co">##              &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;</span></span>
+<span><span class="co">##       [1]     chr4     42588      + |         1</span></span>
+<span><span class="co">##       [2]     chr4     42594      + |         2</span></span>
+<span><span class="co">##       [3]     chr4     42601      + |         1</span></span>
+<span><span class="co">##       [4]     chr4     42621      + |         1</span></span>
+<span><span class="co">##       [5]     chr4     42657      + |         1</span></span>
+<span><span class="co">##       ...      ...       ...    ... .       ...</span></span>
+<span><span class="co">##   [15789]     chr4   1307075      - |         1</span></span>
+<span><span class="co">##   [15790]     chr4   1307120      - |         1</span></span>
+<span><span class="co">##   [15791]     chr4   1307283      - |         1</span></span>
+<span><span class="co">##   [15792]     chr4   1307742      - |         1</span></span>
+<span><span class="co">##   [15793]     chr4   1319004      - |         1</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 7 sequences from an unspecified genome</span></span></code></pre>
 <p>A named list like the one above can be passed as an argument to nearly every function in BRGenomics, and many functions will automatically return dataframes, or melted dataframes that use the list names as the sample names (which can simplify plotting with <code>ggplot2</code> or <code>lattice</code>).</p>
 <hr>
 <p><em>Note that BRGenomics does also support the use of <code>GRangesList</code> or <code>CompressedGRangesList</code> classes for grouping multiple datasets. However, care should be taken when using these, as many functions with methods for <code>GRanges</code> objects also have methods for <code>GRangesList</code> objects. Furthermore, <code>GRangesList</code> objects can be automatically coerced into <code>CompressedGRangesList</code> objects, which can lower memory usage but can also incur significant performance penalties.</em></p>
 <hr>
-<div id="example-summarizing-signal-from-multiple-samples" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example-summarizing-signal-from-multiple-samples" class="anchor"></a>Example: Summarizing Signal from Multiple Samples</h2>
+<div class="section level3">
+<h3 id="example-summarizing-signal-from-multiple-samples">Example: Summarizing Signal from Multiple Samples<a class="anchor" aria-label="anchor" href="#example-summarizing-signal-from-multiple-samples"></a>
+</h3>
 <p>We can pass our list of GRanges directly to <code>getCountsByRegions</code> to simultaneously count reads for each dataset, and melt the result for plotting with <code>ggplot</code>:</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="../reference/getCountsByRegions.html">getCountsByRegions</a></span>(<span class="no">ps_list</span>, <span class="no">txs_dm6_chr4</span>[<span class="fl">1</span>:<span class="fl">5</span>], <span class="kw">ncores</span> <span class="kw">=</span> <span class="fl">1</span>)</pre></body></html></div>
-<pre><code>##   ps1 ps2 ps3
-## 1   1   0   0
-## 2  20  22  17
-## 3   4   4   5
-## 4  36  47  43
-## 5  84  90  89</code></pre>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="co"># melt, and use the optional region_names argument</span>
-<span class="no">txs_counts</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/getCountsByRegions.html">getCountsByRegions</a></span>(<span class="no">ps_list</span>, <span class="no">txs_dm6_chr4</span>, <span class="kw">melt</span> <span class="kw">=</span> <span class="fl">TRUE</span>,
-                                 <span class="kw">region_names</span> <span class="kw">=</span> <span class="no">txs_dm6_chr4</span>$<span class="no">tx_name</span>,
-                                 <span class="kw">ncores</span> <span class="kw">=</span> <span class="fl">1</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">txs_counts</span>)</pre></body></html></div>
-<pre><code>##        region signal sample
-## 1 FBtr0346692      1    ps1
-## 2 FBtr0344900     20    ps1
-## 3 FBtr0340499      4    ps1
-## 4 FBtr0333704     36    ps1
-## 5 FBtr0333705     84    ps1
-## 6 FBtr0100246   1017    ps1</code></pre>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ggplot2</span>)
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">txs_counts</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">sample</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">signal</span>, <span class="kw">fill</span> <span class="kw">=</span> <span class="no">sample</span>)) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin</a></span>() +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>()</pre></body></html></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/getCountsByRegions.html">getCountsByRegions</a></span><span class="op">(</span><span class="va">ps_list</span>, <span class="va">txs_dm6_chr4</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, ncores <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##   ps1 ps2 ps3</span></span>
+<span><span class="co">## 1   1   0   0</span></span>
+<span><span class="co">## 2  20  22  17</span></span>
+<span><span class="co">## 3   4   4   5</span></span>
+<span><span class="co">## 4  36  47  43</span></span>
+<span><span class="co">## 5  84  90  89</span></span></code></pre>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># melt, and use the optional region_names argument</span></span>
+<span><span class="va">txs_counts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getCountsByRegions.html">getCountsByRegions</a></span><span class="op">(</span><span class="va">ps_list</span>, <span class="va">txs_dm6_chr4</span>, melt <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                                 region_names <span class="op">=</span> <span class="va">txs_dm6_chr4</span><span class="op">$</span><span class="va">tx_name</span>,</span>
+<span>                                 ncores <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">txs_counts</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##        region signal sample</span></span>
+<span><span class="co">## 1 FBtr0346692      1    ps1</span></span>
+<span><span class="co">## 2 FBtr0344900     20    ps1</span></span>
+<span><span class="co">## 3 FBtr0340499      4    ps1</span></span>
+<span><span class="co">## 4 FBtr0333704     36    ps1</span></span>
+<span><span class="co">## 5 FBtr0333705     84    ps1</span></span>
+<span><span class="co">## 6 FBtr0100246   1017    ps1</span></span></code></pre>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Warning: package 'ggplot2' was built under R version 4.1.2</span></span></code></pre>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">txs_counts</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sample</span>, y <span class="op">=</span> <span class="va">signal</span>, fill <span class="op">=</span> <span class="va">sample</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html" class="external-link">geom_violin</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="AnalyzingMultipleDatasets_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 </div>
-<div id="example-making-browser-shots-in-r" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example-making-browser-shots-in-r" class="anchor"></a>Example: Making Browser Shots in R</h2>
+<div class="section level3">
+<h3 id="example-making-browser-shots-in-r">Example: Making Browser Shots in R<a class="anchor" aria-label="anchor" href="#example-making-browser-shots-in-r"></a>
+</h3>
 <p>By using the <code><a href="../reference/getCountsByPositions.html">getCountsByPositions()</a></code> on several datasets over a single region-of-interest, we can bake our own genome browser shots within R. Using the same region we plotted earlier:</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">cbp_maxtx</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span>(<span class="no">ps_list</span>, <span class="no">txs_dm6_chr4</span>[<span class="fl">135</span>],
-                                  <span class="kw">melt</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">ncores</span> <span class="kw">=</span> <span class="fl">1</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">cbp_maxtx</span>)</pre></body></html></div>
-<pre><code>##   region position signal sample
-## 1      1        1      0    ps1
-## 2      1        2      0    ps1
-## 3      1        3      0    ps1
-## 4      1        4      0    ps1
-## 5      1        5      0    ps1
-## 6      1        6      0    ps1</code></pre>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">cbp_maxtx</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">position</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">signal</span>)) +
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(~<span class="no">sample</span>, <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">strip.position</span> <span class="kw">=</span> <span class="st">"right"</span>) +
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span>(<span class="kw">size</span> <span class="kw">=</span> <span class="fl">0.5</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="st">"darkgray"</span>) +
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html">coord_cartesian</a></span>(<span class="kw">expand</span> <span class="kw">=</span> <span class="fl">FALSE</span>) +
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="kw">title</span> <span class="kw">=</span> <span class="no">txs_dm6_chr4</span>$<span class="no">tx_name</span>[<span class="fl">135</span>],
-         <span class="kw">x</span> <span class="kw">=</span> <span class="st">"Distance from TSS"</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="st">"PRO-seq Signal"</span>) +
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span>() +
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="kw">strip.text.y</span> <span class="kw">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span>(<span class="kw">angle</span> <span class="kw">=</span> <span class="fl">0</span>),
-          <span class="kw">strip.background</span> <span class="kw">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span>(),
-          <span class="kw">axis.line.x</span> <span class="kw">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span>(),
-          <span class="kw">axis.ticks.x</span> <span class="kw">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span>())</pre></body></html></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">cbp_maxtx</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span><span class="op">(</span><span class="va">ps_list</span>, <span class="va">txs_dm6_chr4</span><span class="op">[</span><span class="fl">135</span><span class="op">]</span>, </span>
+<span>                                  melt <span class="op">=</span> <span class="cn">TRUE</span>, ncores <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">cbp_maxtx</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##   region position signal sample</span></span>
+<span><span class="co">## 1      1        1      0    ps1</span></span>
+<span><span class="co">## 2      1        2      0    ps1</span></span>
+<span><span class="co">## 3      1        3      0    ps1</span></span>
+<span><span class="co">## 4      1        4      0    ps1</span></span>
+<span><span class="co">## 5      1        5      0    ps1</span></span>
+<span><span class="co">## 6      1        6      0    ps1</span></span></code></pre>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">cbp_maxtx</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">position</span>, y <span class="op">=</span> <span class="va">signal</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">sample</span>, ncol <span class="op">=</span> <span class="fl">1</span>, strip.position <span class="op">=</span> <span class="st">"right"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_col</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">0.5</span>, color <span class="op">=</span> <span class="st">"darkgray"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="va">txs_dm6_chr4</span><span class="op">$</span><span class="va">tx_name</span><span class="op">[</span><span class="fl">135</span><span class="op">]</span>,</span>
+<span>         x <span class="op">=</span> <span class="st">"Distance from TSS"</span>, y <span class="op">=</span> <span class="st">"PRO-seq Signal"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>strip.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>,</span>
+<span>          strip.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>          axis.line.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>          axis.ticks.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="AnalyzingMultipleDatasets_files/figure-html/unnamed-chunk-7-1.png" width="576"></p>
 </div>
 </div>
-<div id="multiplexed-granges" class="section level1">
-<h1 class="hasAnchor">
-<a href="#multiplexed-granges" class="anchor"></a>Multiplexed GRanges</h1>
+<div class="section level2">
+<h2 id="multiplexed-granges">Multiplexed GRanges<a class="anchor" aria-label="anchor" href="#multiplexed-granges"></a>
+</h2>
 <p>There is another data structure that is widely supported with BRGenomics, called a <strong>multiplexed GRanges</strong>. A multiplexed GRanges is a single GRanges object that contains multiple metadata fields containing basepair-resolution coverage data for different datasets. We currently recommend users use lists of GRanges objects, but you might find that multiplexed GRanges objects have performance benefits for your data (notes on this below).</p>
 <p>A multiplexed GRanges object can be made using the <code><a href="../reference/mergeGRangesData.html">mergeGRangesData()</a></code> with option <code>multiplex = TRUE</code>.</p>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="no">ps_multi</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/mergeGRangesData.html">mergeGRangesData</a></span>(<span class="no">ps1</span>, <span class="no">ps2</span>, <span class="no">ps3</span>, <span class="kw">multiplex</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">ncores</span> <span class="kw">=</span> <span class="fl">1</span>)
-<span class="no">ps_multi</span></pre></body></html></div>
-<pre><code>## GRanges object with 47380 ranges and 3 metadata columns:
-##           seqnames    ranges strand |       ps1       ps2       ps3
-##              &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
-##       [1]     chr4      1295      + |         1         0         0
-##       [2]     chr4     41428      + |         0         1         0
-##       [3]     chr4     42588      + |         0         0         1
-##       [4]     chr4     42590      + |         2         0         0
-##       [5]     chr4     42593      + |         0         5         0
-##       ...      ...       ...    ... .       ...       ...       ...
-##   [47376]     chr4   1307742      - |         0         0         1
-##   [47377]     chr4   1316537      - |         1         0         0
-##   [47378]     chr4   1318960      - |         0         1         0
-##   [47379]     chr4   1319004      - |         0         0         1
-##   [47380]     chr4   1319369      - |         1         0         0
-##   -------
-##   seqinfo: 7 sequences from an unspecified genome</code></pre>
-<p>As in any GRanges object, the metadata fields are accessible as a dataframe with the <code>mcols()</code> function, and individual columns are accessible with the <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code> operator.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
-<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="fu">mcols</span>(<span class="no">ps_multi</span>)</pre></body></html></div>
-<pre><code>## DataFrame with 47380 rows and 3 columns
-##             ps1       ps2       ps3
-##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
-## 1             1         0         0
-## 2             0         1         0
-## 3             0         0         1
-## 4             2         0         0
-## 5             0         5         0
-## ...         ...       ...       ...
-## 47376         0         0         1
-## 47377         1         0         0
-## 47378         0         1         0
-## 47379         0         0         1
-## 47380         1         0         0</code></pre>
-<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="no">ps_multi</span>$<span class="no">ps1</span>[<span class="fl">1</span>:<span class="fl">5</span>]
-<span class="co">## [1] 1 0 0 2 0</span></pre></body></html></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ps_multi</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mergeGRangesData.html">mergeGRangesData</a></span><span class="op">(</span><span class="va">ps1</span>, <span class="va">ps2</span>, <span class="va">ps3</span>, multiplex <span class="op">=</span> <span class="cn">TRUE</span>, ncores <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">ps_multi</span></span></code></pre></div>
+<pre><code><span><span class="co">## GRanges object with 47380 ranges and 3 metadata columns:</span></span>
+<span><span class="co">##           seqnames    ranges strand |       ps1       ps2       ps3</span></span>
+<span><span class="co">##              &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;</span></span>
+<span><span class="co">##       [1]     chr4      1295      + |         1         0         0</span></span>
+<span><span class="co">##       [2]     chr4     41428      + |         0         1         0</span></span>
+<span><span class="co">##       [3]     chr4     42588      + |         0         0         1</span></span>
+<span><span class="co">##       [4]     chr4     42590      + |         2         0         0</span></span>
+<span><span class="co">##       [5]     chr4     42593      + |         0         5         0</span></span>
+<span><span class="co">##       ...      ...       ...    ... .       ...       ...       ...</span></span>
+<span><span class="co">##   [47376]     chr4   1307742      - |         0         0         1</span></span>
+<span><span class="co">##   [47377]     chr4   1316537      - |         1         0         0</span></span>
+<span><span class="co">##   [47378]     chr4   1318960      - |         0         1         0</span></span>
+<span><span class="co">##   [47379]     chr4   1319004      - |         0         0         1</span></span>
+<span><span class="co">##   [47380]     chr4   1319369      - |         1         0         0</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 7 sequences from an unspecified genome</span></span></code></pre>
+<p>As in any GRanges object, the metadata fields are accessible as a dataframe with the <code><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">mcols()</a></code> function, and individual columns are accessible with the <code>$</code> operator.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">mcols</a></span><span class="op">(</span><span class="va">ps_multi</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## DataFrame with 47380 rows and 3 columns</span></span>
+<span><span class="co">##             ps1       ps2       ps3</span></span>
+<span><span class="co">##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;</span></span>
+<span><span class="co">## 1             1         0         0</span></span>
+<span><span class="co">## 2             0         1         0</span></span>
+<span><span class="co">## 3             0         0         1</span></span>
+<span><span class="co">## 4             2         0         0</span></span>
+<span><span class="co">## 5             0         5         0</span></span>
+<span><span class="co">## ...         ...       ...       ...</span></span>
+<span><span class="co">## 47376         0         0         1</span></span>
+<span><span class="co">## 47377         1         0         0</span></span>
+<span><span class="co">## 47378         0         1         0</span></span>
+<span><span class="co">## 47379         0         0         1</span></span>
+<span><span class="co">## 47380         1         0         0</span></span></code></pre>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ps_multi</span><span class="op">$</span><span class="va">ps1</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
+<span><span class="co">## [1] 1 0 0 2 0</span></span></code></pre></div>
 <p>This data structure can be passed to most functions in BRGenomics. To be explicit, users should set the <code>field</code> argument, when it exists, to set the datasets for which calculations should be performed:</p>
-<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="co"># for all datasets (all fields), get counts in the first 5 transcripts</span>
-<span class="fu"><a href="../reference/getCountsByRegions.html">getCountsByRegions</a></span>(<span class="no">ps_multi</span>, <span class="no">txs_dm6_chr4</span>[<span class="fl">1</span>:<span class="fl">5</span>],
-                   <span class="kw">field</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="fu">mcols</span>(<span class="no">ps_multi</span>)),
-                   <span class="kw">ncores</span> <span class="kw">=</span> <span class="fl">1</span>)</pre></body></html></div>
-<pre><code>##   ps1 ps2 ps3
-## 1   1   0   0
-## 2  20  22  17
-## 3   4   4   5
-## 4  36  47  43
-## 5  84  90  89</code></pre>
-<div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="co"># get counts for ps2 dataset only</span>
-<span class="fu"><a href="../reference/getCountsByRegions.html">getCountsByRegions</a></span>(<span class="no">ps_multi</span>, <span class="no">txs_dm6_chr4</span>[<span class="fl">1</span>:<span class="fl">5</span>],
-                   <span class="kw">field</span> <span class="kw">=</span> <span class="st">"ps2"</span>, <span class="kw">ncores</span> <span class="kw">=</span> <span class="fl">1</span>)</pre></body></html></div>
-<pre><code>## [1]  0 22  4 47 90</code></pre>
-<div class="sourceCode" id="cb23"><html><body><pre class="r"><span class="co"># if no field is given, most functions will default to using all fields</span>
-<span class="fu"><a href="../reference/getCountsByRegions.html">getCountsByRegions</a></span>(<span class="no">ps_multi</span>, <span class="no">txs_dm6_chr4</span>[<span class="fl">1</span>:<span class="fl">5</span>],
-                   <span class="kw">ncores</span> <span class="kw">=</span> <span class="fl">1</span>)</pre></body></html></div>
-<pre><code>## field not found in dataset.gr; will default to using all fields in dataset.gr</code></pre>
-<pre><code>##   ps1 ps2 ps3
-## 1   1   0   0
-## 2  20  22  17
-## 3   4   4   5
-## 4  36  47  43
-## 5  84  90  89</code></pre>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># for all datasets (all fields), get counts in the first 5 transcripts</span></span>
+<span><span class="fu"><a href="../reference/getCountsByRegions.html">getCountsByRegions</a></span><span class="op">(</span><span class="va">ps_multi</span>, <span class="va">txs_dm6_chr4</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, </span>
+<span>                   field <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">mcols</a></span><span class="op">(</span><span class="va">ps_multi</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                   ncores <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##   ps1 ps2 ps3</span></span>
+<span><span class="co">## 1   1   0   0</span></span>
+<span><span class="co">## 2  20  22  17</span></span>
+<span><span class="co">## 3   4   4   5</span></span>
+<span><span class="co">## 4  36  47  43</span></span>
+<span><span class="co">## 5  84  90  89</span></span></code></pre>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># get counts for ps2 dataset only</span></span>
+<span><span class="fu"><a href="../reference/getCountsByRegions.html">getCountsByRegions</a></span><span class="op">(</span><span class="va">ps_multi</span>, <span class="va">txs_dm6_chr4</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, </span>
+<span>                   field <span class="op">=</span> <span class="st">"ps2"</span>, ncores <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1]  0 22  4 47 90</span></span></code></pre>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># if no field is given, most functions will default to using all fields</span></span>
+<span><span class="fu"><a href="../reference/getCountsByRegions.html">getCountsByRegions</a></span><span class="op">(</span><span class="va">ps_multi</span>, <span class="va">txs_dm6_chr4</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, </span>
+<span>                   ncores <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## field not found in dataset.gr; will default to using all fields in dataset.gr</span></span></code></pre>
+<pre><code><span><span class="co">##   ps1 ps2 ps3</span></span>
+<span><span class="co">## 1   1   0   0</span></span>
+<span><span class="co">## 2  20  22  17</span></span>
+<span><span class="co">## 3   4   4   5</span></span>
+<span><span class="co">## 4  36  47  43</span></span>
+<span><span class="co">## 5  84  90  89</span></span></code></pre>
 <p>In our experience with PRO-seq data, and to our surprise, a list of GRanges objects typically outperforms multiplexed GRanges on a typical laptop, despite the theoretical benefits of multiplexing.</p>
 <hr>
 <p><em>In principle, the multiplexed GRanges structure is designed to reduce memory usage and increase performance, but this has not been our experience when dealing with sparse, basepair-resolution data like PRO-seq. Overlapping signal with regions of interest (e.g. in <code><a href="../reference/getCountsByRegions.html">getCountsByRegions()</a></code> or <code>getCountsByPosition()</code>) is relatively efficient for reasonably sized GRanges objects, and these calculations scale reasonably well with multicore processing. While multiplexing means that signal overlapping only has to be performed once, we’ve found that this is a relatively small benefit in practice that is easily offset by having to do signal calculations on large sparse vectors of signal counts. However, the relative benefits of using lists or multiplexing are likely to depend on the nature of the data being analyzed, as well as well as computer hardware.</em></p>
 <hr>
 </div>
-<div id="saving-binary-r-files" class="section level1">
-<h1 class="hasAnchor">
-<a href="#saving-binary-r-files" class="anchor"></a>Saving Binary R Files</h1>
+<div class="section level2">
+<h2 id="saving-binary-r-files">Saving Binary R Files<a class="anchor" aria-label="anchor" href="#saving-binary-r-files"></a>
+</h2>
 <p>While the handling of GRanges data in BRGenomics is relatively fast, the initial importation of bigWig or bedGraph files as GRanges objects remains a noticeable bottleneck. This may be tolerable for interactive workflows, in which data is imported once before undergoing lengthy analysis, but the bottleneck is a significant detriment for users who regularly import data.</p>
 <p>To avoid this bottleneck, users can save reusable data structures as binary R files, which effectively save the memory state of R objects. Not only are these objects rapidly reloaded into memory upon importation, but they have the added benefit of saving the user from repeating data formatting.</p>
-<p>Any R object can be saved to storage using the <code><a href="https://rdrr.io/r/base/readRDS.html">saveRDS()</a></code> function, and re-imported using <code><a href="https://rdrr.io/r/base/readRDS.html">readRDS()</a></code>.</p>
-<div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="co"># save the PRO-seq GRanges for later import</span>
-<span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">saveRDS</a></span>(<span class="no">PROseq</span>, <span class="kw">file</span> <span class="kw">=</span> <span class="st">"~/PROseq.RData"</span>)
-
-<span class="co"># save a list of GRanges</span>
-<span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">saveRDS</a></span>(<span class="no">ps_list</span>, <span class="kw">file</span> <span class="kw">=</span> <span class="st">"~/ps_list.RData"</span>)
-
-<span class="co"># re-import</span>
-<span class="no">ps_list</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span>(<span class="st">"~/ps_list.RData"</span>)</pre></body></html></div>
-<p>The <code><a href="https://rdrr.io/r/base/save.html">save()</a></code> and <code><a href="https://rdrr.io/r/base/load.html">load()</a></code> commands can also be used to accomplish the same thing, although they work slightly differently.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+<p>Any R object can be saved to storage using the <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS()</a></code> function, and re-imported using <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS()</a></code>.</p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># save the PRO-seq GRanges for later import</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS</a></span><span class="op">(</span><span class="va">PROseq</span>, file <span class="op">=</span> <span class="st">"~/PROseq.RData"</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="co"># save a list of GRanges</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS</a></span><span class="op">(</span><span class="va">ps_list</span>, file <span class="op">=</span> <span class="st">"~/ps_list.RData"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># re-import</span></span>
+<span><span class="va">ps_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"~/ps_list.RData"</span><span class="op">)</span></span></code></pre></div>
+<p>The <code><a href="https://rdrr.io/r/base/save.html" class="external-link">save()</a></code> and <code><a href="https://rdrr.io/r/base/load.html" class="external-link">load()</a></code> commands can also be used to accomplish the same thing, although they work slightly differently.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
 </div>
 <div class="footnotes">
 <hr>
 <ol>
-<li id="fn1"><p>The dataframe, by default, is not a base R <code>data.frame</code>, but rather an S4 <code>DataFrame</code>. The distinction isn’t important for end users, and it’s unlikely users will encounter any reason to coerce the class using <code>as.data.frame</code>.<a href="#fnref1" class="footnote-back">↩</a></p></li>
-<li id="fn2"><p>Unlike the <code><a href="https://rdrr.io/r/base/readRDS.html">saveRDS()</a></code>/ <code><a href="https://rdrr.io/r/base/readRDS.html">readRDS()</a></code> commands, the <code>read()</code>/<code><a href="https://rdrr.io/r/base/load.html">load()</a></code> commands maintain the original name of the objects. For instance, if you <code><a href="https://rdrr.io/r/base/save.html">save(PROseq, file = "~/ps.RData")</a></code>, and in a new R session run <code>read("~/ps.RData")</code>, a new object called <code>PROseq</code> will be created in your new environment. (Note that this is the same way that RStudio saves your current working environment to disk, i.e. it saves the entire environment into an RData file, which can then be reloaded, remaking every data object).<a href="#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn1"><p>The dataframe, by default, is not a base R <code>data.frame</code>, but rather an S4 <code>DataFrame</code>. The distinction isn’t important for end users, and it’s unlikely users will encounter any reason to coerce the class using <code>as.data.frame</code>.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>Unlike the <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS()</a></code>/ <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS()</a></code> commands, the <code>read()</code>/<code><a href="https://rdrr.io/r/base/load.html" class="external-link">load()</a></code> commands maintain the original name of the objects. For instance, if you <code>save(PROseq, file = "~/ps.RData")</code>, and in a new R session run <code>read("~/ps.RData")</code>, a new object called <code>PROseq</code> will be created in your new environment. (Note that this is the same way that RStudio saves your current working environment to disk, i.e. it saves the entire environment into an RData file, which can then be reloaded, remaking every data object).<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
   </div>
@@ -357,11 +376,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Mike DeBerardine.</p>
+  <p></p>
+<p>Developed by Mike DeBerardine.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -369,6 +390,8 @@
 
   
 
+
+  
 
   </body>
 </html>

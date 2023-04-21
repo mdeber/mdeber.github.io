@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
       </span>
     </div>
 
@@ -47,7 +49,7 @@
   <a href="../articles/Overview.html">Overview</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Guides
      
     <span class="caret"></span>
@@ -91,7 +93,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/mdeber/BRGenomics">
+  <a href="https://github.com/mdeber/BRGenomics" class="external-link">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -112,7 +114,7 @@
       <h1 data-toc-skip>Spike-in Normalization</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/mdeber/BRGenomics/blob/master/vignettes/SpikeInNormalization.Rmd"><code>vignettes/SpikeInNormalization.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/mdeber/BRGenomics/blob/HEAD/vignettes/SpikeInNormalization.Rmd" class="external-link"><code>vignettes/SpikeInNormalization.Rmd</code></a></small>
       <div class="hidden name"><code>SpikeInNormalization.Rmd</code></div>
 
     </div>
@@ -122,76 +124,80 @@
 <p>BRGenomics includes useful utilities for spike-in normalization.</p>
 <p>A typical approach is to add the spike-in (either exogenous cells or synthetic oligonucleotides) before library preparation, and to subsequently map to a <strong>combined genome</strong> containing both the target organisms chromosomes (to map the experimental reads) as well as sequences/chromosomes for the spike-in.</p>
 <p>This so-called “competitive alignment” results in the creation of BAM files containing a mix of chromosomes, for which it should be straightforward to identify the spike-in chromosomes.</p>
-<div id="counting-spike-in-reads" class="section level1">
-<h1 class="hasAnchor">
-<a href="#counting-spike-in-reads" class="anchor"></a>Counting Spike-in Reads</h1>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">BRGenomics</span>)</pre></body></html></div>
+<div class="section level2">
+<h2 id="counting-spike-in-reads">Counting Spike-in Reads<a class="anchor" aria-label="anchor" href="#counting-spike-in-reads"></a>
+</h2>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mdeber.github.io" class="external-link">BRGenomics</a></span><span class="op">)</span></span></code></pre></div>
 <p>For this section, we’ll use a list of 4 dummy datasets containing normal, as well as spike-in chromosomes. Consider the first 2 datasets:</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">grl</span>[<span class="fl">1</span>:<span class="fl">2</span>]</pre></body></html></div>
-<pre><code>## $gr1_rep1
-## GRanges object with 4 ranges and 1 metadata column:
-##        seqnames    ranges strand |     score
-##           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
-##   [1]      chr1         1      + |         1
-##   [2]      chr2         2      + |         1
-##   [3] spikechr1         3      + |         1
-##   [4] spikechr2         4      + |         1
-##   -------
-##   seqinfo: 4 sequences from an unspecified genome; no seqlengths
-## 
-## $gr2_rep1
-## GRanges object with 4 ranges and 1 metadata column:
-##        seqnames    ranges strand |     score
-##           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
-##   [1]      chr1         1      + |         2
-##   [2]      chr2         2      + |         2
-##   [3] spikechr1         3      + |         1
-##   [4] spikechr2         4      + |         1
-##   -------
-##   seqinfo: 4 sequences from an unspecified genome; no seqlengths</code></pre>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">grl</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span></code></pre></div>
+<pre><code><span><span class="co">## $gr1_rep1</span></span>
+<span><span class="co">## GRanges object with 4 ranges and 1 metadata column:</span></span>
+<span><span class="co">##        seqnames    ranges strand |     score</span></span>
+<span><span class="co">##           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;</span></span>
+<span><span class="co">##   [1]      chr1         1      + |         1</span></span>
+<span><span class="co">##   [2]      chr2         2      + |         1</span></span>
+<span><span class="co">##   [3] spikechr1         3      + |         1</span></span>
+<span><span class="co">##   [4] spikechr2         4      + |         1</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 4 sequences from an unspecified genome; no seqlengths</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $gr2_rep1</span></span>
+<span><span class="co">## GRanges object with 4 ranges and 1 metadata column:</span></span>
+<span><span class="co">##        seqnames    ranges strand |     score</span></span>
+<span><span class="co">##           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;</span></span>
+<span><span class="co">##   [1]      chr1         1      + |         2</span></span>
+<span><span class="co">##   [2]      chr2         2      + |         2</span></span>
+<span><span class="co">##   [3] spikechr1         3      + |         1</span></span>
+<span><span class="co">##   [4] spikechr2         4      + |         1</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 4 sequences from an unspecified genome; no seqlengths</span></span></code></pre>
 <p>We can identify the spike-in chromosomes either by full names, or by a regular expression that matches the spike-in chromosomes. In this case, we named our spike-in chromosomes to contain the string “spike” which makes them easy to identify.</p>
 <p>To count the reads for each dataset:</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="../reference/getSpikeInCounts.html">getSpikeInCounts</a></span>(<span class="no">grl</span>, <span class="kw">si_pattern</span> <span class="kw">=</span> <span class="st">"spike"</span>, <span class="kw">ncores</span> <span class="kw">=</span> <span class="fl">1</span>)</pre></body></html></div>
-<pre><code>##     sample total_reads exp_reads spike_reads
-## 1 gr1_rep1           4         2           2
-## 2 gr2_rep1           6         4           2
-## 3 gr1_rep2           5         2           3
-## 4 gr2_rep2          12         8           4</code></pre>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/getSpikeInCounts.html">getSpikeInCounts</a></span><span class="op">(</span><span class="va">grl</span>, si_pattern <span class="op">=</span> <span class="st">"spike"</span>, ncores <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##     sample total_reads exp_reads spike_reads</span></span>
+<span><span class="co">## 1 gr1_rep1           4         2           2</span></span>
+<span><span class="co">## 2 gr2_rep1           6         4           2</span></span>
+<span><span class="co">## 3 gr1_rep2           5         2           3</span></span>
+<span><span class="co">## 4 gr2_rep2          12         8           4</span></span></code></pre>
 </div>
-<div id="filtering-spike-in-reads" class="section level1">
-<h1 class="hasAnchor">
-<a href="#filtering-spike-in-reads" class="anchor"></a>Filtering Spike-in Reads</h1>
+<div class="section level2">
+<h2 id="filtering-spike-in-reads">Filtering Spike-in Reads<a class="anchor" aria-label="anchor" href="#filtering-spike-in-reads"></a>
+</h2>
 <p>We can also remove the spike-in reads from our data:</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="../reference/getSpikeInCounts.html">removeSpikeInReads</a></span>(<span class="no">grl</span>[<span class="fl">1</span>:<span class="fl">2</span>], <span class="kw">si_pattern</span> <span class="kw">=</span> <span class="st">"spike"</span>, <span class="kw">ncores</span> <span class="kw">=</span> <span class="fl">1</span>)</pre></body></html></div>
-<pre><code>## $gr1_rep1
-## GRanges object with 2 ranges and 1 metadata column:
-##       seqnames    ranges strand |     score
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
-##   [1]     chr1         1      + |         1
-##   [2]     chr2         2      + |         1
-##   -------
-##   seqinfo: 2 sequences from an unspecified genome; no seqlengths
-## 
-## $gr2_rep1
-## GRanges object with 2 ranges and 1 metadata column:
-##       seqnames    ranges strand |     score
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
-##   [1]     chr1         1      + |         2
-##   [2]     chr2         2      + |         2
-##   -------
-##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/getSpikeInCounts.html">removeSpikeInReads</a></span><span class="op">(</span><span class="va">grl</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, si_pattern <span class="op">=</span> <span class="st">"spike"</span>, ncores <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## $gr1_rep1</span></span>
+<span><span class="co">## GRanges object with 2 ranges and 1 metadata column:</span></span>
+<span><span class="co">##       seqnames    ranges strand |     score</span></span>
+<span><span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;</span></span>
+<span><span class="co">##   [1]     chr1         1      + |         1</span></span>
+<span><span class="co">##   [2]     chr2         2      + |         1</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $gr2_rep1</span></span>
+<span><span class="co">## GRanges object with 2 ranges and 1 metadata column:</span></span>
+<span><span class="co">##       seqnames    ranges strand |     score</span></span>
+<span><span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;</span></span>
+<span><span class="co">##   [1]     chr1         1      + |         2</span></span>
+<span><span class="co">##   [2]     chr2         2      + |         2</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</span></span></code></pre>
 <p>And if we wanted to isolate the spike-in reads, there is an analogous <code><a href="../reference/getSpikeInCounts.html">getSpikeInReads()</a></code> function.</p>
 </div>
-<div id="the-spike-in-normalization-factor" class="section level1">
-<h1 class="hasAnchor">
-<a href="#the-spike-in-normalization-factor" class="anchor"></a>The Spike-in Normalization Factor</h1>
+<div class="section level2">
+<h2 id="the-spike-in-normalization-factor">The Spike-in Normalization Factor<a class="anchor" aria-label="anchor" href="#the-spike-in-normalization-factor"></a>
+</h2>
 <p>There are several methods by which to generate spike-in normalization factors, but we advocate for a particular method, which generates units we call <b>S</b>pike-in normalized <b>R</b>eads <b>P</b>er <b>M</b>illion mapped reads in the negative <b>C</b>ontrol (<b>SRPMC</b>). The SRPMC normalization factor for a given sample <span class="math inline">\(i\)</span> is defined as such:</p>
 <p><span class="math display">\[SRPMC:\ NF_i = \frac{\sum reads_{spikein, control}}{\sum reads_{spikein, i}} 
 \cdot \frac{10^6}{\sum reads_{experimental, control}}\]</span></p>
 <p>This expression effectively calculates Reads Per Million (RPM) normalization for the negative control, and all other samples <span class="math inline">\(i\)</span> are scaled into equivalent units according to the ratio of their spike-in reads. We provide a more explicit derivation below.</p>
-<div id="derivation-of-srpmc" class="section level2">
-<h2 class="hasAnchor">
-<a href="#derivation-of-srpmc" class="anchor"></a>Derivation of SRPMC</h2>
+<div class="section level3">
+<h3 id="derivation-of-srpmc">Derivation of SRPMC<a class="anchor" aria-label="anchor" href="#derivation-of-srpmc"></a>
+</h3>
 <p>The fundamental concept of spike-in normalization is that the ratio of experimental reads to spike-in reads can be used to correct for global changes in starting material. Let’s call this ratio <u>R</u>eads <u>P</u>er <u>S</u>pike-in read (<b>RPS</b>):</p>
 <p><span class="math display">\[RPS = \frac{\sum reads_{experimental}}{\sum reads_{spikein}}\]</span></p>
 <p>In isolation, this number only reflects the relative amounts of spike-in material recovered and mapped. The meaningful information about changes in material can only arise from making direct comparisons between samples. For any sample, <span class="math inline">\(i\)</span>, we can calculate the global change in signal as a proportion of the material recovered from a negative control:</p>
@@ -209,180 +215,190 @@
 \cdot \frac{10^6}{\sum reads_{experimental, control}}\]</span></p>
 </div>
 </div>
-<div id="calculating-normalization-factors" class="section level1">
-<h1 class="hasAnchor">
-<a href="#calculating-normalization-factors" class="anchor"></a>Calculating Normalization Factors</h1>
+<div class="section level2">
+<h2 id="calculating-normalization-factors">Calculating Normalization Factors<a class="anchor" aria-label="anchor" href="#calculating-normalization-factors"></a>
+</h2>
 <p>We can calculate SRPMC normalization factors for each sample using the <code><a href="../reference/getSpikeInNFs.html">getSpikeInNFs()</a></code> function, using the same syntax we used to count the spike-in reads.</p>
 <p>However, we have to also identify the negative control, which is the sample that will have the “reference” (RPM) normalization. We do this either using a regular expression (<code>ctrl_pattern</code> argument) or by supplying the name(s) of the negative controls (the <code>ctrl_names</code> argument).</p>
 <p>The default method is “SRPMC”, but there are other options, as well.</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="../reference/getSpikeInNFs.html">getSpikeInNFs</a></span>(<span class="no">grl</span>, <span class="kw">si_pattern</span> <span class="kw">=</span> <span class="st">"spike"</span>, <span class="kw">ctrl_pattern</span> <span class="kw">=</span> <span class="st">"gr1"</span>, <span class="kw">ncores</span> <span class="kw">=</span> <span class="fl">1</span>)</pre></body></html></div>
-<pre><code>## [1] 500000 500000 500000 375000</code></pre>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/getSpikeInNFs.html">getSpikeInNFs</a></span><span class="op">(</span><span class="va">grl</span>, si_pattern <span class="op">=</span> <span class="st">"spike"</span>, ctrl_pattern <span class="op">=</span> <span class="st">"gr1"</span>, ncores <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 500000 500000 500000 375000</span></span></code></pre>
 <p>(The NFs are high because our dummy data contain only a few reads).</p>
 <p>By default, normalization factors utilize <strong>batch normalization</strong>, such that in any replicate (identified by the characters following “rep” in the sample names), the negative control is RPM normalized, and the other conditions are normalized to the within-replicate negative control (see the documentation for further details).</p>
 <p>Currently, batch normalization requires the sample names end with strings matching the format <code>"_rep1"</code>, <code>"_rep2"</code>, etc. If sample names do not conform to this pattern, you can rename them by using the <code>sample_names</code> argument.</p>
 </div>
-<div id="normalizing-data" class="section level1">
-<h1 class="hasAnchor">
-<a href="#normalizing-data" class="anchor"></a>Normalizing Data</h1>
+<div class="section level2">
+<h2 id="normalizing-data">Normalizing Data<a class="anchor" aria-label="anchor" href="#normalizing-data"></a>
+</h2>
 <p>We can also use the <code><a href="../reference/getSpikeInNFs.html">spikeInNormGRanges()</a></code> function to simultaneously find the spike-in reads, calculate the spike-in normalization factors, filter out spike-in reads, and normalize the readcounts:</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="fu"><a href="../reference/getSpikeInNFs.html">spikeInNormGRanges</a></span>(<span class="no">grl</span>, <span class="kw">si_pattern</span> <span class="kw">=</span> <span class="st">"spike"</span>, <span class="kw">ctrl_pattern</span> <span class="kw">=</span> <span class="st">"gr1"</span>, <span class="kw">ncores</span> <span class="kw">=</span> <span class="fl">1</span>)</pre></body></html></div>
-<pre><code>## $gr1_rep1
-## GRanges object with 2 ranges and 1 metadata column:
-##       seqnames    ranges strand |     score
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
-##   [1]     chr1         1      + |     5e+05
-##   [2]     chr2         2      + |     5e+05
-##   -------
-##   seqinfo: 2 sequences from an unspecified genome; no seqlengths
-## 
-## $gr2_rep1
-## GRanges object with 2 ranges and 1 metadata column:
-##       seqnames    ranges strand |     score
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
-##   [1]     chr1         1      + |     1e+06
-##   [2]     chr2         2      + |     1e+06
-##   -------
-##   seqinfo: 2 sequences from an unspecified genome; no seqlengths
-## 
-## $gr1_rep2
-## GRanges object with 2 ranges and 1 metadata column:
-##       seqnames    ranges strand |     score
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
-##   [1]     chr1         1      + |     5e+05
-##   [2]     chr2         2      + |     5e+05
-##   -------
-##   seqinfo: 2 sequences from an unspecified genome; no seqlengths
-## 
-## $gr2_rep2
-## GRanges object with 2 ranges and 1 metadata column:
-##       seqnames    ranges strand |     score
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
-##   [1]     chr1         1      + |   1500000
-##   [2]     chr2         2      + |   1500000
-##   -------
-##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/getSpikeInNFs.html">spikeInNormGRanges</a></span><span class="op">(</span><span class="va">grl</span>, si_pattern <span class="op">=</span> <span class="st">"spike"</span>, ctrl_pattern <span class="op">=</span> <span class="st">"gr1"</span>, ncores <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## $gr1_rep1</span></span>
+<span><span class="co">## GRanges object with 2 ranges and 1 metadata column:</span></span>
+<span><span class="co">##       seqnames    ranges strand |     score</span></span>
+<span><span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;</span></span>
+<span><span class="co">##   [1]     chr1         1      + |     5e+05</span></span>
+<span><span class="co">##   [2]     chr2         2      + |     5e+05</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $gr2_rep1</span></span>
+<span><span class="co">## GRanges object with 2 ranges and 1 metadata column:</span></span>
+<span><span class="co">##       seqnames    ranges strand |     score</span></span>
+<span><span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;</span></span>
+<span><span class="co">##   [1]     chr1         1      + |     1e+06</span></span>
+<span><span class="co">##   [2]     chr2         2      + |     1e+06</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $gr1_rep2</span></span>
+<span><span class="co">## GRanges object with 2 ranges and 1 metadata column:</span></span>
+<span><span class="co">##       seqnames    ranges strand |     score</span></span>
+<span><span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;</span></span>
+<span><span class="co">##   [1]     chr1         1      + |     5e+05</span></span>
+<span><span class="co">##   [2]     chr2         2      + |     5e+05</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $gr2_rep2</span></span>
+<span><span class="co">## GRanges object with 2 ranges and 1 metadata column:</span></span>
+<span><span class="co">##       seqnames    ranges strand |     score</span></span>
+<span><span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;</span></span>
+<span><span class="co">##   [1]     chr1         1      + |   1500000</span></span>
+<span><span class="co">##   [2]     chr2         2      + |   1500000</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</span></span></code></pre>
 </div>
-<div id="normalization-by-sub-sampling" class="section level1">
-<h1 class="hasAnchor">
-<a href="#normalization-by-sub-sampling" class="anchor"></a>Normalization by Sub-sampling</h1>
-<div id="rationale" class="section level2">
-<h2 class="hasAnchor">
-<a href="#rationale" class="anchor"></a>Rationale</h2>
+<div class="section level2">
+<h2 id="normalization-by-sub-sampling">Normalization by Sub-sampling<a class="anchor" aria-label="anchor" href="#normalization-by-sub-sampling"></a>
+</h2>
+<div class="section level3">
+<h3 id="rationale">Rationale<a class="anchor" aria-label="anchor" href="#rationale"></a>
+</h3>
 <p>When viewing genomics data in a genome browser (or otherwise plotting signal for a single gene), the sparsity of basepair resolution data can challenge our visual perception.</p>
 <p>Consider two datasets from identical samples, but where one is sequenced to a higher depth. The two datasets can be normalized such that the signal counts are equivalent, but the dataset with higher sequencing depth will have also uncovered additional sites. When plotted in a genome browser, the total signal within a region may be the same, but the more highly sequenced dataset will cover more positions but have lower peaks, while the less sequenced dataset will look sparse and spikey in comparison.</p>
 <p>Below, we compare PRO-seq data derived from the same dataset over the same gene. In one case, we randomly sample half of the reads over that gene, while in another, we divide all the readcounts by 2.</p>
-<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"PROseq"</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"txs_dm6_chr4"</span>)</pre></body></html></div>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="co"># choose a single gene</span>
-<span class="no">gene_i</span> <span class="kw">&lt;-</span> <span class="no">txs_dm6_chr4</span>[<span class="fl">185</span>]
-<span class="no">reads.gene_i</span> <span class="kw">&lt;-</span> <span class="fu">subsetByOverlaps</span>(<span class="no">PROseq</span>, <span class="no">gene_i</span>)
-
-<span class="co"># sample half the raw reads</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">11</span>)
-<span class="no">sreads.gene_i</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/subsampleGRanges.html">subsampleGRanges</a></span>(<span class="no">reads.gene_i</span>, <span class="kw">prop</span> <span class="kw">=</span> <span class="fl">0.5</span>, <span class="kw">ncores</span> <span class="kw">=</span> <span class="fl">1</span>)
-
-<span class="co"># downscale raw reads by a factor of 2</span>
-<span class="fu">score</span>(<span class="no">reads.gene_i</span>) <span class="kw">&lt;-</span> <span class="fl">0.5</span> * <span class="fu">score</span>(<span class="no">reads.gene_i</span>)</pre></body></html></div>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="fu">score</span>(<span class="no">reads.gene_i</span>))
-<span class="co">## [1] 738.5</span>
-<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="fu">score</span>(<span class="no">sreads.gene_i</span>))
-<span class="co">## [1] 738</span></pre></body></html></div>
-<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="fl">1</span>:<span class="fu">width</span>(<span class="no">gene_i</span>),
-     <span class="kw">y</span> <span class="kw">=</span> <span class="fu"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span>(<span class="no">sreads.gene_i</span>, <span class="no">gene_i</span>),
-     <span class="kw">type</span> <span class="kw">=</span> <span class="st">"h"</span>, <span class="kw">ylim</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>, <span class="fl">20</span>),
-     <span class="kw">main</span> <span class="kw">=</span> <span class="st">"PRO-seq (down-sampled)"</span>,
-     <span class="kw">xlab</span> <span class="kw">=</span> <span class="st">"Distance from TSS"</span>, <span class="kw">ylab</span> <span class="kw">=</span> <span class="st">"Down-sampled PRO-seq Reads"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"PROseq"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"txs_dm6_chr4"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># choose a single gene</span></span>
+<span><span class="va">gene_i</span> <span class="op">&lt;-</span> <span class="va">txs_dm6_chr4</span><span class="op">[</span><span class="fl">185</span><span class="op">]</span></span>
+<span><span class="va">reads.gene_i</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/IRanges/man/findOverlaps-methods.html" class="external-link">subsetByOverlaps</a></span><span class="op">(</span><span class="va">PROseq</span>, <span class="va">gene_i</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># sample half the raw reads</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">11</span><span class="op">)</span></span>
+<span><span class="va">sreads.gene_i</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/subsampleGRanges.html">subsampleGRanges</a></span><span class="op">(</span><span class="va">reads.gene_i</span>, prop <span class="op">=</span> <span class="fl">0.5</span>, ncores <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># downscale raw reads by a factor of 2</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/score.html" class="external-link">score</a></span><span class="op">(</span><span class="va">reads.gene_i</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">0.5</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/score.html" class="external-link">score</a></span><span class="op">(</span><span class="va">reads.gene_i</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/score.html" class="external-link">score</a></span><span class="op">(</span><span class="va">reads.gene_i</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">## [1] 738.5</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/score.html" class="external-link">score</a></span><span class="op">(</span><span class="va">sreads.gene_i</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">## [1] 738</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/start.html" class="external-link">width</a></span><span class="op">(</span><span class="va">gene_i</span><span class="op">)</span>, </span>
+<span>     y <span class="op">=</span> <span class="fu"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span><span class="op">(</span><span class="va">sreads.gene_i</span>, <span class="va">gene_i</span><span class="op">)</span>,</span>
+<span>     type <span class="op">=</span> <span class="st">"h"</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span><span class="op">)</span>,</span>
+<span>     main <span class="op">=</span> <span class="st">"PRO-seq (down-sampled)"</span>,</span>
+<span>     xlab <span class="op">=</span> <span class="st">"Distance from TSS"</span>, ylab <span class="op">=</span> <span class="st">"Down-sampled PRO-seq Reads"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="SpikeInNormalization_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
-<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="fl">1</span>:<span class="fu">width</span>(<span class="no">gene_i</span>),
-     <span class="kw">y</span> <span class="kw">=</span> <span class="fu"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span>(<span class="no">reads.gene_i</span>, <span class="no">gene_i</span>),
-     <span class="kw">type</span> <span class="kw">=</span> <span class="st">"h"</span>,  <span class="kw">ylim</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>, <span class="fl">20</span>),
-     <span class="kw">main</span> <span class="kw">=</span> <span class="st">"PRO-seq (down-scaled)"</span>,
-     <span class="kw">xlab</span> <span class="kw">=</span> <span class="st">"Distance from TSS"</span>,  <span class="kw">ylab</span> <span class="kw">=</span> <span class="st">"Down-scaled PRO-seq Reads"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/start.html" class="external-link">width</a></span><span class="op">(</span><span class="va">gene_i</span><span class="op">)</span>, </span>
+<span>     y <span class="op">=</span> <span class="fu"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span><span class="op">(</span><span class="va">reads.gene_i</span>, <span class="va">gene_i</span><span class="op">)</span>,</span>
+<span>     type <span class="op">=</span> <span class="st">"h"</span>,  ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span><span class="op">)</span>,</span>
+<span>     main <span class="op">=</span> <span class="st">"PRO-seq (down-scaled)"</span>, </span>
+<span>     xlab <span class="op">=</span> <span class="st">"Distance from TSS"</span>,  ylab <span class="op">=</span> <span class="st">"Down-scaled PRO-seq Reads"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="SpikeInNormalization_files/figure-html/unnamed-chunk-11-2.png" width="700"></p>
 <p>The two plots above come from the same data, and contain the same quantity of signal, but their profiles are notably distinct. Particularly when plotting many samples over large regions within a genome browser, differences caused by sequencing depth can be misleading. It can be challenging to estimate differences if some datasets are “tall and spikey” while others are “short and smooth”.</p>
 <p>Absent global changes in signal, the above scenario can be resolved beforehand by equal sequencing depths, or by down-sampling to match readcounts.</p>
 <p>However, matching raw readcounts is not a solution when significant biological changes in total signal should be accounted for.</p>
 <p>For instance, consider an example in which there is a true, two-fold biological difference in transcription between two samples. If we could avoid all technical artifacts and measure the transcription directly in each individual cell, we would expect to uncover half the number of transcribing complexes in the lower condition. Having equivalent sequencing depth across those two conditions is effectively a technical artifact, and down-scaling the signal by multiplication can cause the visual challenges observed above.</p>
 </div>
-<div id="sub-sampling-for-normalization" class="section level2">
-<h2 class="hasAnchor">
-<a href="#sub-sampling-for-normalization" class="anchor"></a>Sub-sampling for Normalization</h2>
+<div class="section level3">
+<h3 id="sub-sampling-for-normalization">Sub-sampling for Normalization<a class="anchor" aria-label="anchor" href="#sub-sampling-for-normalization"></a>
+</h3>
 <p>To address the above concerns, we’ve included a function <code><a href="../reference/subsampleBySpikeIn.html">subsampleBySpikeIn()</a></code> to randomly sample reads to match the normalized signal proportions between datasets.</p>
 <p>Internally, the function uses the <code><a href="../reference/getSpikeInNFs.html">getSpikeInNFs()</a></code> function, but instead of SRPMC normalization, using the option <code>method = "SNR"</code>, which calculates normalization factors that downscale each dataset to match the dataset with the least spike-in reads. From this, the number of “desired reads” is established for each dataset, and subsequently that number of reads is randomly sampled.</p>
-<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="fu"><a href="../reference/getSpikeInCounts.html">removeSpikeInReads</a></span>(<span class="no">grl</span>, <span class="kw">si_pattern</span> <span class="kw">=</span> <span class="st">"spike"</span>, <span class="kw">ncores</span> <span class="kw">=</span> <span class="fl">1</span>)</pre></body></html></div>
-<pre><code>## $gr1_rep1
-## GRanges object with 2 ranges and 1 metadata column:
-##       seqnames    ranges strand |     score
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
-##   [1]     chr1         1      + |         1
-##   [2]     chr2         2      + |         1
-##   -------
-##   seqinfo: 2 sequences from an unspecified genome; no seqlengths
-## 
-## $gr2_rep1
-## GRanges object with 2 ranges and 1 metadata column:
-##       seqnames    ranges strand |     score
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
-##   [1]     chr1         1      + |         2
-##   [2]     chr2         2      + |         2
-##   -------
-##   seqinfo: 2 sequences from an unspecified genome; no seqlengths
-## 
-## $gr1_rep2
-## GRanges object with 2 ranges and 1 metadata column:
-##       seqnames    ranges strand |     score
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
-##   [1]     chr1         1      + |         1
-##   [2]     chr2         2      + |         1
-##   -------
-##   seqinfo: 2 sequences from an unspecified genome; no seqlengths
-## 
-## $gr2_rep2
-## GRanges object with 2 ranges and 1 metadata column:
-##       seqnames    ranges strand |     score
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
-##   [1]     chr1         1      + |         4
-##   [2]     chr2         2      + |         4
-##   -------
-##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
-<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="fu"><a href="../reference/getSpikeInNFs.html">getSpikeInNFs</a></span>(<span class="no">grl</span>, <span class="kw">si_pattern</span> <span class="kw">=</span> <span class="st">"spike"</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="st">"SNR"</span>, <span class="kw">batch_norm</span> <span class="kw">=</span> <span class="fl">FALSE</span>,
-              <span class="kw">ncores</span> <span class="kw">=</span> <span class="fl">1</span>)</pre></body></html></div>
-<pre><code>## [1] 1.0000000 1.0000000 0.6666667 0.5000000</code></pre>
-<div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="fu"><a href="../reference/subsampleBySpikeIn.html">subsampleBySpikeIn</a></span>(<span class="no">grl</span>, <span class="kw">si_pattern</span> <span class="kw">=</span> <span class="st">"spike"</span>, <span class="kw">batch_norm</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">ncores</span> <span class="kw">=</span> <span class="fl">1</span>)</pre></body></html></div>
-<pre><code>## $gr1_rep1
-## GRanges object with 2 ranges and 1 metadata column:
-##       seqnames    ranges strand |     score
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
-##   [1]     chr1         1      + |         1
-##   [2]     chr2         2      + |         1
-##   -------
-##   seqinfo: 2 sequences from an unspecified genome; no seqlengths
-## 
-## $gr2_rep1
-## GRanges object with 2 ranges and 1 metadata column:
-##       seqnames    ranges strand |     score
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
-##   [1]     chr1         1      + |         2
-##   [2]     chr2         2      + |         2
-##   -------
-##   seqinfo: 2 sequences from an unspecified genome; no seqlengths
-## 
-## $gr1_rep2
-## GRanges object with 1 range and 1 metadata column:
-##       seqnames    ranges strand |     score
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
-##   [1]     chr1         1      + |         1
-##   -------
-##   seqinfo: 2 sequences from an unspecified genome; no seqlengths
-## 
-## $gr2_rep2
-## GRanges object with 2 ranges and 1 metadata column:
-##       seqnames    ranges strand |     score
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
-##   [1]     chr1         1      + |         1
-##   [2]     chr2         2      + |         3
-##   -------
-##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/getSpikeInCounts.html">removeSpikeInReads</a></span><span class="op">(</span><span class="va">grl</span>, si_pattern <span class="op">=</span> <span class="st">"spike"</span>, ncores <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## $gr1_rep1</span></span>
+<span><span class="co">## GRanges object with 2 ranges and 1 metadata column:</span></span>
+<span><span class="co">##       seqnames    ranges strand |     score</span></span>
+<span><span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;</span></span>
+<span><span class="co">##   [1]     chr1         1      + |         1</span></span>
+<span><span class="co">##   [2]     chr2         2      + |         1</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $gr2_rep1</span></span>
+<span><span class="co">## GRanges object with 2 ranges and 1 metadata column:</span></span>
+<span><span class="co">##       seqnames    ranges strand |     score</span></span>
+<span><span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;</span></span>
+<span><span class="co">##   [1]     chr1         1      + |         2</span></span>
+<span><span class="co">##   [2]     chr2         2      + |         2</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $gr1_rep2</span></span>
+<span><span class="co">## GRanges object with 2 ranges and 1 metadata column:</span></span>
+<span><span class="co">##       seqnames    ranges strand |     score</span></span>
+<span><span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;</span></span>
+<span><span class="co">##   [1]     chr1         1      + |         1</span></span>
+<span><span class="co">##   [2]     chr2         2      + |         1</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $gr2_rep2</span></span>
+<span><span class="co">## GRanges object with 2 ranges and 1 metadata column:</span></span>
+<span><span class="co">##       seqnames    ranges strand |     score</span></span>
+<span><span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;</span></span>
+<span><span class="co">##   [1]     chr1         1      + |         4</span></span>
+<span><span class="co">##   [2]     chr2         2      + |         4</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</span></span></code></pre>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/getSpikeInNFs.html">getSpikeInNFs</a></span><span class="op">(</span><span class="va">grl</span>, si_pattern <span class="op">=</span> <span class="st">"spike"</span>, method <span class="op">=</span> <span class="st">"SNR"</span>, batch_norm <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>              ncores <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 1.0000000 1.0000000 0.6666667 0.5000000</span></span></code></pre>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/subsampleBySpikeIn.html">subsampleBySpikeIn</a></span><span class="op">(</span><span class="va">grl</span>, si_pattern <span class="op">=</span> <span class="st">"spike"</span>, batch_norm <span class="op">=</span> <span class="cn">FALSE</span>, ncores <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## $gr1_rep1</span></span>
+<span><span class="co">## GRanges object with 2 ranges and 1 metadata column:</span></span>
+<span><span class="co">##       seqnames    ranges strand |     score</span></span>
+<span><span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;</span></span>
+<span><span class="co">##   [1]     chr1         1      + |         1</span></span>
+<span><span class="co">##   [2]     chr2         2      + |         1</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $gr2_rep1</span></span>
+<span><span class="co">## GRanges object with 2 ranges and 1 metadata column:</span></span>
+<span><span class="co">##       seqnames    ranges strand |     score</span></span>
+<span><span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;</span></span>
+<span><span class="co">##   [1]     chr1         1      + |         2</span></span>
+<span><span class="co">##   [2]     chr2         2      + |         2</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $gr1_rep2</span></span>
+<span><span class="co">## GRanges object with 1 range and 1 metadata column:</span></span>
+<span><span class="co">##       seqnames    ranges strand |     score</span></span>
+<span><span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;</span></span>
+<span><span class="co">##   [1]     chr1         1      + |         1</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $gr2_rep2</span></span>
+<span><span class="co">## GRanges object with 2 ranges and 1 metadata column:</span></span>
+<span><span class="co">##       seqnames    ranges strand |     score</span></span>
+<span><span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;</span></span>
+<span><span class="co">##   [1]     chr1         1      + |         1</span></span>
+<span><span class="co">##   [2]     chr2         2      + |         3</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</span></span></code></pre>
 <p>Normalization by sub-sampling sacrifices information to reduce biases across datasets.</p>
 </div>
 </div>
@@ -399,11 +415,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Mike DeBerardine.</p>
+  <p></p>
+<p>Developed by Mike DeBerardine.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -411,6 +429,8 @@
 
   
 
+
+  
 
   </body>
 </html>

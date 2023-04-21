@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
       </span>
     </div>
 
@@ -47,7 +49,7 @@
   <a href="../articles/Overview.html">Overview</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Guides
      
     <span class="caret"></span>
@@ -91,7 +93,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/mdeber/BRGenomics">
+  <a href="https://github.com/mdeber/BRGenomics" class="external-link">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -112,238 +114,261 @@
       <h1 data-toc-skip>Getting Started</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/mdeber/BRGenomics/blob/master/vignettes/GettingStarted.Rmd"><code>vignettes/GettingStarted.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/mdeber/BRGenomics/blob/HEAD/vignettes/GettingStarted.Rmd" class="external-link"><code>vignettes/GettingStarted.Rmd</code></a></small>
       <div class="hidden name"><code>GettingStarted.Rmd</code></div>
 
     </div>
 
     
     
-<div id="installation" class="section level1">
-<h1 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h1>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <p>As of Bioconductor 3.11 (release date April 28, 2020), BRGenomics can be installed directly from Bioconductor:</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="co"># install.packages("BiocManager")</span>
-<span class="kw pkg">BiocManager</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span>(<span class="st">"BRGenomics"</span>)</pre></body></html></div>
-<p>Alternatively, the latest development version can be installed from<br><a href="https://github.com/mdeber/BRGenomics">GitHub</a>:</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="co"># install.packages("remotes")</span>
-<span class="kw pkg">remotes</span><span class="kw ns">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"mdeber/BRGenomics@R3"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># install.packages("BiocManager")</span></span>
+<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"BRGenomics"</span><span class="op">)</span></span></code></pre></div>
+<p>Alternatively, the latest development version can be installed from<br><a href="https://github.com/mdeber/BRGenomics" class="external-link">GitHub</a>:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"mdeber/BRGenomics@R3"</span><span class="op">)</span></span></code></pre></div>
 <p><em>BRGenomics (and Bioconductor 3.11) require R version 4.0 (release April 24, 2020). Installing the <code>R3</code> branch, as shown above, is required to install under R 3.x.</em></p>
-<p>If you install the development version from Github and you’re using Windows, <a href="https://cran.rstudio.com/bin/windows/Rtools/">Rtools for Windows</a> is required.</p>
+<p>If you install the development version from Github and you’re using Windows, <a href="https://cran.rstudio.com/bin/windows/Rtools/" class="external-link">Rtools for Windows</a> is required.</p>
 </div>
-<div id="parallel-processing" class="section level1">
-<h1 class="hasAnchor">
-<a href="#parallel-processing" class="anchor"></a>Parallel Processing</h1>
+<div class="section level2">
+<h2 id="parallel-processing">Parallel Processing<a class="anchor" aria-label="anchor" href="#parallel-processing"></a>
+</h2>
 <p>By default, many BRGenomics functions use multicore processing as implemented in the <code>parallel</code> package. BRGenomics functions that can be parallelized always contain the argument <code>ncores</code>. If not specified, the default is to use the global option “mc.cores” (the same option used by the <code>parallel</code> package), or 2 if that option is not set.</p>
-<p>If you wanted to change the global default to 4 cores, for example, you would run <code><a href="https://rdrr.io/r/base/options.html">options(mc.cores = 4)</a></code> at the start of your R session. If you’re unsure how many cores your processor has, run <code><a href="https://rdrr.io/r/parallel/detectCores.html">parallel::detectCores()</a></code>.</p>
+<p>If you wanted to change the global default to 4 cores, for example, you would run <code>options(mc.cores = 4)</code> at the start of your R session. If you’re unsure how many cores your processor has, run <code><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">parallel::detectCores()</a></code>.</p>
 <p>While performance can be memory constrained in some cases (and thus actually hampered by excessive parallelization), substantial performance benefits can be achieved by maximizing parallelization.</p>
-<p>However, parallel processing is not available on Windows. To maintain compatibility, all code in this vignette as well as the example code in the documentation is to use a single core, i.e. <code>ncores = 1</code>.</p>
+<p>However, parallel processing is not available on Windows. To maintain compatibility, all code in this vignette as well as the example code in the documentation is to use a single core, i.e. <code>ncores = 1</code>.</p>
 </div>
-<div id="included-datasets" class="section level1">
-<h1 class="hasAnchor">
-<a href="#included-datasets" class="anchor"></a>Included Datasets</h1>
+<div class="section level2">
+<h2 id="included-datasets">Included Datasets<a class="anchor" aria-label="anchor" href="#included-datasets"></a>
+</h2>
 <p>BRGenomics ships with an example dataset of PRO-seq data from Drosophila melanogaster<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. PRO-seq is a basepair-resolution method that uses 3’-end sequencing of nascent RNA to map the locations of actively engaged RNA polymerases.</p>
 <p>To keep the dataset small, we’ve only included reads mapping to the fourth chromosome<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>.</p>
-<p>The included datasets can be accessed using the <code><a href="https://rdrr.io/r/utils/data.html">data()</a></code> function:</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">BRGenomics</span>)</pre></body></html></div>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"PROseq"</span>)
-<span class="no">PROseq</span></pre></body></html></div>
-<pre><code>## GRanges object with 47380 ranges and 1 metadata column:
-##           seqnames    ranges strand |     score
-##              &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
-##       [1]     chr4      1295      + |         1
-##       [2]     chr4     41428      + |         1
-##       [3]     chr4     42588      + |         1
-##       [4]     chr4     42590      + |         2
-##       [5]     chr4     42593      + |         5
-##       ...      ...       ...    ... .       ...
-##   [47376]     chr4   1307742      - |         1
-##   [47377]     chr4   1316537      - |         1
-##   [47378]     chr4   1318960      - |         1
-##   [47379]     chr4   1319004      - |         1
-##   [47380]     chr4   1319369      - |         1
-##   -------
-##   seqinfo: 7 sequences from an unspecified genome</code></pre>
-<p>Notice that the data is contained within a <code>GRanges</code> object. GRanges objects, from the <em><a href="https://bioconductor.org/packages/3.12/GenomicRanges">GenomicRanges</a></em> package, are very easy to work with, and are supported by a plethora of useful functions and packages.</p>
+<p>The included datasets can be accessed using the <code><a href="https://rdrr.io/r/utils/data.html" class="external-link">data()</a></code> function:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mdeber.github.io" class="external-link">BRGenomics</a></span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"PROseq"</span><span class="op">)</span></span>
+<span><span class="va">PROseq</span></span></code></pre></div>
+<pre><code><span><span class="co">## GRanges object with 47380 ranges and 1 metadata column:</span></span>
+<span><span class="co">##           seqnames    ranges strand |     score</span></span>
+<span><span class="co">##              &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;</span></span>
+<span><span class="co">##       [1]     chr4      1295      + |         1</span></span>
+<span><span class="co">##       [2]     chr4     41428      + |         1</span></span>
+<span><span class="co">##       [3]     chr4     42588      + |         1</span></span>
+<span><span class="co">##       [4]     chr4     42590      + |         2</span></span>
+<span><span class="co">##       [5]     chr4     42593      + |         5</span></span>
+<span><span class="co">##       ...      ...       ...    ... .       ...</span></span>
+<span><span class="co">##   [47376]     chr4   1307742      - |         1</span></span>
+<span><span class="co">##   [47377]     chr4   1316537      - |         1</span></span>
+<span><span class="co">##   [47378]     chr4   1318960      - |         1</span></span>
+<span><span class="co">##   [47379]     chr4   1319004      - |         1</span></span>
+<span><span class="co">##   [47380]     chr4   1319369      - |         1</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 7 sequences from an unspecified genome</span></span></code></pre>
+<p>Notice that the data is contained within a <code>GRanges</code> object. GRanges objects, from the <em><a href="https://bioconductor.org/packages/3.13/GenomicRanges" class="external-link">GenomicRanges</a></em> package, are very easy to work with, and are supported by a plethora of useful functions and packages.</p>
 <p>The structure of the data will be described later on (in section <em>“Basepair-Resolution GRanges Objects”</em>). For now, we’ll just note that both annotations (e.g. genelists) and data are contained using the same GRanges class.</p>
 <p>We’ve included an example genelist to accompany the PRO-seq data:</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"txs_dm6_chr4"</span>)
-<span class="no">txs_dm6_chr4</span></pre></body></html></div>
-<pre><code>## GRanges object with 339 ranges and 2 metadata columns:
-##         seqnames          ranges strand |     tx_name     gene_id
-##            &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;character&gt;
-##     [1]     chr4        879-5039      + | FBtr0346692 FBgn0267363
-##     [2]     chr4     42774-43374      + | FBtr0344900 FBgn0266617
-##     [3]     chr4     44774-46074      + | FBtr0340499 FBgn0265633
-##     [4]     chr4     56497-60974      + | FBtr0333704 FBgn0264617
-##     [5]     chr4     56497-63124      + | FBtr0333705 FBgn0264617
-##     ...      ...             ...    ... .         ...         ...
-##   [335]     chr4 1192419-1196848      - | FBtr0100543 FBgn0039924
-##   [336]     chr4 1192419-1196848      - | FBtr0100544 FBgn0039924
-##   [337]     chr4 1225089-1230713      - | FBtr0100406 FBgn0027101
-##   [338]     chr4 1225737-1230713      - | FBtr0100402 FBgn0027101
-##   [339]     chr4 1225737-1230713      - | FBtr0100404 FBgn0027101
-##   -------
-##   seqinfo: 7 sequences from dm6 genome</code></pre>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"txs_dm6_chr4"</span><span class="op">)</span></span>
+<span><span class="va">txs_dm6_chr4</span></span></code></pre></div>
+<pre><code><span><span class="co">## GRanges object with 339 ranges and 2 metadata columns:</span></span>
+<span><span class="co">##         seqnames          ranges strand |     tx_name     gene_id</span></span>
+<span><span class="co">##            &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;character&gt;</span></span>
+<span><span class="co">##     [1]     chr4        879-5039      + | FBtr0346692 FBgn0267363</span></span>
+<span><span class="co">##     [2]     chr4     42774-43374      + | FBtr0344900 FBgn0266617</span></span>
+<span><span class="co">##     [3]     chr4     44774-46074      + | FBtr0340499 FBgn0265633</span></span>
+<span><span class="co">##     [4]     chr4     56497-60974      + | FBtr0333704 FBgn0264617</span></span>
+<span><span class="co">##     [5]     chr4     56497-63124      + | FBtr0333705 FBgn0264617</span></span>
+<span><span class="co">##     ...      ...             ...    ... .         ...         ...</span></span>
+<span><span class="co">##   [335]     chr4 1192419-1196848      - | FBtr0100543 FBgn0039924</span></span>
+<span><span class="co">##   [336]     chr4 1192419-1196848      - | FBtr0100544 FBgn0039924</span></span>
+<span><span class="co">##   [337]     chr4 1225089-1230713      - | FBtr0100406 FBgn0027101</span></span>
+<span><span class="co">##   [338]     chr4 1225737-1230713      - | FBtr0100402 FBgn0027101</span></span>
+<span><span class="co">##   [339]     chr4 1225737-1230713      - | FBtr0100404 FBgn0027101</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 7 sequences from dm6 genome</span></span></code></pre>
 <p>The GRanges above contains all Flybase annotated transcripts from chromosome 4, with no filtering of any kind.</p>
 </div>
-<div id="basic-operations-on-granges" class="section level1">
-<h1 class="hasAnchor">
-<a href="#basic-operations-on-granges" class="anchor"></a>Basic Operations on GRanges</h1>
+<div class="section level2">
+<h2 id="basic-operations-on-granges">Basic Operations on GRanges<a class="anchor" aria-label="anchor" href="#basic-operations-on-granges"></a>
+</h2>
 <p>For users who are unfamiliar with GRanges objects, this section demonstrates a number of basic operations.</p>
 <p>A quick summary of the general structure: Each element of a GRanges object is called a “range”. As you can see above, each range consists of several components: <code>seqnames</code>, <code>ranges</code>, and <code>strand</code>. These essential attributes are all found to the left of the vertical divider above; everything to the right of that divider is an optional, metadata attribute.</p>
-<p>The core attributes can be accessed using the functions <code>seqnames()</code>, <code>ranges()</code>, and <code>strand()</code>. All metadata can be accessed using <code>mcols()</code>, and individual columns are accessible with the <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code> operator. The only reserved metadata column is the <code>score</code> column, which is just like any other metadata column, except that users can use the <code>score()</code> function to assess it.</p>
-<p>All of the above functions are both “getters” and “setters”, e.g. <code>strand(x)</code> returns the strand information, and <code>strand(x) &lt;- "+"</code> assigns it.</p>
+<p>The core attributes can be accessed using the functions <code><a href="https://rdrr.io/pkg/GenomeInfoDb/man/seqinfo.html" class="external-link">seqnames()</a></code>, <code><a href="https://rdrr.io/pkg/IRanges/man/range-squeezers.html" class="external-link">ranges()</a></code>, and <code>strand()</code>. All metadata can be accessed using <code><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">mcols()</a></code>, and individual columns are accessible with the <code>$</code> operator. The only reserved metadata column is the <code>score</code> column, which is just like any other metadata column, except that users can use the <code>score()</code> function to assess it.</p>
+<p>All of the above functions are both “getters” and “setters”, e.g. <code>strand(x)</code> returns the strand information, and <code>strand(x) &lt;- "+"</code> assigns it.</p>
 <p>These and other operations are demonstrated below.</p>
 <hr>
-<p><em>To learn more about GRanges objects, including a general overview of their components, see the useful vignette <a href="https://bioconductor.org/packages/release/bioc/vignettes/GenomicRanges/inst/doc/GenomicRangesIntroduction.html"><em>An Introduction to the GenomicRanges Package</em></a>. Alternatively, see the archived materials from the 2018 Bioconductor workshop <a href="https://bioconductor.github.io/BiocWorkshops/solving-common-bioinformatic-challenges-using-genomicranges.html"><em>Solving Common Bioinformatic Challenges Using GenomicRanges</em></a>. Note that this package will implement and streamline a number of common operations, but users should still have a basic familiarity with GRanges objects.</em></p>
+<p><em>To learn more about GRanges objects, including a general overview of their components, see the useful vignette <a href="https://bioconductor.org/packages/release/bioc/vignettes/GenomicRanges/inst/doc/GenomicRangesIntroduction.html" class="external-link"><em>An Introduction to the GenomicRanges Package</em></a>. Alternatively, see the archived materials from the 2018 Bioconductor workshop <a href="https://bioconductor.github.io/BiocWorkshops/solving-common-bioinformatic-challenges-using-genomicranges.html" class="external-link"><em>Solving Common Bioinformatic Challenges Using GenomicRanges</em></a>. Note that this package will implement and streamline a number of common operations, but users should still have a basic familiarity with GRanges objects.</em></p>
 <hr>
 <p> </p>
 <p>Get the length of the genelist:</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="no">txs_dm6_chr4</span>)</pre></body></html></div>
-<pre><code>## [1] 339</code></pre>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">txs_dm6_chr4</span><span class="op">)</span> </span></code></pre></div>
+<pre><code><span><span class="co">## [1] 339</span></span></code></pre>
 <p> </p>
 <p>Select the 2nd transcript:</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">txs_dm6_chr4</span>[<span class="fl">2</span>]</pre></body></html></div>
-<pre><code>## GRanges object with 1 range and 2 metadata columns:
-##       seqnames      ranges strand |     tx_name     gene_id
-##          &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;character&gt;
-##   [1]     chr4 42774-43374      + | FBtr0344900 FBgn0266617
-##   -------
-##   seqinfo: 7 sequences from dm6 genome</code></pre>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">txs_dm6_chr4</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span></code></pre></div>
+<pre><code><span><span class="co">## GRanges object with 1 range and 2 metadata columns:</span></span>
+<span><span class="co">##       seqnames      ranges strand |     tx_name     gene_id</span></span>
+<span><span class="co">##          &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;character&gt;</span></span>
+<span><span class="co">##   [1]     chr4 42774-43374      + | FBtr0344900 FBgn0266617</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 7 sequences from dm6 genome</span></span></code></pre>
 <p> </p>
 <p>Select 4 transcripts:</p>
-<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="no">tx4</span> <span class="kw">&lt;-</span> <span class="no">txs_dm6_chr4</span>[<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">10</span>, <span class="fl">200</span>, <span class="fl">300</span>)]
-<span class="no">tx4</span></pre></body></html></div>
-<pre><code>## GRanges object with 4 ranges and 2 metadata columns:
-##       seqnames          ranges strand |     tx_name     gene_id
-##          &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;character&gt;
-##   [1]     chr4        879-5039      + | FBtr0346692 FBgn0267363
-##   [2]     chr4    69326-110059      + | FBtr0308615 FBgn0085432
-##   [3]     chr4   184225-193489      - | FBtr0089150 FBgn0039890
-##   [4]     chr4 1009895-1027101      - | FBtr0309865 FBgn0025741
-##   -------
-##   seqinfo: 7 sequences from dm6 genome</code></pre>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tx4</span> <span class="op">&lt;-</span> <span class="va">txs_dm6_chr4</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span>, <span class="fl">200</span>, <span class="fl">300</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">tx4</span></span></code></pre></div>
+<pre><code><span><span class="co">## GRanges object with 4 ranges and 2 metadata columns:</span></span>
+<span><span class="co">##       seqnames          ranges strand |     tx_name     gene_id</span></span>
+<span><span class="co">##          &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;character&gt;</span></span>
+<span><span class="co">##   [1]     chr4        879-5039      + | FBtr0346692 FBgn0267363</span></span>
+<span><span class="co">##   [2]     chr4    69326-110059      + | FBtr0308615 FBgn0085432</span></span>
+<span><span class="co">##   [3]     chr4   184225-193489      - | FBtr0089150 FBgn0039890</span></span>
+<span><span class="co">##   [4]     chr4 1009895-1027101      - | FBtr0309865 FBgn0025741</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 7 sequences from dm6 genome</span></span></code></pre>
 <p> </p>
 <p>Get the lengths of the first 4 transcripts:</p>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="fu">width</span>(<span class="no">tx4</span>)</pre></body></html></div>
-<pre><code>## [1]  4161 40734  9265 17207</code></pre>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/start.html" class="external-link">width</a></span><span class="op">(</span><span class="va">tx4</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1]  4161 40734  9265 17207</span></span></code></pre>
 <p> </p>
 <p>Get a dataframe of the metadata for the first 4 transcripts:</p>
-<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="fu">mcols</span>(<span class="no">tx4</span>)</pre></body></html></div>
-<pre><code>## DataFrame with 4 rows and 2 columns
-##       tx_name     gene_id
-##   &lt;character&gt; &lt;character&gt;
-## 1 FBtr0346692 FBgn0267363
-## 2 FBtr0308615 FBgn0085432
-## 3 FBtr0089150 FBgn0039890
-## 4 FBtr0309865 FBgn0025741</code></pre>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">mcols</a></span><span class="op">(</span><span class="va">tx4</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## DataFrame with 4 rows and 2 columns</span></span>
+<span><span class="co">##       tx_name     gene_id</span></span>
+<span><span class="co">##   &lt;character&gt; &lt;character&gt;</span></span>
+<span><span class="co">## 1 FBtr0346692 FBgn0267363</span></span>
+<span><span class="co">## 2 FBtr0308615 FBgn0085432</span></span>
+<span><span class="co">## 3 FBtr0089150 FBgn0039890</span></span>
+<span><span class="co">## 4 FBtr0309865 FBgn0025741</span></span></code></pre>
 <p> </p>
 <p>Access a single metadata column for the first 4 transcripts:</p>
-<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="fu">mcols</span>(<span class="no">tx4</span>)[, <span class="fl">2</span>]</pre></body></html></div>
-<pre><code>## [1] "FBgn0267363" "FBgn0085432" "FBgn0039890" "FBgn0025741"</code></pre>
-<div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="fu">mcols</span>(<span class="no">tx4</span>)[, <span class="st">"gene_id"</span>]</pre></body></html></div>
-<pre><code>## [1] "FBgn0267363" "FBgn0085432" "FBgn0039890" "FBgn0025741"</code></pre>
-<div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="no">tx4</span>$<span class="no">gene_id</span></pre></body></html></div>
-<pre><code>## [1] "FBgn0267363" "FBgn0085432" "FBgn0039890" "FBgn0025741"</code></pre>
-<div class="sourceCode" id="cb24"><html><body><pre class="r"><span class="no">tx4_names</span> <span class="kw">&lt;-</span> <span class="no">tx4</span>$<span class="no">tx_name</span>
-<span class="no">tx4_names</span></pre></body></html></div>
-<pre><code>## [1] "FBtr0346692" "FBtr0308615" "FBtr0089150" "FBtr0309865"</code></pre>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">mcols</a></span><span class="op">(</span><span class="va">tx4</span><span class="op">)</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "FBgn0267363" "FBgn0085432" "FBgn0039890" "FBgn0025741"</span></span></code></pre>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">mcols</a></span><span class="op">(</span><span class="va">tx4</span><span class="op">)</span><span class="op">[</span>, <span class="st">"gene_id"</span><span class="op">]</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "FBgn0267363" "FBgn0085432" "FBgn0039890" "FBgn0025741"</span></span></code></pre>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tx4</span><span class="op">$</span><span class="va">gene_id</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "FBgn0267363" "FBgn0085432" "FBgn0039890" "FBgn0025741"</span></span></code></pre>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tx4_names</span> <span class="op">&lt;-</span> <span class="va">tx4</span><span class="op">$</span><span class="va">tx_name</span></span>
+<span><span class="va">tx4_names</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "FBtr0346692" "FBtr0308615" "FBtr0089150" "FBtr0309865"</span></span></code></pre>
 <p> </p>
 <p>Get the first gene_id (a metadata element):</p>
-<div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="no">tx4</span>$<span class="no">gene_id</span>[<span class="fl">1</span>]</pre></body></html></div>
-<pre><code>## [1] "FBgn0267363"</code></pre>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tx4</span><span class="op">$</span><span class="va">gene_id</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "FBgn0267363"</span></span></code></pre>
 <p> </p>
 <p>Remove a metadata column:</p>
-<div class="sourceCode" id="cb28"><html><body><pre class="r"><span class="fu">mcols</span>(<span class="no">tx4</span>) <span class="kw">&lt;-</span> <span class="fu">mcols</span>(<span class="no">tx4</span>)[, -<span class="fl">1</span>]
-<span class="no">tx4</span></pre></body></html></div>
-<pre><code>## GRanges object with 4 ranges and 1 metadata column:
-##       seqnames          ranges strand |           X
-##          &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;
-##   [1]     chr4        879-5039      + | FBgn0267363
-##   [2]     chr4    69326-110059      + | FBgn0085432
-##   [3]     chr4   184225-193489      - | FBgn0039890
-##   [4]     chr4 1009895-1027101      - | FBgn0025741
-##   -------
-##   seqinfo: 7 sequences from dm6 genome</code></pre>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">mcols</a></span><span class="op">(</span><span class="va">tx4</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">mcols</a></span><span class="op">(</span><span class="va">tx4</span><span class="op">)</span><span class="op">[</span>, <span class="op">-</span><span class="fl">1</span><span class="op">]</span></span>
+<span><span class="va">tx4</span></span></code></pre></div>
+<pre><code><span><span class="co">## GRanges object with 4 ranges and 1 metadata column:</span></span>
+<span><span class="co">##       seqnames          ranges strand |           X</span></span>
+<span><span class="co">##          &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;</span></span>
+<span><span class="co">##   [1]     chr4        879-5039      + | FBgn0267363</span></span>
+<span><span class="co">##   [2]     chr4    69326-110059      + | FBgn0085432</span></span>
+<span><span class="co">##   [3]     chr4   184225-193489      - | FBgn0039890</span></span>
+<span><span class="co">##   [4]     chr4 1009895-1027101      - | FBgn0025741</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 7 sequences from dm6 genome</span></span></code></pre>
 <p> </p>
 <p>Rename metadata:</p>
-<div class="sourceCode" id="cb30"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="fu">mcols</span>(<span class="no">tx4</span>)) <span class="kw">&lt;-</span> <span class="st">"gene_id"</span>
-<span class="no">tx4</span></pre></body></html></div>
-<pre><code>## GRanges object with 4 ranges and 1 metadata column:
-##       seqnames          ranges strand |     gene_id
-##          &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;
-##   [1]     chr4        879-5039      + | FBgn0267363
-##   [2]     chr4    69326-110059      + | FBgn0085432
-##   [3]     chr4   184225-193489      - | FBgn0039890
-##   [4]     chr4 1009895-1027101      - | FBgn0025741
-##   -------
-##   seqinfo: 7 sequences from dm6 genome</code></pre>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">mcols</a></span><span class="op">(</span><span class="va">tx4</span><span class="op">)</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"gene_id"</span></span>
+<span><span class="va">tx4</span></span></code></pre></div>
+<pre><code><span><span class="co">## GRanges object with 4 ranges and 1 metadata column:</span></span>
+<span><span class="co">##       seqnames          ranges strand |     gene_id</span></span>
+<span><span class="co">##          &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;</span></span>
+<span><span class="co">##   [1]     chr4        879-5039      + | FBgn0267363</span></span>
+<span><span class="co">##   [2]     chr4    69326-110059      + | FBgn0085432</span></span>
+<span><span class="co">##   [3]     chr4   184225-193489      - | FBgn0039890</span></span>
+<span><span class="co">##   [4]     chr4 1009895-1027101      - | FBgn0025741</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 7 sequences from dm6 genome</span></span></code></pre>
 <p> </p>
-<p>Add metadata; same as access methods (<code>mcols()[]</code>, <code>mcols()$</code>, or simply <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code>):</p>
-<div class="sourceCode" id="cb32"><html><body><pre class="r"><span class="no">tx4</span>$<span class="no">tx_name</span> <span class="kw">&lt;-</span> <span class="no">tx4_names</span>
-<span class="no">tx4</span></pre></body></html></div>
-<pre><code>## GRanges object with 4 ranges and 2 metadata columns:
-##       seqnames          ranges strand |     gene_id     tx_name
-##          &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;character&gt;
-##   [1]     chr4        879-5039      + | FBgn0267363 FBtr0346692
-##   [2]     chr4    69326-110059      + | FBgn0085432 FBtr0308615
-##   [3]     chr4   184225-193489      - | FBgn0039890 FBtr0089150
-##   [4]     chr4 1009895-1027101      - | FBgn0025741 FBtr0309865
-##   -------
-##   seqinfo: 7 sequences from dm6 genome</code></pre>
+<p>Add metadata; same as access methods (<code>mcols()[]</code>, <code>mcols()$</code>, or simply <code>$</code>):</p>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tx4</span><span class="op">$</span><span class="va">tx_name</span> <span class="op">&lt;-</span> <span class="va">tx4_names</span></span>
+<span><span class="va">tx4</span></span></code></pre></div>
+<pre><code><span><span class="co">## GRanges object with 4 ranges and 2 metadata columns:</span></span>
+<span><span class="co">##       seqnames          ranges strand |     gene_id     tx_name</span></span>
+<span><span class="co">##          &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;character&gt;</span></span>
+<span><span class="co">##   [1]     chr4        879-5039      + | FBgn0267363 FBtr0346692</span></span>
+<span><span class="co">##   [2]     chr4    69326-110059      + | FBgn0085432 FBtr0308615</span></span>
+<span><span class="co">##   [3]     chr4   184225-193489      - | FBgn0039890 FBtr0089150</span></span>
+<span><span class="co">##   [4]     chr4 1009895-1027101      - | FBgn0025741 FBtr0309865</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 7 sequences from dm6 genome</span></span></code></pre>
 <p> </p>
 <p>Modify metadata:</p>
-<div class="sourceCode" id="cb34"><html><body><pre class="r"><span class="no">tx4</span>$<span class="no">gene_id</span>[<span class="fl">1</span>] <span class="kw">&lt;-</span> <span class="st">"gene1"</span>
-<span class="no">tx4</span>$<span class="no">tx_name</span> <span class="kw">&lt;-</span> <span class="fl">1</span>:<span class="fl">4</span>
-<span class="no">tx4</span></pre></body></html></div>
-<pre><code>## GRanges object with 4 ranges and 2 metadata columns:
-##       seqnames          ranges strand |     gene_id   tx_name
-##          &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;integer&gt;
-##   [1]     chr4        879-5039      + |       gene1         1
-##   [2]     chr4    69326-110059      + | FBgn0085432         2
-##   [3]     chr4   184225-193489      - | FBgn0039890         3
-##   [4]     chr4 1009895-1027101      - | FBgn0025741         4
-##   -------
-##   seqinfo: 7 sequences from dm6 genome</code></pre>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tx4</span><span class="op">$</span><span class="va">gene_id</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"gene1"</span></span>
+<span><span class="va">tx4</span><span class="op">$</span><span class="va">tx_name</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span></span>
+<span><span class="va">tx4</span></span></code></pre></div>
+<pre><code><span><span class="co">## GRanges object with 4 ranges and 2 metadata columns:</span></span>
+<span><span class="co">##       seqnames          ranges strand |     gene_id   tx_name</span></span>
+<span><span class="co">##          &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;integer&gt;</span></span>
+<span><span class="co">##   [1]     chr4        879-5039      + |       gene1         1</span></span>
+<span><span class="co">##   [2]     chr4    69326-110059      + | FBgn0085432         2</span></span>
+<span><span class="co">##   [3]     chr4   184225-193489      - | FBgn0039890         3</span></span>
+<span><span class="co">##   [4]     chr4 1009895-1027101      - | FBgn0025741         4</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 7 sequences from dm6 genome</span></span></code></pre>
 <p> </p>
 <p>Get beginning of ranges (not strand specific):</p>
-<div class="sourceCode" id="cb36"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/stats/start.html">start</a></span>(<span class="no">tx4</span>)</pre></body></html></div>
-<pre><code>## [1]     879   69326  184225 1009895</code></pre>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/start.html" class="external-link">start</a></span><span class="op">(</span><span class="va">tx4</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1]     879   69326  184225 1009895</span></span></code></pre>
 <p> </p>
 <p>Get beginning of ranges (strand specific):</p>
-<div class="sourceCode" id="cb38"><html><body><pre class="r"><span class="no">tx4_tss</span> <span class="kw">&lt;-</span> <span class="fu">resize</span>(<span class="no">tx4</span>, <span class="kw">width</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">fix</span> <span class="kw">=</span> <span class="st">"start"</span>)
-<span class="no">tx4_tss</span></pre></body></html></div>
-<pre><code>## GRanges object with 4 ranges and 2 metadata columns:
-##       seqnames    ranges strand |     gene_id   tx_name
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;integer&gt;
-##   [1]     chr4       879      + |       gene1         1
-##   [2]     chr4     69326      + | FBgn0085432         2
-##   [3]     chr4    193489      - | FBgn0039890         3
-##   [4]     chr4   1027101      - | FBgn0025741         4
-##   -------
-##   seqinfo: 7 sequences from dm6 genome</code></pre>
-<div class="sourceCode" id="cb40"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/stats/start.html">start</a></span>(<span class="no">tx4_tss</span>)</pre></body></html></div>
-<pre><code>## [1]     879   69326  193489 1027101</code></pre>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tx4_tss</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/IRanges/man/intra-range-methods.html" class="external-link">resize</a></span><span class="op">(</span><span class="va">tx4</span>, width <span class="op">=</span> <span class="fl">1</span>, fix <span class="op">=</span> <span class="st">"start"</span><span class="op">)</span></span>
+<span><span class="va">tx4_tss</span></span></code></pre></div>
+<pre><code><span><span class="co">## GRanges object with 4 ranges and 2 metadata columns:</span></span>
+<span><span class="co">##       seqnames    ranges strand |     gene_id   tx_name</span></span>
+<span><span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;integer&gt;</span></span>
+<span><span class="co">##   [1]     chr4       879      + |       gene1         1</span></span>
+<span><span class="co">##   [2]     chr4     69326      + | FBgn0085432         2</span></span>
+<span><span class="co">##   [3]     chr4    193489      - | FBgn0039890         3</span></span>
+<span><span class="co">##   [4]     chr4   1027101      - | FBgn0025741         4</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 7 sequences from dm6 genome</span></span></code></pre>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/start.html" class="external-link">start</a></span><span class="op">(</span><span class="va">tx4_tss</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1]     879   69326  193489 1027101</span></span></code></pre>
 <p> </p>
 <p>Remove all metadata:</p>
-<div class="sourceCode" id="cb42"><html><body><pre class="r"><span class="fu">mcols</span>(<span class="no">tx4</span>) <span class="kw">&lt;-</span> <span class="kw">NULL</span>
-<span class="no">tx4</span></pre></body></html></div>
-<pre><code>## GRanges object with 4 ranges and 0 metadata columns:
-##       seqnames          ranges strand
-##          &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt;
-##   [1]     chr4        879-5039      +
-##   [2]     chr4    69326-110059      +
-##   [3]     chr4   184225-193489      -
-##   [4]     chr4 1009895-1027101      -
-##   -------
-##   seqinfo: 7 sequences from dm6 genome</code></pre>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">mcols</a></span><span class="op">(</span><span class="va">tx4</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span><span class="va">tx4</span></span></code></pre></div>
+<pre><code><span><span class="co">## GRanges object with 4 ranges and 0 metadata columns:</span></span>
+<span><span class="co">##       seqnames          ranges strand</span></span>
+<span><span class="co">##          &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt;</span></span>
+<span><span class="co">##   [1]     chr4        879-5039      +</span></span>
+<span><span class="co">##   [2]     chr4    69326-110059      +</span></span>
+<span><span class="co">##   [3]     chr4   184225-193489      -</span></span>
+<span><span class="co">##   [4]     chr4 1009895-1027101      -</span></span>
+<span><span class="co">##   -------</span></span>
+<span><span class="co">##   seqinfo: 7 sequences from dm6 genome</span></span></code></pre>
 </div>
 <div class="footnotes">
 <hr>
 <ol>
-<li id="fn1"><p>Hojoong Kwak, Nicholas J. Fuda, Leighton J. Core, John T. Lis (2013). Precise Maps of RNA Polymerase Reveal How Promoters Direct Initiation and Pausing. <em>Science</em> <strong>339</strong>(6122): 950–953. <a href="https://doi.org/10.1126/science.1229386" class="uri">https://doi.org/10.1126/science.1229386</a><a href="#fnref1" class="footnote-back">↩</a></p></li>
-<li id="fn2"><p>Chromosome 4 in Drosophila, often referred to as the “dot” chromosome, is very small and contains very few genes<a href="#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn1"><p>Hojoong Kwak, Nicholas J. Fuda, Leighton J. Core, John T. Lis (2013). Precise Maps of RNA Polymerase Reveal How Promoters Direct Initiation and Pausing. <em>Science</em> <strong>339</strong>(6122): 950–953. <a href="https://doi.org/10.1126/science.1229386" class="external-link uri">https://doi.org/10.1126/science.1229386</a><a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>Chromosome 4 in Drosophila, often referred to as the “dot” chromosome, is very small and contains very few genes<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
   </div>
@@ -359,11 +384,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Mike DeBerardine.</p>
+  <p></p>
+<p>Developed by Mike DeBerardine.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -371,6 +398,8 @@
 
   
 
+
+  
 
   </body>
 </html>

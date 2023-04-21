@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
       </span>
     </div>
 
@@ -47,7 +49,7 @@
   <a href="../articles/Overview.html">Overview</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Guides
      
     <span class="caret"></span>
@@ -91,7 +93,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/mdeber/BRGenomics">
+  <a href="https://github.com/mdeber/BRGenomics" class="external-link">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -112,135 +114,149 @@
       <h1 data-toc-skip>Signal Counting</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/mdeber/BRGenomics/blob/master/vignettes/SignalCounting.Rmd"><code>vignettes/SignalCounting.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/mdeber/BRGenomics/blob/HEAD/vignettes/SignalCounting.Rmd" class="external-link"><code>vignettes/SignalCounting.Rmd</code></a></small>
       <div class="hidden name"><code>SignalCounting.Rmd</code></div>
 
     </div>
 
     
     
-<div id="count-signal-by-region" class="section level1">
-<h1 class="hasAnchor">
-<a href="#count-signal-by-region" class="anchor"></a>Count Signal by Region</h1>
+<div class="section level2">
+<h2 id="count-signal-by-region">Count Signal by Region<a class="anchor" aria-label="anchor" href="#count-signal-by-region"></a>
+</h2>
 <p>The <code>getCountsByRegion()</code> function counts signal within regions of interest, and returns a simple vector.</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">BRGenomics</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"PROseq"</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"txs_dm6_chr4"</span>)</pre></body></html></div>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">counts_txs</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/getCountsByRegions.html">getCountsByRegions</a></span>(<span class="no">PROseq</span>, <span class="no">txs_dm6_chr4</span>)
-<span class="no">counts_txs</span>[<span class="fl">1</span>:<span class="fl">5</span>]
-<span class="co">## [1]   1  59  13 126 263</span>
-<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="no">txs_dm6_chr4</span>) <span class="kw">==</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="no">counts_txs</span>)
-<span class="co">## [1] TRUE</span></pre></body></html></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mdeber.github.io" class="external-link">BRGenomics</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"PROseq"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"txs_dm6_chr4"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">counts_txs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getCountsByRegions.html">getCountsByRegions</a></span><span class="op">(</span><span class="va">PROseq</span>, <span class="va">txs_dm6_chr4</span><span class="op">)</span></span>
+<span><span class="va">counts_txs</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
+<span><span class="co">## [1]   1  59  13 126 263</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">txs_dm6_chr4</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">counts_txs</span><span class="op">)</span></span>
+<span><span class="co">## [1] TRUE</span></span></code></pre></div>
 <p><em>Critically, the default assumes the input is “basepair-resolution”. If the input data is run-length compressed (like a standard bigWig or coverage file), set <code>expand_ranges = TRUE</code>.</em></p>
 </div>
-<div id="count-signal-by-position-and-region" class="section level1">
-<h1 class="hasAnchor">
-<a href="#count-signal-by-position-and-region" class="anchor"></a>Count Signal by Position and Region</h1>
+<div class="section level2">
+<h2 id="count-signal-by-position-and-region">Count Signal by Position and Region<a class="anchor" aria-label="anchor" href="#count-signal-by-position-and-region"></a>
+</h2>
 <p>The <code><a href="../reference/getCountsByPositions.html">getCountsByPositions()</a></code> function will count signal at each position within each region of interest. By default, a matrix is returned, with a row for each region, and a column for each position.</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="co"># get first 100 bases of each transcript</span>
-<span class="no">txs_pr</span> <span class="kw">&lt;-</span> <span class="fu">promoters</span>(<span class="no">txs_dm6_chr4</span>, <span class="fl">0</span>, <span class="fl">100</span>)
-<span class="co"># get signal at each base within each promoter region</span>
-<span class="no">countmatrix_pr</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span>(<span class="no">PROseq</span>, <span class="no">txs_pr</span>)</pre></body></html></div>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span>(<span class="no">countmatrix_pr</span>)
-<span class="co">## [1] "matrix" "array"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="no">countmatrix_pr</span>) <span class="kw">==</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="no">txs_pr</span>)
-<span class="co">## [1] TRUE</span>
-<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(<span class="no">countmatrix_pr</span>) <span class="kw">==</span> <span class="fu">width</span>(<span class="no">txs_pr</span>[<span class="fl">1</span>])
-<span class="co">## [1] TRUE</span></pre></body></html></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># get first 100 bases of each transcript</span></span>
+<span><span class="va">txs_pr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/IRanges/man/intra-range-methods.html" class="external-link">promoters</a></span><span class="op">(</span><span class="va">txs_dm6_chr4</span>, <span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span></span>
+<span><span class="co"># get signal at each base within each promoter region</span></span>
+<span><span class="va">countmatrix_pr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span><span class="op">(</span><span class="va">PROseq</span>, <span class="va">txs_pr</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">countmatrix_pr</span><span class="op">)</span></span>
+<span><span class="co">## [1] "matrix" "array"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">countmatrix_pr</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">txs_pr</span><span class="op">)</span></span>
+<span><span class="co">## [1] TRUE</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">countmatrix_pr</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/start.html" class="external-link">width</a></span><span class="op">(</span><span class="va">txs_pr</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">## [1] TRUE</span></span></code></pre></div>
 <p> </p>
 <p><em>Again, be sure to know if your data is “basepair-resolution”, or if the ranges are compressed and should be expanded using the <code>expand_ranges</code> argument.</em></p>
 <p>By default, each “position” (each column) is a single base, but counting can be done in bins as well:</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="co"># get signal in 10 bp bins within each promoter region</span>
-<span class="no">countmatrix_pr_bin</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span>(<span class="no">PROseq</span>, <span class="no">txs_pr</span>, <span class="kw">binsize</span> <span class="kw">=</span> <span class="fl">10</span>)
-<span class="no">countmatrix_pr_bin</span>[<span class="fl">1</span>:<span class="fl">5</span>, ]</pre></body></html></div>
-<pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
-## [1,]    0    0    0    0    0    0    0    0    0     0
-## [2,]    2    1    7    1    0    0    0    3    2     0
-## [3,]    0    0    1    0    0    0    1    0    0     0
-## [4,]    0    0    0    0    0    0    0    0    0     0
-## [5,]    0    0    0    0    0    0    0    0    0     0</code></pre>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/all.html">all</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span>(<span class="no">countmatrix_pr_bin</span>) <span class="kw">==</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span>(<span class="no">countmatrix_pr</span>))
-<span class="co">## [1] TRUE</span></pre></body></html></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># get signal in 10 bp bins within each promoter region</span></span>
+<span><span class="va">countmatrix_pr_bin</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span><span class="op">(</span><span class="va">PROseq</span>, <span class="va">txs_pr</span>, binsize <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="va">countmatrix_pr_bin</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="op">]</span></span></code></pre></div>
+<pre><code><span><span class="co">##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]</span></span>
+<span><span class="co">## [1,]    0    0    0    0    0    0    0    0    0     0</span></span>
+<span><span class="co">## [2,]    2    1    7    1    0    0    0    3    2     0</span></span>
+<span><span class="co">## [3,]    0    0    1    0    0    0    1    0    0     0</span></span>
+<span><span class="co">## [4,]    0    0    0    0    0    0    0    0    0     0</span></span>
+<span><span class="co">## [5,]    0    0    0    0    0    0    0    0    0     0</span></span></code></pre>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">countmatrix_pr_bin</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">countmatrix_pr</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">## [1] TRUE</span></span></code></pre></div>
 <p>By default, an error is returned if input regions aren’t all the same size:</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span>(<span class="no">PROseq</span>, <span class="no">txs_dm6_chr4</span>)</pre></body></html></div>
-<pre><code>## Error in .get_cbp_mw(hits, dataset.gr, regions.gr, binsize, FUN, smw, : regions.gr contains ranges with multiple widths, but simplify.multi.widths is set to 'error'. Did you mean to call getCountsByRegions instead?</code></pre>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span><span class="op">(</span><span class="va">PROseq</span>, <span class="va">txs_dm6_chr4</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Error in .get_cbp_mw(hits, dataset.gr, regions.gr, binsize, FUN, smw, : regions.gr contains ranges with multiple widths, but simplify.multi.widths is set to 'error'. Did you mean to call getCountsByRegions instead?</span></span></code></pre>
 <p>This is intended to avoid accidental use of <code><a href="../reference/getCountsByPositions.html">getCountsByPositions()</a></code> in lieu of <code><a href="../reference/getCountsByRegions.html">getCountsByRegions()</a></code>. However, for the rare case when users do intend to use multi-width regions, there is support for this using the <code>simplify.multi.widths</code> argument, which contains several useful options for how to do this (see the documentation for more details).</p>
-<div id="example-plot-signal-over-a-gene" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example-plot-signal-over-a-gene" class="anchor"></a>Example: Plot Signal Over a Gene</h2>
+<div class="section level3">
+<h3 id="example-plot-signal-over-a-gene">Example: Plot Signal Over a Gene<a class="anchor" aria-label="anchor" href="#example-plot-signal-over-a-gene"></a>
+</h3>
 <p>We can use <code><a href="../reference/getCountsByPositions.html">getCountsByPositions()</a></code> to get the signal profile over a single gene. Let’s have a look at the gene with the highest signal near the TSS:</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">idx</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.min.html">which.max</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span>(<span class="no">countmatrix_pr</span>))
-<span class="no">idx</span>
-<span class="co">## [1] 135</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="fl">1</span>:<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(<span class="no">countmatrix_pr</span>),
-     <span class="kw">y</span> <span class="kw">=</span> <span class="no">countmatrix_pr</span>[<span class="no">idx</span>, ],
-     <span class="kw">type</span> <span class="kw">=</span> <span class="st">"h"</span>,
-     <span class="kw">main</span> <span class="kw">=</span> <span class="no">txs_pr</span>$<span class="no">tx_name</span>[<span class="no">idx</span>],
-     <span class="kw">xlab</span> <span class="kw">=</span> <span class="st">"Distance to TSS"</span>,
-     <span class="kw">ylab</span> <span class="kw">=</span> <span class="st">"PRO-seq Signal"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">idx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/which.min.html" class="external-link">which.max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">countmatrix_pr</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">idx</span></span>
+<span><span class="co">## [1] 135</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">countmatrix_pr</span><span class="op">)</span>, </span>
+<span>     y <span class="op">=</span> <span class="va">countmatrix_pr</span><span class="op">[</span><span class="va">idx</span>, <span class="op">]</span>, </span>
+<span>     type <span class="op">=</span> <span class="st">"h"</span>, </span>
+<span>     main <span class="op">=</span> <span class="va">txs_pr</span><span class="op">$</span><span class="va">tx_name</span><span class="op">[</span><span class="va">idx</span><span class="op">]</span>,</span>
+<span>     xlab <span class="op">=</span> <span class="st">"Distance to TSS"</span>,</span>
+<span>     ylab <span class="op">=</span> <span class="st">"PRO-seq Signal"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="SignalCounting_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 </div>
-<div id="example-plot-signal-heatmap" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example-plot-signal-heatmap" class="anchor"></a>Example: Plot Signal Heatmap</h2>
+<div class="section level3">
+<h3 id="example-plot-signal-heatmap">Example: Plot Signal Heatmap<a class="anchor" aria-label="anchor" href="#example-plot-signal-heatmap"></a>
+</h3>
 <p>A typical use of <code><a href="../reference/getCountsByPositions.html">getCountsByPositions()</a></code> is to generate a heatmap of signal by position within a list of genes. The <code>ComplexHeatmap</code> package is well documented and offers a high level of functionality, but we can also use <code>ggplot2</code> to generate customizable heatmaps.</p>
 <p>To format our matrix for ggplot, we want to “melt” it. The package <code>reshape2</code> can melt matrices into dataframes, but BRGenomics also provides a <code>melt</code> argument for several functions, including <code><a href="../reference/getCountsByPositions.html">getCountsByPositions()</a></code>:</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">cbp.df</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span>(<span class="no">PROseq</span>, <span class="no">txs_pr</span>, <span class="kw">binsize</span> <span class="kw">=</span> <span class="fl">10</span>,
-                               <span class="kw">melt</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">ncores</span> <span class="kw">=</span> <span class="fl">1</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">cbp.df</span>)</pre></body></html></div>
-<pre><code>##   region position signal
-## 1      1        1      0
-## 2      1        2      0
-## 3      1        3      0
-## 4      1        4      0
-## 5      1        5      0
-## 6      1        6      0</code></pre>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">cbp.df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span><span class="op">(</span><span class="va">PROseq</span>, <span class="va">txs_pr</span>, binsize <span class="op">=</span> <span class="fl">10</span>, </span>
+<span>                               melt <span class="op">=</span> <span class="cn">TRUE</span>, ncores <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">cbp.df</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##   region position signal</span></span>
+<span><span class="co">## 1      1        1      0</span></span>
+<span><span class="co">## 2      1        2      0</span></span>
+<span><span class="co">## 3      1        3      0</span></span>
+<span><span class="co">## 4      1        4      0</span></span>
+<span><span class="co">## 5      1        5      0</span></span>
+<span><span class="co">## 6      1        6      0</span></span></code></pre>
 <p>As you can see, the rows and columns of the matrix are now described in columns of this dataframe, and the signal held at each position is in the third column. Now we can plot:</p>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ggplot2</span>)</pre></body></html></div>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">cbp.df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="fl">10</span>*<span class="no">position</span> - <span class="fl">5</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">region</span>, <span class="kw">fill</span> <span class="kw">=</span> <span class="no">signal</span>)) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html">geom_raster</a></span>() +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html">coord_cartesian</a></span>(<span class="kw">expand</span> <span class="kw">=</span> <span class="fl">FALSE</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="st">"Distance from TSS"</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="st">"Transcript"</span>,
-       <span class="kw">title</span> <span class="kw">=</span> <span class="st">"PRO-seq"</span>, <span class="kw">fill</span> <span class="kw">=</span> <span class="st">"Reads"</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>()</pre></body></html></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Warning: package 'ggplot2' was built under R version 4.1.2</span></span></code></pre>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">cbp.df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">10</span><span class="op">*</span><span class="va">position</span> <span class="op">-</span> <span class="fl">5</span>, y <span class="op">=</span> <span class="va">region</span>, fill <span class="op">=</span> <span class="va">signal</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_raster</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Distance from TSS"</span>, y <span class="op">=</span> <span class="st">"Transcript"</span>, </span>
+<span>       title <span class="op">=</span> <span class="st">"PRO-seq"</span>, fill <span class="op">=</span> <span class="st">"Reads"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="SignalCounting_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 <p> </p>
 <p>The high dynamic range of PRO-seq data means that regions (rows) with less signal are hard to pick out. To address this, we can row-normalize the data, and let’s sort the rows by the max signal position, as well.</p>
-<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="co"># take only rows decent signal</span>
-<span class="no">row_signal</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span>(<span class="no">countmatrix_pr</span>)
-<span class="no">idx_signal</span> <span class="kw">&lt;-</span> <span class="no">row_signal</span> <span class="kw">&gt;</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span>(<span class="no">row_signal</span>)
-<span class="no">cbp</span> <span class="kw">&lt;-</span> <span class="no">countmatrix_pr</span>[<span class="no">idx_signal</span>, ]
-
-<span class="co"># row-normalize</span>
-<span class="no">cbp_rn</span> <span class="kw">&lt;-</span> <span class="fl">100</span> * <span class="no">cbp</span> / <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span>(<span class="no">cbp</span>)
-
-<span class="co"># get row order (by max position)</span>
-<span class="no">row_order</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(<span class="no">cbp_rn</span>, <span class="fl">1</span>, <span class="no">which.max</span>), <span class="kw">decreasing</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
-
-<span class="co"># melt into a dataframe</span>
-<span class="no">rn_cbp.df</span> <span class="kw">&lt;-</span> <span class="kw pkg">reshape2</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/reshape2/man/melt.html">melt</a></span>(<span class="no">cbp_rn</span>[<span class="no">row_order</span>, ],
-                            <span class="kw">varnames</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"region"</span>, <span class="st">"position"</span>),
-                            <span class="kw">value.name</span> <span class="kw">=</span> <span class="st">"signal"</span>)</pre></body></html></div>
-<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">rn_cbp.df</span>,
-       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">position</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">region</span>, <span class="kw">fill</span> <span class="kw">=</span> <span class="no">signal</span>)) +
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html">geom_raster</a></span>() +
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_fill_gradient</a></span>(<span class="kw">low</span> <span class="kw">=</span> <span class="st">"white"</span>, <span class="kw">high</span> <span class="kw">=</span> <span class="st">"blue"</span>) +
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html">coord_cartesian</a></span>(<span class="kw">expand</span> <span class="kw">=</span> <span class="fl">FALSE</span>) +
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="st">"Distance from TSS"</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="kw">NULL</span>,
-         <span class="kw">title</span> <span class="kw">=</span> <span class="st">"Row-Normalized PRO-seq"</span>, <span class="kw">fill</span> <span class="kw">=</span> <span class="st">"% Signal"</span>) +
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>() +
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="kw">axis.ticks.y</span> <span class="kw">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span>(),
-          <span class="kw">axis.text.y</span> <span class="kw">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span>())</pre></body></html></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># take only rows decent signal</span></span>
+<span><span class="va">row_signal</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">countmatrix_pr</span><span class="op">)</span></span>
+<span><span class="va">idx_signal</span> <span class="op">&lt;-</span> <span class="va">row_signal</span> <span class="op">&gt;</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html" class="external-link">median</a></span><span class="op">(</span><span class="va">row_signal</span><span class="op">)</span></span>
+<span><span class="va">cbp</span> <span class="op">&lt;-</span> <span class="va">countmatrix_pr</span><span class="op">[</span><span class="va">idx_signal</span>, <span class="op">]</span></span>
+<span></span>
+<span><span class="co"># row-normalize</span></span>
+<span><span class="va">cbp_rn</span> <span class="op">&lt;-</span> <span class="fl">100</span> <span class="op">*</span> <span class="va">cbp</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">cbp</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># get row order (by max position)</span></span>
+<span><span class="va">row_order</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/order.html" class="external-link">order</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">cbp_rn</span>, <span class="fl">1</span>, <span class="va">which.max</span><span class="op">)</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># melt into a dataframe</span></span>
+<span><span class="va">rn_cbp.df</span> <span class="op">&lt;-</span> <span class="fu">reshape2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/reshape2/man/melt.html" class="external-link">melt</a></span><span class="op">(</span><span class="va">cbp_rn</span><span class="op">[</span><span class="va">row_order</span>, <span class="op">]</span>, </span>
+<span>                            varnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"region"</span>, <span class="st">"position"</span><span class="op">)</span>,</span>
+<span>                            value.name <span class="op">=</span> <span class="st">"signal"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">rn_cbp.df</span>, </span>
+<span>       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">position</span>, y <span class="op">=</span> <span class="va">region</span>, fill <span class="op">=</span> <span class="va">signal</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_raster</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html" class="external-link">scale_fill_gradient</a></span><span class="op">(</span>low <span class="op">=</span> <span class="st">"white"</span>, high <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Distance from TSS"</span>, y <span class="op">=</span> <span class="cn">NULL</span>, </span>
+<span>         title <span class="op">=</span> <span class="st">"Row-Normalized PRO-seq"</span>, fill <span class="op">=</span> <span class="st">"% Signal"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>axis.ticks.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>          axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="SignalCounting_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
 <p><em>Note that this is not what a typical PRO-seq heatmap looks like, but this data is very sparse owing to the dot chromosome, low sequencing depth, and no genelist filtering.</em></p>
 </div>
 </div>
-<div id="blacklisting" class="section level1">
-<h1 class="hasAnchor">
-<a href="#blacklisting" class="anchor"></a>Blacklisting</h1>
+<div class="section level2">
+<h2 id="blacklisting">Blacklisting<a class="anchor" aria-label="anchor" href="#blacklisting"></a>
+</h2>
 <p>Many functions in BRGenomics support blacklisting, or the exclusion of certain sites from analysis. To use this feature, import your blacklist as a GRanges object, and use the blacklist option.</p>
-<p>For instance, <code><a href="../reference/getCountsByPositions.html">getCountsByPositions()</a></code> supports blacklisting, and there is an additional option of whether to set all blacklisted sites to 0 counts, or to set those sites equal to NA. Setting them to NA is useful, as many functions have arguments to ignore NA values in calculations, i.e. <code><a href="https://rdrr.io/r/base/mean.html">mean(x, na.rm = TRUE)</a></code>.</p>
+<p>For instance, <code><a href="../reference/getCountsByPositions.html">getCountsByPositions()</a></code> supports blacklisting, and there is an additional option of whether to set all blacklisted sites to 0 counts, or to set those sites equal to NA. Setting them to NA is useful, as many functions have arguments to ignore NA values in calculations, i.e. <code>mean(x, na.rm = TRUE)</code>.</p>
 <p>Supplying a blacklist to <code><a href="../reference/bootstrap-signal-by-position.html">metaSubsample()</a></code> will result in blacklisted positions being ignored in the calculations. Regions for which some section overlaps the blacklist are not ignored entirely, but the blacklisted positions themselves won’t contribute to the calculations.</p>
 </div>
   </div>
@@ -256,11 +272,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Mike DeBerardine.</p>
+  <p></p>
+<p>Developed by Mike DeBerardine.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -268,6 +286,8 @@
 
   
 
+
+  
 
   </body>
 </html>

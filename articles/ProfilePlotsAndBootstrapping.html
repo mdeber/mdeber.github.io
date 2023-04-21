@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
       </span>
     </div>
 
@@ -47,7 +49,7 @@
   <a href="../articles/Overview.html">Overview</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Guides
      
     <span class="caret"></span>
@@ -91,7 +93,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/mdeber/BRGenomics">
+  <a href="https://github.com/mdeber/BRGenomics" class="external-link">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -112,135 +114,147 @@
       <h1 data-toc-skip>Profile Plots &amp; Bootstrapping</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/mdeber/BRGenomics/blob/master/vignettes/ProfilePlotsAndBootstrapping.Rmd"><code>vignettes/ProfilePlotsAndBootstrapping.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/mdeber/BRGenomics/blob/HEAD/vignettes/ProfilePlotsAndBootstrapping.Rmd" class="external-link"><code>vignettes/ProfilePlotsAndBootstrapping.Rmd</code></a></small>
       <div class="hidden name"><code>ProfilePlotsAndBootstrapping.Rmd</code></div>
 
     </div>
 
     
     
-<div id="conventional-profiles" class="section level1">
-<h1 class="hasAnchor">
-<a href="#conventional-profiles" class="anchor"></a>Conventional Profiles</h1>
+<div class="section level2">
+<h2 id="conventional-profiles">Conventional Profiles<a class="anchor" aria-label="anchor" href="#conventional-profiles"></a>
+</h2>
 <p>As an example, we’ll plot PRO-seq signal in promoter-proximal regions by calculating the mean signal intensity at each base in the first 100 bases of a transcript.</p>
 <p>First, calculate signal at each base for all promoter-proximal regions:</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">BRGenomics</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"PROseq"</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"txs_dm6_chr4"</span>)
-<span class="no">txs_pr</span> <span class="kw">&lt;-</span> <span class="fu">promoters</span>(<span class="no">txs_dm6_chr4</span>, <span class="fl">0</span>, <span class="fl">100</span>)</pre></body></html></div>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">countmatrix_pr</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span>(<span class="no">PROseq</span>, <span class="no">txs_pr</span>, <span class="kw">ncores</span> <span class="kw">=</span> <span class="fl">1</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span>(<span class="no">countmatrix_pr</span>)
-<span class="co">## [1] 339 100</span>
-<span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span>(<span class="no">countmatrix_pr</span>) <span class="kw">==</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="no">txs_pr</span>), <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="fu">width</span>(<span class="no">txs_pr</span>)))
-<span class="co">## [1] TRUE TRUE</span></pre></body></html></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mdeber.github.io" class="external-link">BRGenomics</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"PROseq"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"txs_dm6_chr4"</span><span class="op">)</span></span>
+<span><span class="va">txs_pr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/IRanges/man/intra-range-methods.html" class="external-link">promoters</a></span><span class="op">(</span><span class="va">txs_dm6_chr4</span>, <span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">countmatrix_pr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getCountsByPositions.html">getCountsByPositions</a></span><span class="op">(</span><span class="va">PROseq</span>, <span class="va">txs_pr</span>, ncores <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">countmatrix_pr</span><span class="op">)</span></span>
+<span><span class="co">## [1] 339 100</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">countmatrix_pr</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">txs_pr</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/start.html" class="external-link">width</a></span><span class="op">(</span><span class="va">txs_pr</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">## [1] TRUE TRUE</span></span></code></pre></div>
 <p>For each position (each column of the matrix), calculate the mean, and plot:</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="fl">1</span>:<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(<span class="no">countmatrix_pr</span>),
-     <span class="kw">y</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colMeans</a></span>(<span class="no">countmatrix_pr</span>),
-     <span class="kw">type</span> <span class="kw">=</span> <span class="st">"l"</span>,
-     <span class="kw">xlab</span> <span class="kw">=</span> <span class="st">"Distance to TSS (bp)"</span>,
-     <span class="kw">ylab</span> <span class="kw">=</span> <span class="st">"Mean PRO-seq Reads"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">countmatrix_pr</span><span class="op">)</span>,</span>
+<span>     y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">colMeans</a></span><span class="op">(</span><span class="va">countmatrix_pr</span><span class="op">)</span>,</span>
+<span>     type <span class="op">=</span> <span class="st">"l"</span>, </span>
+<span>     xlab <span class="op">=</span> <span class="st">"Distance to TSS (bp)"</span>,</span>
+<span>     ylab <span class="op">=</span> <span class="st">"Mean PRO-seq Reads"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="ProfilePlotsAndBootstrapping_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 <p> </p>
-<div id="drawbacks" class="section level2">
-<h2 class="hasAnchor">
-<a href="#drawbacks" class="anchor"></a>Drawbacks</h2>
+<div class="section level3">
+<h3 id="drawbacks">Drawbacks<a class="anchor" aria-label="anchor" href="#drawbacks"></a>
+</h3>
 <p>One drawback of using the arithmetic mean is that means are not robust to outliers. In other words, the mean signal at any position is liable to be determined by a small number of highly influential points. This is especially problematic for high dynamic range data like PRO-seq.</p>
 <p>It’s common to see this issue addressed through the use medians/quantiles in place of arithmetic means. However, observe what happens as we plot the median signal across our gene list using several different gene-filtering thresholds:</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">plot_meds</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">sig_thresh</span>) {
-  <span class="no">idx</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span>(<span class="no">countmatrix_pr</span>) <span class="kw">&gt;</span> <span class="no">sig_thresh</span>)
-  <span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="fl">1</span>:<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(<span class="no">countmatrix_pr</span>),
-       <span class="kw">y</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(<span class="no">countmatrix_pr</span>[<span class="no">idx</span>, ], <span class="fl">2</span>, <span class="no">median</span>),
-       <span class="kw">type</span> <span class="kw">=</span> <span class="st">"l"</span>,
-       <span class="kw">main</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span>(<span class="st">"Regions with &gt;%s reads"</span>, <span class="no">sig_thresh</span>),
-       <span class="kw">xlab</span> <span class="kw">=</span> <span class="st">"Distance to TSS (bp)"</span>,
-       <span class="kw">ylab</span> <span class="kw">=</span> <span class="st">"Median PRO-seq Reads"</span>)
-}
-
-<span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span>(<span class="kw">mfrow</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">3</span>, <span class="fl">2</span>))
-
-<span class="kw">for</span> (<span class="no">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>, <span class="fl">30</span>*<span class="fl">2</span>^(<span class="fl">0</span>:<span class="fl">4</span>))) {
-  <span class="fu">plot_meds</span>(<span class="no">i</span>)
-}</pre></body></html></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">plot_meds</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">sig_thresh</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">idx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">countmatrix_pr</span><span class="op">)</span> <span class="op">&gt;</span> <span class="va">sig_thresh</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">countmatrix_pr</span><span class="op">)</span>,</span>
+<span>       y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">countmatrix_pr</span><span class="op">[</span><span class="va">idx</span>, <span class="op">]</span>, <span class="fl">2</span>, <span class="va">median</span><span class="op">)</span>,</span>
+<span>       type <span class="op">=</span> <span class="st">"l"</span>, </span>
+<span>       main <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"Regions with &gt;%s reads"</span>, <span class="va">sig_thresh</span><span class="op">)</span>,</span>
+<span>       xlab <span class="op">=</span> <span class="st">"Distance to TSS (bp)"</span>,</span>
+<span>       ylab <span class="op">=</span> <span class="st">"Median PRO-seq Reads"</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">30</span><span class="op">*</span><span class="fl">2</span><span class="op">^</span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu">plot_meds</span><span class="op">(</span><span class="va">i</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
 <p><img src="ProfilePlotsAndBootstrapping_files/figure-html/unnamed-chunk-4-1.png" width="576"></p>
 <p>The paucity of transcription on Drosophila chromosome 4 makes this a somewhat extreme example, and you might find that the above situation is a non-issue for your data. However, it’s important to keep in mind how unexpressed genes can affect the median. A common rule of thumb is that a given cell is only apt to express around half of its genes; if that holds true, the median of an unfiltered genelist will be close to zero, and could be insensitive to changes occurring at expressed genes.</p>
 </div>
 </div>
-<div id="the-rationale-for-bootstrapping" class="section level1">
-<h1 class="hasAnchor">
-<a href="#the-rationale-for-bootstrapping" class="anchor"></a>The Rationale for Bootstrapping</h1>
+<div class="section level2">
+<h2 id="the-rationale-for-bootstrapping">The Rationale for Bootstrapping<a class="anchor" aria-label="anchor" href="#the-rationale-for-bootstrapping"></a>
+</h2>
 <p>A robust alternative to plotting mean or median signal profiles is to plot <strong>bootstrapped</strong> mean signal profiles, known as metaprofile plots or metaplots.</p>
 <p>To bootstrap the mean signal by position, a small number of genes are randomly sampled from a genelist, and the mean signal at each position is calculated for that group of genes. This process of randomly sampling genes and calculating mean signals is repeated over many iterations, and the final bootstrapped mean for each position is the median of the sampled means.</p>
 <p>One feature of bootstrapping is that it is robust to outliers. But more than that, the a bootstrapped mean provides an <em>expectation</em> for what the mean signal would be for any arbitrary group of genes, and associated with that expectation is a measure of uncertainty. By taking quantiles of the sub-sampled means <em>other than</em> the median (the expected value), we can estimate the extent to which the mean varies across arbitrary groups of genes.</p>
 <p>For example, the 75th percentile of the sub-sampled means is a number for which, 25% of the time, we calculated a higher mean. Similarly, a 90% confidence interval about the bootstrapped mean encompasses all values between the 5th and 95th percentiles of the sub-sampled means.</p>
 </div>
-<div id="generating-and-plotting-metaprofiles" class="section level1">
-<h1 class="hasAnchor">
-<a href="#generating-and-plotting-metaprofiles" class="anchor"></a>Generating and Plotting Metaprofiles</h1>
+<div class="section level2">
+<h2 id="generating-and-plotting-metaprofiles">Generating and Plotting Metaprofiles<a class="anchor" aria-label="anchor" href="#generating-and-plotting-metaprofiles"></a>
+</h2>
 <p>We can use the <code><a href="../reference/bootstrap-signal-by-position.html">metaSubsample()</a></code> function to bootstrap mean values by position for a genelist. The function accepts the same arguments as <code><a href="../reference/getCountsByPositions.html">getCountsByPositions()</a></code>, in addition to other arguments related to the bootstrapping.</p>
 <p>By default, 10% of the genelist is randomly sampled 1000 times, and confidence bands are returned for the 12.5th and 87.5th percentiles (i.e. a 75% confidence interval).</p>
 <p>Given the small size our dataset, we’ll reduce this to a 30% confidence interval, and we’ll additionally use 5 bp bins:</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">bootmeans.df</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/bootstrap-signal-by-position.html">metaSubsample</a></span>(<span class="no">PROseq</span>, <span class="no">txs_pr</span>, <span class="kw">binsize</span> <span class="kw">=</span> <span class="fl">5</span>,
-                              <span class="kw">lower</span> <span class="kw">=</span> <span class="fl">0.35</span>, <span class="kw">upper</span> <span class="kw">=</span> <span class="fl">0.65</span>, <span class="kw">ncores</span> <span class="kw">=</span> <span class="fl">1</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">bootmeans.df</span>)</pre></body></html></div>
-<pre><code>##    x       mean      lower      upper sample.name
-## 1  3 0.03529412 0.02941176 0.04705882      PROseq
-## 2  8 0.05882353 0.04117647 0.07058824      PROseq
-## 3 13 0.07647059 0.05294118 0.10000000      PROseq
-## 4 18 0.07058824 0.04705882 0.09411765      PROseq
-## 5 23 0.12941176 0.10000000 0.15882353      PROseq
-## 6 28 0.09411765 0.08235294 0.10588235      PROseq</code></pre>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">bootmeans.df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bootstrap-signal-by-position.html">metaSubsample</a></span><span class="op">(</span><span class="va">PROseq</span>, <span class="va">txs_pr</span>, binsize <span class="op">=</span> <span class="fl">5</span>, </span>
+<span>                              lower <span class="op">=</span> <span class="fl">0.35</span>, upper <span class="op">=</span> <span class="fl">0.65</span>, ncores <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">bootmeans.df</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##    x       mean      lower      upper sample.name</span></span>
+<span><span class="co">## 1  3 0.03529412 0.02941176 0.04705882      PROseq</span></span>
+<span><span class="co">## 2  8 0.05294118 0.04117647 0.07058824      PROseq</span></span>
+<span><span class="co">## 3 13 0.07647059 0.05294118 0.09411765      PROseq</span></span>
+<span><span class="co">## 4 18 0.07058824 0.05294118 0.10000000      PROseq</span></span>
+<span><span class="co">## 5 23 0.12352941 0.09411765 0.15882353      PROseq</span></span>
+<span><span class="co">## 6 28 0.09411765 0.08235294 0.10588235      PROseq</span></span></code></pre>
 <p>A dataframe is returned for plotting, and notice how the x-values have been automatically adjusted to be the center of the bins.</p>
 <p>Below, we show how to plot the confidence bands using base R plotting, as well as <code>ggplot2</code>.</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">mean</span> ~ <span class="no">x</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">bootmeans.df</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">"l"</span>,
-     <span class="kw">main</span> <span class="kw">=</span> <span class="st">"PRO-seq Signal"</span>, <span class="kw">ylim</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>, <span class="fl">1.4</span>),
-     <span class="kw">xlab</span> <span class="kw">=</span> <span class="st">"Distance from TSS"</span>,
-     <span class="kw">ylab</span> <span class="kw">=</span> <span class="st">"Mean Signal + 30% CI"</span>)
-
-<span class="co"># draw a polygon to add confidence bands,</span>
-<span class="co"># and use adjustcolor() to add transparency</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/polygon.html">polygon</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">bootmeans.df</span>$<span class="no">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(<span class="no">bootmeans.df</span>$<span class="no">x</span>)),
-        <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">bootmeans.df</span>$<span class="no">lower</span>, <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(<span class="no">bootmeans.df</span>$<span class="no">upper</span>)),
-        <span class="kw">col</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/adjustcolor.html">adjustcolor</a></span>(<span class="st">"black"</span>, <span class="fl">0.1</span>), <span class="kw">border</span> <span class="kw">=</span> <span class="fl">FALSE</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mean</span> <span class="op">~</span> <span class="va">x</span>, data <span class="op">=</span> <span class="va">bootmeans.df</span>, type <span class="op">=</span> <span class="st">"l"</span>, </span>
+<span>     main <span class="op">=</span> <span class="st">"PRO-seq Signal"</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1.4</span><span class="op">)</span>,</span>
+<span>     xlab <span class="op">=</span> <span class="st">"Distance from TSS"</span>,</span>
+<span>     ylab <span class="op">=</span> <span class="st">"Mean Signal + 30% CI"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># draw a polygon to add confidence bands,</span></span>
+<span><span class="co"># and use adjustcolor() to add transparency</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/polygon.html" class="external-link">polygon</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">bootmeans.df</span><span class="op">$</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">rev</a></span><span class="op">(</span><span class="va">bootmeans.df</span><span class="op">$</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, </span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">bootmeans.df</span><span class="op">$</span><span class="va">lower</span>, <span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Vector-class.html" class="external-link">rev</a></span><span class="op">(</span><span class="va">bootmeans.df</span><span class="op">$</span><span class="va">upper</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>        col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/adjustcolor.html" class="external-link">adjustcolor</a></span><span class="op">(</span><span class="st">"black"</span>, <span class="fl">0.1</span><span class="op">)</span>, border <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="ProfilePlotsAndBootstrapping_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">require</a></span>(<span class="no">ggplot2</span>)</pre></body></html></div>
-<pre><code>## Loading required package: ggplot2</code></pre>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">bootmeans.df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="no">x</span>, <span class="no">mean</span>)) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html">geom_ribbon</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="no">x</span>, <span class="kw">ymin</span> <span class="kw">=</span> <span class="no">lower</span>, <span class="kw">ymax</span> <span class="kw">=</span> <span class="no">upper</span>),
-              <span class="kw">alpha</span> <span class="kw">=</span> <span class="fl">0.1</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="kw">title</span> <span class="kw">=</span> <span class="st">"PRO-seq Signal"</span>,
-       <span class="kw">x</span> <span class="kw">=</span> <span class="st">"Distance from TSS"</span>,
-       <span class="kw">y</span> <span class="kw">=</span> <span class="st">"Mean Signal + 30% CI"</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>()</pre></body></html></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Loading required package: ggplot2</span></span></code></pre>
+<pre><code><span><span class="co">## Warning: package 'ggplot2' was built under R version 4.1.2</span></span></code></pre>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">bootmeans.df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">mean</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html" class="external-link">geom_ribbon</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">x</span>, ymin <span class="op">=</span> <span class="va">lower</span>, ymax <span class="op">=</span> <span class="va">upper</span><span class="op">)</span>,</span>
+<span>              alpha <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"PRO-seq Signal"</span>, </span>
+<span>       x <span class="op">=</span> <span class="st">"Distance from TSS"</span>, </span>
+<span>       y <span class="op">=</span> <span class="st">"Mean Signal + 30% CI"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="ProfilePlotsAndBootstrapping_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
-<div id="example-comparative-metaplots" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example-comparative-metaplots" class="anchor"></a>Example: Comparative Metaplots</h2>
+<div class="section level3">
+<h3 id="example-comparative-metaplots">Example: Comparative Metaplots<a class="anchor" aria-label="anchor" href="#example-comparative-metaplots"></a>
+</h3>
 <p>Like other functions in BRGenomics, we can pass a list of GRanges to <code><a href="../reference/bootstrap-signal-by-position.html">metaSubsample()</a></code>, and the output is conveniently combined for plotting.</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="co"># make 3 datasets</span>
-<span class="no">ps_list</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">ps1</span> <span class="kw">=</span> <span class="no">PROseq</span>[<span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="no">PROseq</span>), <span class="fl">3</span>)],
-                <span class="kw">ps2</span> <span class="kw">=</span> <span class="no">PROseq</span>[<span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="no">PROseq</span>), <span class="fl">3</span>)],
-                <span class="kw">ps3</span> <span class="kw">=</span> <span class="no">PROseq</span>[<span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">3</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="no">PROseq</span>), <span class="fl">3</span>)])</pre></body></html></div>
-<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="no">bm_list.df</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/bootstrap-signal-by-position.html">metaSubsample</a></span>(<span class="no">ps_list</span>, <span class="no">txs_pr</span>, <span class="kw">binsize</span> <span class="kw">=</span> <span class="fl">5</span>,
-                            <span class="kw">lower</span> <span class="kw">=</span> <span class="fl">0.35</span>, <span class="kw">upper</span> <span class="kw">=</span> <span class="fl">0.65</span>, <span class="kw">ncores</span> <span class="kw">=</span> <span class="fl">1</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">bm_list.df</span>)</pre></body></html></div>
-<pre><code>##    x       mean       lower      upper sample.name
-## 1  3 0.01176471 0.005882353 0.01764706         ps1
-## 2  8 0.01764706 0.011764706 0.02352941         ps1
-## 3 13 0.01764706 0.011764706 0.02352941         ps1
-## 4 18 0.03529412 0.017647059 0.04705882         ps1
-## 5 23 0.02941176 0.017647059 0.04705882         ps1
-## 6 28 0.02941176 0.023529412 0.03529412         ps1</code></pre>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">require</a></span>(<span class="no">ggplot2</span>)
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">bm_list.df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="no">x</span>, <span class="no">mean</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="no">sample.name</span>)) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html">geom_ribbon</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="no">x</span>, <span class="kw">ymin</span> <span class="kw">=</span> <span class="no">lower</span>, <span class="kw">ymax</span> <span class="kw">=</span> <span class="no">upper</span>,
-                  <span class="kw">color</span> <span class="kw">=</span> <span class="kw">NULL</span>, <span class="kw">fill</span> <span class="kw">=</span> <span class="no">sample.name</span>),
-              <span class="kw">alpha</span> <span class="kw">=</span> <span class="fl">0.2</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="kw">title</span> <span class="kw">=</span> <span class="st">"PRO-seq Signal"</span>,
-       <span class="kw">x</span> <span class="kw">=</span> <span class="st">"Distance from TSS"</span>,
-       <span class="kw">y</span> <span class="kw">=</span> <span class="st">"Mean Signal + 30% CI"</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span>()</pre></body></html></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># make 3 datasets</span></span>
+<span><span class="va">ps_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>ps1 <span class="op">=</span> <span class="va">PROseq</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">PROseq</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span><span class="op">]</span>, </span>
+<span>                ps2 <span class="op">=</span> <span class="va">PROseq</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">PROseq</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span><span class="op">]</span>, </span>
+<span>                ps3 <span class="op">=</span> <span class="va">PROseq</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">PROseq</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">bm_list.df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bootstrap-signal-by-position.html">metaSubsample</a></span><span class="op">(</span><span class="va">ps_list</span>, <span class="va">txs_pr</span>, binsize <span class="op">=</span> <span class="fl">5</span>, </span>
+<span>                            lower <span class="op">=</span> <span class="fl">0.35</span>, upper <span class="op">=</span> <span class="fl">0.65</span>, ncores <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">bm_list.df</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##    x       mean       lower      upper sample.name</span></span>
+<span><span class="co">## 1  3 0.01176471 0.005882353 0.01764706         ps1</span></span>
+<span><span class="co">## 2  8 0.01764706 0.011764706 0.02352941         ps1</span></span>
+<span><span class="co">## 3 13 0.01764706 0.011764706 0.02352941         ps1</span></span>
+<span><span class="co">## 4 18 0.04117647 0.023529412 0.04705882         ps1</span></span>
+<span><span class="co">## 5 23 0.02941176 0.023529412 0.04705882         ps1</span></span>
+<span><span class="co">## 6 28 0.02941176 0.023529412 0.03529412         ps1</span></span></code></pre>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">bm_list.df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">mean</span>, color <span class="op">=</span> <span class="va">sample.name</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html" class="external-link">geom_ribbon</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">x</span>, ymin <span class="op">=</span> <span class="va">lower</span>, ymax <span class="op">=</span> <span class="va">upper</span>,</span>
+<span>                  color <span class="op">=</span> <span class="cn">NULL</span>, fill <span class="op">=</span> <span class="va">sample.name</span><span class="op">)</span>,</span>
+<span>              alpha <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"PRO-seq Signal"</span>, </span>
+<span>       x <span class="op">=</span> <span class="st">"Distance from TSS"</span>, </span>
+<span>       y <span class="op">=</span> <span class="st">"Mean Signal + 30% CI"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="ProfilePlotsAndBootstrapping_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 <p><em>Bear in mind that the above confidence intervals are ignoring 70% of the sub-sampling experiments, which is excessive. More reasonable parameters would reveal how lacking this data is, i.e. how un-confident we are that there is a robust difference in the mean signal at various positions.</em></p>
 </div>
@@ -258,11 +272,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Mike DeBerardine.</p>
+  <p></p>
+<p>Developed by Mike DeBerardine.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -270,6 +286,8 @@
 
   
 
+
+  
 
   </body>
 </html>

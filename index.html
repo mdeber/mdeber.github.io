@@ -29,6 +29,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -41,7 +43,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
       </span>
     </div>
 
@@ -57,7 +59,7 @@
   <a href="articles/Overview.html">Overview</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Guides
      
     <span class="caret"></span>
@@ -101,7 +103,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/mdeber/BRGenomics">
+  <a href="https://github.com/mdeber/BRGenomics" class="external-link">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -119,47 +121,44 @@
       </header><div class="row">
   <div class="contents col-md-9">
 
-<div id="brgenomics" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#brgenomics" class="anchor"></a>BRGenomics</h1></div>
+<div class="section level1">
+<div class="page-header"><h1 id="brgenomics">BRGenomics<a class="anchor" aria-label="anchor" href="#brgenomics"></a>
+</h1></div>
 <!-- badges: start (versions currently manual...) -->
-
-<!-- badges: end -->
-<p>Efficient tools for the analysis of high-resolution genomics data in R.</p>
-<p>Explore the documentation: <a href="https://mdeber.github.io/" class="uri">https://mdeber.github.io/</a></p>
+<!-- badges: end --><p>Efficient tools for the analysis of high-resolution genomics data in R.</p>
+<p>Explore the documentation: <a href="https://mdeber.github.io/" class="external-link uri">https://mdeber.github.io/</a></p>
 </div>
-<div id="installation" class="section level1">
-<h1 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h1>
+<div class="section level1">
+<h1 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h1>
 <p>As of Bioconductor 3.11 (release date April 28, 2020), BRGenomics can be installed directly from Bioconductor:</p>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="co"># install.packages("BiocManager")</span>
-<span class="kw pkg">BiocManager</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span>(<span class="st">"BRGenomics"</span>)</pre></div>
-<p>Alternatively, the latest development version can be installed from <a href="https://github.com/mdeber/BRGenomics">GitHub</a>:</p>
-<div class="sourceCode" id="cb2"><pre class="r"><span class="co"># install.packages("remotes")</span>
-<span class="kw pkg">remotes</span><span class="kw ns">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"mdeber/BRGenomics@R3"</span>)</pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># install.packages("BiocManager")</span></span>
+<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"BRGenomics"</span><span class="op">)</span></span></code></pre></div>
+<p>Alternatively, the latest development version can be installed from <a href="https://github.com/mdeber/BRGenomics" class="external-link">GitHub</a>:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"mdeber/BRGenomics@R3"</span><span class="op">)</span></span></code></pre></div>
 <p><em>BRGenomics (and Bioconductor 3.11) require R version 4.0 (release April 24, 2020). Installing the <code>R3</code> branch, as shown above, can be installed under R &gt;= 3.5</em></p>
-<p>If you install the development version from Github and you’re using Windows, <a href="https://cran.rstudio.com/bin/windows/Rtools/">Rtools for Windows</a> is required.</p>
-<div id="features" class="section level2">
-<h2 class="hasAnchor">
-<a href="#features" class="anchor"></a>Features</h2>
-<p>See the <a href="https://mdeber.github.io/">documentation website</a>, which includes an introductory vignette, as well as the documentation for currently implemented functions, complete with demonstrative example code. The package currently includes example PRO-seq data<sup><br><span class="math display">1</span><br></sup>.</p>
+<p>If you install the development version from Github and you’re using Windows, <a href="https://cran.rstudio.com/bin/windows/Rtools/" class="external-link">Rtools for Windows</a> is required.</p>
+<div class="section level2">
+<h2 id="features">Features<a class="anchor" aria-label="anchor" href="#features"></a>
+</h2>
+<p>See the <a href="https://mdeber.github.io/" class="external-link">documentation website</a>, which includes an introductory vignette, as well as the documentation for currently implemented functions, complete with demonstrative example code. The package currently includes example PRO-seq data<sup>[1]</sup>.</p>
 </div>
-<div id="limitations-for-windows-users" class="section level2">
-<h2 class="hasAnchor">
-<a href="#limitations-for-windows-users" class="anchor"></a>Limitations for Windows users</h2>
+<div class="section level2">
+<h2 id="limitations-for-windows-users">Limitations for Windows users<a class="anchor" aria-label="anchor" href="#limitations-for-windows-users"></a>
+</h2>
 <ul>
 <li>No support for parallel/multicore processing</li>
 <li>No support for import bigWig files</li>
 </ul>
 </div>
-<div id="possible-future-changes" class="section level2">
-<h2 class="hasAnchor">
-<a href="#possible-future-changes" class="anchor"></a>Possible future changes</h2>
+<div class="section level2">
+<h2 id="possible-future-changes">Possible future changes<a class="anchor" aria-label="anchor" href="#possible-future-changes"></a>
+</h2>
 <ul>
-<li>Convert several functions into S4 generics
-<ul>
-<li><em>Note that in future versions, the names of the first argument of certain functions may change, but their order/utility will not. I.e., functions with with the first argument <code>dataset.gr</code> may become <code>x</code></em></li>
-</ul>
+<li>Convert several functions into S4 generics<ul><li><em>Note that in future versions, the names of the first argument of certain functions may change, but their order/utility will not. I.e., functions with with the first argument <code>dataset.gr</code> may become <code>x</code></em></li></ul>
 </li>
 <li>Formalize support for <code>GRangesList</code> objects (should be already complete)</li>
 <li>Write methods for <code>BigWigFile</code>/<code>BigWigFileList</code> objects (to avoid loading data into memory)</li>
@@ -167,10 +166,8 @@
 <li>Vectorize <code><a href="reference/genebodies.html">genebodies()</a></code> function (like many <code>GenomicRanges</code> functions are)</li>
 </ul>
 <hr>
-<ol>
-<li>Hojoong Kwak, Nicholas J. Fuda, Leighton J. Core, John T. Lis (2013). Precise Maps of RNA Polymerase Reveal How Promoters Direct Initiation and Pausing. <em>Science</em> <strong>339</strong>(6122): 950–953. <a href="https://doi.org/10.1126/science.1229386" class="uri">https://doi.org/10.1126/science.1229386</a>
-</li>
-</ol>
+<ol style="list-style-type: decimal"><li>Hojoong Kwak, Nicholas J. Fuda, Leighton J. Core, John T. Lis (2013). Precise Maps of RNA Polymerase Reveal How Promoters Direct Initiation and Pausing. <em>Science</em> <strong>339</strong>(6122): 950–953. <a href="https://doi.org/10.1126/science.1229386" class="external-link uri">https://doi.org/10.1126/science.1229386</a>
+</li></ol>
 </div>
 </div>
 
@@ -178,51 +175,61 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from BIOC at <br><a href="https://www.bioconductor.org/packages/BRGenomics">https://​www.bioconductor.org/​packages/​BRGenomics</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/mdeber/BRGenomics/">https://​github.com/​mdeber/​BRGenomics/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/mdeber/BRGenomics/issues">https://​github.com/​mdeber/​BRGenomics/​issues</a>
-</li>
+<li><a href="https://www.bioconductor.org/packages/BRGenomics" class="external-link">View on Bioconductor</a></li>
+<li><a href="https://github.com/mdeber/BRGenomics/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/mdeber/BRGenomics/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.r-project.org/Licenses/Artistic-2.0">Artistic-2.0</a></li>
+<li><a href="https://www.r-project.org/Licenses/Artistic-2.0" class="external-link">Artistic-2.0</a></li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing BRGenomics</a></li>
+</ul>
+</div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Mike DeBerardine <br><small class="roles"> Author, maintainer </small>  </li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://bioconductor.org/checkResults/release/bioc-LATEST/BRGenomics/"><img src="https://img.shields.io/badge/platforms-linux%20%7C%20osx%20%7C%20win-yellow.svg" alt="platforms"></a></li>
-<li><a href="https://www.bioconductor.org/packages/BRGenomics"><img src="https://img.shields.io/badge/release%20version-1.0.3-navy.svg" alt="release"></a></li>
-<li><a href="http://bioconductor.org/checkResults/devel/bioc-LATEST/BRGenomics/"><img src="http://www.bioconductor.org/shields/lastcommit/release/bioc/BRGenomics.svg" alt="updated"></a></li>
-<li><a href="https://github.com/mdeber/BRGenomics"><img src="https://img.shields.io/badge/devel%20version-1.1.3-orange.svg" alt="devel"></a></li>
-<li><a href="https://github.com/mdeber/BRGenomics/commits/master"><img src="https://img.shields.io/github/last-commit/mdeber/BRGenomics.svg" alt="last commit"></a></li>
-<li><a href="https://bioconductor.org/checkResults/release/bioc-LATEST/BRGenomics/"><img src="http://www.bioconductor.org/shields/build/release/bioc/BRGenomics.svg" alt="BioC status"></a></li>
-<li><a href="https://codecov.io/gh/mdeber/BRGenomics"><img src="https://codecov.io/gh/mdeber/BRGenomics/branch/master/graph/badge.svg" alt="test coverage"></a></li>
+<li><a href="https://bioconductor.org/checkResults/release/bioc-LATEST/BRGenomics/" class="external-link"><img src="https://img.shields.io/badge/platforms-linux%20%7C%20osx%20%7C%20win-yellow.svg" alt="platforms"></a></li>
+<li><a href="https://www.bioconductor.org/packages/BRGenomics" class="external-link"><img src="https://img.shields.io/badge/release%20version-1.0.3-navy.svg" alt="release"></a></li>
+<li><a href="http://bioconductor.org/checkResults/devel/bioc-LATEST/BRGenomics/" class="external-link"><img src="http://www.bioconductor.org/shields/lastcommit/release/bioc/BRGenomics.svg" alt="updated"></a></li>
+<li><a href="https://github.com/mdeber/BRGenomics" class="external-link"><img src="https://img.shields.io/badge/devel%20version-1.1.3-orange.svg" alt="devel"></a></li>
+<li><a href="https://github.com/mdeber/BRGenomics/commits/master" class="external-link"><img src="https://img.shields.io/github/last-commit/mdeber/BRGenomics.svg" alt="last commit"></a></li>
+<li><a href="https://bioconductor.org/checkResults/release/bioc-LATEST/BRGenomics/" class="external-link"><img src="http://www.bioconductor.org/shields/build/release/bioc/BRGenomics.svg" alt="BioC status"></a></li>
+<li><a href="https://codecov.io/gh/mdeber/BRGenomics" class="external-link"><img src="https://codecov.io/gh/mdeber/BRGenomics/branch/master/graph/badge.svg" alt="test coverage"></a></li>
 </ul>
 </div>
-</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Mike DeBerardine.</p>
+  <p></p>
+<p>Developed by Mike DeBerardine.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -230,6 +237,8 @@
 
   
 
+
+  
 
   </body>
 </html>
