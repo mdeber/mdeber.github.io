@@ -43,7 +43,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">BRGenomics</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.11.1</span>
       </span>
     </div>
 
@@ -131,15 +131,16 @@
 <div class="section level1">
 <h1 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h1>
-<p>As of Bioconductor 3.11 (release date April 28, 2020), BRGenomics can be installed directly from Bioconductor:</p>
+<p>BRGenomics can be installed directly from Bioconductor:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install.packages("BiocManager")</span></span>
+<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="st">"BiocManager"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html" class="external-link">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
 <span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"BRGenomics"</span><span class="op">)</span></span></code></pre></div>
 <p>Alternatively, the latest development version can be installed from <a href="https://github.com/mdeber/BRGenomics" class="external-link">GitHub</a>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"mdeber/BRGenomics@R3"</span><span class="op">)</span></span></code></pre></div>
-<p><em>BRGenomics (and Bioconductor 3.11) require R version 4.0 (release April 24, 2020). Installing the <code>R3</code> branch, as shown above, can be installed under R &gt;= 3.5</em></p>
+<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="st">"remotes"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html" class="external-link">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"mdeber/BRGenomics"</span><span class="op">)</span></span></code></pre></div>
 <p>If you install the development version from Github and you’re using Windows, <a href="https://cran.rstudio.com/bin/windows/Rtools/" class="external-link">Rtools for Windows</a> is required.</p>
 <div class="section level2">
 <h2 id="features">Features<a class="anchor" aria-label="anchor" href="#features"></a>
@@ -152,18 +153,6 @@
 <ul>
 <li>No support for parallel/multicore processing</li>
 <li>No support for import bigWig files</li>
-</ul>
-</div>
-<div class="section level2">
-<h2 id="possible-future-changes">Possible future changes<a class="anchor" aria-label="anchor" href="#possible-future-changes"></a>
-</h2>
-<ul>
-<li>Convert several functions into S4 generics<ul><li><em>Note that in future versions, the names of the first argument of certain functions may change, but their order/utility will not. I.e., functions with with the first argument <code>dataset.gr</code> may become <code>x</code></em></li></ul>
-</li>
-<li>Formalize support for <code>GRangesList</code> objects (should be already complete)</li>
-<li>Write methods for <code>BigWigFile</code>/<code>BigWigFileList</code> objects (to avoid loading data into memory)</li>
-<li>(Possibly) use <code>GPos</code> objects by default</li>
-<li>Vectorize <code><a href="reference/genebodies.html">genebodies()</a></code> function (like many <code>GenomicRanges</code> functions are)</li>
 </ul>
 <hr>
 <ol style="list-style-type: decimal"><li>Hojoong Kwak, Nicholas J. Fuda, Leighton J. Core, John T. Lis (2013). Precise Maps of RNA Polymerase Reveal How Promoters Direct Initiation and Pausing. <em>Science</em> <strong>339</strong>(6122): 950–953. <a href="https://doi.org/10.1126/science.1229386" class="external-link uri">https://doi.org/10.1126/science.1229386</a>
@@ -209,9 +198,9 @@
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://bioconductor.org/checkResults/release/bioc-LATEST/BRGenomics/" class="external-link"><img src="https://img.shields.io/badge/platforms-linux%20%7C%20osx%20%7C%20win-yellow.svg" alt="platforms"></a></li>
-<li><a href="https://www.bioconductor.org/packages/BRGenomics" class="external-link"><img src="https://img.shields.io/badge/release%20version-1.0.3-navy.svg" alt="release"></a></li>
+<li><a href="https://www.bioconductor.org/packages/BRGenomics" class="external-link"><img src="https://img.shields.io/badge/release%20version-1.10.1-navy.svg" alt="release"></a></li>
 <li><a href="http://bioconductor.org/checkResults/devel/bioc-LATEST/BRGenomics/" class="external-link"><img src="http://www.bioconductor.org/shields/lastcommit/release/bioc/BRGenomics.svg" alt="updated"></a></li>
-<li><a href="https://github.com/mdeber/BRGenomics" class="external-link"><img src="https://img.shields.io/badge/devel%20version-1.1.3-orange.svg" alt="devel"></a></li>
+<li><a href="https://github.com/mdeber/BRGenomics" class="external-link"><img src="https://img.shields.io/badge/devel%20version-1.11.1-orange.svg" alt="devel"></a></li>
 <li><a href="https://github.com/mdeber/BRGenomics/commits/master" class="external-link"><img src="https://img.shields.io/github/last-commit/mdeber/BRGenomics.svg" alt="last commit"></a></li>
 <li><a href="https://bioconductor.org/checkResults/release/bioc-LATEST/BRGenomics/" class="external-link"><img src="http://www.bioconductor.org/shields/build/release/bioc/BRGenomics.svg" alt="BioC status"></a></li>
 <li><a href="https://codecov.io/gh/mdeber/BRGenomics" class="external-link"><img src="https://codecov.io/gh/mdeber/BRGenomics/branch/master/graph/badge.svg" alt="test coverage"></a></li>
